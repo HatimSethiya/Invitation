@@ -21,32 +21,46 @@ function InvitationOpening({ invitation, onOpen }) {
 
   return (
     <section className="invitation-opening" aria-label="Wedding invitation opening">
-      <div className="opening-scene">
-        <div className="card-shadow" />
-        <button className="wedding-card" onClick={onOpen} type="button" aria-label="Open wedding invitation">
-          <div className="card-backdrop" />
-          <div className="card-leaf leaf-a">❧</div>
-          <div className="card-leaf leaf-b">❧</div>
+      <div className="opening-vignette" />
+      <div className="opening-leaves opening-leaves-left">❧</div>
+      <div className="opening-leaves opening-leaves-right">❧</div>
+
+      <div className="opening-doors">
+        <div className="door-panel door-left">
+          <span className="door-vine vine-top">❧</span>
+          <span className="door-vine vine-bottom">❧</span>
+        </div>
+        <div className="door-panel door-right">
+          <span className="door-vine vine-top">❧</span>
+          <span className="door-vine vine-bottom">❧</span>
+        </div>
+        <div className="door-seam" />
+      </div>
+
+      <div className="opening-card-shadow" />
+      <button className="wedding-card" onClick={onOpen} type="button" aria-label="Open wedding invitation">
+        <div className="card-paper">
+          <div className="card-ornament ornament-top">❧</div>
+          <div className="card-ornament ornament-bottom">❧</div>
           <div className="card-inner-border" />
           <div className="card-monogram">{copy.accent}</div>
-          <p className="card-small">THE WEDDING OF</p>
+          <p className="card-small">A WEDDING INVITATION</p>
           <h1><span>{bride}</span><i>&amp;</i><span>{groom}</span></h1>
           <div className="card-divider"><b>✦</b></div>
           <p className="card-date">{formatDate(invitation.weddingDate, { day: "numeric", month: "long", year: "numeric" })}</p>
           <span className="card-tap">TAP TO OPEN</span>
           <span className="card-arrow">↓</span>
-        </button>
-      </div>
+        </div>
+      </button>
 
-      <div className="opening-curtain curtain-left" />
-      <div className="opening-curtain curtain-right" />
       <div className="opening-bottom-curtain">
         <span className="curtain-fold fold-one" /><span className="curtain-fold fold-two" /><span className="curtain-fold fold-three" />
       </div>
+
       <div className="opening-spark spark-one">✦</div>
       <div className="opening-spark spark-two">✧</div>
       <div className="opening-spark spark-three">❋</div>
-      <p className="opening-caption">A little note of forever</p>
+      <p className="opening-caption">Tap the invitation to begin</p>
     </section>
   );
 }
