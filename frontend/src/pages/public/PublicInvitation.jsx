@@ -14,31 +14,24 @@ function formatDate(value, options = { dateStyle: "long" }) {
   return Number.isNaN(date.getTime()) ? value : date.toLocaleDateString(undefined, options);
 }
 
-function InvitationOpening({ invitation, onOpen }) {
+function InvitationOpening({ invitation, started, onOpen }) {
   const bride = invitation.couple?.brideName || "Bride";
   const groom = invitation.couple?.groomName || "Groom";
   const copy = themeCopy[invitation.theme] || themeCopy.royalRose;
+  const particles = Array.from({ length: 18 });
 
   return (
-    <section className="invitation-opening" aria-label="Wedding invitation opening">
+    <section className={`invitation-opening ${started ? "opening-started" : ""}`} aria-label="Wedding invitation opening">
       <div className="opening-vignette" />
-      <div className="opening-leaves opening-leaves-left">❧</div>
-      <div className="opening-leaves opening-leaves-right">❧</div>
-
+      <div className="opening-atmosphere" />
       <div className="opening-doors">
-        <div className="door-panel door-left">
-          <span className="door-vine vine-top">❧</span>
-          <span className="door-vine vine-bottom">❧</span>
-        </div>
-        <div className="door-panel door-right">
-          <span className="door-vine vine-top">❧</span>
-          <span className="door-vine vine-bottom">❧</span>
-        </div>
+        <div className="door-panel door-left"><span className="door-vine vine-top">❧</span><span className="door-vine vine-bottom">❧</span></div>
+        <div className="door-panel door-right"><span className="door-vine vine-top">❧</span><span className="door-vine vine-bottom">❧</span></div>
         <div className="door-seam" />
       </div>
 
       <div className="opening-card-shadow" />
-      <button className="wedding-card" onClick={onOpen} type="button" aria-label="Open wedding invitation">
+      <button className="wedding-card" onClick={onOpen} type="button" aria-label="Open wedding invitation" disabled={started}>
         <div className="card-paper">
           <div className="card-ornament ornament-top">❧</div>
           <div className="card-ornament ornament-bottom">❧</div>
@@ -57,10 +50,11 @@ function InvitationOpening({ invitation, onOpen }) {
         <span className="curtain-fold fold-one" /><span className="curtain-fold fold-two" /><span className="curtain-fold fold-three" />
       </div>
 
-      <div className="opening-spark spark-one">✦</div>
-      <div className="opening-spark spark-two">✧</div>
-      <div className="opening-spark spark-three">❋</div>
-      <p className="opening-caption">Tap the invitation to begin</p>
+      <div className="opening-particles">
+        {particles.map((_, index) => <i key={index} className={`particle particle-${index + 1}`}>✦</i>)}
+      </div>
+      <div className="opening-flare" />
+      <div className="opening-caption">Tap the invitation to begin</div>
     </section>
   );
 }
@@ -68,6 +62,7 @@ function PublicInvitation() {
   const { slug } = useParams();
   const [invitation, setInvitation] = useState(null);
   const [error, setError] = useState("");
+  const [openingStarted, setOpeningStarted] = useState(false);
   const [opened, setOpened] = useState(false);
 
   useEffect(() => {
@@ -83,10 +78,10 @@ function PublicInvitation() {
   }, [slug]);
 
   useEffect(() => {
-    if (!opened) return;
-    document.body.classList.add("invitation-is-open");
-    return () => document.body.classList.remove("invitation-is-open");
-  }, [opened]);
+    if (!openingStarted) return;
+    const timer = window.setTimeout(() => setOpened(true), 2350);
+    return () => window.clearTimeout(timer);
+  }, [openingStarted]);
 
   const themeClass = useMemo(() => `theme-${invitation?.theme || "royalRose"}`, [invitation?.theme]);
 
@@ -100,7 +95,7 @@ function PublicInvitation() {
 
   return (
     <main className={`public-page ${themeClass} ${opened ? "invitation-revealed" : "invitation-locked"}`}>
-      {!opened && <InvitationOpening invitation={invitation} onOpen={() => setOpened(true)} />}
+      {!opened && <InvitationOpening invitation={invitation} started={openingStarted} onOpen={() => setOpeningStarted(true)} />}
 
       <div className="invitation-body">
         <section className="public-hero reveal-up">
