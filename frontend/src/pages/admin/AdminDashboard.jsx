@@ -10,7 +10,7 @@ function AdminDashboard() {
 
   const loadInvitations = async () => {
     try { const response = await api.get("/invitations"); setData(response.data); }
-    catch { setData((current) => current); }
+    catch { /* Session is already protected by the route. */ }
     finally { setLoading(false); }
   };
 
@@ -50,7 +50,7 @@ function AdminDashboard() {
           <div className="invitation-list">{data.invitations.map((invitation) => (
             <article className="invitation-row" key={invitation._id}>
               <div className="invitation-info"><span className={`status-pill status-${invitation.status}`}>{invitation.status}</span><h3>{invitation.title}</h3><p>{new Date(invitation.weddingDate).toLocaleDateString()} · /i/{invitation.slug}</p></div>
-              <div className="row-actions"><Link className="small-button" to={`/admin/invitations/${invitation._id}/edit`}>Edit</Link>{invitation.status === "published" ? <a className="small-button" href={`/i/${invitation.slug}`} target="_blank" rel="noreferrer">View</a> : <button className="small-button" onClick={() => updateStatus(invitation._id, "published")}>Publish</button>}{invitation.status !== "archived" && <button className="small-button danger" onClick={() => removeInvitation(invitation._id)}>Delete</button>}</div>
+              <div className="row-actions">{invitation.status === "published" ? <a className="small-button" href={`/i/${invitation.slug}`} target="_blank" rel="noreferrer">View</a> : <button className="small-button" onClick={() => updateStatus(invitation._id, "published")}>Publish</button>}{invitation.status !== "archived" && <button className="small-button danger" onClick={() => removeInvitation(invitation._id)}>Delete</button>}</div>
             </article>
           ))}</div>
         )}
