@@ -21,37 +21,35 @@ function InvitationOpening({ invitation, onOpen }) {
 
   return (
     <section className="invitation-opening" aria-label="Wedding invitation opening">
-      <div className="opening-glow opening-glow-one" />
-      <div className="opening-glow opening-glow-two" />
-      <div className="opening-petal petal-one">✦</div>
-      <div className="opening-petal petal-two">❋</div>
-      <div className="opening-petal petal-three">✦</div>
-      <div className="opening-petal petal-four">❋</div>
-
-      <div className="opening-content">
-        <div className="opening-monogram">{copy.accent}</div>
-        <p className="opening-kicker">A little note of forever</p>
-        <div className="opening-rule"><span /></div>
-        <p className="opening-invite">You are warmly invited to celebrate</p>
-
-        <h1 className="opening-names">
-          <span>{bride}</span>
-          <i>&amp;</i>
-          <span>{groom}</span>
-        </h1>
-
-        <p className="opening-date">{formatDate(invitation.weddingDate)}</p>
-
-        <button className="open-invitation" onClick={onOpen} type="button">
-          <span className="open-ring">⌄</span>
-          <span>Open Invitation</span>
+      <div className="opening-scene">
+        <div className="card-shadow" />
+        <button className="wedding-card" onClick={onOpen} type="button" aria-label="Open wedding invitation">
+          <div className="card-backdrop" />
+          <div className="card-leaf leaf-a">❧</div>
+          <div className="card-leaf leaf-b">❧</div>
+          <div className="card-inner-border" />
+          <div className="card-monogram">{copy.accent}</div>
+          <p className="card-small">THE WEDDING OF</p>
+          <h1><span>{bride}</span><i>&amp;</i><span>{groom}</span></h1>
+          <div className="card-divider"><b>✦</b></div>
+          <p className="card-date">{formatDate(invitation.weddingDate, { day: "numeric", month: "long", year: "numeric" })}</p>
+          <span className="card-tap">TAP TO OPEN</span>
+          <span className="card-arrow">↓</span>
         </button>
-        <p className="opening-hint">Tap to begin the celebration</p>
       </div>
+
+      <div className="opening-curtain curtain-left" />
+      <div className="opening-curtain curtain-right" />
+      <div className="opening-bottom-curtain">
+        <span className="curtain-fold fold-one" /><span className="curtain-fold fold-two" /><span className="curtain-fold fold-three" />
+      </div>
+      <div className="opening-spark spark-one">✦</div>
+      <div className="opening-spark spark-two">✧</div>
+      <div className="opening-spark spark-three">❋</div>
+      <p className="opening-caption">A little note of forever</p>
     </section>
   );
 }
-
 function PublicInvitation() {
   const { slug } = useParams();
   const [invitation, setInvitation] = useState(null);
