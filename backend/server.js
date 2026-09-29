@@ -5,6 +5,7 @@ const path = require("path");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const invitationRoutes = require("./routes/invitationRoutes");
+const uploadRoutes = require("./routes/uploadRoutes");
 const seedAdmin = require("./services/adminSeed");
 
 dotenv.config();
@@ -20,6 +21,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/invitations", invitationRoutes);
+app.use("/api/uploads", uploadRoutes);
 
 app.get("/api/health", (req, res) => {
   res.json({
