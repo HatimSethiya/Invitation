@@ -18,46 +18,95 @@ function InvitationOpening({ invitation, started, onOpen }) {
   const bride = invitation.couple?.brideName || "Bride";
   const groom = invitation.couple?.groomName || "Groom";
   const copy = themeCopy[invitation.theme] || themeCopy.royalRose;
-  const particles = Array.from({ length: 18 });
+  const particles = Array.from({ length: 22 });
 
   return (
-    <section className={`invitation-opening ${started ? "opening-started" : ""}`} aria-label="Wedding invitation opening">
-      <div className="opening-vignette" />
+    <section
+      className={`invitation-opening ${started ? "opening-started" : ""}`}
+      aria-label="Wedding invitation opening"
+    >
       <div className="opening-atmosphere" />
-      <div className="opening-doors">
-        <div className="door-panel door-left"><span className="door-vine vine-top">❧</span><span className="door-vine vine-bottom">❧</span></div>
-        <div className="door-panel door-right"><span className="door-vine vine-top">❧</span><span className="door-vine vine-bottom">❧</span></div>
+      <div className="opening-vignette" />
+
+      <div className="opening-doors" aria-hidden="true">
+        <div className="door-panel door-left">
+          <span className="door-vine vine-top">❧</span>
+          <span className="door-vine vine-bottom">❧</span>
+          <span className="door-light-line" />
+        </div>
+        <div className="door-panel door-right">
+          <span className="door-vine vine-top">❧</span>
+          <span className="door-vine vine-bottom">❧</span>
+          <span className="door-light-line" />
+        </div>
         <div className="door-seam" />
       </div>
 
-      <div className="opening-card-shadow" />
-      <button className="wedding-card" onClick={onOpen} type="button" aria-label="Open wedding invitation" disabled={started}>
+      <div className="opening-card-shadow" aria-hidden="true" />
+
+      <button
+        className="wedding-card"
+        onClick={onOpen}
+        type="button"
+        aria-label="Open wedding invitation"
+        disabled={started}
+      >
         <div className="card-paper">
+          <span className="card-corner corner-tl" />
+          <span className="card-corner corner-tr" />
+          <span className="card-corner corner-bl" />
+          <span className="card-corner corner-br" />
+
+          <div className="card-inner-border" />
           <div className="card-ornament ornament-top">❧</div>
           <div className="card-ornament ornament-bottom">❧</div>
-          <div className="card-inner-border" />
-          <div className="card-monogram">{copy.accent}</div>
+
+          <div className="card-seal" aria-hidden="true">
+            <span>{copy.accent}</span>
+          </div>
+
           <p className="card-small">A WEDDING INVITATION</p>
-          <h1><span>{bride}</span><i>&amp;</i><span>{groom}</span></h1>
+
+          <h1>
+            <span>{bride}</span>
+            <i>&amp;</i>
+            <span>{groom}</span>
+          </h1>
+
           <div className="card-divider"><b>✦</b></div>
-          <p className="card-date">{formatDate(invitation.weddingDate, { day: "numeric", month: "long", year: "numeric" })}</p>
-          <span className="card-tap">TAP TO OPEN</span>
-          <span className="card-arrow">↓</span>
+          <p className="card-date">
+            {formatDate(invitation.weddingDate, {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            })}
+          </p>
+
+          <div className="card-open-prompt">
+            <span className="prompt-ring"><b>↗</b></span>
+            <span>TAP TO OPEN</span>
+          </div>
         </div>
       </button>
 
-      <div className="opening-bottom-curtain">
-        <span className="curtain-fold fold-one" /><span className="curtain-fold fold-two" /><span className="curtain-fold fold-three" />
+      <div className="opening-bottom-curtain" aria-hidden="true">
+        <span className="curtain-fold fold-one" />
+        <span className="curtain-fold fold-two" />
+        <span className="curtain-fold fold-three" />
       </div>
 
-      <div className="opening-particles">
-        {particles.map((_, index) => <i key={index} className={`particle particle-${index + 1}`}>✦</i>)}
+      <div className="opening-particles" aria-hidden="true">
+        {particles.map((_, index) => (
+          <i key={index} className={`particle particle-${index + 1}`}>✦</i>
+        ))}
       </div>
-      <div className="opening-flare" />
+
+      <div className="opening-flare" aria-hidden="true" />
       <div className="opening-caption">Tap the invitation to begin</div>
     </section>
   );
 }
+
 function PublicInvitation() {
   const { slug } = useParams();
   const [invitation, setInvitation] = useState(null);
@@ -67,6 +116,7 @@ function PublicInvitation() {
 
   useEffect(() => {
     let active = true;
+
     api.get(`/invitations/public/${slug}`)
       .then((response) => {
         if (active) setInvitation(response.data.invitation);
@@ -74,28 +124,54 @@ function PublicInvitation() {
       .catch((err) => {
         if (active) setError(err.response?.data?.message || "Invitation not found.");
       });
+
     return () => { active = false; };
   }, [slug]);
 
   useEffect(() => {
     if (!openingStarted) return;
+
     const timer = window.setTimeout(() => setOpened(true), 2350);
     return () => window.clearTimeout(timer);
   }, [openingStarted]);
 
-  const themeClass = useMemo(() => `theme-${invitation?.theme || "royalRose"}`, [invitation?.theme]);
+  const themeClass = useMemo(
+    () => `theme-${invitation?.theme || "royalRose"}`,
+    [invitation?.theme]
+  );
 
   if (error) {
-    return <main className="public-page"><section className="public-card"><span className="eyebrow">Wedding Invitation</span><h1>Invitation unavailable</h1><p>{error}</p></section></main>;
+    return (
+      <main className="public-page">
+        <section className="public-card">
+          <span className="eyebrow">Wedding Invitation</span>
+          <h1>Invitation unavailable</h1>
+          <p>{error}</p>
+        </section>
+      </main>
+    );
   }
 
   if (!invitation) {
-    return <main className="public-page"><section className="public-card"><div className="loading-orb" /><p>Opening invitation...</p></section></main>;
+    return (
+      <main className="public-page">
+        <section className="public-card">
+          <div className="loading-orb" />
+          <p>Opening invitation...</p>
+        </section>
+      </main>
+    );
   }
 
   return (
     <main className={`public-page ${themeClass} ${opened ? "invitation-revealed" : "invitation-locked"}`}>
-      {!opened && <InvitationOpening invitation={invitation} started={openingStarted} onOpen={() => setOpeningStarted(true)} />}
+      {!opened && (
+        <InvitationOpening
+          invitation={invitation}
+          started={openingStarted}
+          onOpen={() => setOpeningStarted(true)}
+        />
+      )}
 
       <div className="invitation-body">
         <section className="public-hero reveal-up">
@@ -132,14 +208,26 @@ function PublicInvitation() {
         {invitation.family?.length > 0 && (
           <section className="public-section reveal-up">
             <span className="eyebrow">With Blessings</span>
-            {invitation.family.map((member) => <div className="family-line" key={member._id}><strong>{member.name}</strong><span>{member.relation}</span></div>)}
+            {invitation.family.map((member) => (
+              <div className="family-line" key={member._id}>
+                <strong>{member.name}</strong>
+                <span>{member.relation}</span>
+              </div>
+            ))}
           </section>
         )}
 
         {invitation.gallery?.length > 0 && (
           <section className="public-section reveal-up">
             <span className="eyebrow">Our Memories</span>
-            <div className="public-gallery">{invitation.gallery.map((image) => <figure key={image._id}><img src={image.imageUrl} alt={image.caption || "Wedding memory"} /><figcaption>{image.caption}</figcaption></figure>)}</div>
+            <div className="public-gallery">
+              {invitation.gallery.map((image) => (
+                <figure key={image._id}>
+                  <img src={image.imageUrl} alt={image.caption || "Wedding memory"} />
+                  <figcaption>{image.caption}</figcaption>
+                </figure>
+              ))}
+            </div>
           </section>
         )}
 
