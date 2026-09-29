@@ -1,99 +1,62 @@
-* {
-  box-sizing: border-box;
-}
+#root { min-height: 100vh; }
 
-:root {
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", sans-serif;
-  color: #2d2438;
-  background: #fffafc;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-}
-
-html,
-body,
-#root {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100%;
-}
-
-body {
-  min-height: 100vh;
-}
-
-button,
-input,
-textarea,
-select {
-  font: inherit;
-}
-
-a {
-  color: inherit;
-}
-
-.page-shell {
+.auth-page,
+.dashboard-page,
+.auth-loading {
   min-height: 100vh;
   display: grid;
   place-items: center;
-  padding: 24px;
+  padding: 22px;
   background:
-    radial-gradient(circle at top, rgba(217, 174, 188, 0.18), transparent 42%),
+    radial-gradient(circle at 15% 10%, rgba(218, 173, 191, .28), transparent 35%),
+    radial-gradient(circle at 90% 90%, rgba(190, 161, 118, .18), transparent 35%),
     #fffafc;
 }
 
-.page-card {
-  width: min(100%, 520px);
-  padding: 40px 28px;
-  border: 1px solid rgba(120, 86, 102, 0.14);
-  border-radius: 28px;
-  background: rgba(255, 255, 255, 0.88);
-  box-shadow: 0 24px 70px rgba(72, 42, 55, 0.12);
-  text-align: center;
+.login-card,
+.dashboard-card {
+  width: min(100%, 480px);
+  padding: 38px 26px;
+  border: 1px solid rgba(120, 86, 102, .14);
+  border-radius: 30px;
+  background: rgba(255,255,255,.9);
+  box-shadow: 0 30px 80px rgba(72,42,55,.14);
 }
 
-.eyebrow {
-  display: inline-block;
-  margin-bottom: 12px;
-  color: #a16a7f;
-  font-size: 0.76rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+.login-card { text-align: center; }
+.login-mark {
+  width: 54px; height: 54px; margin: 0 auto 18px; display: grid; place-items: center;
+  border-radius: 50%; background: #4c3340; color: #fff; font-size: 22px;
+  box-shadow: 0 12px 30px rgba(76,51,64,.22);
 }
-
-.page-card h1 {
-  margin: 0;
-  color: #3d2932;
-  font-size: clamp(2rem, 8vw, 3.2rem);
-  line-height: 1.08;
+.login-card h1, .dashboard-card h1 { margin: 0; color: #3d2932; font-size: clamp(2rem, 9vw, 3rem); }
+.login-subtitle, .dashboard-card p { color: #76666d; line-height: 1.7; }
+.login-form { margin-top: 28px; display: grid; gap: 18px; text-align: left; }
+.login-form label { display: grid; gap: 8px; color: #4c3a42; font-weight: 700; font-size: .9rem; }
+.login-form input {
+  width: 100%; min-height: 50px; padding: 0 15px; border: 1px solid #dfd2d8; border-radius: 14px;
+  outline: none; background: #fff; color: #3d2932;
 }
-
-.page-card p {
-  margin: 16px auto 26px;
-  max-width: 430px;
-  color: #76666d;
-  line-height: 1.7;
+.login-form input:focus { border-color: #a16a7f; box-shadow: 0 0 0 4px rgba(161,106,127,.1); }
+.password-field { position: relative; display: block; }
+.password-field input { padding-right: 68px; }
+.password-field button {
+  position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+  border: 0; background: transparent; color: #8b5369; font-weight: 700; cursor: pointer;
 }
-
-.primary-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 48px;
-  padding: 0 22px;
-  border-radius: 999px;
-  background: #4c3340;
-  color: #fff;
-  font-weight: 700;
-  text-decoration: none;
-  transition: transform 180ms ease, box-shadow 180ms ease;
+.auth-error { padding: 12px 14px; border-radius: 12px; background: #fff0f1; color: #a23b49; font-size: .9rem; }
+.login-button, .secondary-button {
+  min-height: 50px; border: 0; border-radius: 999px; cursor: pointer; font-weight: 800;
 }
+.login-button { background: #4c3340; color: #fff; }
+.login-button:disabled { opacity: .65; cursor: wait; }
+.dashboard-card { text-align: center; }
+.dashboard-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 24px; }
+.secondary-button { padding: 0 22px; background: #f3e9ed; color: #4c3340; }
+.auth-loading { color: #76666d; }
+.loading-orb { width: 34px; height: 34px; border: 3px solid #e4d5db; border-top-color: #4c3340; border-radius: 50%; animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
 
-.primary-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(76, 51, 64, 0.2);
+@media (min-width: 700px) {
+  .login-card, .dashboard-card { padding: 48px 42px; }
 }
