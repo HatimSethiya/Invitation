@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../services/api";
+import "./cinematic-opening.css";
 
 const themeCopy = {
   royalRose: { accent: "A", line: "An evening woven with love" },
@@ -131,7 +132,7 @@ function PublicInvitation() {
   useEffect(() => {
     if (!openingStarted) return;
 
-    const timer = window.setTimeout(() => setOpened(true), 2350);
+    const timer = window.setTimeout(() => setOpened(true), 3000);
     return () => window.clearTimeout(timer);
   }, [openingStarted]);
 
