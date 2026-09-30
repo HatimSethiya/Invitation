@@ -1,98 +1,67 @@
 .invitation-opening{background:
-  radial-gradient(circle at 50% 44%,rgba(246,237,207,.24),transparent 24%),
-  radial-gradient(circle at 50% 105%,rgba(181,151,91,.12),transparent 42%),
-  linear-gradient(145deg,#718269 0%,#52634d 48%,#293729 100%);
-  perspective:1400px;isolation:isolate;
+radial-gradient(circle at 50% 38%,rgba(255,240,216,.22),transparent 25%),
+linear-gradient(145deg,#5b2638 0%,#351824 45%,#160d13 100%);
+perspective:1500px;isolation:isolate}
+.invitation-opening .opening-atmosphere{animation:cin-atmosphere 9s ease-in-out infinite alternate}
+.invitation-opening .opening-vignette{background:radial-gradient(circle at 50% 40%,transparent 0 24%,rgba(25,7,15,.18) 52%,rgba(10,4,8,.72) 100%)}
+.invitation-opening .opening-doors{filter:drop-shadow(0 18px 30px rgba(0,0,0,.34))}
+.invitation-opening .door-panel{
+background:linear-gradient(90deg,#210e17 0%,#4b1d2c 13%,#8b4b5f 29%,#5b273b 45%,#9b5c6c 61%,#542238 79%,#200d16 100%);
+box-shadow:inset 0 0 70px rgba(10,3,7,.5),inset 0 0 0 1px rgba(255,226,197,.12);
 }
-.invitation-opening .opening-atmosphere{animation:cin-atmosphere 7s ease-in-out infinite alternate}
-.invitation-opening .door-panel{backface-visibility:hidden;transform-style:preserve-3d}
-.invitation-opening .door-panel:after{border-color:rgba(238,226,190,.22);box-shadow:inset 0 0 35px rgba(12,19,11,.14)}
-.invitation-opening .door-light-line{position:absolute;top:12%;bottom:12%;width:1px;background:linear-gradient(transparent,rgba(239,224,182,.25),transparent);opacity:.7}
-.invitation-opening .door-left .door-light-line{right:10%}
-.invitation-opening .door-right .door-light-line{left:10%}
-
-.invitation-opening .opening-card-shadow{
-  width:min(69vw,318px);height:min(104vw,488px);
-  background:rgba(7,13,7,.55);filter:blur(28px);
+.invitation-opening .door-panel:before{
+background:repeating-linear-gradient(90deg,rgba(255,231,205,.06) 0 4%,rgba(20,4,12,.2) 4% 10%,rgba(255,235,215,.04) 10% 16%);
 }
-.invitation-opening .wedding-card{
-  width:min(68vw,312px);height:min(104vw,488px);
-  max-height:78svh;perspective:1000px;
-}
+.invitation-opening .door-panel:after{border-color:rgba(255,220,190,.18);box-shadow:inset 0 0 42px rgba(18,3,10,.2)}
+.invitation-opening .door-vine{color:rgba(244,206,169,.42);text-shadow:0 0 16px rgba(245,201,153,.15)}
+.invitation-opening .door-light-line{background:linear-gradient(transparent,rgba(255,216,176,.38),transparent)}
+.invitation-opening .door-seam{background:rgba(30,7,16,.5);box-shadow:0 0 30px rgba(255,210,163,.14)}
+.wedding-lights{position:absolute;inset:0;z-index:11;pointer-events:none}
+.wedding-lights span{position:absolute;width:7px;height:7px;border-radius:50%;background:#ffe1a7;box-shadow:0 0 13px 4px rgba(255,207,126,.45);animation:light-twinkle 2.2s ease-in-out infinite}
+.wedding-lights span:nth-child(1){left:10%;top:13%}.wedding-lights span:nth-child(2){left:87%;top:19%;animation-delay:-.7s}
+.wedding-lights span:nth-child(3){left:15%;top:82%;animation-delay:-1.2s}.wedding-lights span:nth-child(4){right:12%;bottom:18%;animation-delay:-1.7s}
+.wedding-lights span:nth-child(5){left:50%;top:10%;animation-delay:-.4s}
+.floral-frame{position:absolute;z-index:13;color:#e5bd8d;font:400 9rem Georgia,serif;line-height:1;opacity:.34;filter:drop-shadow(0 0 10px rgba(230,187,130,.18));pointer-events:none}
+.floral-left{left:-46px;top:8%;transform:rotate(-22deg)}.floral-right{right:-46px;bottom:9%;transform:rotate(158deg)}
+.opening-started .floral-left{animation:floral-left 1.8s cubic-bezier(.65,0,.2,1) .25s forwards}.opening-started .floral-right{animation:floral-right 1.8s cubic-bezier(.65,0,.2,1) .25s forwards}
+.invitation-opening .opening-card-shadow{width:min(70vw,320px);height:min(105vw,492px);background:rgba(8,2,6,.62);filter:blur(30px)}
+.invitation-opening .wedding-card{width:min(68vw,312px);height:min(104vw,488px);max-height:78svh;perspective:1100px}
 .invitation-opening .card-paper{
-  padding:38px 25px;
-  background:
-    radial-gradient(circle at 50% 16%,rgba(255,255,255,.94),transparent 32%),
-    linear-gradient(145deg,#fffdf5 0%,#f4ecd8 52%,#e8dcc0 100%);
+padding:38px 25px;
+background:radial-gradient(circle at 50% 14%,rgba(255,255,255,.98),transparent 31%),linear-gradient(145deg,#fffdf7,#f4ead4 55%,#ead9bc);
+box-shadow:0 32px 80px rgba(10,2,7,.5),inset 0 0 0 1px rgba(126,82,45,.2);
 }
-.invitation-opening .card-paper:before{
-  content:"";position:absolute;inset:0;
-  background:
-    linear-gradient(115deg,transparent 28%,rgba(255,255,255,.58) 50%,transparent 72%),
-    radial-gradient(circle at 10% 90%,rgba(145,126,77,.08),transparent 25%);
-  transform:translateX(-125%);pointer-events:none;
-}
-.invitation-opening .opening-started .card-paper:before{animation:cin-paper-glint 1.05s ease .15s forwards}
-.invitation-opening .card-corner{
-  position:absolute;width:35px;height:35px;border-color:rgba(143,120,70,.38);opacity:.9;
-}
-.invitation-opening .corner-tl{top:9px;left:9px;border-top:1px solid;border-left:1px solid}
-.invitation-opening .corner-tr{top:9px;right:9px;border-top:1px solid;border-right:1px solid}
-.invitation-opening .corner-bl{bottom:9px;left:9px;border-bottom:1px solid;border-left:1px solid}
-.invitation-opening .corner-br{bottom:9px;right:9px;border-bottom:1px solid;border-right:1px solid}
-.invitation-opening .card-seal{
-  position:relative;width:58px;height:58px;margin:0 auto 19px;
-  display:grid;place-items:center;border:1px solid #8d9878;border-radius:50%;
-  color:#5a684c;font:italic 1.7rem Georgia,serif;
-  box-shadow:0 8px 24px rgba(83,92,65,.1);
-}
-.invitation-opening .card-seal:before{
-  content:"";position:absolute;inset:5px;border:1px solid rgba(141,152,120,.25);border-radius:50%;
-}
-.invitation-opening .card-open-prompt{
-  position:absolute;left:0;right:0;bottom:18px;
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  color:#75664c;font-size:.52rem;letter-spacing:.24em;
-}
-.invitation-opening .prompt-ring{
-  width:29px;height:29px;display:grid;place-items:center;border-radius:50%;
-  border:1px solid rgba(143,120,70,.45);font-size:.78rem;letter-spacing:0;
-  animation:cin-prompt 1.8s ease-in-out infinite;
-}
-.invitation-opening .prompt-ring b{font-weight:400}
-
+.invitation-opening .card-paper:before{background:linear-gradient(115deg,transparent 28%,rgba(255,255,255,.7) 50%,transparent 72%),radial-gradient(circle at 10% 90%,rgba(145,76,94,.08),transparent 25%)}
+.invitation-opening .card-inner-border{border-color:rgba(126,82,45,.42)}.invitation-opening .card-inner-border:after{border-color:rgba(126,82,45,.16)}
+.invitation-opening .card-seal{border-color:#9a5365;color:#7d3047;box-shadow:0 8px 28px rgba(116,42,65,.13)}
+.invitation-opening .card-seal:before{border-color:rgba(154,83,101,.25)}
+.invitation-opening .card-small{color:#755568}
+.invitation-opening .wedding-card h1{color:#5b303d}.invitation-opening .wedding-card h1 i{color:#ad7950}
+.invitation-opening .card-divider{border-color:rgba(151,95,65,.35)}.invitation-opening .card-divider b{background:#f5ecd9;color:#a16646}
+.invitation-opening .card-date{color:#765566}
+.invitation-opening .card-open-prompt{color:#754f5d}
+.invitation-opening .prompt-ring{border-color:rgba(158,88,105,.55)}
 .invitation-opening .opening-bottom-curtain{
-  height:25%;background:
-    linear-gradient(0deg,#273627 0%,#4b5d46 50%,#728169 100%);
+height:26%;background:linear-gradient(0deg,#1d0b13,#4a1d2c 48%,#8c4e61 100%);
+box-shadow:0 -20px 42px rgba(16,2,9,.4)
 }
-.invitation-opening .opening-bottom-curtain:after{
-  content:"";position:absolute;left:0;right:0;top:-20px;height:35px;
-  background:linear-gradient(180deg,transparent,rgba(18,27,16,.18));
-}
-.invitation-opening .opening-flare{
-  width:16px;height:16px;background:#fff8dc;
-  box-shadow:0 0 22px 9px rgba(255,228,153,.35);
-}
-
-.invitation-opening .opening-particles .particle{font-size:9px}
-.invitation-opening .opening-particles .particle:nth-child(3n){font-size:13px}
-.invitation-opening .opening-particles .particle:nth-child(4n){font-size:7px}
-
-@keyframes cin-atmosphere{
-  from{transform:scale(1) translate3d(-1%,0,0)}
-  to{transform:scale(1.08) translate3d(1%,-1.5%,0)}
-}
+.invitation-opening .opening-bottom-curtain:before{background:repeating-linear-gradient(90deg,rgba(255,232,211,.055) 0 8%,rgba(20,3,12,.18) 8% 17%)}
+.invitation-opening .opening-bottom-curtain:after{background:linear-gradient(180deg,transparent,rgba(255,220,185,.14))}
+.golden-sweep{position:absolute;z-index:43;left:-25%;top:38%;width:150%;height:2px;opacity:0;transform:rotate(-8deg);background:linear-gradient(90deg,transparent,rgba(255,225,168,.0),rgba(255,239,200,.9),rgba(255,225,168,.0),transparent);box-shadow:0 0 20px rgba(255,220,157,.6);pointer-events:none}
+.opening-started .golden-sweep{animation:golden-sweep 1.5s ease .55s forwards}
+.opening-petals{position:absolute;inset:0;z-index:46;pointer-events:none;overflow:hidden}
+.petal{position:absolute;color:#efc9a2;font-size:15px;opacity:0;text-shadow:0 0 12px rgba(255,204,153,.5)}
+.petal-1{left:8%;top:22%}.petal-2{left:21%;top:68%}.petal-3{left:36%;top:16%}.petal-4{left:49%;top:76%}.petal-5{left:64%;top:22%}.petal-6{left:77%;top:64%}.petal-7{left:90%;top:34%}.petal-8{left:29%;top:42%}.petal-9{left:57%;top:48%}.petal-10{left:84%;top:78%}
+.opening-started .petal{animation:petal-fall 1.8s cubic-bezier(.2,.8,.2,1) forwards}
+.opening-started .petal-1{animation-delay:.65s}.opening-started .petal-2{animation-delay:.78s}.opening-started .petal-3{animation-delay:.9s}.opening-started .petal-4{animation-delay:1.02s}.opening-started .petal-5{animation-delay:.72s}.opening-started .petal-6{animation-delay:1.08s}.opening-started .petal-7{animation-delay:.86s}.opening-started .petal-8{animation-delay:1.14s}.opening-started .petal-9{animation-delay:.96s}.opening-started .petal-10{animation-delay:1.22s}
+.opening-started .opening-particles .particle{color:#ffd99b;text-shadow:0 0 16px rgba(255,205,128,.9)}
+@keyframes light-twinkle{0%,100%{opacity:.25;transform:scale(.75)}50%{opacity:1;transform:scale(1.35)}}
+@keyframes floral-left{to{transform:translateX(-35px) rotate(-32deg);opacity:0}}
+@keyframes floral-right{to{transform:translateX(35px) rotate(168deg);opacity:0}}
+@keyframes golden-sweep{0%{opacity:0;transform:translateX(-20%) rotate(-8deg)}25%{opacity:1}100%{opacity:0;transform:translateX(35%) rotate(-8deg)}}
+@keyframes petal-fall{0%{opacity:0;transform:translate3d(0,-5px,0) rotate(0) scale(.5)}25%{opacity:1}100%{opacity:0;transform:translate3d(35px,120px,0) rotate(180deg) scale(.8)}}
+@keyframes cin-atmosphere{from{transform:scale(1) translate3d(-1%,0,0)}to{transform:scale(1.08) translate3d(1%,-1.5%,0)}}
 @keyframes cin-paper-glint{to{transform:translateX(125%)}}
-@keyframes cin-prompt{
-  0%,100%{transform:translateY(0);box-shadow:0 0 0 0 rgba(143,120,70,0)}
-  50%{transform:translateY(-3px);box-shadow:0 0 0 7px rgba(143,120,70,.08)}
-}
-
-@media(max-width:700px){
-  .invitation-opening .wedding-card{width:min(77vw,320px);height:min(116vw,500px);max-height:76svh}
-  .invitation-opening .opening-card-shadow{width:min(80vw,338px);height:min(122vw,520px)}
-}
-@media(prefers-reduced-motion:reduce){
-  .invitation-opening .opening-atmosphere,
-  .invitation-opening .prompt-ring{animation:none}
-}
+@keyframes cin-prompt{0%,100%{transform:translateY(0);box-shadow:0 0 0 0 rgba(143,120,70,0)}50%{transform:translateY(-3px);box-shadow:0 0 0 7px rgba(143,120,70,.08)}}
+@media(max-width:700px){.invitation-opening .wedding-card{width:min(77vw,320px);height:min(116vw,500px);max-height:76svh}.invitation-opening .opening-card-shadow{width:min(80vw,338px);height:min(122vw,520px)}.floral-frame{font-size:7rem}}
+@media(prefers-reduced-motion:reduce){.invitation-opening .opening-atmosphere,.invitation-opening .prompt-ring,.wedding-lights span{animation:none}.opening-started .petal{animation:none;opacity:0}}
