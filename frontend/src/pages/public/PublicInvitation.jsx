@@ -29,6 +29,9 @@ function InvitationOpening({ invitation, started, onOpen }) {
       <div className="opening-atmosphere" />
       <div className="opening-vignette" />
 
+      <div className="wedding-lights" aria-hidden="true"><span /><span /><span /><span /><span /></div>
+      <div className="floral-frame floral-left" aria-hidden="true">❧</div>
+      <div className="floral-frame floral-right" aria-hidden="true">❧</div>
       <div className="opening-doors" aria-hidden="true">
         <div className="door-panel door-left">
           <span className="door-vine vine-top">❧</span>
@@ -103,6 +106,8 @@ function InvitationOpening({ invitation, started, onOpen }) {
       </div>
 
       <div className="opening-flare" aria-hidden="true" />
+      <div className="golden-sweep" aria-hidden="true" />
+      <div className="opening-petals" aria-hidden="true">{Array.from({ length: 10 }).map((_, index) => <i key={index} className={`petal petal-${index + 1}`}>❧</i>)}</div>
       <div className="opening-caption">Tap the invitation to begin</div>
     </section>
   );
