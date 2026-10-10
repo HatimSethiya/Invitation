@@ -20,7 +20,8 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
 }
 
 .invitation-revealed {
-  overflow: auto;
+  /* Let the document own vertical scrolling; avoid a nested page scrollbar. */
+  overflow: visible;
   min-height: 100vh;
 }
 
