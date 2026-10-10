@@ -53,6 +53,7 @@ function PublicInvitation() {
   const [invitation, setInvitation] = useState(null);
   const [error, setError] = useState("");
   const [isUnboxed, setIsUnboxed] = useState(false);
+  const [isHandoffStarted, setIsHandoffStarted] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -121,6 +122,7 @@ function PublicInvitation() {
         {!isUnboxed && (
           <EnvelopeReveal
             invitation={invitation}
+            onHandoffStart={() => setIsHandoffStarted(true)}
             onOpened={() => setIsUnboxed(true)}
           />
         )}
@@ -130,8 +132,13 @@ function PublicInvitation() {
       <motion.div
         className="invitation-body"
         initial={{ opacity: 0 }}
-        animate={{ opacity: isUnboxed ? 1 : 0 }}
-        transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+        animate={{ opacity: isHandoffStarted || isUnboxed ? 1 : 0 }}
+        transition={{
+          opacity: {
+            duration: 1.15,
+            ease: [0.22, 1, 0.36, 1],
+          },
+        }}
       >
         {/* Hero Section */}
         <motion.section
