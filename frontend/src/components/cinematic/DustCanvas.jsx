@@ -128,13 +128,16 @@ function DustCanvas({ isDissolving, cardBoundsRef }) {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d", { alpha: true });
+    if (!ctx) return;
 
     let lastTime = performance.now();
 
     const handleResize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
+      // Limit mobile backing-store resolution to reduce GPU fill cost.
+      const maxDpr = window.innerWidth < 600 ? 1.5 : 2;
+      const dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
+      canvas.width = Math.round(window.innerWidth * dpr);
+      canvas.height = Math.round(window.innerHeight * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
@@ -154,8 +157,10 @@ function DustCanvas({ isDissolving, cardBoundsRef }) {
       const ambient = ambientParticlesRef.current;
       for (let i = 0; i < ambient.length; i++) {
         const p = ambient[i];
-        p.x += p.vx;
-        p.y += p.vy;
+        // Keep ambient drift consistent across different frame rates.
+        const frameScale = dt * 60;
+        p.x += p.vx * frameScale;
+        p.y += p.vy * frameScale;
 
         // Wrap around viewport edges
         if (p.y < -10) p.y = height + 10;
@@ -214,15 +219,40 @@ function DustCanvas({ isDissolving, cardBoundsRef }) {
         }
       }
 
-      animFrameRef.current = requestAnimationFrame(render);
+      if (!document.hidden) {
+        animFrameRef.current = requestAnimationFrame(render);
+      } else {
+        animFrameRef.current = null;
+      }
+    };
+
+    const startRendering = () => {
+      if (animFrameRef.current === null && !document.hidden) {
+        lastTime = performance.now();
+        animFrameRef.current = requestAnimationFrame(render);
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        if (animFrameRef.current !== null) {
+          cancelAnimationFrame(animFrameRef.current);
+          animFrameRef.current = null;
+        }
+      } else {
+        startRendering();
+      }
     };
 
     animFrameRef.current = requestAnimationFrame(render);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      if (animFrameRef.current) {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      if (animFrameRef.current !== null) {
         cancelAnimationFrame(animFrameRef.current);
+        animFrameRef.current = null;
       }
     };
   }, []);
