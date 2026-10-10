@@ -75,27 +75,23 @@ function EnvelopeReveal({ invitation, onHandoffStart, onOpened }) {
       setIsCurtainsOpening(true);
     }, 850);
 
-    // Step 4: Build the warm center light while the curtains continue their full travel.
+    // Open a dimensional light portal while the card dust and curtains are
+    // still in motion. The page starts revealing underneath this portal.
     addTimer(() => {
       setIsRevealingLight(true);
-    }, 1900);
-
-    // Start the page reveal as the stationery finishes dissolving, not after
-    // the stage has become empty. The golden bloom bridges both scenes.
-    addTimer(() => {
       setIsHandoffTransitioning(true);
       if (onHandoffStart) onHandoffStart();
-    }, 2050);
+    }, 1750);
 
-    // Fade the stage while its bloom and the invitation hero overlap underneath.
+    // Expand the portal into the page; keep both layers overlapping.
     addTimer(() => {
       setIsDissolvingOut(true);
-    }, 2550);
+    }, 2850);
 
-    // Keep the overlay mounted until the crossfade has fully resolved.
+    // Remove the opening scene only after the layered transition resolves.
     addTimer(() => {
       if (onOpened) onOpened();
-    }, 3700);
+    }, 3900);
   }, [addTimer, onHandoffStart, onOpened]);
 
   return (
@@ -110,6 +106,9 @@ function EnvelopeReveal({ invitation, onHandoffStart, onOpened }) {
       {/* Warm Ambient Theatrical Lighting */}
       <div className="stage-theatrical-glow" aria-hidden="true" />
       <div className="stage-vignette-frame" aria-hidden="true" />
+      <div className="stage-portal-aura" aria-hidden="true" />
+      <div className="stage-portal-rings" aria-hidden="true" />
+      <div className="stage-light-streaks" aria-hidden="true" />
 
       {/* Layer 1: Realistic Heavy Velvet Theatre Curtains */}
       <VelvetCurtains isOpening={isCurtainsOpening} />

@@ -989,3 +989,188 @@
   }
 }
 
+/* --------------------------------------------------------------------------
+   IMMERSIVE PORTAL HANDOFF
+   Dark wine atmosphere fractures into a luminous, dimensional invitation.
+   Only transform/opacity animate on the large portal layers where possible.
+   -------------------------------------------------------------------------- */
+.stage-portal-aura,
+.stage-portal-rings,
+.stage-light-streaks {
+  position: absolute;
+  inset: -12%;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.stage-portal-aura {
+  z-index: 28;
+  background:
+    radial-gradient(ellipse at 50% 50%,
+      rgba(255, 255, 245, 0.98) 0%,
+      rgba(255, 231, 187, 0.86) 8%,
+      rgba(236, 173, 120, 0.42) 21%,
+      rgba(151, 49, 87, 0.2) 39%,
+      transparent 63%);
+  transform: scale(0.18);
+  filter: blur(2px);
+}
+
+.stage-portal-rings {
+  z-index: 29;
+  inset: -25%;
+  background:
+    radial-gradient(ellipse at center,
+      transparent 0 26%,
+      rgba(255, 239, 201, 0.72) 26.2%,
+      rgba(255, 239, 201, 0.04) 26.7%,
+      transparent 27.2% 38%,
+      rgba(255, 219, 160, 0.38) 38.2%,
+      rgba(255, 219, 160, 0.02) 38.8%,
+      transparent 39.2% 51%,
+      rgba(255, 243, 215, 0.2) 51.2%,
+      transparent 51.8%);
+  transform: scale(0.36) rotateX(62deg) rotateZ(-12deg);
+  mix-blend-mode: screen;
+}
+
+.stage-light-streaks {
+  z-index: 30;
+  inset: -20%;
+  background:
+    linear-gradient(112deg, transparent 35%, rgba(255, 246, 220, 0.0) 43%,
+      rgba(255, 246, 220, 0.58) 49.8%, rgba(255, 246, 220, 0.0) 51%,
+      transparent 58%),
+    linear-gradient(72deg, transparent 42%, rgba(255, 225, 172, 0.0) 47%,
+      rgba(255, 225, 172, 0.3) 49.8%, rgba(255, 225, 172, 0.0) 51%,
+      transparent 56%);
+  transform: translate3d(-8%, 2%, 0) scale(1.12);
+  mix-blend-mode: screen;
+}
+
+.cinematic-stage-overlay.stage-handoff-started .stage-portal-aura {
+  animation: portalAuraExpand 1.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.cinematic-stage-overlay.stage-handoff-started .stage-portal-rings {
+  animation: portalRingsOpen 1.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.cinematic-stage-overlay.stage-handoff-started .stage-light-streaks {
+  animation: portalStreakSweep 1.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes portalAuraExpand {
+  0% { opacity: 0; transform: scale(0.18); }
+  24% { opacity: 1; }
+  58% { opacity: 0.9; transform: scale(0.92); }
+  100% { opacity: 0; transform: scale(1.5); }
+}
+
+@keyframes portalRingsOpen {
+  0% { opacity: 0; transform: scale(0.36) rotateX(62deg) rotateZ(-12deg); }
+  26% { opacity: 0.82; }
+  100% { opacity: 0; transform: scale(1.35) rotateX(62deg) rotateZ(8deg); }
+}
+
+@keyframes portalStreakSweep {
+  0% { opacity: 0; transform: translate3d(-8%, 2%, 0) scale(1.12); }
+  22% { opacity: 0.9; }
+  100% { opacity: 0; transform: translate3d(8%, -1%, 0) scale(1.04); }
+}
+
+/* The public page is revealed through the same portal, not a separate fade. */
+.invitation-body.invitation-handoff-active .public-hero {
+  animation: invitationPortalReveal 1.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: clip-path, filter;
+}
+
+.invitation-body.invitation-handoff-active .public-hero .eyebrow,
+.invitation-body.invitation-handoff-active .public-hero .hero-script,
+.invitation-body.invitation-handoff-active .public-hero .public-date {
+  animation: heroDetailsResolve 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.55s both;
+}
+
+.invitation-body.invitation-handoff-active .public-hero h1 {
+  animation: heroNameResolve 1.25s cubic-bezier(0.16, 1, 0.3, 1) 0.28s both;
+}
+
+.invitation-body.invitation-handoff-active .couple-photo {
+  animation: heroPhotoResolve 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.32s both;
+}
+
+@keyframes invitationPortalReveal {
+  0% {
+    clip-path: ellipse(0% 0% at 50% 48%);
+    filter: brightness(1.7) saturate(1.2);
+  }
+  45% {
+    clip-path: ellipse(58% 52% at 50% 48%);
+    filter: brightness(1.22) saturate(1.1);
+  }
+  100% {
+    clip-path: ellipse(150% 150% at 50% 48%);
+    filter: brightness(1) saturate(1);
+  }
+}
+
+@keyframes heroNameResolve {
+  0% { opacity: 0; filter: blur(16px); transform: translateY(18px) scale(1.035); }
+  65% { opacity: 1; filter: blur(0); transform: translateY(-2px) scale(0.995); }
+  100% { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); }
+}
+
+@keyframes heroDetailsResolve {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes heroPhotoResolve {
+  0% {
+    opacity: 0;
+    filter: blur(18px) brightness(1.45);
+    clip-path: inset(18% 14% 18% 14% round 50%);
+    transform: scale(1.06);
+  }
+  70% {
+    opacity: 1;
+    filter: blur(0) brightness(1.04);
+    clip-path: inset(0 round 180px 180px 28px 28px);
+    transform: scale(0.995);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0) brightness(1);
+    clip-path: inset(0 round 180px 180px 28px 28px);
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 600px) {
+  .stage-portal-rings {
+    inset: -12%;
+  }
+
+  .stage-portal-aura {
+    filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-stage-overlay.stage-handoff-started .stage-portal-aura,
+  .cinematic-stage-overlay.stage-handoff-started .stage-portal-rings,
+  .cinematic-stage-overlay.stage-handoff-started .stage-light-streaks,
+  .invitation-body.invitation-handoff-active .public-hero,
+  .invitation-body.invitation-handoff-active .public-hero h1,
+  .invitation-body.invitation-handoff-active .public-hero .eyebrow,
+  .invitation-body.invitation-handoff-active .public-hero .hero-script,
+  .invitation-body.invitation-handoff-active .public-hero .public-date,
+  .invitation-body.invitation-handoff-active .couple-photo {
+    animation: none !important;
+    clip-path: none;
+    filter: none;
+    transform: none;
+    opacity: 1;
+  }
+}
+
