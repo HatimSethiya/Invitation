@@ -1,28 +1,23 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import VelvetCurtains from "./cinematic/VelvetCurtains";
-import CardStationery from "./cinematic/CardStationery";
-import DustCanvas from "./cinematic/DustCanvas";
 import "./cinematic/CinematicOpening.css";
 
-/**
- * EnvelopeReveal: Ultra-luxury, cinematic wedding invitation reveal coordinator.
- * Orchestrates a 4-second continuous physical sequence:
- * 1. Dark, breathing theatrical stage with heavy velvet curtains & ivory stationery card.
- * 2. Delicate tactile anticipation & diagonal light sweep on tap.
- * 3. Progressive structural card dissolution into 60 FPS luminous wedding dust particles.
- * 4. Realistic velvet curtain bunching with curved wavy inner drape profiles.
- * 5. Warm golden ambient stage glow flooding the center.
- * 6. Smooth, elegant handoff to the public invitation hero content.
- */
-function EnvelopeReveal({ invitation, onHandoffStart, onOpened }) {
-  const [isAnticipating, setIsAnticipating] = useState(false);
-  const [isDissolving, setIsDissolving] = useState(false);
-  const [isCurtainsOpening, setIsCurtainsOpening] = useState(false);
-  const [isRevealingLight, setIsRevealingLight] = useState(false);
-  const [isDissolvingOut, setIsDissolvingOut] = useState(false);
-  const [isHandoffTransitioning, setIsHandoffTransitioning] = useState(false);
+function formatDate(value) {
+  if (!value) return "";
+  const date = new Date(value);
+  return Number.isNaN(date.getTime())
+    ? value
+    : date.toLocaleDateString(undefined, {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      });
+}
 
-  const cardRef = useRef(null);
+function EnvelopeReveal({ invitation, onHandoffStart, onOpened }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isComplete, setIsComplete] = useState(false);
+
   const hasTriggeredRef = useRef(false);
   const timersRef = useRef([]);
 
@@ -32,7 +27,6 @@ function EnvelopeReveal({ invitation, onHandoffStart, onOpened }) {
     return id;
   }, []);
 
-  // Cleanup all timers on unmount
   useEffect(() => {
     return () => {
       timersRef.current.forEach((id) => clearTimeout(id));
@@ -40,90 +34,104 @@ function EnvelopeReveal({ invitation, onHandoffStart, onOpened }) {
     };
   }, []);
 
-  // Main Orchestrated Cinematic Sequence
+  const bride =
+    invitation?.couple?.partner1?.name ||
+    invitation?.couple?.brideName ||
+    "Bride";
+
+  const groom =
+    invitation?.couple?.partner2?.name ||
+    invitation?.couple?.groomName ||
+    "Groom";
+
+  const pairInitials = `${(bride?.[0] || "B").toUpperCase()}${(groom?.[0] || "G").toUpperCase()}`;
+
   const triggerSequence = useCallback(() => {
     if (hasTriggeredRef.current) return;
     hasTriggeredRef.current = true;
 
-    // Check for user-preferred reduced motion
     const prefersReducedMotion =
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+    setIsOpen(true);
+
     if (prefersReducedMotion) {
+      setIsTransitioning(true);
+      setIsComplete(true);
       if (onHandoffStart) onHandoffStart();
-      setIsDissolving(true);
-      setIsCurtainsOpening(true);
-      setIsHandoffTransitioning(true);
-      setIsDissolvingOut(true);
       addTimer(() => {
         if (onOpened) onOpened();
-      }, 500);
+      }, 250);
       return;
     }
 
-    // Step 1: Hold a deliberate anticipation beat before the card reacts.
-    setIsAnticipating(true);
-
-    // Step 2: Let the light sweep finish before the stationery begins dissolving.
     addTimer(() => {
-      setIsDissolving(true);
-    }, 650);
+      setIsTransitioning(true);
+    }, 320);
 
-    // Step 3: Start the curtain reveal after the card has visibly begun to dissolve.
     addTimer(() => {
-      setIsCurtainsOpening(true);
-    }, 850);
-
-    // Step 4: Build the warm center light while the curtains continue their full travel.
-    addTimer(() => {
-      setIsRevealingLight(true);
-    }, 1900);
-
-    // Start the page reveal as the stationery finishes dissolving, not after
-    // the stage has become empty. The golden bloom bridges both scenes.
-    addTimer(() => {
-      setIsHandoffTransitioning(true);
       if (onHandoffStart) onHandoffStart();
-    }, 2050);
+    }, 1150);
 
-    // Fade the stage while its bloom and the invitation hero overlap underneath.
     addTimer(() => {
-      setIsDissolvingOut(true);
-    }, 2550);
-
-    // Keep the overlay mounted until the crossfade has fully resolved.
-    addTimer(() => {
+      setIsComplete(true);
       if (onOpened) onOpened();
-    }, 3700);
+    }, 1900);
   }, [addTimer, onHandoffStart, onOpened]);
 
   return (
     <div
-      className={`cinematic-stage-overlay ${
-        isDissolvingOut ? "stage-dissolving-out" : ""
-      } ${isRevealingLight ? "stage-revealing-light" : ""} ${
-        isHandoffTransitioning ? "stage-handoff-started" : ""
-      }`}
+      className={`cinematic-stage-overlay ${isOpen ? "is-open" : ""} ${
+        isTransitioning ? "is-transitioning" : ""
+      } ${isComplete ? "is-complete" : ""}`}
       aria-label="Wedding invitation cinematic opening"
     >
-      {/* Warm Ambient Theatrical Lighting */}
-      <div className="stage-theatrical-glow" aria-hidden="true" />
-      <div className="stage-vignette-frame" aria-hidden="true" />
+      <div className="stage-ambient" aria-hidden="true" />
+      <div className="stage-lustre" aria-hidden="true" />
+      <div className="stage-sheen" aria-hidden="true" />
 
-      {/* Layer 1: Realistic Heavy Velvet Theatre Curtains */}
-      <VelvetCurtains isOpening={isCurtainsOpening} />
+      <div className="reveal-envelope-shell" aria-hidden="true">
+        <div className="envelope-backdrop" />
+        <div className="envelope-flap envelope-flap-left" />
+        <div className="envelope-flap envelope-flap-right" />
+        <div className="envelope-crease" />
+        <div className="wax-seal">{pairInitials}</div>
 
-      {/* Layer 2: 60 FPS HTML5 Canvas Luminous Wedding Dust Engine */}
-      <DustCanvas isDissolving={isDissolving} cardBoundsRef={cardRef} />
+        <div className="reveal-card">
+          <div className="reveal-card-inner">
+            <span className="reveal-kicker">with love</span>
+            <div className="reveal-monogram">{pairInitials}</div>
+            <h1>
+              {bride}
+              <span>&amp;</span>
+              {groom}
+            </h1>
+            <p className="reveal-date">{formatDate(invitation?.weddingDate)}</p>
+            <p className="reveal-venue">
+              {invitation?.venue?.name || "Join us for a celebration"}
+            </p>
+          </div>
+        </div>
+      </div>
 
-      {/* Layer 3: Physical Ivory Cotton Rag Stationery with Progressive Structural Dissolution */}
-      <CardStationery
-        invitation={invitation}
-        isAnticipating={isAnticipating}
-        isDissolving={isDissolving}
-        onCardTap={triggerSequence}
-        cardRef={cardRef}
+      <div className="reveal-prompt" aria-live="polite">
+        <span className="prompt-pill">
+          {isOpen ? "Opening the invitation…" : "Tap to open"}
+        </span>
+      </div>
+
+      <button
+        type="button"
+        className="reveal-interaction-button"
+        onClick={triggerSequence}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            triggerSequence();
+          }
+        }}
+        aria-label="Open the wedding invitation"
       />
     </div>
   );
