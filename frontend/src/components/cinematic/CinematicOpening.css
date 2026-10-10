@@ -760,6 +760,12 @@
   animation: promptFadeBreath 2.8s ease-in-out infinite;
 }
 
+.stationery-card-container.is-anticipating .card-open-prompt,
+.stationery-card-container.is-dissolving .card-open-prompt {
+  animation: none;
+  opacity: 0;
+}
+
 @keyframes stageGlowBreath {
   0%, 100% {
     opacity: 0.72;
