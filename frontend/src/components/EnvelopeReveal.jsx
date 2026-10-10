@@ -59,45 +59,34 @@ function EnvelopeReveal({ invitation, onOpened }) {
       return;
     }
 
-    // Step 1 (0.0s relative / 0.6s mark): Anticipation & delicate light sweep across card
+    // Step 1: Hold a deliberate anticipation beat before the card reacts.
     setIsAnticipating(true);
 
-    // Step 2 (0.35s relative / 0.95s mark): Progressive structural dissolution & canvas wedding dust
+    // Step 2: Let the light sweep finish before the stationery begins dissolving.
     addTimer(() => {
       setIsDissolving(true);
-    }, 350);
+    }, 650);
 
-    // Step 3 (0.55s relative / 1.15s mark): Heavy velvet curtains pull sideways with fold compression
+    // Step 3: Start the curtain reveal after the card has visibly begun to dissolve.
     addTimer(() => {
       setIsCurtainsOpening(true);
-    }, 550);
+    }, 850);
 
-    // Step 4 (1.75s relative / 2.35s mark): Warm golden stage aura expands in the center
+    // Step 4: Build the warm center light while the curtains continue their full travel.
     addTimer(() => {
       setIsRevealingLight(true);
-    }, 1750);
+    }, 1900);
 
-    // Step 5 (2.50s relative / 3.10s mark): Theatrical stage overlay dissolves into public page
+    // Step 5: Keep the stage present until the curtain movement has nearly completed.
     addTimer(() => {
       setIsDissolvingOut(true);
-    }, 2500);
+    }, 3250);
 
-    // Step 6 (3.30s relative / 3.90s mark): Clean handoff to public invitation hero content
+    // Step 6: Hand off only after the cinematic stage has had time to resolve.
     addTimer(() => {
       if (onOpened) onOpened();
-    }, 3300);
+    }, 4100);
   }, [addTimer, onOpened]);
-
-  // Gentle auto-trigger after 3.5s of breathing stage if user hasn't tapped yet
-  useEffect(() => {
-    const autoTimer = setTimeout(() => {
-      if (!hasTriggeredRef.current) {
-        triggerSequence();
-      }
-    }, 3500);
-
-    return () => clearTimeout(autoTimer);
-  }, [triggerSequence]);
 
   return (
     <div
