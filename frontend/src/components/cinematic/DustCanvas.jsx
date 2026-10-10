@@ -144,7 +144,20 @@ function DustCanvas({ isDissolving, cardBoundsRef }) {
     handleResize();
     window.addEventListener("resize", handleResize);
 
+    let lastRenderTime = 0;
+
     const render = (currentTime) => {
+      // Keep idle ambience light; restore full refresh during the active reveal.
+      const idleFrameInterval = isDissolving ? 0 : 1000 / 30;
+      if (
+        idleFrameInterval > 0 &&
+        currentTime - lastRenderTime < idleFrameInterval
+      ) {
+        animFrameRef.current = requestAnimationFrame(render);
+        return;
+      }
+
+      lastRenderTime = currentTime;
       const dt = Math.min((currentTime - lastTime) / 1000, 0.05); // cap delta time
       lastTime = currentTime;
 
@@ -255,7 +268,7 @@ function DustCanvas({ isDissolving, cardBoundsRef }) {
         animFrameRef.current = null;
       }
     };
-  }, []);
+  }, [isDissolving]);
 
   return (
     <canvas
