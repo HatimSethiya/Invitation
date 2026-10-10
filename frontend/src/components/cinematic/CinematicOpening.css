@@ -742,3 +742,56 @@
     opacity: 0;
   }
 }
+
+/* ==========================================================================
+   IDLE CINEMATIC PRESENCE
+   Keep the invitation feeling alive while waiting for the guest's tap.
+   These idle effects stop as soon as the opening sequence begins.
+   ========================================================================== */
+.cinematic-stage-overlay:not(.stage-dissolving-out) .stage-theatrical-glow {
+  animation: stageGlowBreath 6.5s ease-in-out infinite;
+}
+
+.stationery-card-container:not(.is-anticipating):not(.is-dissolving) .stationery-card {
+  animation: stationeryIdleFloat 5.8s ease-in-out infinite;
+}
+
+.card-open-prompt {
+  animation: promptFadeBreath 2.8s ease-in-out infinite;
+}
+
+@keyframes stageGlowBreath {
+  0%, 100% {
+    opacity: 0.72;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes stationeryIdleFloat {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -5px, 0);
+  }
+}
+
+@keyframes promptFadeBreath {
+  0%, 100% {
+    opacity: 0.68;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-stage-overlay:not(.stage-dissolving-out) .stage-theatrical-glow,
+  .stationery-card-container:not(.is-anticipating):not(.is-dissolving) .stationery-card,
+  .card-open-prompt {
+    animation: none !important;
+  }
+}
+
