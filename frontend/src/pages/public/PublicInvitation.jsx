@@ -1,150 +1,91 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
+import { motion, AnimatePresence } from "motion/react";
 import api from "../../services/api";
-import "./cinematic-opening.css";
-
-const themeCopy = {
-  royalRose: { accent: "A", line: "An evening woven with love" },
-  emeraldGarden: { accent: "E", line: "Where two stories become one" },
-  ivoryHeritage: { accent: "I", line: "A timeless beginning together" },
-};
+import EnvelopeReveal from "../../components/EnvelopeReveal";
 
 function formatDate(value, options = { dateStyle: "long" }) {
   if (!value) return "";
   const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? value : date.toLocaleDateString(undefined, options);
+  return Number.isNaN(date.getTime())
+    ? value
+    : date.toLocaleDateString(undefined, options);
 }
 
-function InvitationOpening({ invitation, started, onOpen }) {
-  const bride = invitation.couple?.brideName || "Bride";
-  const groom = invitation.couple?.groomName || "Groom";
-  const copy = themeCopy[invitation.theme] || themeCopy.royalRose;
-  const particles = Array.from({ length: 22 });
+// Motion stagger variants for luxurious fluid scroll reveals
+const sectionVariants = {
+  hidden: { opacity: 0, y: 35 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.85,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+};
 
-  return (
-    <section
-      className={`invitation-opening ${started ? "opening-started" : ""}`}
-      aria-label="Wedding invitation opening"
-    >
-      <div className="opening-atmosphere" />
-      <div className="opening-vignette" />
+const staggerContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.08,
+    },
+  },
+};
 
-      <div className="wedding-lights" aria-hidden="true"><span /><span /><span /><span /><span /></div>
-      <div className="floral-frame floral-left" aria-hidden="true">❧</div>
-      <div className="floral-frame floral-right" aria-hidden="true">❧</div>
-      <div className="opening-doors" aria-hidden="true">
-        <div className="door-panel door-left">
-          <span className="door-vine vine-top">❧</span>
-          <span className="door-vine vine-bottom">❧</span>
-          <span className="door-light-line" />
-        </div>
-        <div className="door-panel door-right">
-          <span className="door-vine vine-top">❧</span>
-          <span className="door-vine vine-bottom">❧</span>
-          <span className="door-light-line" />
-        </div>
-        <div className="door-seam" />
-      </div>
-
-      <div className="opening-card-shadow" aria-hidden="true" />
-
-      <button
-        className="wedding-card"
-        onClick={onOpen}
-        type="button"
-        aria-label="Open wedding invitation"
-        disabled={started}
-      >
-        <div className="card-paper">
-          <span className="card-corner corner-tl" />
-          <span className="card-corner corner-tr" />
-          <span className="card-corner corner-bl" />
-          <span className="card-corner corner-br" />
-
-          <div className="card-inner-border" />
-          <div className="card-ornament ornament-top">❧</div>
-          <div className="card-ornament ornament-bottom">❧</div>
-
-          <div className="card-seal" aria-hidden="true">
-            <span>{copy.accent}</span>
-          </div>
-
-          <p className="card-small">A WEDDING INVITATION</p>
-
-          <h1>
-            <span>{bride}</span>
-            <i>&amp;</i>
-            <span>{groom}</span>
-          </h1>
-
-          <div className="card-divider"><b>✦</b></div>
-          <p className="card-date">
-            {formatDate(invitation.weddingDate, {
-              day: "numeric",
-              month: "long",
-              year: "numeric",
-            })}
-          </p>
-
-          <div className="card-open-prompt">
-            <span className="prompt-ring"><b>↗</b></span>
-            <span>TAP TO OPEN</span>
-          </div>
-        </div>
-      </button>
-
-      <div className="opening-bottom-curtain" aria-hidden="true">
-        <span className="curtain-fold fold-one" />
-        <span className="curtain-fold fold-two" />
-        <span className="curtain-fold fold-three" />
-      </div>
-
-      <div className="opening-particles" aria-hidden="true">
-        {particles.map((_, index) => (
-          <i key={index} className={`particle particle-${index + 1}`}>✦</i>
-        ))}
-      </div>
-
-      <div className="opening-flare" aria-hidden="true" />
-      <div className="golden-sweep" aria-hidden="true" />
-      <div className="opening-petals" aria-hidden="true">{Array.from({ length: 10 }).map((_, index) => <i key={index} className={`petal petal-${index + 1}`}>❧</i>)}</div>
-      <div className="opening-caption">Tap the invitation to begin</div>
-    </section>
-  );
-}
+const cardItemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.65,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+};
 
 function PublicInvitation() {
   const { slug } = useParams();
   const [invitation, setInvitation] = useState(null);
   const [error, setError] = useState("");
-  const [openingStarted, setOpeningStarted] = useState(false);
-  const [opened, setOpened] = useState(false);
+  const [isUnboxed, setIsUnboxed] = useState(false);
 
   useEffect(() => {
     let active = true;
 
-    api.get(`/invitations/public/${slug}`)
+    api
+      .get(`/invitations/public/${slug}`)
       .then((response) => {
         if (active) setInvitation(response.data.invitation);
       })
       .catch((err) => {
-        if (active) setError(err.response?.data?.message || "Invitation not found.");
+        if (active)
+          setError(err.response?.data?.message || "Invitation not found.");
       });
 
-    return () => { active = false; };
+    return () => {
+      active = false;
+    };
   }, [slug]);
-
-  useEffect(() => {
-    if (!openingStarted) return;
-
-    const timer = window.setTimeout(() => setOpened(true), 3000);
-    return () => window.clearTimeout(timer);
-  }, [openingStarted]);
 
   const themeClass = useMemo(
     () => `theme-${invitation?.theme || "royalRose"}`,
     [invitation?.theme]
   );
+
+  const bride =
+    invitation?.couple?.partner1?.name ||
+    invitation?.couple?.brideName ||
+    "Bride";
+
+  const groom =
+    invitation?.couple?.partner2?.name ||
+    invitation?.couple?.groomName ||
+    "Groom";
 
   if (error) {
     return (
@@ -163,95 +104,253 @@ function PublicInvitation() {
       <main className="public-page">
         <section className="public-card">
           <div className="loading-orb" />
-          <p>Opening invitation...</p>
+          <p>Preparing invitation...</p>
         </section>
       </main>
     );
   }
 
   return (
-    <main className={`public-page ${themeClass} ${opened ? "invitation-revealed" : "invitation-locked"}`}>
-      {!opened && (
-        <InvitationOpening
-          invitation={invitation}
-          started={openingStarted}
-          onOpen={() => setOpeningStarted(true)}
-        />
-      )}
+    <main
+      className={`public-page ${themeClass} ${
+        isUnboxed ? "invitation-revealed" : "invitation-locked"
+      }`}
+    >
+      {/* 3D Envelope Unboxing Overlay with GSAP & Vanilla-Tilt */}
+      <AnimatePresence>
+        {!isUnboxed && (
+          <EnvelopeReveal
+            invitation={invitation}
+            onOpened={() => setIsUnboxed(true)}
+          />
+        )}
+      </AnimatePresence>
 
-      <div className="invitation-body">
-        <section className="public-hero reveal-up">
+      {/* Main Guest-Facing Invitation Body Animated via Motion */}
+      <motion.div
+        className="invitation-body"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isUnboxed ? 1 : 0 }}
+        transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+      >
+        {/* Hero Section */}
+        <motion.section
+          className="public-hero"
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-40px" }}
+        >
           <span className="eyebrow">You are invited</span>
           <p className="hero-script">Together with their families</p>
-          <h1>{invitation.couple?.brideName || "Bride"} <span>&amp;</span> {invitation.couple?.groomName || "Groom"}</h1>
+          <h1>
+            {bride} <span>&amp;</span> {groom}
+          </h1>
           <p className="public-date">{formatDate(invitation.weddingDate)}</p>
-          {invitation.couple?.couplePhoto && <img className="couple-photo" src={invitation.couple.couplePhoto} alt="The couple" />}
-        </section>
+          {invitation.couple?.couplePhoto && (
+            <motion.img
+              className="couple-photo"
+              src={invitation.couple.couplePhoto}
+              alt={`${bride} and ${groom}`}
+              initial={{ scale: 0.94, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+              viewport={{ once: true }}
+            />
+          )}
+        </motion.section>
 
+        {/* Love Story Section */}
         {invitation.story?.length > 0 && (
-          <section className="public-section reveal-up">
+          <motion.section
+            className="public-section"
+            variants={sectionVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-40px" }}
+          >
             <span className="eyebrow">Our Story</span>
-            {invitation.story.map((item) => <article key={item._id}><h2>{item.title}</h2><p>{item.content}</p></article>)}
-          </section>
+            {invitation.story.map((item) => (
+              <motion.article
+                key={item._id || item.title}
+                variants={cardItemVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
+                <h2>{item.title}</h2>
+                <p>{item.content}</p>
+                {item.image && (
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="story-image"
+                    style={{
+                      maxWidth: "100%",
+                      borderRadius: "16px",
+                      margin: "16px 0",
+                    }}
+                  />
+                )}
+              </motion.article>
+            ))}
+          </motion.section>
         )}
 
+        {/* Ceremonies & Events Section */}
         {invitation.events?.length > 0 && (
-          <section className="public-section reveal-up">
+          <motion.section
+            className="public-section"
+            variants={sectionVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-40px" }}
+          >
             <span className="eyebrow">The Celebrations</span>
-            {invitation.events.map((event) => (
-              <article className="event-card" key={event._id}>
-                <span className="event-dot" />
-                <h2>{event.title || event.type}</h2>
-                <p>{event.date && formatDate(event.date)}{event.time ? ` · ${event.time}` : ""}</p>
-                <strong>{event.venue}</strong>
-                <p>{event.address}</p>
-                {event.mapUrl && <a href={event.mapUrl} target="_blank" rel="noreferrer">Open Maps ↗</a>}
-              </article>
-            ))}
-          </section>
-        )}
-
-        {invitation.family?.length > 0 && (
-          <section className="public-section reveal-up">
-            <span className="eyebrow">With Blessings</span>
-            {invitation.family.map((member) => (
-              <div className="family-line" key={member._id}>
-                <strong>{member.name}</strong>
-                <span>{member.relation}</span>
-              </div>
-            ))}
-          </section>
-        )}
-
-        {invitation.gallery?.length > 0 && (
-          <section className="public-section reveal-up">
-            <span className="eyebrow">Our Memories</span>
-            <div className="public-gallery">
-              {invitation.gallery.map((image) => (
-                <figure key={image._id}>
-                  <img src={image.imageUrl} alt={image.caption || "Wedding memory"} />
-                  <figcaption>{image.caption}</figcaption>
-                </figure>
+            <motion.div
+              variants={staggerContainerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-30px" }}
+            >
+              {invitation.events.map((event) => (
+                <motion.article
+                  className="event-card"
+                  key={event._id || event.title}
+                  variants={cardItemVariants}
+                >
+                  <span className="event-dot" />
+                  <h2>{event.title || event.type}</h2>
+                  <p>
+                    {event.date && formatDate(event.date)}
+                    {event.time ? ` · ${event.time}` : ""}
+                  </p>
+                  <strong>{event.venue}</strong>
+                  {event.address && <p>{event.address}</p>}
+                  {event.description && <p>{event.description}</p>}
+                  {event.mapUrl && (
+                    <a
+                      href={event.mapUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="event-map-link"
+                    >
+                      Open Maps ↗
+                    </a>
+                  )}
+                </motion.article>
               ))}
-            </div>
-          </section>
+            </motion.div>
+          </motion.section>
         )}
 
+        {/* Family Blessings Section */}
+        {invitation.family?.length > 0 && (
+          <motion.section
+            className="public-section"
+            variants={sectionVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-40px" }}
+          >
+            <span className="eyebrow">With Blessings</span>
+            <motion.div
+              variants={staggerContainerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              {invitation.family.map((member) => (
+                <motion.div
+                  className="family-line"
+                  key={member._id || member.name}
+                  variants={cardItemVariants}
+                >
+                  <strong>{member.name}</strong>
+                  <span>{member.relation}</span>
+                </motion.div>
+              ))}
+            </motion.div>
+          </motion.section>
+        )}
+
+        {/* Photo Gallery Section */}
+        {invitation.gallery?.length > 0 && (
+          <motion.section
+            className="public-section"
+            variants={sectionVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-40px" }}
+          >
+            <span className="eyebrow">Our Memories</span>
+            <motion.div
+              className="public-gallery"
+              variants={staggerContainerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-20px" }}
+            >
+              {invitation.gallery.map((image) => (
+                <motion.figure
+                  key={image._id || image.imageUrl}
+                  variants={cardItemVariants}
+                >
+                  <img
+                    src={image.imageUrl}
+                    alt={image.caption || "Wedding memory"}
+                    loading="lazy"
+                  />
+                  {image.caption && <figcaption>{image.caption}</figcaption>}
+                </motion.figure>
+              ))}
+            </motion.div>
+          </motion.section>
+        )}
+
+        {/* Main Venue Section */}
         {invitation.venue?.name && (
-          <section className="public-section reveal-up">
+          <motion.section
+            className="public-section"
+            variants={sectionVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-40px" }}
+          >
             <span className="eyebrow">Venue</span>
             <h2>{invitation.venue.name}</h2>
-            <p>{invitation.venue.address}, {invitation.venue.city}</p>
-            {invitation.venue.mapUrl && <a href={invitation.venue.mapUrl} target="_blank" rel="noreferrer">Open Venue Map ↗</a>}
-          </section>
+            <p>
+              {invitation.venue.address}
+              {invitation.venue.city ? `, ${invitation.venue.city}` : ""}
+            </p>
+            {invitation.venue.mapUrl && (
+              <a
+                href={invitation.venue.mapUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="venue-map-link"
+              >
+                Open Venue Map ↗
+              </a>
+            )}
+          </motion.section>
         )}
 
-        <footer className="invitation-closing reveal-up">
+        {/* Closing Footer */}
+        <motion.footer
+          className="invitation-closing"
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
           <span className="closing-mark">♡</span>
           <p>With love,</p>
-          <strong>{invitation.couple?.brideName || "Bride"} &amp; {invitation.couple?.groomName || "Groom"}</strong>
-        </footer>
-      </div>
+          <strong>
+            {bride} &amp; {groom}
+          </strong>
+        </motion.footer>
+      </motion.div>
     </main>
   );
 }

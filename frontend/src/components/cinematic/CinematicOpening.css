@@ -1,0 +1,744 @@
+/* ==========================================================================
+   PREMIUM CINEMATIC WEDDING INVITATION OPENING
+   - Realistic Heavy Velvet Drapery with Curved Wavy Inner Edges
+   - Cotton Rag Ivory Stationery with Embossed Antique Gold Detailing
+   - Subtle Tactile Anticipation & Diagonal Light Sweep
+   - Progressive Edge-and-Surface Structural Dissolution
+   - High-Performance 60 FPS Canvas Luminous Wedding Dust
+   ========================================================================== */
+
+/* Fullscreen Master Stage */
+.cinematic-stage-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #080104;
+  user-select: none;
+  touch-action: none;
+  font-family: Georgia, "Times New Roman", serif;
+  transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity;
+}
+
+.cinematic-stage-overlay.stage-dissolving-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   THEATRICAL STAGE AMBIENCE & LIGHTING
+   -------------------------------------------------------------------------- */
+.stage-theatrical-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    radial-gradient(ellipse at 50% 48%, rgba(225, 185, 120, 0.18) 0%, rgba(130, 20, 55, 0.22) 42%, transparent 72%),
+    radial-gradient(circle at 50% 100%, rgba(70, 10, 32, 0.45) 0%, transparent 60%);
+  transition: opacity 1.8s ease;
+}
+
+.curtains-parting ~ .stage-theatrical-glow,
+.stage-revealing-light .stage-theatrical-glow {
+  opacity: 1;
+  background:
+    radial-gradient(ellipse at 50% 48%, rgba(245, 210, 145, 0.32) 0%, rgba(165, 30, 75, 0.28) 48%, transparent 78%),
+    radial-gradient(circle at 50% 100%, rgba(95, 15, 45, 0.55) 0%, transparent 65%);
+}
+
+.stage-vignette-frame {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 25;
+  background: radial-gradient(ellipse at center, transparent 38%, rgba(6, 1, 3, 0.75) 82%, #050002 100%);
+}
+
+/* Canvas Particle Layer */
+.dust-particle-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 22;
+  pointer-events: none;
+}
+
+
+/* ==========================================================================
+   REALISTIC VELVET THEATRE DRAPERY
+   - 6 Uneven Folds per Side with Deep Valleys & Rich Velvet Nap Sheen
+   - Organic Curved Wavy Leading Edge (No Straight Rectangular Lines)
+   - Non-Linear Bunching & Staggered Cloth Compression Physics
+   ========================================================================== */
+.theatrical-curtains-stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  z-index: 15;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.velvet-curtain {
+  position: absolute;
+  top: -2%;
+  width: 53vw;
+  height: 104%;
+  overflow: visible;
+  will-change: transform;
+}
+
+.curtain-left {
+  left: 0;
+  z-index: 17;
+}
+
+.curtain-right {
+  right: 0;
+  z-index: 16;
+}
+
+/* Deep Fabric Backing Layer */
+.curtain-fabric-base {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #100107 0%, #20040f 50%, #0d0106 100%);
+  transition: transform 1.95s cubic-bezier(0.25, 1, 0.35, 1) 0.30s, opacity 1.95s ease 0.30s;
+  will-change: transform;
+}
+
+/* Individual Vertical Pleats */
+.curtain-pleat {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  transform-origin: center top;
+  will-change: transform;
+  border-radius: 0 0 16px 12px;
+  filter: drop-shadow(4px 0 14px rgba(0, 0, 0, 0.7));
+}
+
+/* Left Curtain Pleat Distribution Across 53vw */
+.curtain-left .pleat-1 { left: 0%;  width: 32%; z-index: 5; }
+.curtain-left .pleat-2 { left: 16%; width: 22%; z-index: 3; }
+.curtain-left .pleat-3 { left: 30%; width: 26%; z-index: 6; }
+.curtain-left .pleat-4 { left: 48%; width: 20%; z-index: 4; }
+.curtain-left .pleat-5 { left: 62%; width: 24%; z-index: 7; }
+.curtain-left .pleat-6 { left: 76%; width: 28%; z-index: 8; } /* Leading Edge */
+
+/* Right Curtain Pleat Distribution (Mirrored) */
+.curtain-right .pleat-1 { right: 0%;  width: 32%; z-index: 5; }
+.curtain-right .pleat-2 { right: 16%; width: 22%; z-index: 3; }
+.curtain-right .pleat-3 { right: 30%; width: 26%; z-index: 6; }
+.curtain-right .pleat-4 { right: 48%; width: 20%; z-index: 4; }
+.curtain-right .pleat-5 { right: 62%; width: 24%; z-index: 7; }
+.curtain-right .pleat-6 { right: 76%; width: 28%; z-index: 8; } /* Leading Edge */
+
+/* Convex Highlight Crests */
+.pleat-crest {
+  background:
+    linear-gradient(180deg, rgba(8, 1, 4, 0.82) 0%, transparent 18%, transparent 78%, rgba(8, 1, 4, 0.9) 100%),
+    linear-gradient(90deg, #18020a 0%, #470821 22%, #7a123a 48%, #9f1c4e 56%, #7a123a 74%, #2c0414 100%);
+  box-shadow:
+    inset 0 0 28px rgba(0, 0, 0, 0.65),
+    inset -14px 0 20px rgba(255, 140, 180, 0.14),
+    inset 14px 0 20px rgba(0, 0, 0, 0.8);
+}
+
+/* Concave Shadow Valleys */
+.pleat-valley {
+  background:
+    linear-gradient(180deg, rgba(5, 0, 2, 0.92) 0%, transparent 18%, transparent 78%, rgba(5, 0, 2, 0.95) 100%),
+    linear-gradient(90deg, #090104 0%, #20040f 30%, #3e071c 50%, #20040f 70%, #060003 100%);
+  box-shadow:
+    inset 0 0 45px rgba(0, 0, 0, 0.95),
+    inset -20px 0 25px rgba(0, 0, 0, 0.9),
+    inset 20px 0 25px rgba(0, 0, 0, 0.9);
+}
+
+.pleat-1 {
+  background: linear-gradient(90deg, #100107 0%, #38061a 45%, #18020a 100%);
+}
+
+/* Master Leading Edge with Organic Wavy Silhouette (Curved Drape Profile) */
+.curtain-left .pleat-leading-edge {
+  clip-path: polygon(
+    0% 0%,
+    91% 0%,
+    99% 10%,
+    93% 22%,
+    98% 34%,
+    91% 46%,
+    100% 58%,
+    93% 70%,
+    98% 82%,
+    92% 94%,
+    90% 100%,
+    0% 100%
+  );
+  background:
+    linear-gradient(180deg, rgba(8, 1, 4, 0.85) 0%, transparent 18%, transparent 78%, rgba(8, 1, 4, 0.92) 100%),
+    linear-gradient(90deg, #220310 0%, #5a0a2a 28%, #8f1743 54%, #bb245c 64%, #8f1743 78%, #360519 100%);
+  box-shadow:
+    inset 0 0 25px rgba(0, 0, 0, 0.6),
+    inset -10px 0 16px rgba(255, 160, 195, 0.18);
+}
+
+.curtain-right .pleat-leading-edge {
+  clip-path: polygon(
+    9% 0%,
+    100% 0%,
+    100% 100%,
+    10% 100%,
+    8% 94%,
+    2% 82%,
+    7% 70%,
+    0% 58%,
+    9% 46%,
+    2% 34%,
+    7% 22%,
+    1% 10%
+  );
+  background:
+    linear-gradient(180deg, rgba(8, 1, 4, 0.85) 0%, transparent 18%, transparent 78%, rgba(8, 1, 4, 0.92) 100%),
+    linear-gradient(270deg, #220310 0%, #5a0a2a 28%, #8f1743 54%, #bb245c 64%, #8f1743 78%, #360519 100%);
+  box-shadow:
+    inset 0 0 25px rgba(0, 0, 0, 0.6),
+    inset 10px 0 16px rgba(255, 160, 195, 0.18);
+}
+
+/* Warm Stage Rim Light on the Leading Edge */
+.leading-edge-light-rim {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  pointer-events: none;
+  opacity: 0.55;
+  transition: opacity 1.2s ease;
+}
+
+.curtain-left .leading-edge-light-rim {
+  right: 0;
+  background: linear-gradient(180deg, transparent 5%, rgba(255, 225, 165, 0.55) 30%, rgba(255, 235, 185, 0.7) 60%, transparent 95%);
+  box-shadow: 0 0 12px 2px rgba(255, 215, 140, 0.45);
+}
+
+.curtain-right .leading-edge-light-rim {
+  left: 0;
+  background: linear-gradient(180deg, transparent 5%, rgba(255, 225, 165, 0.55) 30%, rgba(255, 235, 185, 0.7) 60%, transparent 95%);
+  box-shadow: 0 0 12px 2px rgba(255, 215, 140, 0.45);
+}
+
+/* Top Stage Drape Pelmet Shadow */
+.stage-top-drape-shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.88) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 18;
+}
+
+/* --------------------------------------------------------------------------
+   CURTAIN OPENING PHYSICS: NON-LINEAR CLOTH BUNCHING & TENSION DEFORMATION
+   - Staggered delays: Leading pleat leads, intermediate pleats follow
+   - Compression: scaleX shrinks as pleats bunch at screen edge
+   - Skew: subtle lateral tension angle
+   -------------------------------------------------------------------------- */
+/* Left Curtain Transitions */
+.curtain-left .pleat-6 {
+  transition: transform 1.95s cubic-bezier(0.22, 1, 0.36, 1) 0.0s, opacity 1.95s ease 0.0s;
+}
+.curtain-left .pleat-5 {
+  transition: transform 1.95s cubic-bezier(0.22, 1, 0.36, 1) 0.06s, opacity 1.95s ease 0.06s;
+}
+.curtain-left .pleat-4 {
+  transition: transform 1.95s cubic-bezier(0.22, 1, 0.36, 1) 0.12s, opacity 1.95s ease 0.12s;
+}
+.curtain-left .pleat-3 {
+  transition: transform 1.95s cubic-bezier(0.22, 1, 0.36, 1) 0.18s, opacity 1.95s ease 0.18s;
+}
+.curtain-left .pleat-2 {
+  transition: transform 1.95s cubic-bezier(0.22, 1, 0.36, 1) 0.24s, opacity 1.95s ease 0.24s;
+}
+.curtain-left .pleat-1 {
+  transition: transform 1.95s cubic-bezier(0.22, 1, 0.36, 1) 0.30s, opacity 1.95s ease 0.30s;
+}
+
+/* Left Curtain Parting Keyframe Transforms */
+.curtains-parting .curtain-left .pleat-6 {
+  transform: translateX(-350%) scaleX(0.24) skewY(2.6deg);
+}
+.curtains-parting .curtain-left .pleat-5 {
+  transform: translateX(-285%) scaleX(0.30) skewY(2.2deg);
+}
+.curtains-parting .curtain-left .pleat-4 {
+  transform: translateX(-215%) scaleX(0.38) skewY(1.8deg);
+}
+.curtains-parting .curtain-left .pleat-3 {
+  transform: translateX(-150%) scaleX(0.46) skewY(1.3deg);
+}
+.curtains-parting .curtain-left .pleat-2 {
+  transform: translateX(-95%) scaleX(0.55) skewY(0.9deg);
+}
+.curtains-parting .curtain-left .pleat-1 {
+  transform: translateX(-45%) scaleX(0.65) skewY(0.4deg);
+}
+.curtains-parting .curtain-left .curtain-fabric-base {
+  transform: translateX(-100%);
+}
+
+/* Right Curtain Transitions */
+.curtain-right .pleat-6 {
+  transition: transform 1.95s cubic-bezier(0.22, 1, 0.36, 1) 0.0s, opacity 1.95s ease 0.0s;
+}
+.curtain-right .pleat-5 {
+  transition: transform 1.95s cubic-bezier(0.22, 1, 0.36, 1) 0.06s, opacity 1.95s ease 0.06s;
+}
+.curtain-right .pleat-4 {
+  transition: transform 1.95s cubic-bezier(0.22, 1, 0.36, 1) 0.12s, opacity 1.95s ease 0.12s;
+}
+.curtain-right .pleat-3 {
+  transition: transform 1.95s cubic-bezier(0.22, 1, 0.36, 1) 0.18s, opacity 1.95s ease 0.18s;
+}
+.curtain-right .pleat-2 {
+  transition: transform 1.95s cubic-bezier(0.22, 1, 0.36, 1) 0.24s, opacity 1.95s ease 0.24s;
+}
+.curtain-right .pleat-1 {
+  transition: transform 1.95s cubic-bezier(0.22, 1, 0.36, 1) 0.30s, opacity 1.95s ease 0.30s;
+}
+
+/* Right Curtain Parting Keyframe Transforms */
+.curtains-parting .curtain-right .pleat-6 {
+  transform: translateX(350%) scaleX(0.24) skewY(-2.6deg);
+}
+.curtains-parting .curtain-right .pleat-5 {
+  transform: translateX(285%) scaleX(0.30) skewY(-2.2deg);
+}
+.curtains-parting .curtain-right .pleat-4 {
+  transform: translateX(215%) scaleX(0.38) skewY(-1.8deg);
+}
+.curtains-parting .curtain-right .pleat-3 {
+  transform: translateX(150%) scaleX(0.46) skewY(-1.3deg);
+}
+.curtains-parting .curtain-right .pleat-2 {
+  transform: translateX(95%) scaleX(0.55) skewY(-0.9deg);
+}
+.curtains-parting .curtain-right .pleat-1 {
+  transform: translateX(45%) scaleX(0.65) skewY(-0.4deg);
+}
+.curtains-parting .curtain-right .curtain-fabric-base {
+  transform: translateX(100%);
+}
+
+
+/* ==========================================================================
+   PHYSICAL STATIONERY INVITATION CARD
+   - 400gsm Heavy Cotton Rag Ivory Paper
+   - Embossed Metallic Antique Gold Framing & Monogram
+   - Diagonal Silky Light Sweep on Interaction
+   - Progressive Edge-and-Surface Structural Dust Dissolution
+   ========================================================================== */
+.stationery-card-container {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+  perspective: 1200px;
+}
+
+.stationery-card {
+  position: relative;
+  width: min(88vw, 380px);
+  height: min(76vh, 520px);
+  border-radius: 12px;
+  /* Luxurious Cotton Rag Ivory Paper */
+  background: radial-gradient(circle at 50% 15%, #ffffff 0%, #fbf7ee 50%, #f4eae0 100%);
+  box-shadow:
+    0 32px 75px -15px rgba(0, 0, 0, 0.9),
+    0 10px 24px -5px rgba(0, 0, 0, 0.5),
+    inset 0 0 0 1px rgba(197, 160, 89, 0.45),
+    inset 0 0 45px rgba(184, 148, 86, 0.12);
+  padding: 34px 26px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  box-sizing: border-box;
+  overflow: hidden;
+  transform-origin: center center;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease;
+  will-change: transform, opacity, filter, mask-image;
+}
+
+/* Subtle Paper Texture */
+.card-paper-texture {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(180, 145, 95, 0.05) 1px, transparent 1px);
+  background-size: 8px 8px;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   STAGE 0.60 – 0.90: INTERACTION ANTICIPATION & LIGHT SWEEP
+   -------------------------------------------------------------------------- */
+.is-anticipating .stationery-card {
+  transform: scale(1.018) translateY(-6px) rotateX(1.4deg) rotateY(-0.6deg);
+  box-shadow:
+    0 40px 90px -12px rgba(0, 0, 0, 0.95),
+    0 0 25px rgba(212, 175, 55, 0.35),
+    inset 0 0 0 1px rgba(212, 175, 55, 0.75);
+}
+
+/* Silky Diagonal Light Sweep across Card Surface */
+.card-light-sweep {
+  position: absolute;
+  top: -60%;
+  left: -60%;
+  width: 220%;
+  height: 220%;
+  background: linear-gradient(
+    115deg,
+    transparent 38%,
+    rgba(255, 245, 220, 0.0) 44%,
+    rgba(255, 245, 220, 0.28) 50%,
+    rgba(255, 245, 220, 0.0) 56%,
+    transparent 62%
+  );
+  transform: translateX(-110%) rotate(25deg);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.is-anticipating .card-light-sweep {
+  opacity: 1;
+  transform: translateX(110%) rotate(25deg);
+  transition: transform 0.72s cubic-bezier(0.25, 1, 0.35, 1), opacity 0.5s ease;
+}
+
+/* --------------------------------------------------------------------------
+   STAGE 0.90 – 1.80: PROGRESSIVE STRUCTURAL DUST DISSOLUTION
+   - Progressive radial erosion mask sweeps from surface/edges inward
+   - Glowing golden fiber ember edge marks the boundary of transformation
+   - Card breaks down structurally rather than simply fading opacity
+   -------------------------------------------------------------------------- */
+.is-dissolving .stationery-card {
+  animation: cardStructuralDissolve 1.45s cubic-bezier(0.35, 0, 0.25, 1) forwards;
+  pointer-events: none;
+}
+
+@keyframes cardStructuralDissolve {
+  0% {
+    transform: scale(1.018) translateY(-6px) rotateX(1.4deg);
+    filter: blur(0px) brightness(1);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 100%, black 100%);
+    mask-image: radial-gradient(ellipse at 50% 50%, black 100%, black 100%);
+    opacity: 1;
+  }
+  25% {
+    /* Edges and surface begin eroding into glowing dust */
+    transform: scale(1.01) translateY(-14px) rotateX(1deg);
+    filter: blur(0.5px) brightness(1.08) sepia(12%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 65%, rgba(0, 0, 0, 0.7) 82%, transparent 95%);
+    mask-image: radial-gradient(ellipse at 50% 50%, black 65%, rgba(0, 0, 0, 0.7) 82%, transparent 95%);
+    opacity: 0.96;
+  }
+  60% {
+    /* Deep progressive structural erosion */
+    transform: scale(0.97) translateY(-28px) rotateX(2deg);
+    filter: blur(3px) brightness(1.22) sepia(35%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 35%, rgba(0, 0, 0, 0.5) 55%, transparent 75%);
+    mask-image: radial-gradient(ellipse at 50% 50%, black 35%, rgba(0, 0, 0, 0.5) 55%, transparent 75%);
+    opacity: 0.82;
+  }
+  100% {
+    /* Complete dissolution into wedding dust */
+    transform: scale(0.88) translateY(-46px) rotateX(3deg);
+    filter: blur(14px) brightness(1.45) sepia(60%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 50%, transparent 0%, transparent 100%);
+    mask-image: radial-gradient(ellipse at 50% 50%, transparent 0%, transparent 100%);
+    opacity: 0;
+  }
+}
+
+/* Luminous Gold Ember Boundary on Dissolution */
+.card-dissolve-ember {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: inset 0 0 35px 8px rgba(235, 195, 125, 0.65);
+  transition: opacity 0.35s ease;
+}
+
+.is-dissolving .card-dissolve-ember {
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   STATIONERY DETAILS: EMBOSSED ANTIQUE GOLD ACCENTS & REFINED TYPOGRAPHY
+   -------------------------------------------------------------------------- */
+.card-gold-border-outer {
+  position: absolute;
+  inset: 12px;
+  border: 0.5px solid rgba(197, 160, 89, 0.45);
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.card-gold-border-inner {
+  position: absolute;
+  inset: 4px;
+  border: 1px solid rgba(197, 160, 89, 0.65);
+  border-radius: 4px;
+}
+
+.card-corner-notch {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: rgba(184, 148, 86, 0.75);
+}
+
+.card-corner-notch.tl { top: -1px; left: -1px; border-top: 1.5px solid; border-left: 1.5px solid; }
+.card-corner-notch.tr { top: -1px; right: -1px; border-top: 1.5px solid; border-right: 1.5px solid; }
+.card-corner-notch.bl { bottom: -1px; left: -1px; border-bottom: 1.5px solid; border-left: 1.5px solid; }
+.card-corner-notch.br { bottom: -1px; right: -1px; border-bottom: 1.5px solid; border-right: 1.5px solid; }
+
+.stationery-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.card-eyebrow {
+  font-size: 0.68rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #8c6f4a;
+  font-weight: 700;
+}
+
+.card-family-intro {
+  margin: 0;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: #7b5966;
+}
+
+/* Embossed Monogram Crest */
+.card-monogram-crest {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fffefb 32%, #ecdbbf 100%);
+  border: 1px solid rgba(197, 160, 89, 0.75);
+  box-shadow:
+    0 6px 18px rgba(184, 148, 86, 0.22),
+    inset 0 1px 2px rgba(255, 255, 255, 0.9),
+    inset 0 -2px 4px rgba(120, 85, 30, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 6px 0;
+}
+
+.crest-ring-inner {
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  border: 1px dashed rgba(184, 148, 86, 0.45);
+}
+
+.crest-initials {
+  font-style: italic;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #4b1022;
+  letter-spacing: -0.02em;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8), 0 -1px 1px rgba(80, 20, 40, 0.25);
+}
+
+/* Couple Names Block */
+.card-couple-block {
+  margin: 4px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-couple-name {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.85rem, 6.2vw, 2.4rem);
+  line-height: 1.1;
+  color: #330b1a;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.card-ampersand {
+  margin: 2px 0;
+  font-style: italic;
+  font-size: 1.35rem;
+  color: #b89456;
+}
+
+/* Delicate Ornament Divider */
+.card-ornament-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 60%;
+  margin: 4px 0;
+}
+
+.divider-rule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(184, 148, 86, 0.55), transparent);
+}
+
+.divider-gem {
+  color: #b89456;
+  font-size: 0.75rem;
+}
+
+/* Footer Date & Venue */
+.stationery-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.card-wedding-date {
+  margin: 0;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: #4d362b;
+}
+
+.card-wedding-venue {
+  margin: 0;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8c714e;
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   UNDERSTATED INTERACTION PROMPT
+   - Minimalist pulse, zero cartoonish icons
+   - Fades out immediately on interaction
+   -------------------------------------------------------------------------- */
+.card-open-prompt {
+  margin-top: 26px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ded0b8;
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.prompt-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #d4af37;
+  box-shadow: 0 0 10px 2px rgba(212, 175, 55, 0.65);
+  animation: promptPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes promptPulse {
+  0%, 100% { opacity: 0.35; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+.is-anticipating + .card-open-prompt,
+.is-dissolving + .card-open-prompt {
+  opacity: 0;
+}
+
+
+/* ==========================================================================
+   MOBILE-FIRST VIEWPORTS & ACCESSIBILITY
+   ========================================================================== */
+@media (max-width: 600px) {
+  .stationery-card {
+    width: min(88vw, 340px);
+    height: min(74vh, 480px);
+    padding: 26px 20px;
+  }
+
+  .card-couple-name {
+    font-size: 1.85rem;
+  }
+
+  .card-monogram-crest {
+    width: 46px;
+    height: 46px;
+  }
+
+  .crest-initials {
+    font-size: 1.15rem;
+  }
+
+  .velvet-curtain {
+    width: 55vw;
+  }
+}
+
+/* Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-stage-overlay {
+    transition: opacity 0.5s ease;
+  }
+
+  .velvet-curtain,
+  .curtain-pleat,
+  .stationery-card,
+  .dust-particle-canvas {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .curtains-parting .curtain-left {
+    transform: translateX(-100%);
+  }
+
+  .curtains-parting .curtain-right {
+    transform: translateX(100%);
+  }
+
+  .is-dissolving .stationery-card {
+    opacity: 0;
+  }
+}
