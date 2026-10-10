@@ -20,6 +20,7 @@ function EnvelopeReveal({ invitation, onHandoffStart, onOpened }) {
   const [isCurtainsOpening, setIsCurtainsOpening] = useState(false);
   const [isRevealingLight, setIsRevealingLight] = useState(false);
   const [isDissolvingOut, setIsDissolvingOut] = useState(false);
+  const [isHandoffTransitioning, setIsHandoffTransitioning] = useState(false);
 
   const cardRef = useRef(null);
   const hasTriggeredRef = useRef(false);
@@ -53,6 +54,7 @@ function EnvelopeReveal({ invitation, onHandoffStart, onOpened }) {
       if (onHandoffStart) onHandoffStart();
       setIsDissolving(true);
       setIsCurtainsOpening(true);
+      setIsHandoffTransitioning(true);
       setIsDissolvingOut(true);
       addTimer(() => {
         if (onOpened) onOpened();
@@ -78,28 +80,31 @@ function EnvelopeReveal({ invitation, onHandoffStart, onOpened }) {
       setIsRevealingLight(true);
     }, 1900);
 
-    // Begin revealing the real invitation underneath the final curtain movement.
-    // This overlapping crossfade prevents a black/empty frame between scenes.
+    // Start the page reveal as the stationery finishes dissolving, not after
+    // the stage has become empty. The golden bloom bridges both scenes.
     addTimer(() => {
+      setIsHandoffTransitioning(true);
       if (onHandoffStart) onHandoffStart();
-    }, 2850);
+    }, 2050);
 
-    // Fade the cinematic stage only after the invitation body has started appearing.
+    // Fade the stage while its bloom and the invitation hero overlap underneath.
     addTimer(() => {
       setIsDissolvingOut(true);
-    }, 3250);
+    }, 2550);
 
-    // Remove the overlay after its fade, leaving the already-visible invitation.
+    // Keep the overlay mounted until the crossfade has fully resolved.
     addTimer(() => {
       if (onOpened) onOpened();
-    }, 4100);
+    }, 3700);
   }, [addTimer, onHandoffStart, onOpened]);
 
   return (
     <div
       className={`cinematic-stage-overlay ${
         isDissolvingOut ? "stage-dissolving-out" : ""
-      } ${isRevealingLight ? "stage-revealing-light" : ""}`}
+      } ${isRevealingLight ? "stage-revealing-light" : ""} ${
+        isHandoffTransitioning ? "stage-handoff-started" : ""
+      }`}
       aria-label="Wedding invitation cinematic opening"
     >
       {/* Warm Ambient Theatrical Lighting */}
