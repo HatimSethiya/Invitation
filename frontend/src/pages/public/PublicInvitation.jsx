@@ -131,11 +131,23 @@ function PublicInvitation() {
       {/* Main Guest-Facing Invitation Body Animated via Motion */}
       <motion.div
         className="invitation-body"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isHandoffStarted || isUnboxed ? 1 : 0 }}
+        initial={{ opacity: 0, y: 24, scale: 0.985 }}
+        animate={{
+          opacity: isHandoffStarted || isUnboxed ? 1 : 0,
+          y: isHandoffStarted || isUnboxed ? 0 : 24,
+          scale: isHandoffStarted || isUnboxed ? 1 : 0.985,
+        }}
         transition={{
           opacity: {
             duration: 1.15,
+            ease: [0.22, 1, 0.36, 1],
+          },
+          y: {
+            duration: 1.25,
+            ease: [0.22, 1, 0.36, 1],
+          },
+          scale: {
+            duration: 1.35,
             ease: [0.22, 1, 0.36, 1],
           },
         }}
