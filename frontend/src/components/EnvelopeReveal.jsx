@@ -14,7 +14,7 @@ import "./cinematic/CinematicOpening.css";
  * 5. Warm golden ambient stage glow flooding the center.
  * 6. Smooth, elegant handoff to the public invitation hero content.
  */
-function EnvelopeReveal({ invitation, onOpened }) {
+function EnvelopeReveal({ invitation, onHandoffStart, onOpened }) {
   const [isAnticipating, setIsAnticipating] = useState(false);
   const [isDissolving, setIsDissolving] = useState(false);
   const [isCurtainsOpening, setIsCurtainsOpening] = useState(false);
@@ -50,6 +50,7 @@ function EnvelopeReveal({ invitation, onOpened }) {
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (prefersReducedMotion) {
+      if (onHandoffStart) onHandoffStart();
       setIsDissolving(true);
       setIsCurtainsOpening(true);
       setIsDissolvingOut(true);
@@ -77,16 +78,22 @@ function EnvelopeReveal({ invitation, onOpened }) {
       setIsRevealingLight(true);
     }, 1900);
 
-    // Step 5: Keep the stage present until the curtain movement has nearly completed.
+    // Begin revealing the real invitation underneath the final curtain movement.
+    // This overlapping crossfade prevents a black/empty frame between scenes.
+    addTimer(() => {
+      if (onHandoffStart) onHandoffStart();
+    }, 2850);
+
+    // Fade the cinematic stage only after the invitation body has started appearing.
     addTimer(() => {
       setIsDissolvingOut(true);
     }, 3250);
 
-    // Step 6: Hand off only after the cinematic stage has had time to resolve.
+    // Remove the overlay after its fade, leaving the already-visible invitation.
     addTimer(() => {
       if (onOpened) onOpened();
     }, 4100);
-  }, [addTimer, onOpened]);
+  }, [addTimer, onHandoffStart, onOpened]);
 
   return (
     <div
