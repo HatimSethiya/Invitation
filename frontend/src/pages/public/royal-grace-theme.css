@@ -199,8 +199,8 @@
 .public-page.theme-royalGrace .reveal-card .reveal-venue { color: var(--rg-green); }
 .public-page.theme-royalGrace .reveal-prompt .prompt-pill { color: #fff8e6; border-color: rgba(216,195,145,.65); background: rgba(32,59,44,.68); }
 .public-page.theme-royalGrace .reveal-interaction-button { cursor: pointer; }
-.public-page.theme-royalGrace .rg-error,
-.public-page.theme-royalGrace .rg-loading { display: grid; place-items: center; min-height: 100vh; padding: 24px; text-align: center; }
+.public-page.theme-royalGrace.rg-error,
+.public-page.theme-royalGrace.rg-loading { display: grid; place-items: center; min-height: 100vh; padding: 24px; text-align: center; }
 .public-page.theme-royalGrace .rg-paper-card { max-width: 560px; padding: 48px; border: 1px solid var(--rg-line); background: #fffdf5; }
 .public-page.theme-royalGrace .rg-paper-card h1 { font: 40px "Playfair Display", serif; }
 .public-page.theme-royalGrace .rg-loading-seal { display: grid; place-items: center; width: 56px; height: 56px; margin: auto; border: 1px solid var(--rg-gold); border-radius: 50%; color: var(--rg-gold); animation: rgSeal 2s ease-in-out infinite; }
