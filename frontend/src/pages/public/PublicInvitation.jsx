@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import api from "../../services/api";
 import EnvelopeReveal from "../../components/EnvelopeReveal";
+import "./royal-grace-theme.css";
 
 function formatDate(value, options = { dateStyle: "long" }) {
   if (!value) return "";
