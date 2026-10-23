@@ -1,4 +1,3 @@
-import { useRef } from "react";
 
 function formatDate(value) {
   if (!value) return "";
@@ -21,10 +20,7 @@ function CardStationery({
   isAnticipating,
   isDissolving,
   onCardTap,
-  cardRef,
 }) {
-  const localRef = useRef(null);
-  const activeRef = cardRef || localRef;
 
   // Dynamic names & initials
   const bride =
@@ -43,7 +39,6 @@ function CardStationery({
 
   return (
     <div
-      ref={activeRef}
       className={`stationery-card-container ${
         isAnticipating ? "is-anticipating" : ""
       } ${isDissolving ? "is-dissolving" : ""}`}
