@@ -20,7 +20,9 @@
   user-select: none;
   touch-action: none;
   font-family: Georgia, "Times New Roman", serif;
-  transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  transition:
+    opacity 1.05s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.72s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity;
 }
 
@@ -362,18 +364,25 @@
 }
 
 .is-dissolving .stationery-card {
-  animation: cardExit 0.52s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: cardExit 1.15s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   pointer-events: none;
 }
 
 @keyframes cardExit {
   from {
     opacity: 1;
+    filter: blur(0);
     transform: scale(1.012) translateY(-4px);
+  }
+  58% {
+    opacity: 0.54;
+    filter: blur(0.8px);
+    transform: scale(0.99) translateY(-8px);
   }
   to {
     opacity: 0;
-    transform: scale(0.95) translateY(-16px);
+    filter: blur(2.2px);
+    transform: scale(0.965) translateY(-13px);
   }
 }
 
@@ -682,4 +691,13 @@
 
 .cinematic-stage-overlay.stage-handoff-active {
   background-color: transparent;
+}
+
+/* Let the curtains blend into the page instead of sliding away abruptly. */
+.cinematic-stage-overlay.stage-handoff-active .velvet-curtain,
+.cinematic-stage-overlay.stage-handoff-active .curtain-fabric-base,
+.cinematic-stage-overlay.stage-handoff-active .stage-top-drape-shadow {
+  opacity: 0;
+  transition:
+    opacity 1.75s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
 }
