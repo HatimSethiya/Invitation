@@ -4,14 +4,11 @@ import CardStationery from "./cinematic/CardStationery";
 import "./cinematic/CinematicOpening.css";
 
 /**
- * EnvelopeReveal: Ultra-luxury, cinematic wedding invitation reveal coordinator.
- * Orchestrates a 4-second continuous physical sequence:
- * 1. Dark, breathing theatrical stage with heavy velvet curtains & ivory stationery card.
- * 2. Delicate tactile anticipation & diagonal light sweep on tap.
- * 3. Progressive structural card dissolution into 60 FPS luminous wedding dust particles.
- * 4. Realistic velvet curtain bunching with curved wavy inner drape profiles.
- * 5. Warm golden ambient stage glow flooding the center.
- * 6. Smooth, elegant handoff to the public invitation hero content.
+ * EnvelopeReveal coordinates a clean invitation opening:
+ * 1. The stationery responds gently to the guest's tap.
+ * 2. Velvet curtains part.
+ * 3. The stationery fades and scales away without glow or particles.
+ * 4. The real invitation page fades and scales into view.
  */
 function EnvelopeReveal({ invitation, onHandoffStart, onOpened }) {
   const [isAnticipating, setIsAnticipating] = useState(false);
@@ -19,7 +16,6 @@ function EnvelopeReveal({ invitation, onHandoffStart, onOpened }) {
   const [isCurtainsOpening, setIsCurtainsOpening] = useState(false);
   const [isDissolvingOut, setIsDissolvingOut] = useState(false);
 
-  const cardRef = useRef(null);
   const hasTriggeredRef = useRef(false);
   const timersRef = useRef([]);
 
@@ -100,7 +96,6 @@ function EnvelopeReveal({ invitation, onHandoffStart, onOpened }) {
         isAnticipating={isAnticipating}
         isDissolving={isDissolving}
         onCardTap={triggerSequence}
-        cardRef={cardRef}
       />
     </div>
   );
