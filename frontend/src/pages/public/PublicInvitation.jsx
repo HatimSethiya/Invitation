@@ -130,9 +130,7 @@ function PublicInvitation() {
 
       {/* Main Guest-Facing Invitation Body Animated via Motion */}
       <motion.div
-        className={`invitation-body ${
-          isHandoffStarted ? "invitation-handoff-active" : ""
-        }`}
+        className="invitation-body"
         initial={{ opacity: 0, y: 24, scale: 0.985 }}
         animate={{
           opacity: isHandoffStarted || isUnboxed ? 1 : 0,
