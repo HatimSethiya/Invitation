@@ -60,27 +60,27 @@ function EnvelopeReveal({ invitation, onHandoffStart, onOpened }) {
     setIsAnticipating(true);
     setIsCurtainsOpening(true);
 
-    // Start revealing the real invitation behind the opening before the old card
-    // exits, so the two visuals overlap instead of exposing the dark stage.
+    // Begin the page crossfade after the curtains have had time to travel, while
+    // the stationery still remains visible to bridge both scenes.
     addTimer(() => {
       setIsHandoffActive(true);
       if (onHandoffStart) onHandoffStart();
-    }, 1480);
+    }, 1900);
 
-    // Fade the stationery out with a plain scale transition, without glow effects.
+    // Let the card dissolve slowly after the page begins to appear behind it.
     addTimer(() => {
       setIsDissolving(true);
-    }, 1720);
+    }, 2100);
 
-    // Crossfade the empty stage away while the invitation settles into place.
+    // Fade the stage only after the curtain blend has mostly completed.
     addTimer(() => {
       setIsDissolvingOut(true);
-    }, 2580);
+    }, 4200);
 
     // Keep the overlay mounted until the page transition has finished.
     addTimer(() => {
       if (onOpened) onOpened();
-    }, 3800);
+    }, 5500);
   }, [addTimer, onHandoffStart, onOpened]);
 
   return (
