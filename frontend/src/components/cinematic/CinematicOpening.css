@@ -671,3 +671,15 @@
   }
 }
 
+
+
+/* Crossfade the underlying invitation in before the curtain stage fades out. */
+.cinematic-stage-overlay {
+  transition:
+    background-color 0.62s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cinematic-stage-overlay.stage-handoff-active {
+  background-color: transparent;
+}
