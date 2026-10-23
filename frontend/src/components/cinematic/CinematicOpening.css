@@ -21,8 +21,8 @@
   touch-action: none;
   font-family: Georgia, "Times New Roman", serif;
   transition:
-    opacity 1.05s cubic-bezier(0.22, 1, 0.36, 1),
-    background-color 0.72s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 1.20s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 1.00s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity;
 }
 
@@ -70,7 +70,7 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(180deg, #100107 0%, #20040f 50%, #0d0106 100%);
-  transition: transform 1.95s cubic-bezier(0.25, 1, 0.35, 1) 0.30s, opacity 1.95s ease 0.30s;
+  transition: transform 2.30s cubic-bezier(0.25, 1, 0.35, 1) 0.35s, opacity 2.30s ease 0.35s;
   will-change: transform;
 }
 
@@ -217,22 +217,22 @@
    -------------------------------------------------------------------------- */
 /* Left Curtain Transitions */
 .curtain-left .pleat-6 {
-  transition: transform 1.95s cubic-bezier(0.22, 1, 0.36, 1) 0.0s, opacity 1.95s ease 0.0s;
+  transition: transform 2.30s cubic-bezier(0.22, 1, 0.36, 1) 0.0s, opacity 2.30s ease 0.0s;
 }
 .curtain-left .pleat-5 {
-  transition: transform 1.95s cubic-bezier(0.22, 1, 0.36, 1) 0.06s, opacity 1.95s ease 0.06s;
+  transition: transform 2.30s cubic-bezier(0.22, 1, 0.36, 1) 0.07s, opacity 2.30s ease 0.07s;
 }
 .curtain-left .pleat-4 {
-  transition: transform 1.95s cubic-bezier(0.22, 1, 0.36, 1) 0.12s, opacity 1.95s ease 0.12s;
+  transition: transform 2.30s cubic-bezier(0.22, 1, 0.36, 1) 0.14s, opacity 2.30s ease 0.14s;
 }
 .curtain-left .pleat-3 {
-  transition: transform 1.95s cubic-bezier(0.22, 1, 0.36, 1) 0.18s, opacity 1.95s ease 0.18s;
+  transition: transform 2.30s cubic-bezier(0.22, 1, 0.36, 1) 0.21s, opacity 2.30s ease 0.21s;
 }
 .curtain-left .pleat-2 {
-  transition: transform 1.95s cubic-bezier(0.22, 1, 0.36, 1) 0.24s, opacity 1.95s ease 0.24s;
+  transition: transform 2.30s cubic-bezier(0.22, 1, 0.36, 1) 0.28s, opacity 2.30s ease 0.28s;
 }
 .curtain-left .pleat-1 {
-  transition: transform 1.95s cubic-bezier(0.22, 1, 0.36, 1) 0.30s, opacity 1.95s ease 0.30s;
+  transition: transform 2.30s cubic-bezier(0.22, 1, 0.36, 1) 0.35s, opacity 2.30s ease 0.35s;
 }
 
 /* Left Curtain Parting Keyframe Transforms */
@@ -260,22 +260,22 @@
 
 /* Right Curtain Transitions */
 .curtain-right .pleat-6 {
-  transition: transform 1.95s cubic-bezier(0.22, 1, 0.36, 1) 0.0s, opacity 1.95s ease 0.0s;
+  transition: transform 2.30s cubic-bezier(0.22, 1, 0.36, 1) 0.0s, opacity 2.30s ease 0.0s;
 }
 .curtain-right .pleat-5 {
-  transition: transform 1.95s cubic-bezier(0.22, 1, 0.36, 1) 0.06s, opacity 1.95s ease 0.06s;
+  transition: transform 2.30s cubic-bezier(0.22, 1, 0.36, 1) 0.07s, opacity 2.30s ease 0.07s;
 }
 .curtain-right .pleat-4 {
-  transition: transform 1.95s cubic-bezier(0.22, 1, 0.36, 1) 0.12s, opacity 1.95s ease 0.12s;
+  transition: transform 2.30s cubic-bezier(0.22, 1, 0.36, 1) 0.14s, opacity 2.30s ease 0.14s;
 }
 .curtain-right .pleat-3 {
-  transition: transform 1.95s cubic-bezier(0.22, 1, 0.36, 1) 0.18s, opacity 1.95s ease 0.18s;
+  transition: transform 2.30s cubic-bezier(0.22, 1, 0.36, 1) 0.21s, opacity 2.30s ease 0.21s;
 }
 .curtain-right .pleat-2 {
-  transition: transform 1.95s cubic-bezier(0.22, 1, 0.36, 1) 0.24s, opacity 1.95s ease 0.24s;
+  transition: transform 2.30s cubic-bezier(0.22, 1, 0.36, 1) 0.28s, opacity 2.30s ease 0.28s;
 }
 .curtain-right .pleat-1 {
-  transition: transform 1.95s cubic-bezier(0.22, 1, 0.36, 1) 0.30s, opacity 1.95s ease 0.30s;
+  transition: transform 2.30s cubic-bezier(0.22, 1, 0.36, 1) 0.35s, opacity 2.30s ease 0.35s;
 }
 
 /* Right Curtain Parting Keyframe Transforms */
@@ -364,7 +364,7 @@
 }
 
 .is-dissolving .stationery-card {
-  animation: cardExit 1.15s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: cardExit 1.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   pointer-events: none;
 }
 
@@ -374,14 +374,19 @@
     filter: blur(0);
     transform: scale(1.012) translateY(-4px);
   }
-  58% {
-    opacity: 0.54;
-    filter: blur(0.8px);
-    transform: scale(0.99) translateY(-8px);
+  42% {
+    opacity: 0.72;
+    filter: blur(0.35px);
+    transform: scale(1.002) translateY(-6px);
+  }
+  76% {
+    opacity: 0.24;
+    filter: blur(1.35px);
+    transform: scale(0.98) translateY(-10px);
   }
   to {
     opacity: 0;
-    filter: blur(2.2px);
+    filter: blur(2.4px);
     transform: scale(0.965) translateY(-13px);
   }
 }
@@ -685,8 +690,8 @@
 /* Crossfade the underlying invitation in before the curtain stage fades out. */
 .cinematic-stage-overlay {
   transition:
-    background-color 0.62s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+    background-color 1.00s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 1.20s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .cinematic-stage-overlay.stage-handoff-active {
@@ -698,6 +703,8 @@
 .cinematic-stage-overlay.stage-handoff-active .curtain-fabric-base,
 .cinematic-stage-overlay.stage-handoff-active .stage-top-drape-shadow {
   opacity: 0;
+  filter: blur(1.4px);
   transition:
-    opacity 1.75s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
+    opacity 1.90s cubic-bezier(0.22, 1, 0.36, 1) 0.50s,
+    filter 1.90s cubic-bezier(0.22, 1, 0.36, 1) 0.50s;
 }
