@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import VelvetCurtains from "./cinematic/VelvetCurtains";
 import CardStationery from "./cinematic/CardStationery";
-import DustCanvas from "./cinematic/DustCanvas";
 import "./cinematic/CinematicOpening.css";
 
 /**
@@ -18,9 +17,7 @@ function EnvelopeReveal({ invitation, onHandoffStart, onOpened }) {
   const [isAnticipating, setIsAnticipating] = useState(false);
   const [isDissolving, setIsDissolving] = useState(false);
   const [isCurtainsOpening, setIsCurtainsOpening] = useState(false);
-  const [isRevealingLight, setIsRevealingLight] = useState(false);
   const [isDissolvingOut, setIsDissolvingOut] = useState(false);
-  const [isHandoffTransitioning, setIsHandoffTransitioning] = useState(false);
 
   const cardRef = useRef(null);
   const hasTriggeredRef = useRef(false);
@@ -51,73 +48,53 @@ function EnvelopeReveal({ invitation, onHandoffStart, onOpened }) {
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (prefersReducedMotion) {
-      if (onHandoffStart) onHandoffStart();
-      setIsDissolving(true);
       setIsCurtainsOpening(true);
-      setIsHandoffTransitioning(true);
+      setIsDissolving(true);
       setIsDissolvingOut(true);
+      if (onHandoffStart) onHandoffStart();
       addTimer(() => {
         if (onOpened) onOpened();
       }, 500);
       return;
     }
 
-    // Step 1: Hold a deliberate anticipation beat before the card reacts.
+    // Keep the stationery in place while the curtains begin to part.
     setIsAnticipating(true);
+    setIsCurtainsOpening(true);
 
-    // Step 2: Let the light sweep finish before the stationery begins dissolving.
+    // Once the curtains are nearly open, fade the card away with a plain scale
+    // transition instead of gold embers, particles, or a light bloom.
     addTimer(() => {
       setIsDissolving(true);
-    }, 650);
+    }, 1750);
 
-    // Step 3: Start the curtain reveal after the card has visibly begun to dissolve.
+    // Reveal the real invitation after the stationery has faded away.
     addTimer(() => {
-      setIsCurtainsOpening(true);
-    }, 850);
-
-    // Step 4: Build the warm center light while the curtains continue their full travel.
-    addTimer(() => {
-      setIsRevealingLight(true);
-    }, 1900);
-
-    // Start the page reveal as the stationery finishes dissolving, not after
-    // the stage has become empty. The golden bloom bridges both scenes.
-    addTimer(() => {
-      setIsHandoffTransitioning(true);
       if (onHandoffStart) onHandoffStart();
-    }, 2050);
+    }, 2280);
 
-    // Fade the stage while its bloom and the invitation hero overlap underneath.
+    // Crossfade the empty stage away while the invitation settles into place.
     addTimer(() => {
       setIsDissolvingOut(true);
-    }, 2550);
+    }, 2580);
 
-    // Keep the overlay mounted until the crossfade has fully resolved.
+    // Keep the overlay mounted until the page transition has finished.
     addTimer(() => {
       if (onOpened) onOpened();
-    }, 3700);
+    }, 3550);
   }, [addTimer, onHandoffStart, onOpened]);
 
   return (
     <div
       className={`cinematic-stage-overlay ${
         isDissolvingOut ? "stage-dissolving-out" : ""
-      } ${isRevealingLight ? "stage-revealing-light" : ""} ${
-        isHandoffTransitioning ? "stage-handoff-started" : ""
       }`}
       aria-label="Wedding invitation cinematic opening"
     >
-      {/* Warm Ambient Theatrical Lighting */}
-      <div className="stage-theatrical-glow" aria-hidden="true" />
-      <div className="stage-vignette-frame" aria-hidden="true" />
-
       {/* Layer 1: Realistic Heavy Velvet Theatre Curtains */}
       <VelvetCurtains isOpening={isCurtainsOpening} />
 
-      {/* Layer 2: 60 FPS HTML5 Canvas Luminous Wedding Dust Engine */}
-      <DustCanvas isDissolving={isDissolving} cardBoundsRef={cardRef} />
-
-      {/* Layer 3: Physical Ivory Cotton Rag Stationery with Progressive Structural Dissolution */}
+      {/* Invitation stationery fades away cleanly after the curtains open. */}
       <CardStationery
         invitation={invitation}
         isAnticipating={isAnticipating}
