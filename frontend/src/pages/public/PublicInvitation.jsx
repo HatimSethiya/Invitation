@@ -139,15 +139,15 @@ function PublicInvitation() {
         }}
         transition={{
           opacity: {
-            duration: 1.15,
+            duration: 1.55,
             ease: [0.22, 1, 0.36, 1],
           },
           y: {
-            duration: 1.25,
+            duration: 1.65,
             ease: [0.22, 1, 0.36, 1],
           },
           scale: {
-            duration: 1.35,
+            duration: 1.80,
             ease: [0.22, 1, 0.36, 1],
           },
         }}
