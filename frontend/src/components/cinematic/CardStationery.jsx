@@ -14,8 +14,7 @@ function formatDate(value) {
 
 /**
  * CardStationery: Physical 400gsm cotton rag ivory stationery invitation
- * with embossed antique gold details, subtle light sweep on interaction,
- * and progressive structural dissolution into wedding dust.
+ * with embossed antique gold details and a clean, smooth handoff animation.
  */
 function CardStationery({
   invitation,
@@ -62,12 +61,6 @@ function CardStationery({
       <div className="stationery-card">
         {/* Subtle Paper Texture & Watermark */}
         <div className="card-paper-texture" />
-
-        {/* Soft Diagonal Light Sweep (Triggers on Tap 0.6s - 0.9s) */}
-        <div className="card-light-sweep" />
-
-        {/* Dissolution Glowing Ember Boundary */}
-        <div className="card-dissolve-ember" />
 
         {/* Delicate Antique Gold Double Border */}
         <div className="card-gold-border-outer">
