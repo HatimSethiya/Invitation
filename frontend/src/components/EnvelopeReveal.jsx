@@ -77,7 +77,7 @@ function EnvelopeReveal({ invitation, onHandoffStart, onOpened }) {
     // Keep the overlay mounted until the page transition has finished.
     addTimer(() => {
       if (onOpened) onOpened();
-    }, 3550);
+    }, 3800);
   }, [addTimer, onHandoffStart, onOpened]);
 
   return (
