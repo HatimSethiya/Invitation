@@ -14,6 +14,7 @@ function EnvelopeReveal({ invitation, onHandoffStart, onOpened }) {
   const [isAnticipating, setIsAnticipating] = useState(false);
   const [isDissolving, setIsDissolving] = useState(false);
   const [isCurtainsOpening, setIsCurtainsOpening] = useState(false);
+  const [isHandoffActive, setIsHandoffActive] = useState(false);
   const [isDissolvingOut, setIsDissolvingOut] = useState(false);
 
   const hasTriggeredRef = useRef(false);
@@ -46,6 +47,7 @@ function EnvelopeReveal({ invitation, onHandoffStart, onOpened }) {
     if (prefersReducedMotion) {
       setIsCurtainsOpening(true);
       setIsDissolving(true);
+      setIsHandoffActive(true);
       setIsDissolvingOut(true);
       if (onHandoffStart) onHandoffStart();
       addTimer(() => {
@@ -58,16 +60,17 @@ function EnvelopeReveal({ invitation, onHandoffStart, onOpened }) {
     setIsAnticipating(true);
     setIsCurtainsOpening(true);
 
-    // Once the curtains are nearly open, fade the card away with a plain scale
-    // transition instead of gold embers, particles, or a light bloom.
+    // Start revealing the real invitation behind the opening before the old card
+    // exits, so the two visuals overlap instead of exposing the dark stage.
+    addTimer(() => {
+      setIsHandoffActive(true);
+      if (onHandoffStart) onHandoffStart();
+    }, 1480);
+
+    // Fade the stationery out with a plain scale transition, without glow effects.
     addTimer(() => {
       setIsDissolving(true);
-    }, 1750);
-
-    // Reveal the real invitation after the stationery has faded away.
-    addTimer(() => {
-      if (onHandoffStart) onHandoffStart();
-    }, 2280);
+    }, 1720);
 
     // Crossfade the empty stage away while the invitation settles into place.
     addTimer(() => {
@@ -83,8 +86,8 @@ function EnvelopeReveal({ invitation, onHandoffStart, onOpened }) {
   return (
     <div
       className={`cinematic-stage-overlay ${
-        isDissolvingOut ? "stage-dissolving-out" : ""
-      }`}
+        isHandoffActive ? "stage-handoff-active" : ""
+      } ${isDissolvingOut ? "stage-dissolving-out" : ""}`}
       aria-label="Wedding invitation cinematic opening"
     >
       {/* Layer 1: Realistic Heavy Velvet Theatre Curtains */}
