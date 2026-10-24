@@ -215,11 +215,11 @@ function PublicInvitation() {
                       <div><strong>{details.programmeTime}</strong></div>
                     </div>
                   )}
-                  {hasValue(programmeVenue) && (
+                  {(hasValue(programmeVenue) || hasValue(programmeAddress)) && (
                     <div className="bohra-detail-row">
                       <span className="bohra-detail-icon" aria-hidden="true">⌖</span>
                       <div>
-                        <strong>{programmeVenue}</strong>
+                        <strong>{programmeVenue || "Venue"}</strong>
                         {hasValue(programmeAddress) && <span>{programmeAddress}</span>}
                       </div>
                     </div>
@@ -234,12 +234,12 @@ function PublicInvitation() {
               </section>
 
               {Array.isArray(invitation.events) && invitation.events.some((event) =>
-                hasValue(event.title) || hasValue(event.venue) || hasValue(event.time)
+                hasValue(event.title) || hasValue(event.venue) || hasValue(event.time) || event.date || hasValue(event.description)
               ) && (
                 <section className="bohra-additional-events">
                   <span className="bohra-section-kicker">Additional Programme</span>
                   {invitation.events.filter((event) =>
-                    hasValue(event.title) || hasValue(event.venue) || hasValue(event.time)
+                    hasValue(event.title) || hasValue(event.venue) || hasValue(event.time) || event.date || hasValue(event.description)
                   ).map((event) => (
                     <article className="bohra-extra-event glass-panel" key={event._id || event.title}>
                       <h3>{event.title || event.type}</h3>
