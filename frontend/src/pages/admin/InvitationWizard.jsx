@@ -98,7 +98,6 @@ function InvitationWizard() {
 
     audio.pause();
     audio.src = track.audioUrl;
-    audio.currentTime = 0;
     setPreviewTrackId(track.id);
     setMusicError("");
 
