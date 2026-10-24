@@ -6,6 +6,7 @@ const {
   updateInvitation,
   deleteInvitation,
   updateInvitationStatus,
+  updateInvitationTheme,
   getPublicInvitation,
 } = require("../controllers/invitationController");
 const { protect, requireAdmin } = require("../middleware/authMiddleware");
@@ -21,6 +22,7 @@ router.get("/:id", getAdminInvitation);
 router.post("/", createInvitation);
 router.put("/:id", updateInvitation);
 router.patch("/:id/status", updateInvitationStatus);
+router.patch("/:id/theme", updateInvitationTheme);
 router.delete("/:id", deleteInvitation);
 
 module.exports = router;
