@@ -80,6 +80,35 @@ const musicSchema = new mongoose.Schema(
   { _id: false }
 );
 
+const bohraDetailsSchema = new mongoose.Schema(
+  {
+    openingBlessing: { type: String, trim: true, default: "With The Grace of Allah & Panjatan Pak (AS)" },
+    razaDuaLine: { type: String, trim: true, default: "With Raza & Dua Mubarak of" },
+    spiritualLeader: { type: String, trim: true, default: "Aqa Maula Syedna Mufaddal Saifuddin (TUS)" },
+    hostFamilyOne: { type: String, trim: true, default: "" },
+    hostBridge: { type: String, trim: true, default: "Thereafter" },
+    hostFamilyTwo: { type: String, trim: true, default: "" },
+    invitationWording: { type: String, trim: true, default: "Cordially Invite & Request The Honor Of Your Presence To Grace The Wedding Ceremony Of Their Grand Son" },
+    brideFamilyLine: { type: String, trim: true, default: "" },
+    nikahOfficiantIntro: { type: String, trim: true, default: "Nikah Solemnised On The Hand Mubarak Of His Holiness" },
+    nikahOfficiant: { type: String, trim: true, default: "" },
+    programmeHeading: { type: String, trim: true, default: "Programme Insha Allah" },
+    programmeTitle: { type: String, trim: true, default: "Daris & Dinner" },
+    hijriDate: { type: String, trim: true, default: "" },
+    programmeTime: { type: String, trim: true, default: "" },
+    programmeVenue: { type: String, trim: true, default: "" },
+    invitees: { type: String, trim: true, default: "" },
+    complimentsFrom: { type: String, trim: true, default: "" },
+    specialRequest: { type: String, trim: true, default: "" },
+    heavenlyBlessings: { type: String, trim: true, default: "" },
+    senderName: { type: String, trim: true, default: "" },
+    senderFirm: { type: String, trim: true, default: "" },
+    senderAddress: { type: String, trim: true, default: "" },
+    senderContacts: { type: String, trim: true, default: "" },
+  },
+  { _id: false }
+);
+
 const invitationSchema = new mongoose.Schema(
   {
     title: {
@@ -112,6 +141,10 @@ const invitationSchema = new mongoose.Schema(
     },
     couple: {
       type: coupleSchema,
+      default: () => ({}),
+    },
+    bohraDetails: {
+      type: bohraDetailsSchema,
       default: () => ({}),
     },
     events: {
