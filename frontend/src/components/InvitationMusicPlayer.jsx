@@ -70,27 +70,16 @@ function InvitationMusicPlayer({ music, visible, audioRef: sharedAudioRef }) {
         type="button"
         onClick={togglePlayback}
         aria-label={isPlaying ? "Pause wedding music" : "Resume wedding music"}
-        title={isPlaying ? "Pause music" : "Resume music"}
+        title={playError || (isPlaying ? "Pause music" : "Resume music")}
         aria-pressed={isPlaying}
       >
         <span className="music-player-glyph" aria-hidden="true">{isPlaying ? "Ⅱ" : "♫"}</span>
       </button>
-      <div className="music-player-track">
-        <strong>{music.title || "Wedding instrumental"}</strong>
-        {music.artist && <span>{music.artist}</span>}
-        {music.attribution && (
-          <span className="music-player-credit">Music by {music.attribution}</span>
-        )}
-      </div>
-      <div className="music-player-links">
-        {music.shareUrl && (
-          <a href={music.shareUrl} target="_blank" rel="noreferrer">Track</a>
-        )}
-        {music.licenseUrl && (
-          <a href={music.licenseUrl} target="_blank" rel="noreferrer">License</a>
-        )}
-      </div>
-      {playError && <span className="music-player-error" role="status">{playError}</span>}
+      {playError && (
+        <span className="music-player-error" role="status">
+          {playError}
+        </span>
+      )}
     </aside>
   );
 }
