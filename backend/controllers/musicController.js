@@ -1,4 +1,17 @@
 const JAMENDO_API_URL = "https://api.jamendo.com/v3.0/tracks/";
+const CATALOG_CACHE_TTL_MS = 5 * 60 * 1000;
+const CATALOG_CACHE_MAX_ENTRIES = 60;
+const catalogCache = new Map();
+
+const isUsableCatalog = (payload) =>
+  payload?.headers?.status === "success" && Array.isArray(payload.results);
+
+const getProviderError = (payload) =>
+  [
+    payload?.headers?.error_message,
+    payload?.error_description,
+    payload?.message,
+  ].find((value) => typeof value === "string" && value.trim()) || "";
 
 const getInstrumentalCatalog = async (req, res) => {
   const clientId =
@@ -12,43 +25,86 @@ const getInstrumentalCatalog = async (req, res) => {
     });
   }
 
-  const query = typeof req.query.query === "string"
+  const rawQuery = typeof req.query.query === "string"
     ? req.query.query.trim().slice(0, 100)
     : "";
+  // Instrumental is already enforced by vocalinstrumental, so treat common
+  // instrumental-only searches (including the typo seen in the UI) as browse.
+  const query = /^(?:instrumentals?|instrnmental|instrumental music)$/i.test(rawQuery)
+    ? ""
+    : rawQuery;
   const limit = Math.min(Math.max(Number.parseInt(req.query.limit, 10) || 24, 1), 24);
   const offset = Math.min(Math.max(Number.parseInt(req.query.offset, 10) || 0, 0), 2000);
+  const cacheKey = `${query.toLowerCase()}|${offset}|${limit}`;
+  const cached = catalogCache.get(cacheKey);
+
+  if (cached && cached.expiresAt > Date.now()) {
+    catalogCache.delete(cacheKey);
+    catalogCache.set(cacheKey, cached);
+    return res.json(cached.payload);
+  }
+
+  if (cached) catalogCache.delete(cacheKey);
 
   try {
-    const params = new URLSearchParams({
+    const baseParams = new URLSearchParams({
       client_id: clientId,
       format: "json",
       limit: String(limit),
       offset: String(offset),
       audioformat: "mp32",
       vocalinstrumental: "instrumental",
-      include: "licenses musicinfo",
     });
 
-    if (query) params.set("search", query);
+    if (query) baseParams.set("search", query);
 
-    const response = await fetch(`${JAMENDO_API_URL}?${params.toString()}`, {
-      signal: AbortSignal.timeout(9000),
-    });
+    // Request licence metadata first. If the provider rejects optional metadata,
+    // retry the same page without it so tracks can still be browsed and previewed.
+    const detailedParams = new URLSearchParams(baseParams);
+    detailedParams.set("include", "licenses");
 
-    if (!response.ok) {
+    const requestCatalog = async (params) => {
+      const response = await fetch(`${JAMENDO_API_URL}?${params.toString()}`, {
+        signal: AbortSignal.timeout(9000),
+      });
+      let payload = null;
+
+      try {
+        payload = await response.json();
+      } catch {
+        // The provider may return a non-JSON error body.
+      }
+
+      return {
+        response,
+        payload,
+        usable: response.ok && isUsableCatalog(payload),
+      };
+    };
+
+    let result = await requestCatalog(detailedParams);
+    if (!result.usable) {
+      const fallback = await requestCatalog(baseParams);
+      if (fallback.usable || getProviderError(fallback.payload)) result = fallback;
+    }
+
+    if (!result.usable) {
+      const providerMessage = getProviderError(result.payload);
+      console.error("Jamendo catalogue response was unusable:", {
+        status: result.payload?.headers?.status || result.response?.status || "unknown",
+        code: result.payload?.headers?.code,
+        message: providerMessage || "No provider error message",
+      });
+
       return res.status(502).json({
         success: false,
-        message: "The instrumental catalogue is temporarily unavailable. Please try again.",
+        message: providerMessage
+          ? `Music catalogue error: ${providerMessage}`
+          : "Jamendo returned an unexpected response. Check the API client ID and try again.",
       });
     }
 
-    const payload = await response.json();
-    if (payload.headers?.status !== "success" || !Array.isArray(payload.results)) {
-      return res.status(502).json({
-        success: false,
-        message: "The music provider did not return a usable track list.",
-      });
-    }
+    const payload = result.payload;
 
     const tracks = payload.results
       .filter((track) => typeof track.audio === "string" && track.audio.startsWith("https://"))
@@ -71,7 +127,7 @@ const getInstrumentalCatalog = async (req, res) => {
         };
       });
 
-    return res.json({
+    const catalogPayload = {
       success: true,
       tracks,
       offset,
@@ -79,7 +135,19 @@ const getInstrumentalCatalog = async (req, res) => {
       hasMore: payload.results.length === limit,
       provider: "Jamendo",
       message: "Stream tracks directly; no audio file is added to the project.",
+    };
+
+    catalogCache.set(cacheKey, {
+      expiresAt: Date.now() + CATALOG_CACHE_TTL_MS,
+      payload: catalogPayload,
     });
+
+    if (catalogCache.size > CATALOG_CACHE_MAX_ENTRIES) {
+      const oldestKey = catalogCache.keys().next().value;
+      if (oldestKey !== undefined) catalogCache.delete(oldestKey);
+    }
+
+    return res.json(catalogPayload);
   } catch (error) {
     console.error("Instrumental catalogue error:", error.message);
     return res.status(502).json({
