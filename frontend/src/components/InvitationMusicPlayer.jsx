@@ -75,11 +75,7 @@ function InvitationMusicPlayer({ music, visible, audioRef: sharedAudioRef }) {
       >
         <span className="music-player-glyph" aria-hidden="true">{isPlaying ? "Ⅱ" : "♫"}</span>
       </button>
-      {playError && (
-        <span className="music-player-error" role="status">
-          {playError}
-        </span>
-      )}
+
     </aside>
   );
 }
