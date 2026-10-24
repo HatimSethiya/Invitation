@@ -933,3 +933,141 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
   .music-track-card,
   .invitation-music-player { transition: none; }
 }
+
+
+/* Existing invitation music library dialog */
+.music-dialog-backdrop {
+  position: fixed;
+  z-index: 2000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: clamp(10px, 3vw, 26px);
+  background: rgba(12, 22, 16, .54);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  animation: musicDialogBackdropIn .22s ease both;
+}
+.music-dialog {
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 850px);
+  max-height: min(90svh, 900px);
+  min-height: 0;
+  overflow: hidden;
+  padding: clamp(15px, 3vw, 27px);
+  border: 1px solid rgba(177,138,66,.40);
+  border-radius: clamp(20px, 3vw, 30px);
+  color: #294135;
+  background:
+    radial-gradient(ellipse at 4% 0%, rgba(220,232,209,.52), transparent 36%),
+    linear-gradient(145deg, rgba(255,253,247,.98), rgba(244,239,222,.98));
+  box-shadow: 0 30px 95px rgba(7, 18, 11, .34), inset 0 1px 0 rgba(255,255,255,.98);
+  animation: musicDialogPanelIn .28s cubic-bezier(.22, 1, .36, 1) both;
+}
+.music-dialog-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+  padding-bottom: 17px;
+  border-bottom: 1px solid rgba(177,138,66,.24);
+}
+.music-dialog-header h2 {
+  margin: 0;
+  color: #244a3a;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.65rem, 4vw, 2.35rem);
+  font-weight: 600;
+  line-height: 1.08;
+}
+.music-dialog-header p {
+  max-width: 560px;
+  margin: 7px 0 0;
+  color: #6d7769;
+  font-size: .88rem;
+  line-height: 1.55;
+}
+.music-dialog-close {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  place-items: center;
+  border: 1px solid rgba(177,138,66,.28);
+  border-radius: 50%;
+  color: #315642;
+  background: rgba(255,255,255,.72);
+  font-size: 1.7rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.music-dialog .music-search-row {
+  flex: 0 0 auto;
+  margin: 17px 0 12px;
+}
+.music-dialog .music-library-note { flex: 0 0 auto; margin: 0 0 10px; }
+.music-dialog .music-library-error { flex: 0 0 auto; }
+.music-dialog-track-list {
+  flex: 1 1 auto;
+  min-height: 110px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 3px 4px 5px 1px;
+  scrollbar-gutter: stable;
+}
+.music-dialog-track-list .music-track-card {
+  grid-template-columns: 54px minmax(0, 1fr) auto;
+  gap: 12px;
+  padding: 10px;
+}
+.music-dialog-track-list .music-track-artwork {
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+}
+.music-dialog-track-list .music-track-info strong { font-size: .9rem; }
+.music-dialog-track-list .music-track-actions {
+  flex-direction: row;
+  align-items: center;
+}
+.music-dialog-track-list .music-track-actions .small-button { white-space: nowrap; }
+.music-dialog .music-load-more {
+  flex: 0 0 auto;
+  margin: 14px 0 0;
+}
+@keyframes musicDialogBackdropIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes musicDialogPanelIn {
+  from { opacity: 0; transform: translateY(12px) scale(.99); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@media (max-width: 650px) {
+  .music-dialog-backdrop { padding: 7px; }
+  .music-dialog {
+    width: 100%;
+    max-height: 94svh;
+    padding: 14px 11px;
+    border-radius: 22px;
+  }
+  .music-dialog-header h2 { font-size: 1.7rem; }
+  .music-dialog .music-search-row { align-items: stretch; flex-direction: column; }
+  .music-dialog .music-search-row .primary-button { width: 100%; }
+  .music-dialog-track-list .music-track-card {
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 9px;
+  }
+  .music-dialog-track-list .music-track-artwork { width: 44px; height: 44px; }
+  .music-dialog-track-list .music-track-actions {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    width: 100%;
+  }
+  .music-dialog-track-list .music-track-actions button { flex: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .music-dialog-backdrop,
+  .music-dialog { animation: none; }
+}
