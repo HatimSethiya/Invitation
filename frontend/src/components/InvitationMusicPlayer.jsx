@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
-function InvitationMusicPlayer({ music, visible }) {
-  const audioRef = useRef(null);
+function InvitationMusicPlayer({ music, visible, audioRef: sharedAudioRef }) {
+  const localAudioRef = useRef(null);
+  const audioRef = sharedAudioRef || localAudioRef;
   const [isPlaying, setIsPlaying] = useState(false);
   const [playError, setPlayError] = useState("");
 
@@ -39,7 +40,7 @@ function InvitationMusicPlayer({ music, visible }) {
       setIsPlaying(true);
     } catch {
       setIsPlaying(false);
-      setPlayError("Tap play again if your browser blocked audio.");
+      setPlayError("Music could not start. Tap the music icon to retry.");
     }
   };
 
@@ -65,14 +66,14 @@ function InvitationMusicPlayer({ music, visible }) {
         }}
       />
       <button
-        className="music-player-toggle"
+        className="music-player-toggle music-player-icon-toggle"
         type="button"
         onClick={togglePlayback}
-        aria-label={isPlaying ? "Pause wedding music" : "Play wedding music"}
+        aria-label={isPlaying ? "Pause wedding music" : "Resume wedding music"}
+        title={isPlaying ? "Pause music" : "Resume music"}
         aria-pressed={isPlaying}
       >
         <span className="music-player-glyph" aria-hidden="true">{isPlaying ? "Ⅱ" : "♫"}</span>
-        <span>{isPlaying ? "Pause music" : "Play music"}</span>
       </button>
       <div className="music-player-track">
         <strong>{music.title || "Wedding instrumental"}</strong>
