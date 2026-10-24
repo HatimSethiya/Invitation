@@ -26,7 +26,7 @@ const getInstrumentalCatalog = async (req, res) => {
       offset: String(offset),
       audioformat: "mp32",
       vocalinstrumental: "instrumental",
-      include: "licenses,musicinfo",
+      include: "licenses musicinfo",
     });
 
     if (query) params.set("search", query);
