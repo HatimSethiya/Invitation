@@ -55,6 +55,7 @@ function PublicInvitation() {
   const [error, setError] = useState("");
   const [isUnboxed, setIsUnboxed] = useState(false);
   const [isHandoffStarted, setIsHandoffStarted] = useState(false);
+  const isInvitationInteractive = isHandoffStarted || isUnboxed;
 
   useEffect(() => {
     let active = true;
@@ -122,7 +123,7 @@ function PublicInvitation() {
 
     return (
       <main
-        className={`public-page bohra-public-page ${isUnboxed ? "invitation-revealed" : "invitation-locked"}`}
+        className={`public-page bohra-public-page ${isInvitationInteractive ? "invitation-revealed" : "invitation-locked"}`}
       >
         <AnimatePresence>
           {!isUnboxed && (
@@ -133,7 +134,7 @@ function PublicInvitation() {
             />
           )}
         </AnimatePresence>
-        <InvitationMusicPlayer music={invitation.music} visible={isUnboxed} />
+        <InvitationMusicPlayer music={invitation.music} visible={isInvitationInteractive} />
 
         <motion.div
           className="invitation-body bohra-invitation-body"
@@ -300,7 +301,7 @@ function PublicInvitation() {
   return (
     <main
       className={`public-page ${themeClass} ${
-        isUnboxed ? "invitation-revealed" : "invitation-locked"
+        isInvitationInteractive ? "invitation-revealed" : "invitation-locked"
       }`}
     >
       {/* 3D Envelope Unboxing Overlay with GSAP & Vanilla-Tilt */}
@@ -313,7 +314,7 @@ function PublicInvitation() {
           />
         )}
       </AnimatePresence>
-      <InvitationMusicPlayer music={invitation.music} visible={isUnboxed} />
+      <InvitationMusicPlayer music={invitation.music} visible={isInvitationInteractive} />
 
       {/* Main Guest-Facing Invitation Body Animated via Motion */}
       <motion.div
