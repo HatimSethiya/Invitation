@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../../services/api";
 import ImageUpload from "../../components/ImageUpload";
 
-const steps = ["Basic & Style", "Couple", "Bohra Details", "Events", "Family & Story", "Venue", "Review"];
+const steps = ["Basic & Style", "Couple", "Bohra Details", "Events", "Family & Story", "Venue", "Music", "Review"];
 const eventTemplate = { type: "Wedding", title: "", date: "", time: "", venue: "", address: "", description: "", mapUrl: "" };
 const familyTemplate = { name: "", relation: "", side: "other" };
 const galleryTemplate = { imageUrl: "", caption: "" };
@@ -13,6 +13,15 @@ function InvitationWizard() {
   const [step, setStep] = useState(0);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [musicQuery, setMusicQuery] = useState("");
+  const [musicTracks, setMusicTracks] = useState([]);
+  const [musicLoading, setMusicLoading] = useState(false);
+  const [musicError, setMusicError] = useState("");
+  const [musicCatalogLoaded, setMusicCatalogLoaded] = useState(false);
+  const [musicOffset, setMusicOffset] = useState(0);
+  const [musicHasMore, setMusicHasMore] = useState(false);
+  const [previewTrackId, setPreviewTrackId] = useState("");
+  const previewAudioRef = useRef(null);
   const [form, setForm] = useState({
     title: "", slug: "", weddingDate: "", theme: "bohraNikah",
     couple: { brideName: "", groomName: "", bridePhoto: "", groomPhoto: "", couplePhoto: "", brideBio: "", groomBio: "" },
@@ -46,10 +55,101 @@ function InvitationWizard() {
     story: [{ title: "", content: "", image: "" }],
     gallery: [{ ...galleryTemplate }],
     venue: { name: "", address: "", city: "", latitude: "", longitude: "", mapUrl: "" },
-    music: { audioUrl: "", title: "", autoplay: false, loop: true }
+    music: { audioUrl: "", title: "", artist: "", provider: "", trackId: "", shareUrl: "", licenseUrl: "", attribution: "", autoplay: false, loop: true }
   });
 
   const isBohraTemplate = form.theme === "bohraNikah";
+
+  const loadMusicTracks = useCallback(async ({ query = "", offset = 0, append = false } = {}) => {
+    setMusicLoading(true);
+    setMusicError("");
+    try {
+      const response = await api.get("/music/catalog", {
+        params: { query, offset, limit: 24 },
+      });
+      const tracks = Array.isArray(response.data.tracks) ? response.data.tracks : [];
+      setMusicTracks((current) => append ? [...current, ...tracks] : tracks);
+      setMusicOffset(Number(response.data.nextOffset ?? offset + tracks.length));
+      setMusicHasMore(Boolean(response.data.hasMore));
+      setMusicCatalogLoaded(true);
+    } catch (err) {
+      setMusicError(err.response?.data?.message || "Unable to load instrumental tracks. Try again.");
+      setMusicCatalogLoaded(true);
+    } finally {
+      setMusicLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (step === 6 && !musicCatalogLoaded && !musicLoading) {
+      loadMusicTracks();
+    }
+  }, [step, musicCatalogLoaded, musicLoading, loadMusicTracks]);
+
+  const previewTrack = async (track) => {
+    const audio = previewAudioRef.current;
+    if (!audio) return;
+
+    if (previewTrackId === track.id && !audio.paused) {
+      audio.pause();
+      setPreviewTrackId("");
+      return;
+    }
+
+    audio.pause();
+    audio.src = track.audioUrl;
+    audio.currentTime = 0;
+    setPreviewTrackId(track.id);
+    setMusicError("");
+
+    try {
+      await audio.play();
+    } catch {
+      setPreviewTrackId("");
+      setMusicError("The preview could not start. Try this track again.");
+    }
+  };
+
+  const selectMusicTrack = (track) => {
+    setForm((current) => ({
+      ...current,
+      music: {
+        ...current.music,
+        audioUrl: track.audioUrl,
+        title: track.title,
+        artist: track.artist,
+        provider: track.provider || "jamendo",
+        trackId: track.id,
+        shareUrl: track.shareUrl || "",
+        licenseUrl: track.licenseUrl || "",
+        attribution: track.attribution || "",
+        autoplay: false,
+      },
+    }));
+    if (previewAudioRef.current) previewAudioRef.current.pause();
+    setPreviewTrackId("");
+    setMusicError("");
+  };
+
+  const clearMusicTrack = () => {
+    setForm((current) => ({
+      ...current,
+      music: {
+        ...current.music,
+        audioUrl: "",
+        title: "",
+        artist: "",
+        provider: "",
+        trackId: "",
+        shareUrl: "",
+        licenseUrl: "",
+        attribution: "",
+        autoplay: false,
+      },
+    }));
+    if (previewAudioRef.current) previewAudioRef.current.pause();
+    setPreviewTrackId("");
+  };
 
   const root = (key, value) => setForm((current) => ({ ...current, [key]: value }));
   const nested = (group, key, value) => setForm((current) => ({ ...current, [group]: { ...current[group], [key]: value } }));
@@ -138,7 +238,118 @@ function InvitationWizard() {
               </div>
             </div>
           </div>
-        ))}{step === 5 && (isBohraTemplate ? <div className="form-section"><h2>Venue & directions</h2><p className="section-note">No gallery is needed for the Bohra Nikah design. Add the venue address and optional map link.</p><div className="repeat-card"><div className="form-grid"><label>Venue name<input value={form.venue.name} onChange={(e) => nested("venue", "name", e.target.value)} /></label><label>City<input value={form.venue.city} onChange={(e) => nested("venue", "city", e.target.value)} /></label><label className="full">Address<input value={form.venue.address} onChange={(e) => nested("venue", "address", e.target.value)} /></label><label className="full">Google Maps URL<input value={form.venue.mapUrl} onChange={(e) => nested("venue", "mapUrl", e.target.value)} /></label></div></div></div> : <div className="form-section"><div className="section-title-row"><div><h2>Gallery & venue</h2><p className="section-note">Upload your memories and add the main celebration location.</p></div><button className="small-button" onClick={() => add("gallery", galleryTemplate)}>+ Photo</button></div>{form.gallery.map((photo, index) => <div className="repeat-card" key={index}><div className="form-grid"><div className="full"><ImageUpload label={`Gallery photo ${index + 1}`} value={photo.imageUrl} onChange={(value) => item("gallery", index, "imageUrl", value)} /></div><label>Caption<input value={photo.caption} onChange={(e) => item("gallery", index, "caption", e.target.value)} /></label></div></div>)}<div className="repeat-card"><h3>Main venue</h3><div className="form-grid"><label>Name<input value={form.venue.name} onChange={(e) => nested("venue", "name", e.target.value)} /></label><label>City<input value={form.venue.city} onChange={(e) => nested("venue", "city", e.target.value)} /></label><label className="full">Address<input value={form.venue.address} onChange={(e) => nested("venue", "address", e.target.value)} /></label><label className="full">Google Maps URL<input value={form.venue.mapUrl} onChange={(e) => nested("venue", "mapUrl", e.target.value)} /></label></div></div></div>)}{step === 6 && <div className="form-section bohra-review-section"><h2>Review your invitation</h2><p className="section-note">Check the key details before creating the draft.</p><div className="bohra-review-grid"><div><span>Design</span><strong>{form.theme === "bohraNikah" ? "Bohra Nikah · Emerald / Ivory / Gold" : form.theme === "royalRose" ? "Royal Rose" : form.theme === "emeraldGarden" ? "Emerald Garden" : "Ivory Heritage"}</strong></div><div><span>Couple</span><strong>{[form.couple.groomName, form.couple.brideName].filter(Boolean).join(" Weds ") || "Names not entered yet"}</strong></div><div><span>Programme</span><strong>{form.bohraDetails.programmeTitle || "Not specified"}</strong></div><div><span>Date</span><strong>{form.weddingDate ? new Date(form.weddingDate + "T12:00:00").toLocaleDateString(undefined, { dateStyle: "long" }) : "Not specified"}</strong></div></div><div className="publish-note"><strong>Ready to create?</strong><span>This saves as a draft first. Publish the guest link from the dashboard. Bohra Nikah layout does not display couple photos or a gallery.</span></div></div>}
+        ))}{step === 5 && (isBohraTemplate ? <div className="form-section"><h2>Venue & directions</h2><p className="section-note">No gallery is needed for the Bohra Nikah design. Add the venue address and optional map link.</p><div className="repeat-card"><div className="form-grid"><label>Venue name<input value={form.venue.name} onChange={(e) => nested("venue", "name", e.target.value)} /></label><label>City<input value={form.venue.city} onChange={(e) => nested("venue", "city", e.target.value)} /></label><label className="full">Address<input value={form.venue.address} onChange={(e) => nested("venue", "address", e.target.value)} /></label><label className="full">Google Maps URL<input value={form.venue.mapUrl} onChange={(e) => nested("venue", "mapUrl", e.target.value)} /></label></div></div></div> : <div className="form-section"><div className="section-title-row"><div><h2>Gallery & venue</h2><p className="section-note">Upload your memories and add the main celebration location.</p></div><button className="small-button" onClick={() => add("gallery", galleryTemplate)}>+ Photo</button></div>{form.gallery.map((photo, index) => <div className="repeat-card" key={index}><div className="form-grid"><div className="full"><ImageUpload label={`Gallery photo ${index + 1}`} value={photo.imageUrl} onChange={(value) => item("gallery", index, "imageUrl", value)} /></div><label>Caption<input value={photo.caption} onChange={(e) => item("gallery", index, "caption", e.target.value)} /></label></div></div>)}<div className="repeat-card"><h3>Main venue</h3><div className="form-grid"><label>Name<input value={form.venue.name} onChange={(e) => nested("venue", "name", e.target.value)} /></label><label>City<input value={form.venue.city} onChange={(e) => nested("venue", "city", e.target.value)} /></label><label className="full">Address<input value={form.venue.address} onChange={(e) => nested("venue", "address", e.target.value)} /></label><label className="full">Google Maps URL<input value={form.venue.mapUrl} onChange={(e) => nested("venue", "mapUrl", e.target.value)} /></label></div></div></div>)}        {step === 6 && <div className="form-section music-library-section">
+          <div className="section-title-row music-library-heading">
+            <div>
+              <h2>Instrumental music library</h2>
+              <p className="section-note">Preview and attach a streamed instrumental track. No MP3 will be uploaded or copied into your project.</p>
+            </div>
+          </div>
+
+          {form.music.audioUrl && (
+            <div className="music-selected-track">
+              <div className="music-selected-icon" aria-hidden="true">♫</div>
+              <div className="music-selected-copy">
+                <span>Selected for this invitation</span>
+                <strong>{form.music.title || "Wedding instrumental"}</strong>
+                {form.music.artist && <small>{form.music.artist}</small>}
+                {form.music.licenseUrl && <a href={form.music.licenseUrl} target="_blank" rel="noreferrer">View track license ↗</a>}
+              </div>
+              <button className="small-button" type="button" onClick={clearMusicTrack}>Remove</button>
+            </div>
+          )}
+
+          <div className="music-search-row">
+            <label className="music-search-field">Find a mood, instrument or track
+              <input
+                value={musicQuery}
+                onChange={(event) => setMusicQuery(event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    event.preventDefault();
+                    loadMusicTracks({ query: musicQuery, offset: 0, append: false });
+                  }
+                }}
+                placeholder="Romantic piano, soft strings, acoustic..."
+              />
+            </label>
+            <button className="primary-button" type="button" disabled={musicLoading} onClick={() => loadMusicTracks({ query: musicQuery, offset: 0, append: false })}>
+              {musicLoading ? "Loading…" : "Search instrumentals"}
+            </button>
+          </div>
+
+          <div className="music-library-note">
+            <span aria-hidden="true">ⓘ</span>
+            <p>Tracks stream from Jamendo. Review each track's license and attribution before publishing your invitation. A browser may require guests to press Play once.</p>
+          </div>
+
+          {musicError && (
+            <div className="music-library-error" role="alert">
+              <span>{musicError}</span>
+              <button className="small-button" type="button" disabled={musicLoading} onClick={() => loadMusicTracks({ query: musicQuery, offset: 0, append: false })}>Retry</button>
+            </div>
+          )}
+
+          {musicLoading && musicTracks.length === 0 && <div className="music-library-empty">Finding instrumentals…</div>}
+          {!musicLoading && !musicError && musicCatalogLoaded && musicTracks.length === 0 && <div className="music-library-empty">No instrumentals found. Try “piano”, “strings”, “acoustic” or clear your search.</div>}
+
+          <div className="music-track-list">
+            {musicTracks.map((track) => {
+              const selected = form.music.trackId === track.id;
+              const previewing = previewTrackId === track.id;
+              return (
+                <article className={`music-track-card ${selected ? "selected" : ""}`} key={track.id}>
+                  <div className="music-track-artwork">
+                    {track.artworkUrl
+                      ? <img src={track.artworkUrl} alt="" loading="lazy" decoding="async" />
+                      : <span aria-hidden="true">♫</span>}
+                  </div>
+                  <div className="music-track-info">
+                    <strong>{track.title}</strong>
+                    <span>{track.artist}</span>
+                    <small>{Math.floor(track.duration / 60)}:{String(Math.floor(track.duration % 60)).padStart(2, "0")} · Instrumental</small>
+                    <div className="music-track-links">
+                      {track.shareUrl && <a href={track.shareUrl} target="_blank" rel="noreferrer">Track details ↗</a>}
+                      {track.licenseUrl && <a href={track.licenseUrl} target="_blank" rel="noreferrer">License ↗</a>}
+                    </div>
+                  </div>
+                  <div className="music-track-actions">
+                    <button className="small-button" type="button" disabled={!track.audioUrl} onClick={() => previewTrack(track)}>
+                      {previewing ? "Pause preview" : "Preview"}
+                    </button>
+                    <button className={selected ? "music-use-button selected" : "music-use-button"} type="button" onClick={() => selectMusicTrack(track)} disabled={selected}>
+                      {selected ? "Added ✓" : "Use track"}
+                    </button>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+
+          {musicLoading && musicTracks.length > 0 && <div className="music-library-loading-more">Loading more tracks…</div>}
+          {musicHasMore && !musicLoading && (
+            <div className="music-load-more">
+              <button className="secondary-button" type="button" onClick={() => loadMusicTracks({ query: musicQuery, offset: musicOffset, append: true })}>Load more instrumentals</button>
+            </div>
+          )}
+
+          <label className="music-option-toggle">
+            <input type="checkbox" checked={form.music.loop !== false} onChange={(event) => nested("music", "loop", event.target.checked)} />
+            <span><strong>Loop selected track</strong><small>Keep the instrumental playing until the guest pauses it.</small></span>
+          </label>
+          <label className="music-option-toggle">
+            <input type="checkbox" checked={form.music.autoplay === true} onChange={(event) => nested("music", "autoplay", event.target.checked)} />
+            <span><strong>Try autoplay after the invitation opens</strong><small>Some browsers block autoplay; the guest can always use the Play control.</small></span>
+          </label>
+          <audio ref={previewAudioRef} preload="none" onEnded={() => setPreviewTrackId("")} onError={() => {
+            if (previewTrackId) {
+              setMusicError("This preview stream is unavailable. Try another instrumental.");
+              setPreviewTrackId("");
+            }
+          }} />
+        </div>}
+
+{step === 7 && <div className="form-section bohra-review-section"><h2>Review your invitation</h2><p className="section-note">Check the key details before creating the draft.</p><div className="bohra-review-grid"><div><span>Design</span><strong>{form.theme === "bohraNikah" ? "Bohra Nikah · Emerald / Ivory / Gold" : form.theme === "royalRose" ? "Royal Rose" : form.theme === "emeraldGarden" ? "Emerald Garden" : "Ivory Heritage"}</strong></div><div><span>Couple</span><strong>{[form.couple.groomName, form.couple.brideName].filter(Boolean).join(" Weds ") || "Names not entered yet"}</strong></div><div><span>Programme</span><strong>{form.bohraDetails.programmeTitle || "Not specified"}</strong></div><div><span>Date</span><strong>{form.weddingDate ? new Date(form.weddingDate + "T12:00:00").toLocaleDateString(undefined, { dateStyle: "long" }) : "Not specified"}</strong></div></div><div className="publish-note"><strong>Ready to create?</strong><span>This saves as a draft first. Publish the guest link from the dashboard. Bohra Nikah layout does not display couple photos or a gallery.</span></div></div>}
 
         {error && <div className="auth-error wizard-error">{error}</div>}
         <footer className="wizard-footer"><button className="secondary-button" onClick={() => setStep((current) => Math.max(0, current - 1))} disabled={step === 0 || saving}>Back</button>{step < steps.length - 1 ? <button className="primary-button" onClick={next}>Continue</button> : <button className="primary-button" onClick={save} disabled={saving}>{saving ? "Creating..." : "Create Draft"}</button>}</footer>
