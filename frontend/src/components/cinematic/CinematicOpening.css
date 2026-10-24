@@ -694,6 +694,8 @@
 
 .cinematic-stage-overlay.stage-handoff-active {
   background-color: transparent;
+  /* The invitation is visible now; let clicks and scrolling reach it. */
+  pointer-events: none;
 }
 
 /* Let the curtains blend into the page instead of sliding away abruptly. */
