@@ -127,6 +127,62 @@ const updateInvitationStatus = async (req, res) => {
   }
 };
 
+const updateInvitationTheme = async (req, res) => {
+  try {
+    const allowedThemes = ["bohraNikah", "royalRose", "emeraldGarden", "ivoryHeritage"];
+    const { theme } = req.body;
+
+    if (!allowedThemes.includes(theme)) {
+      return res.status(400).json({ success: false, message: "Invalid invitation design." });
+    }
+
+    const invitation = await Invitation.findOne({
+      _id: req.params.id,
+      createdBy: req.user.id,
+    });
+    if (!invitation) {
+      return res.status(404).json({ success: false, message: "Invitation not found." });
+    }
+
+    invitation.theme = theme;
+
+    if (theme === "bohraNikah") {
+      const existing = invitation.bohraDetails?.toObject
+        ? invitation.bohraDetails.toObject()
+        : invitation.bohraDetails || {};
+      const firstEvent = invitation.events?.[0];
+
+      invitation.bohraDetails = {
+        openingBlessing: "With The Grace of Allah & Panjatan Pak (AS)",
+        razaDuaLine: "With Raza & Dua Mubarak of",
+        spiritualLeader: "Aqa Maula Syedna Mufaddal Saifuddin (TUS)",
+        hostBridge: "Thereafter",
+        invitationWording: "Cordially Invite & Request The Honor Of Your Presence To Grace The Wedding Ceremony Of Their Grand Son",
+        nikahOfficiantIntro: "Nikah Solemnised On The Hand Mubarak Of His Holiness",
+        programmeHeading: "Programme Insha Allah",
+        programmeTitle: "Daris & Dinner",
+        programmeTime: firstEvent?.time || "",
+        programmeVenue: invitation.venue?.name || firstEvent?.venue || "",
+        ...existing,
+      };
+
+      // Carry over the existing venue/time when those fields were not previously set.
+      if (!invitation.bohraDetails.programmeTime && firstEvent?.time) {
+        invitation.bohraDetails.programmeTime = firstEvent.time;
+      }
+      if (!invitation.bohraDetails.programmeVenue) {
+        invitation.bohraDetails.programmeVenue = invitation.venue?.name || firstEvent?.venue || "";
+      }
+    }
+
+    await invitation.save();
+    return res.json({ success: true, invitation });
+  } catch (error) {
+    console.error("Update invitation theme error:", error);
+    return res.status(500).json({ success: false, message: "Failed to update invitation design." });
+  }
+};
+
 const getPublicInvitation = async (req, res) => {
   try {
     const invitation = await Invitation.findOne({ slug: req.params.slug.toLowerCase(), status: "published" }).lean();
@@ -144,5 +200,6 @@ module.exports = {
   updateInvitation,
   deleteInvitation,
   updateInvitationStatus,
+  updateInvitationTheme,
   getPublicInvitation,
 };
