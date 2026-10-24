@@ -2,9 +2,8 @@
    PREMIUM CINEMATIC WEDDING INVITATION OPENING
    - Realistic Heavy Velvet Drapery with Curved Wavy Inner Edges
    - Cotton Rag Ivory Stationery with Embossed Antique Gold Detailing
-   - Subtle Tactile Anticipation & Diagonal Light Sweep
-   - Progressive Edge-and-Surface Structural Dissolution
-   - High-Performance 60 FPS Canvas Luminous Wedding Dust
+   - Soft transform/opacity motion tuned for mobile performance
+   - Lightweight card fade and staggered velvet curtain reveal
    ========================================================================== */
 
 /* Fullscreen Master Stage */
@@ -52,7 +51,6 @@
   width: 53vw;
   height: 104%;
   overflow: visible;
-  will-change: transform;
 }
 
 .curtain-left {
@@ -71,7 +69,6 @@
   inset: 0;
   background: linear-gradient(180deg, #100107 0%, #20040f 50%, #0d0106 100%);
   transition: transform 2.30s cubic-bezier(0.25, 1, 0.35, 1) 0.35s, opacity 2.30s ease 0.35s;
-  will-change: transform;
 }
 
 /* Individual Vertical Pleats */
@@ -80,9 +77,7 @@
   top: 0;
   height: 100%;
   transform-origin: center top;
-  will-change: transform;
   border-radius: 0 0 16px 12px;
-  filter: drop-shadow(4px 0 14px rgba(0, 0, 0, 0.7));
 }
 
 /* Left Curtain Pleat Distribution Across 53vw */
@@ -306,8 +301,7 @@
    PHYSICAL STATIONERY INVITATION CARD
    - 400gsm Heavy Cotton Rag Ivory Paper
    - Embossed Metallic Antique Gold Framing & Monogram
-   - Diagonal Silky Light Sweep on Interaction
-   - Progressive Edge-and-Surface Structural Dust Dissolution
+   - Lightweight opacity and transform transition
    ========================================================================== */
 .stationery-card-container {
   position: relative;
@@ -343,7 +337,7 @@
   overflow: hidden;
   transform-origin: center center;
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease;
-  will-change: transform, opacity, filter, mask-image;
+  will-change: transform, opacity;
 }
 
 /* Subtle Paper Texture */
@@ -371,23 +365,19 @@
 @keyframes cardExit {
   from {
     opacity: 1;
-    filter: blur(0);
-    transform: scale(1.012) translateY(-4px);
+    transform: translate3d(0, -4px, 0) scale(1.012);
   }
   42% {
     opacity: 0.72;
-    filter: blur(0.35px);
-    transform: scale(1.002) translateY(-6px);
+    transform: translate3d(0, -6px, 0) scale(1.002);
   }
   76% {
     opacity: 0.24;
-    filter: blur(1.35px);
-    transform: scale(0.98) translateY(-10px);
+    transform: translate3d(0, -10px, 0) scale(0.98);
   }
   to {
     opacity: 0;
-    filter: blur(2.4px);
-    transform: scale(0.965) translateY(-13px);
+    transform: translate3d(0, -13px, 0) scale(0.965);
   }
 }
 
@@ -703,8 +693,5 @@
 .cinematic-stage-overlay.stage-handoff-active .curtain-fabric-base,
 .cinematic-stage-overlay.stage-handoff-active .stage-top-drape-shadow {
   opacity: 0;
-  filter: blur(1.4px);
-  transition:
-    opacity 1.90s cubic-bezier(0.22, 1, 0.36, 1) 0.50s,
-    filter 1.90s cubic-bezier(0.22, 1, 0.36, 1) 0.50s;
+  transition: opacity 1.90s cubic-bezier(0.22, 1, 0.36, 1) 0.50s;
 }
