@@ -43,7 +43,7 @@ const getAdminInvitation = async (req, res) => {
 
 const createInvitation = async (req, res) => {
   try {
-    const { title, slug, weddingDate, status, theme, couple, events, family, story, gallery, venue, music } = req.body;
+    const { title, slug, weddingDate, status, theme, couple, bohraDetails, events, family, story, gallery, venue, music } = req.body;
     if (!title?.trim() || !weddingDate) {
       return res.status(400).json({ success: false, message: "Title and wedding date are required." });
     }
@@ -55,6 +55,7 @@ const createInvitation = async (req, res) => {
       status,
       theme,
       couple,
+      bohraDetails,
       events,
       family,
       story,
@@ -76,13 +77,14 @@ const updateInvitation = async (req, res) => {
     const invitation = await Invitation.findOne({ _id: req.params.id, createdBy: req.user.id });
     if (!invitation) return res.status(404).json({ success: false, message: "Invitation not found." });
 
-    const { title, slug, weddingDate, status, theme, couple, events, family, story, gallery, venue, music } = req.body;
+    const { title, slug, weddingDate, status, theme, couple, bohraDetails, events, family, story, gallery, venue, music } = req.body;
     if (title !== undefined) invitation.title = title.trim();
     if (weddingDate !== undefined) invitation.weddingDate = weddingDate;
     if (slug !== undefined && slug.trim() !== invitation.slug) invitation.slug = await uniqueSlug(slug, invitation._id);
     if (status !== undefined) invitation.status = status;
     if (theme !== undefined) invitation.theme = theme;
     if (couple !== undefined) invitation.couple = couple;
+    if (bohraDetails !== undefined) invitation.bohraDetails = bohraDetails;
     if (events !== undefined) invitation.events = events;
     if (family !== undefined) invitation.family = family;
     if (story !== undefined) invitation.story = story;
