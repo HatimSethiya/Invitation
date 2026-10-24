@@ -1,4 +1,7 @@
 const JAMENDO_API_URL = "https://api.jamendo.com/v3.0/tracks/";
+const CATALOG_CACHE_TTL_MS = 5 * 60 * 1000;
+const CATALOG_CACHE_MAX_ENTRIES = 60;
+const catalogCache = new Map();
 
 const getInstrumentalCatalog = async (req, res) => {
   const clientId =
@@ -17,6 +20,16 @@ const getInstrumentalCatalog = async (req, res) => {
     : "";
   const limit = Math.min(Math.max(Number.parseInt(req.query.limit, 10) || 24, 1), 24);
   const offset = Math.min(Math.max(Number.parseInt(req.query.offset, 10) || 0, 0), 2000);
+  const cacheKey = query.toLowerCase() + "|" + offset + "|" + limit;
+  const cached = catalogCache.get(cacheKey);
+
+  if (cached && cached.expiresAt > Date.now()) {
+    catalogCache.delete(cacheKey);
+    catalogCache.set(cacheKey, cached);
+    return res.json(cached.payload);
+  }
+
+  if (cached) catalogCache.delete(cacheKey);
 
   try {
     const params = new URLSearchParams({
@@ -71,7 +84,7 @@ const getInstrumentalCatalog = async (req, res) => {
         };
       });
 
-    return res.json({
+    const catalogPayload = {
       success: true,
       tracks,
       offset,
@@ -79,7 +92,19 @@ const getInstrumentalCatalog = async (req, res) => {
       hasMore: payload.results.length === limit,
       provider: "Jamendo",
       message: "Stream tracks directly; no audio file is added to the project.",
+    };
+
+    catalogCache.set(cacheKey, {
+      expiresAt: Date.now() + CATALOG_CACHE_TTL_MS,
+      payload: catalogPayload,
     });
+
+    if (catalogCache.size > CATALOG_CACHE_MAX_ENTRIES) {
+      const oldestKey = catalogCache.keys().next().value;
+      if (oldestKey !== undefined) catalogCache.delete(oldestKey);
+    }
+
+    return res.json(catalogPayload);
   } catch (error) {
     console.error("Instrumental catalogue error:", error.message);
     return res.status(502).json({
