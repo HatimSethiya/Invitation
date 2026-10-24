@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../../services/api";
 import { useAuth } from "../../context/AuthContext";
+import MusicLibraryDialog from "../../components/MusicLibraryDialog";
 
 function AdminDashboard() {
   const { user, logout } = useAuth();
@@ -9,6 +10,8 @@ function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [themeSaving, setThemeSaving] = useState("");
   const [actionError, setActionError] = useState("");
+  const [musicInvitation, setMusicInvitation] = useState(null);
+  const [musicSaving, setMusicSaving] = useState(false);
 
   const loadInvitations = async () => {
     try { const response = await api.get("/invitations"); setData(response.data); }
@@ -33,6 +36,38 @@ function AdminDashboard() {
       setActionError(err.response?.data?.message || "Unable to change invitation design.");
     } finally {
       setThemeSaving("");
+    }
+  };
+
+  const saveInvitationMusic = async (track) => {
+    if (!musicInvitation) return;
+
+    setMusicSaving(true);
+    setActionError("");
+    const currentMusic = musicInvitation.music || {};
+
+    try {
+      await api.put(`/invitations/${musicInvitation._id}`, {
+        music: {
+          audioUrl: track.audioUrl,
+          title: track.title,
+          artist: track.artist,
+          provider: track.provider || "jamendo",
+          trackId: track.id,
+          shareUrl: track.shareUrl || "",
+          licenseUrl: track.licenseUrl || "",
+          attribution: track.attribution || "",
+          autoplay: currentMusic.autoplay === true,
+          loop: currentMusic.loop !== false,
+        },
+      });
+      setMusicInvitation(null);
+      await loadInvitations();
+    } catch (err) {
+      setActionError(err.response?.data?.message || "Unable to save invitation music.");
+      setMusicInvitation(null);
+    } finally {
+      setMusicSaving(false);
     }
   };
 
@@ -69,6 +104,7 @@ function AdminDashboard() {
                 <span className={`status-pill status-${invitation.status}`}>{invitation.status}</span>
                 <h3>{invitation.title}</h3>
                 <p>{new Date(invitation.weddingDate).toLocaleDateString()} · /i/{invitation.slug}</p>
+                {invitation.music?.title && <p className="invitation-current-music">♫ {invitation.music.title}{invitation.music.artist ? ` · ${invitation.music.artist}` : ""}</p>}
                 <label className="invitation-design-control">
                   <span>Invitation design</span>
                   <select
@@ -85,11 +121,22 @@ function AdminDashboard() {
                   {themeSaving === invitation._id && <small>Saving design…</small>}
                 </label>
               </div>
-              <div className="row-actions">{invitation.status === "published" ? <a className="small-button" href={`/i/${invitation.slug}`} target="_blank" rel="noreferrer">View</a> : <button className="small-button" onClick={() => updateStatus(invitation._id, "published")}>Publish</button>}{invitation.status !== "archived" && <button className="small-button danger" onClick={() => removeInvitation(invitation._id)}>Delete</button>}</div>
+              <div className="row-actions">
+                {invitation.status === "published" ? <a className="small-button" href={`/i/${invitation.slug}`} target="_blank" rel="noreferrer">View</a> : <button className="small-button" onClick={() => updateStatus(invitation._id, "published")}>Publish</button>}
+                <button className="small-button" onClick={() => setMusicInvitation(invitation)} disabled={musicSaving}>{invitation.music?.audioUrl ? "Change music" : "Add music"}</button>
+                {invitation.status !== "archived" && <button className="small-button danger" onClick={() => removeInvitation(invitation._id)}>Delete</button>}
+              </div>
             </article>
           ))}</div>
         )}
       </section>
+      {musicInvitation && (
+        <MusicLibraryDialog
+          selectedTrackId={musicInvitation.music?.trackId || ""}
+          onClose={() => setMusicInvitation(null)}
+          onSelect={saveInvitationMusic}
+        />
+      )}
     </main>
   );
 }
