@@ -72,8 +72,14 @@ const venueSchema = new mongoose.Schema(
 
 const musicSchema = new mongoose.Schema(
   {
-    audioUrl: { type: String, default: "" },
+    audioUrl: { type: String, trim: true, default: "" },
     title: { type: String, trim: true, default: "" },
+    artist: { type: String, trim: true, default: "" },
+    provider: { type: String, enum: ["", "jamendo", "custom"], default: "" },
+    trackId: { type: String, trim: true, default: "" },
+    shareUrl: { type: String, trim: true, default: "" },
+    licenseUrl: { type: String, trim: true, default: "" },
+    attribution: { type: String, trim: true, default: "" },
     autoplay: { type: Boolean, default: false },
     loop: { type: Boolean, default: true },
   },
