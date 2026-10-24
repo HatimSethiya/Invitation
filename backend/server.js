@@ -33,6 +33,24 @@ app.get("/api/health", (req, res) => {
   });
 });
 
+// In production, serve the Vite build from the same origin as the API.
+// This keeps public invitation routes and API calls working on one hosted URL.
+const frontendDistPath = path.join(__dirname, "../frontend/dist");
+app.use(express.static(frontendDistPath));
+
+app.use((req, res, next) => {
+  const isApiRequest = req.path === "/api" || req.path.startsWith("/api/");
+  const isUploadRequest = req.path === "/uploads" || req.path.startsWith("/uploads/");
+
+  if (req.method !== "GET" || isApiRequest || isUploadRequest) {
+    return next();
+  }
+
+  return res.sendFile(path.join(frontendDistPath, "index.html"), (error) => {
+    if (error) next(error);
+  });
+});
+
 const startServer = async () => {
   await connectDB();
   await seedAdmin();
