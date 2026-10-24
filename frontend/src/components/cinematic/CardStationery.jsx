@@ -33,9 +33,9 @@ function CardStationery({
     invitation?.couple?.groomName ||
     "Groom";
 
-  const p1Initial = (bride?.[0] || "B").toUpperCase();
-  const p2Initial = (groom?.[0] || "G").toUpperCase();
-  const monogram = `${p1Initial}&${p2Initial}`;
+  const groomInitial = (groom?.[0] || "G").toUpperCase();
+  const brideInitial = (bride?.[0] || "B").toUpperCase();
+  const monogram = `${groomInitial}&${brideInitial}`;
 
   return (
     <div
@@ -81,9 +81,9 @@ function CardStationery({
 
         {/* Couple Names */}
         <div className="card-couple-block">
-          <h1 className="card-couple-name">{bride}</h1>
-          <span className="card-ampersand">&amp;</span>
           <h1 className="card-couple-name">{groom}</h1>
+          <span className="card-ampersand">&amp;</span>
+          <h1 className="card-couple-name">{bride}</h1>
         </div>
 
         {/* Delicate Floral / Gold Divider */}
