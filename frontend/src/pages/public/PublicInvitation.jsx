@@ -133,7 +133,7 @@ function PublicInvitation() {
             />
           )}
         </AnimatePresence>
-        <InvitationMusicPlayer music={invitation.music} visible={isHandoffStarted || isUnboxed} />
+        <InvitationMusicPlayer music={invitation.music} visible={isUnboxed} />
 
         <motion.div
           className="invitation-body bohra-invitation-body"
@@ -313,7 +313,7 @@ function PublicInvitation() {
           />
         )}
       </AnimatePresence>
-      <InvitationMusicPlayer music={invitation.music} visible={isHandoffStarted || isUnboxed} />
+      <InvitationMusicPlayer music={invitation.music} visible={isUnboxed} />
 
       {/* Main Guest-Facing Invitation Body Animated via Motion */}
       <motion.div
