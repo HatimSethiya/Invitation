@@ -50,7 +50,7 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
   font-family: Georgia, "Times New Roman", serif;
 }
 .bohra-public-page::before {
-  position: fixed;
+  position: absolute;
   z-index: -1;
   inset: 0;
   content: "";
@@ -211,8 +211,8 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
     0 16px 38px rgba(33, 61, 42, .075),
     inset 0 1px 0 rgba(255,255,255,.95),
     inset 0 -1px 0 rgba(174, 141, 72, .09);
-  backdrop-filter: blur(18px) saturate(1.12);
-  -webkit-backdrop-filter: blur(18px) saturate(1.12);
+  backdrop-filter: blur(12px) saturate(1.08);
+  -webkit-backdrop-filter: blur(12px) saturate(1.08);
 }
 .bohra-couple-panel {
   position: relative;
@@ -611,6 +611,10 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
   overflow-wrap: anywhere;
 }
 @media (max-width: 600px) {
+  .glass-panel {
+    backdrop-filter: blur(8px) saturate(1.04);
+    -webkit-backdrop-filter: blur(8px) saturate(1.04);
+  }
   .bohra-public-page { padding: 8px; }
   .bohra-invitation-body { padding: 4px 0; }
   .bohra-invitation-card { padding: 10px; border-radius: 22px; }
