@@ -7,6 +7,8 @@ function AdminDashboard() {
   const { user, logout } = useAuth();
   const [data, setData] = useState({ stats: { total: 0, published: 0, drafts: 0, archived: 0 }, invitations: [] });
   const [loading, setLoading] = useState(true);
+  const [themeSaving, setThemeSaving] = useState("");
+  const [actionError, setActionError] = useState("");
 
   const loadInvitations = async () => {
     try { const response = await api.get("/invitations"); setData(response.data); }
@@ -19,6 +21,19 @@ function AdminDashboard() {
   const updateStatus = async (id, status) => {
     await api.patch(`/invitations/${id}/status`, { status });
     await loadInvitations();
+  };
+
+  const updateTheme = async (id, theme) => {
+    setThemeSaving(id);
+    setActionError("");
+    try {
+      await api.patch(`/invitations/${id}/theme`, { theme });
+      await loadInvitations();
+    } catch (err) {
+      setActionError(err.response?.data?.message || "Unable to change invitation design.");
+    } finally {
+      setThemeSaving("");
+    }
   };
 
   const removeInvitation = async (id) => {
@@ -44,12 +59,32 @@ function AdminDashboard() {
       <section className="invitations-panel">
         <div className="panel-heading"><div><span className="eyebrow">My Invitations</span><h2>Your wedding collection</h2></div><Link className="primary-button" to="/admin/invitations/new">+ Create Invitation</Link></div>
 
+        {actionError && <div className="auth-error wizard-error" role="alert">{actionError}</div>}
         {loading ? <div className="empty-state">Loading invitations...</div> : data.invitations.length === 0 ? (
           <div className="empty-state"><div className="empty-icon">✦</div><h3>Your first invitation starts here</h3><p>Create a beautiful invitation and publish a shareable link for your guests.</p><Link className="primary-button" to="/admin/invitations/new">Create your first invitation</Link></div>
         ) : (
           <div className="invitation-list">{data.invitations.map((invitation) => (
             <article className="invitation-row" key={invitation._id}>
-              <div className="invitation-info"><span className={`status-pill status-${invitation.status}`}>{invitation.status}</span><h3>{invitation.title}</h3><p>{new Date(invitation.weddingDate).toLocaleDateString()} · /i/{invitation.slug}</p></div>
+              <div className="invitation-info">
+                <span className={`status-pill status-${invitation.status}`}>{invitation.status}</span>
+                <h3>{invitation.title}</h3>
+                <p>{new Date(invitation.weddingDate).toLocaleDateString()} · /i/{invitation.slug}</p>
+                <label className="invitation-design-control">
+                  <span>Invitation design</span>
+                  <select
+                    value={invitation.theme || "royalRose"}
+                    disabled={themeSaving === invitation._id}
+                    onChange={(event) => updateTheme(invitation._id, event.target.value)}
+                    aria-label={`Change design for ${invitation.title}`}
+                  >
+                    <option value="bohraNikah">Bohra Nikah · Emerald / Ivory / Gold</option>
+                    <option value="royalRose">Royal Rose</option>
+                    <option value="emeraldGarden">Emerald Garden</option>
+                    <option value="ivoryHeritage">Ivory Heritage</option>
+                  </select>
+                  {themeSaving === invitation._id && <small>Saving design…</small>}
+                </label>
+              </div>
               <div className="row-actions">{invitation.status === "published" ? <a className="small-button" href={`/i/${invitation.slug}`} target="_blank" rel="noreferrer">View</a> : <button className="small-button" onClick={() => updateStatus(invitation._id, "published")}>Publish</button>}{invitation.status !== "archived" && <button className="small-button danger" onClick={() => removeInvitation(invitation._id)}>Delete</button>}</div>
             </article>
           ))}</div>
