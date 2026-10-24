@@ -48,7 +48,6 @@ function MusicLibraryDialog({ selectedTrackId = "", onSelect, onClose }) {
 
     audio.pause();
     audio.src = track.audioUrl;
-    audio.currentTime = 0;
     setPreviewTrackId(track.id);
     setError("");
 
