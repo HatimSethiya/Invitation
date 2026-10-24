@@ -123,7 +123,7 @@ function InvitationWizard() {
         audioUrl: track.audioUrl,
         title: track.title,
         artist: track.artist,
-        provider: track.provider || "jamendo",
+        provider: track.provider || "internet-archive",
         trackId: track.id,
         shareUrl: track.shareUrl || "",
         licenseUrl: track.licenseUrl || "",
@@ -285,7 +285,7 @@ function InvitationWizard() {
 
           <div className="music-library-note">
             <span aria-hidden="true">ⓘ</span>
-            <p>Tracks stream from Jamendo. Review each track's license and attribution before publishing your invitation. A browser may require guests to press Play once.</p>
+            <p>Tracks stream from Internet Archive. Only public-domain, CC0, CC BY and CC BY-SA tracks are listed; review attribution before publishing. A browser may require guests to press Play once.</p>
           </div>
 
           {musicError && (
