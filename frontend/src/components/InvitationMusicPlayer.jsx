@@ -12,7 +12,6 @@ function InvitationMusicPlayer({ music, visible }) {
     audio.pause();
     setIsPlaying(false);
     setPlayError("");
-    audio.load();
   }, [music?.audioUrl]);
 
   useEffect(() => {
