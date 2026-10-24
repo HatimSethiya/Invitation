@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import api from "../../services/api";
 import EnvelopeReveal from "../../components/EnvelopeReveal";
+import InvitationMusicPlayer from "../../components/InvitationMusicPlayer";
 
 function formatDate(value, options = { dateStyle: "long" }) {
   if (!value) return "";
@@ -132,6 +133,7 @@ function PublicInvitation() {
             />
           )}
         </AnimatePresence>
+        <InvitationMusicPlayer music={invitation.music} visible={isHandoffStarted || isUnboxed} />
 
         <motion.div
           className="invitation-body bohra-invitation-body"
@@ -311,6 +313,7 @@ function PublicInvitation() {
           />
         )}
       </AnimatePresence>
+      <InvitationMusicPlayer music={invitation.music} visible={isHandoffStarted || isUnboxed} />
 
       {/* Main Guest-Facing Invitation Body Animated via Motion */}
       <motion.div
