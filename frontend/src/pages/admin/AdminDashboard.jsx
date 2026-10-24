@@ -52,7 +52,7 @@ function AdminDashboard() {
           audioUrl: track.audioUrl,
           title: track.title,
           artist: track.artist,
-          provider: track.provider || "jamendo",
+          provider: track.provider || "internet-archive",
           trackId: track.id,
           shareUrl: track.shareUrl || "",
           licenseUrl: track.licenseUrl || "",
