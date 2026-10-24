@@ -11,30 +11,41 @@ function MusicLibraryDialog({ selectedTrackId = "", onSelect, onClose }) {
   const [hasMore, setHasMore] = useState(false);
   const [previewTrackId, setPreviewTrackId] = useState("");
   const previewAudioRef = useRef(null);
+  const requestIdRef = useRef(0);
 
   const loadTracks = useCallback(async ({ search = "", start = 0, append = false } = {}) => {
+    const requestId = ++requestIdRef.current;
     setLoading(true);
     setError("");
     try {
       const response = await api.get("/music/catalog", {
         params: { query: search, offset: start, limit: 24 },
       });
+
+      if (requestId !== requestIdRef.current) return;
+
       const nextTracks = Array.isArray(response.data.tracks) ? response.data.tracks : [];
       setTracks((current) => append ? [...current, ...nextTracks] : nextTracks);
       setOffset(Number(response.data.nextOffset ?? start + nextTracks.length));
       setHasMore(Boolean(response.data.hasMore));
       setCatalogLoaded(true);
     } catch (err) {
+      if (requestId !== requestIdRef.current) return;
       setError(err.response?.data?.message || "Unable to load instrumental tracks.");
       setCatalogLoaded(true);
     } finally {
-      setLoading(false);
+      if (requestId === requestIdRef.current) setLoading(false);
     }
   }, []);
 
   useEffect(() => {
     if (!catalogLoaded && !loading) loadTracks();
   }, [catalogLoaded, loading, loadTracks]);
+
+  useEffect(() => () => {
+    requestIdRef.current += 1;
+    if (previewAudioRef.current) previewAudioRef.current.pause();
+  }, []);
 
   const previewTrack = async (track) => {
     const audio = previewAudioRef.current;
