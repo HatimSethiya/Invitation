@@ -900,6 +900,24 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
   white-space: nowrap;
   cursor: pointer;
 }
+.music-player-toggle.music-player-icon-toggle {
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  min-height: 44px;
+  padding: 0;
+  flex: 0 0 44px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+}
+.music-player-icon-toggle .music-player-glyph {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+.music-player-icon-toggle:focus-visible {
+  outline: 3px solid rgba(177, 138, 66, .7);
+  outline-offset: 3px;
+}
 .music-player-glyph { font-size: 1.05rem; }
 .music-player-track { display: grid; gap: 2px; min-width: 0; }
 .music-player-track strong {

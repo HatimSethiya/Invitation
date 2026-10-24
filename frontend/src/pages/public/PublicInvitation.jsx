@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import api from "../../services/api";
@@ -55,7 +55,18 @@ function PublicInvitation() {
   const [error, setError] = useState("");
   const [isUnboxed, setIsUnboxed] = useState(false);
   const [isHandoffStarted, setIsHandoffStarted] = useState(false);
+  const musicAudioRef = useRef(null);
   const isInvitationInteractive = isHandoffStarted || isUnboxed;
+
+  const startMusicFromOpenTap = useCallback(() => {
+    const audio = musicAudioRef.current;
+    if (!audio || !invitation?.music?.audioUrl) return;
+
+    // Start within the tap handler so browsers recognize this as user-initiated playback.
+    audio.play().catch(() => {
+      // The player displays playback failures and lets the guest retry manually.
+    });
+  }, [invitation?.music?.audioUrl]);
 
   useEffect(() => {
     let active = true;
@@ -129,12 +140,13 @@ function PublicInvitation() {
           {!isUnboxed && (
             <EnvelopeReveal
               invitation={invitation}
+              onOpenMusic={startMusicFromOpenTap}
               onHandoffStart={() => setIsHandoffStarted(true)}
               onOpened={() => setIsUnboxed(true)}
             />
           )}
         </AnimatePresence>
-        <InvitationMusicPlayer music={invitation.music} visible={isInvitationInteractive} />
+        <InvitationMusicPlayer music={invitation.music} visible={isInvitationInteractive} audioRef={musicAudioRef} />
 
         <motion.div
           className="invitation-body bohra-invitation-body"
@@ -309,12 +321,13 @@ function PublicInvitation() {
         {!isUnboxed && (
           <EnvelopeReveal
             invitation={invitation}
+            onOpenMusic={startMusicFromOpenTap}
             onHandoffStart={() => setIsHandoffStarted(true)}
             onOpened={() => setIsUnboxed(true)}
           />
         )}
       </AnimatePresence>
-      <InvitationMusicPlayer music={invitation.music} visible={isInvitationInteractive} />
+      <InvitationMusicPlayer music={invitation.music} visible={isInvitationInteractive} audioRef={musicAudioRef} />
 
       {/* Main Guest-Facing Invitation Body Animated via Motion */}
       <motion.div
