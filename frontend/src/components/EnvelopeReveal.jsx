@@ -10,7 +10,7 @@ import "./cinematic/CinematicOpening.css";
  * 3. The stationery fades and scales away without glow or particles.
  * 4. The real invitation page fades and scales into view.
  */
-function EnvelopeReveal({ invitation, onHandoffStart, onOpened }) {
+function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
   const [isAnticipating, setIsAnticipating] = useState(false);
   const [isDissolving, setIsDissolving] = useState(false);
   const [isCurtainsOpening, setIsCurtainsOpening] = useState(false);
@@ -38,6 +38,9 @@ function EnvelopeReveal({ invitation, onHandoffStart, onOpened }) {
   const triggerSequence = useCallback(() => {
     if (hasTriggeredRef.current) return;
     hasTriggeredRef.current = true;
+
+    // Start the selected music directly from the guest's Tap to Open gesture.
+    if (onOpenMusic) onOpenMusic();
 
     // Check for user-preferred reduced motion
     const prefersReducedMotion =
@@ -81,7 +84,7 @@ function EnvelopeReveal({ invitation, onHandoffStart, onOpened }) {
     addTimer(() => {
       if (onOpened) onOpened();
     }, 5500);
-  }, [addTimer, onHandoffStart, onOpened]);
+  }, [addTimer, onHandoffStart, onOpenMusic, onOpened]);
 
   return (
     <div
