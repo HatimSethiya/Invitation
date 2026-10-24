@@ -390,6 +390,8 @@ function PublicInvitation() {
                   <img
                     src={item.image}
                     alt={item.title}
+                    loading="lazy"
+                    decoding="async"
                     className="story-image"
                     style={{
                       maxWidth: "100%",
@@ -506,6 +508,7 @@ function PublicInvitation() {
                     src={image.imageUrl}
                     alt={image.caption || "Wedding memory"}
                     loading="lazy"
+                    decoding="async"
                   />
                   {image.caption && <figcaption>{image.caption}</figcaption>}
                 </motion.figure>
