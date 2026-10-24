@@ -111,6 +111,190 @@ function PublicInvitation() {
     );
   }
 
+  if (invitation.theme === "bohraNikah") {
+    const details = invitation.bohraDetails || {};
+    const hasValue = (value) => typeof value === "string" && value.trim().length > 0;
+    const programmeVenue = details.programmeVenue || invitation.venue?.name || "";
+    const programmeAddress = [invitation.venue?.address, invitation.venue?.city]
+      .filter(Boolean)
+      .join(", ");
+
+    return (
+      <main
+        className={`public-page bohra-public-page ${isUnboxed ? "invitation-revealed" : "invitation-locked"}`}
+      >
+        <AnimatePresence>
+          {!isUnboxed && (
+            <EnvelopeReveal
+              invitation={invitation}
+              onHandoffStart={() => setIsHandoffStarted(true)}
+              onOpened={() => setIsUnboxed(true)}
+            />
+          )}
+        </AnimatePresence>
+
+        <motion.div
+          className="invitation-body bohra-invitation-body"
+          initial={{ opacity: 0, y: 28, scale: 0.975 }}
+          animate={{
+            opacity: isHandoffStarted || isUnboxed ? 1 : 0,
+            y: isHandoffStarted || isUnboxed ? 0 : 28,
+            scale: isHandoffStarted || isUnboxed ? 1 : 0.975,
+          }}
+          transition={{
+            opacity: { duration: 1.6, ease: [0.22, 1, 0.36, 1] },
+            y: { duration: 1.75, ease: [0.22, 1, 0.36, 1] },
+            scale: { duration: 1.85, ease: [0.22, 1, 0.36, 1] },
+          }}
+        >
+          <article className="bohra-invitation-card">
+            <div className="bohra-card-ornament bohra-card-ornament-top" aria-hidden="true">۞</div>
+            <div className="bohra-card-inner-frame">
+              <header className="bohra-card-header">
+                <span className="bohra-card-emblem" aria-hidden="true">✦</span>
+                <p className="bohra-bismillah" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+                {hasValue(details.openingBlessing) && (
+                  <p className="bohra-opening-line">{details.openingBlessing}</p>
+                )}
+                {hasValue(details.razaDuaLine) && (
+                  <p className="bohra-raza-line">{details.razaDuaLine}</p>
+                )}
+                {hasValue(details.spiritualLeader) && (
+                  <p className="bohra-leader-line">{details.spiritualLeader}</p>
+                )}
+              </header>
+
+              {(hasValue(details.hostFamilyOne) || hasValue(details.hostFamilyTwo)) && (
+                <section className="bohra-host-families">
+                  {hasValue(details.hostFamilyOne) && <p>{details.hostFamilyOne}</p>}
+                  {hasValue(details.hostFamilyOne) && hasValue(details.hostFamilyTwo) && (
+                    <span className="bohra-thereafter">{details.hostBridge || "Thereafter"}</span>
+                  )}
+                  {hasValue(details.hostFamilyTwo) && <p>{details.hostFamilyTwo}</p>}
+                </section>
+              )}
+
+              {hasValue(details.invitationWording) && (
+                <p className="bohra-invitation-wording">{details.invitationWording}</p>
+              )}
+
+              <section className="bohra-couple-panel glass-panel">
+                <span className="bohra-section-kicker">Wedding Invitation</span>
+                <div className="bohra-couple-names">
+                  <h1>{groom}</h1>
+                  <span className="bohra-weds">Weds</span>
+                  <h1>{bride}</h1>
+                </div>
+                {hasValue(details.brideFamilyLine) && (
+                  <p className="bohra-bride-family">{details.brideFamilyLine}</p>
+                )}
+              </section>
+
+              {(hasValue(details.nikahOfficiantIntro) || hasValue(details.nikahOfficiant)) && (
+                <section className="bohra-officiant-panel glass-panel">
+                  {hasValue(details.nikahOfficiantIntro) && <p>{details.nikahOfficiantIntro}</p>}
+                  {hasValue(details.nikahOfficiant) && <strong>{details.nikahOfficiant}</strong>}
+                </section>
+              )}
+
+              <section className="bohra-programme-panel glass-panel">
+                <span className="bohra-section-kicker">{details.programmeHeading || "Programme Insha Allah"}</span>
+                <h2>{details.programmeTitle || "Wedding Programme"}</h2>
+                <div className="bohra-programme-rule" aria-hidden="true"><span>✦</span></div>
+                <div className="bohra-programme-details">
+                  <div className="bohra-detail-row">
+                    <span className="bohra-detail-icon" aria-hidden="true">▦</span>
+                    <div>
+                      <strong>{formatDate(invitation.weddingDate)}</strong>
+                      {hasValue(details.hijriDate) && <span>{details.hijriDate}</span>}
+                    </div>
+                  </div>
+                  {hasValue(details.programmeTime) && (
+                    <div className="bohra-detail-row">
+                      <span className="bohra-detail-icon" aria-hidden="true">◷</span>
+                      <div><strong>{details.programmeTime}</strong></div>
+                    </div>
+                  )}
+                  {hasValue(programmeVenue) && (
+                    <div className="bohra-detail-row">
+                      <span className="bohra-detail-icon" aria-hidden="true">⌖</span>
+                      <div>
+                        <strong>{programmeVenue}</strong>
+                        {hasValue(programmeAddress) && <span>{programmeAddress}</span>}
+                      </div>
+                    </div>
+                  )}
+                </div>
+                {hasValue(details.invitees) && <p className="bohra-invitees">{details.invitees}</p>}
+                {hasValue(invitation.venue?.mapUrl) && (
+                  <a className="bohra-map-link" href={invitation.venue.mapUrl} target="_blank" rel="noreferrer">
+                    View venue directions <span aria-hidden="true">↗</span>
+                  </a>
+                )}
+              </section>
+
+              {Array.isArray(invitation.events) && invitation.events.some((event) =>
+                hasValue(event.title) || hasValue(event.venue) || hasValue(event.time)
+              ) && (
+                <section className="bohra-additional-events">
+                  <span className="bohra-section-kicker">Additional Programme</span>
+                  {invitation.events.filter((event) =>
+                    hasValue(event.title) || hasValue(event.venue) || hasValue(event.time)
+                  ).map((event) => (
+                    <article className="bohra-extra-event glass-panel" key={event._id || event.title}>
+                      <h3>{event.title || event.type}</h3>
+                      {event.date && <p>{formatDate(event.date)}</p>}
+                      {hasValue(event.time) && <p>{event.time}</p>}
+                      {hasValue(event.venue) && <strong>{event.venue}</strong>}
+                      {hasValue(event.address) && <p>{event.address}</p>}
+                      {hasValue(event.description) && <p>{event.description}</p>}
+                      {hasValue(event.mapUrl) && <a href={event.mapUrl} target="_blank" rel="noreferrer">Open Maps ↗</a>}
+                    </article>
+                  ))}
+                </section>
+              )}
+
+              {hasValue(details.complimentsFrom) && (
+                <section className="bohra-compliments">
+                  <span className="bohra-section-kicker">With The Best Compliments From</span>
+                  <p>{details.complimentsFrom}</p>
+                </section>
+              )}
+
+              {(hasValue(details.specialRequest) || hasValue(details.heavenlyBlessings)) && (
+                <section className="bohra-family-notes">
+                  {hasValue(details.specialRequest) && (
+                    <div className="bohra-note-panel glass-panel">
+                      <span className="bohra-note-title">Special Request</span>
+                      <p>{details.specialRequest}</p>
+                    </div>
+                  )}
+                  {hasValue(details.heavenlyBlessings) && (
+                    <div className="bohra-note-panel glass-panel">
+                      <span className="bohra-note-title">Heavenly Blessings</span>
+                      <p>{details.heavenlyBlessings}</p>
+                    </div>
+                  )}
+                </section>
+              )}
+
+              {(hasValue(details.senderName) || hasValue(details.senderFirm) ||
+                hasValue(details.senderAddress) || hasValue(details.senderContacts)) && (
+                <footer className="bohra-sender-footer">
+                  {hasValue(details.senderName) && <strong>{details.senderName}</strong>}
+                  {hasValue(details.senderFirm) && <p>{details.senderFirm}</p>}
+                  {hasValue(details.senderAddress) && <p>{details.senderAddress}</p>}
+                  {hasValue(details.senderContacts) && <p>{details.senderContacts}</p>}
+                </footer>
+              )}
+            </div>
+            <div className="bohra-card-ornament bohra-card-ornament-bottom" aria-hidden="true">۞</div>
+          </article>
+        </motion.div>
+      </main>
+    );
+  }
+
   return (
     <main
       className={`public-page ${themeClass} ${
