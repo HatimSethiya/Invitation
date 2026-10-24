@@ -22,6 +22,7 @@ function InvitationWizard() {
   const [musicHasMore, setMusicHasMore] = useState(false);
   const [previewTrackId, setPreviewTrackId] = useState("");
   const previewAudioRef = useRef(null);
+  const musicRequestRef = useRef(0);
   const [form, setForm] = useState({
     title: "", slug: "", weddingDate: "", theme: "bohraNikah",
     couple: { brideName: "", groomName: "", bridePhoto: "", groomPhoto: "", couplePhoto: "", brideBio: "", groomBio: "" },
@@ -61,22 +62,27 @@ function InvitationWizard() {
   const isBohraTemplate = form.theme === "bohraNikah";
 
   const loadMusicTracks = useCallback(async ({ query = "", offset = 0, append = false } = {}) => {
+    const requestId = ++musicRequestRef.current;
     setMusicLoading(true);
     setMusicError("");
     try {
       const response = await api.get("/music/catalog", {
         params: { query, offset, limit: 24 },
       });
+
+      if (requestId !== musicRequestRef.current) return;
+
       const tracks = Array.isArray(response.data.tracks) ? response.data.tracks : [];
       setMusicTracks((current) => append ? [...current, ...tracks] : tracks);
       setMusicOffset(Number(response.data.nextOffset ?? offset + tracks.length));
       setMusicHasMore(Boolean(response.data.hasMore));
       setMusicCatalogLoaded(true);
     } catch (err) {
+      if (requestId !== musicRequestRef.current) return;
       setMusicError(err.response?.data?.message || "Unable to load instrumental tracks. Try again.");
       setMusicCatalogLoaded(true);
     } finally {
-      setMusicLoading(false);
+      if (requestId === musicRequestRef.current) setMusicLoading(false);
     }
   }, []);
 
