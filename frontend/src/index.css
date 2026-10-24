@@ -240,22 +240,28 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
   text-transform: uppercase;
 }
 .bohra-couple-names {
-  display: grid;
-  grid-template-columns: minmax(0,1fr) auto minmax(0,1fr);
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: clamp(5px, 2vw, 18px);
+  justify-content: center;
+  gap: clamp(3px, 0.8vw, 9px);
+  width: 100%;
+  min-width: 0;
   margin-top: 12px;
 }
 .bohra-couple-names h1 {
+  max-width: 100%;
   margin: 0;
   color: var(--bohra-forest);
   font-family: "Cormorant Garamond", "Bodoni MT", Georgia, serif;
-  font-size: clamp(2rem, 7.5vw, 4.35rem);
+  font-size: clamp(1.5rem, 8.5vw, 4.2rem);
   font-weight: 500;
   font-style: italic;
   line-height: 1.05;
   letter-spacing: -.045em;
-  overflow-wrap: anywhere;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  text-align: center;
 }
 .bohra-weds {
   color: #976b2c;
@@ -614,8 +620,8 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
   .bohra-host-families { margin-top: 22px; }
   .bohra-couple-panel { padding: 25px 9px 20px; border-radius: 20px; }
   .bohra-couple-panel::before { inset: 5px; border-radius: 16px; }
-  .bohra-couple-names { grid-template-columns: minmax(0,1fr); gap: 5px; }
-  .bohra-couple-names h1 { font-size: clamp(2.3rem, 12vw, 3.6rem); }
+  .bohra-couple-names { gap: 4px; }
+  .bohra-couple-names h1 { font-size: clamp(1.8rem, 9vw, 3.15rem); }
   .bohra-weds { padding: 0 0 2px; }
   .bohra-programme-panel { padding: 20px 14px; border-radius: 21px; }
   .bohra-family-notes { grid-template-columns: minmax(0,1fr); gap: 10px; }
