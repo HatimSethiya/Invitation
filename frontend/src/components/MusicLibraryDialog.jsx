@@ -121,7 +121,7 @@ function MusicLibraryDialog({ selectedTrackId = "", onSelect, onClose }) {
 
         <div className="music-library-note">
           <span aria-hidden="true">ⓘ</span>
-          <p>Tracks stream from Jamendo; no song file is downloaded into this project. Review each track's license before publishing.</p>
+          <p>Tracks stream from Internet Archive; no song file is downloaded into this project. Only public-domain, CC0, CC BY and CC BY-SA tracks are listed.</p>
         </div>
 
         {error && (
