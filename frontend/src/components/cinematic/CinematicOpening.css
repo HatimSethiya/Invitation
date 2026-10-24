@@ -230,6 +230,14 @@
   transition: transform 2.30s cubic-bezier(0.22, 1, 0.36, 1) 0.35s, opacity 2.30s ease 0.35s;
 }
 
+/* Promote curtain layers only during the reveal, not throughout idle viewing. */
+.curtains-parting .curtain-pleat {
+  will-change: transform, opacity;
+}
+.curtains-parting .curtain-fabric-base {
+  will-change: transform;
+}
+
 /* Left Curtain Parting Keyframe Transforms */
 .curtains-parting .curtain-left .pleat-6 {
   transform: translateX(-350%) scaleX(0.24) skewY(2.6deg);
