@@ -25,3 +25,603 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
   min-height: 100vh;
 }
 
+
+
+/* Bohra Nikah glassmorphism invitation — inspired by the supplied card reference. */
+.bohra-public-page {
+  --bohra-forest: #244a3a;
+  --bohra-forest-deep: #153629;
+  --bohra-emerald: #456b55;
+  --bohra-ivory: #fffaf0;
+  --bohra-paper: #f5eddb;
+  --bohra-gold: #b18a42;
+  --bohra-gold-soft: rgba(177, 138, 66, 0.34);
+  --bohra-ink: #294135;
+  --bohra-muted: #6d7769;
+  position: relative;
+  isolation: isolate;
+  color: var(--bohra-ink);
+  padding: clamp(10px, 3vw, 28px);
+  background:
+    radial-gradient(ellipse at 8% 8%, rgba(174, 197, 157, .24), transparent 32%),
+    radial-gradient(ellipse at 92% 22%, rgba(213, 190, 129, .22), transparent 30%),
+    radial-gradient(ellipse at 50% 100%, rgba(76, 115, 83, .14), transparent 44%),
+    linear-gradient(145deg, #fbf7ec 0%, #f1ead8 48%, #fcf8ed 100%);
+  font-family: Georgia, "Times New Roman", serif;
+}
+.bohra-public-page::before {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  opacity: .24;
+  background:
+    repeating-linear-gradient(45deg, transparent 0 23px, rgba(177, 138, 66, .11) 24px 25px, transparent 26px 48px),
+    repeating-linear-gradient(-45deg, transparent 0 23px, rgba(36, 74, 58, .08) 24px 25px, transparent 26px 48px);
+  mask-image: linear-gradient(to bottom, #000, transparent 82%);
+}
+.bohra-public-page.invitation-locked {
+  height: 100svh;
+  overflow: hidden;
+}
+.bohra-public-page.invitation-revealed {
+  min-height: 100vh;
+  height: auto;
+  overflow: visible;
+}
+.bohra-invitation-body {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 820px);
+  margin: 0 auto;
+  padding: clamp(6px, 1.5vw, 18px) 0;
+}
+.bohra-invitation-card {
+  position: relative;
+  isolation: isolate;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: clamp(15px, 3.5vw, 34px);
+  overflow: hidden;
+  border: 1px solid rgba(177, 138, 66, .62);
+  border-radius: clamp(22px, 4vw, 36px);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255,255,255,.94), transparent 42%),
+    linear-gradient(145deg, rgba(255, 252, 242, .91), rgba(245, 237, 219, .92) 52%, rgba(255, 252, 244, .96));
+  box-shadow:
+    0 28px 76px rgba(24, 51, 38, .15),
+    0 8px 22px rgba(126, 93, 38, .08),
+    inset 0 1px 0 rgba(255,255,255,.96),
+    inset 0 0 0 5px rgba(255,255,255,.26);
+}
+.bohra-invitation-card::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  opacity: .22;
+  background:
+    repeating-linear-gradient(45deg, transparent 0 16px, rgba(177, 138, 66, .10) 17px 18px, transparent 19px 32px),
+    repeating-linear-gradient(-45deg, transparent 0 16px, rgba(36, 74, 58, .07) 17px 18px, transparent 19px 32px);
+  mask-image: linear-gradient(to bottom, #000, transparent 68%);
+}
+.bohra-card-inner-frame {
+  position: relative;
+  padding: clamp(17px, 4vw, 40px) clamp(10px, 3vw, 28px);
+  border: 1px solid rgba(177, 138, 66, .38);
+  border-radius: clamp(16px, 3vw, 26px);
+  background: rgba(255, 252, 243, .28);
+}
+.bohra-card-inner-frame::before,
+.bohra-card-inner-frame::after {
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgba(177, 138, 66, .64), transparent);
+}
+.bohra-card-inner-frame::before { top: 0; }
+.bohra-card-inner-frame::after { bottom: 0; }
+.bohra-card-ornament {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  color: #98702d;
+  font-size: clamp(23px, 5vw, 38px);
+  line-height: 1;
+  text-shadow: 0 2px 0 rgba(255,255,255,.85);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.bohra-card-ornament-top { top: 9px; }
+.bohra-card-ornament-bottom { bottom: 7px; }
+.bohra-card-header {
+  max-width: 650px;
+  margin: 0 auto;
+  text-align: center;
+}
+.bohra-card-emblem {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  margin: 0 auto 8px;
+  border: 1px solid rgba(177, 138, 66, .52);
+  border-radius: 50%;
+  color: var(--bohra-gold);
+  background: rgba(255,255,255,.52);
+  box-shadow: inset 0 1px 0 #fff, 0 5px 15px rgba(60, 75, 48, .06);
+}
+.bohra-bismillah {
+  margin: 0 0 18px;
+  color: var(--bohra-forest-deep);
+  font-size: clamp(1.45rem, 4.5vw, 2.05rem);
+  line-height: 1.8;
+}
+.bohra-opening-line,
+.bohra-raza-line,
+.bohra-leader-line {
+  max-width: 580px;
+  margin: 5px auto;
+  color: var(--bohra-ink);
+  font-size: clamp(.9rem, 2.7vw, 1.08rem);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+.bohra-raza-line { color: #7d5c2d; }
+.bohra-leader-line { margin-bottom: 0; font-weight: 500; }
+.bohra-host-families {
+  max-width: 620px;
+  margin: clamp(24px, 5vw, 44px) auto 0;
+  text-align: center;
+}
+.bohra-host-families p {
+  margin: 8px auto;
+  color: #6e342b;
+  font-size: clamp(1rem, 3vw, 1.28rem);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+.bohra-thereafter {
+  display: block;
+  margin: 12px 0;
+  color: #8f7446;
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-size: .94rem;
+}
+.bohra-invitation-wording {
+  max-width: 570px;
+  margin: 24px auto 0;
+  color: var(--bohra-ink);
+  font-size: clamp(.91rem, 2.7vw, 1.05rem);
+  line-height: 1.75;
+  text-align: center;
+  text-wrap: pretty;
+}
+.glass-panel {
+  border: 1px solid rgba(177, 138, 66, .38);
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.74), rgba(250,245,229,.49)),
+    rgba(255,255,255,.36);
+  box-shadow:
+    0 16px 38px rgba(33, 61, 42, .075),
+    inset 0 1px 0 rgba(255,255,255,.95),
+    inset 0 -1px 0 rgba(174, 141, 72, .09);
+  backdrop-filter: blur(18px) saturate(1.12);
+  -webkit-backdrop-filter: blur(18px) saturate(1.12);
+}
+.bohra-couple-panel {
+  position: relative;
+  margin: clamp(25px, 5vw, 45px) auto 0;
+  padding: clamp(24px, 5vw, 43px) clamp(12px, 3vw, 26px) clamp(20px, 4vw, 34px);
+  border-radius: 26px;
+  text-align: center;
+}
+.bohra-couple-panel::before {
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(177, 138, 66, .23);
+  border-radius: 20px;
+  content: "";
+  pointer-events: none;
+}
+.bohra-section-kicker {
+  display: block;
+  color: #947039;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .20em;
+  line-height: 1.7;
+  text-align: center;
+  text-transform: uppercase;
+}
+.bohra-couple-names {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) auto minmax(0,1fr);
+  align-items: center;
+  gap: clamp(5px, 2vw, 18px);
+  margin-top: 12px;
+}
+.bohra-couple-names h1 {
+  margin: 0;
+  color: var(--bohra-forest);
+  font-family: "Cormorant Garamond", "Bodoni MT", Georgia, serif;
+  font-size: clamp(2rem, 7.5vw, 4.35rem);
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.05;
+  letter-spacing: -.045em;
+  overflow-wrap: anywhere;
+}
+.bohra-weds {
+  color: #976b2c;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(.85rem, 2.7vw, 1.12rem);
+  font-style: italic;
+}
+.bohra-bride-family {
+  max-width: 480px;
+  margin: 18px auto 0;
+  color: #70483b;
+  font-size: clamp(.86rem, 2.5vw, 1rem);
+  line-height: 1.65;
+}
+.bohra-officiant-panel {
+  max-width: 680px;
+  margin: 18px auto 0;
+  padding: 18px clamp(15px, 3vw, 27px);
+  border-radius: 22px;
+  text-align: center;
+}
+.bohra-officiant-panel p {
+  margin: 0;
+  color: var(--bohra-ink);
+  font-size: .93rem;
+  line-height: 1.65;
+}
+.bohra-officiant-panel strong {
+  display: block;
+  margin-top: 6px;
+  color: var(--bohra-forest);
+  font-size: .98rem;
+  font-weight: 650;
+  line-height: 1.65;
+}
+.bohra-programme-panel {
+  margin: clamp(25px, 5vw, 42px) auto 0;
+  padding: clamp(20px, 4vw, 34px) clamp(16px, 3.5vw, 30px);
+  border-radius: 28px;
+  text-align: center;
+}
+.bohra-programme-panel h2 {
+  margin: 8px 0 0;
+  color: var(--bohra-forest);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.7rem, 5.5vw, 2.5rem);
+  font-weight: 500;
+  line-height: 1.15;
+}
+.bohra-programme-rule {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 270px;
+  margin: 14px auto 21px;
+  color: var(--bohra-gold);
+}
+.bohra-programme-rule::before,
+.bohra-programme-rule::after {
+  height: 1px;
+  flex: 1;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgba(177,138,66,.58));
+}
+.bohra-programme-rule::after { transform: scaleX(-1); }
+.bohra-programme-details {
+  display: grid;
+  gap: 15px;
+  max-width: 510px;
+  margin: 0 auto;
+  text-align: left;
+}
+.bohra-detail-row {
+  display: grid;
+  grid-template-columns: 30px minmax(0,1fr);
+  align-items: start;
+  gap: 12px;
+}
+.bohra-detail-icon {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 1px solid rgba(177,138,66,.34);
+  border-radius: 50%;
+  color: #9b7637;
+  background: rgba(255,255,255,.42);
+  font-family: Georgia, serif;
+  font-size: 1.05rem;
+}
+.bohra-detail-row strong,
+.bohra-detail-row span:not(.bohra-detail-icon) {
+  display: block;
+  line-height: 1.5;
+}
+.bohra-detail-row strong {
+  color: var(--bohra-ink);
+  font-weight: 650;
+}
+.bohra-detail-row div span {
+  margin-top: 2px;
+  color: var(--bohra-muted);
+  font-size: .9rem;
+}
+.bohra-invitees {
+  margin: 20px 0 0;
+  color: var(--bohra-forest);
+  font-style: italic;
+  text-align: center;
+}
+.bohra-map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 20px;
+  padding: 10px 16px;
+  border: 1px solid rgba(177,138,66,.48);
+  border-radius: 999px;
+  color: var(--bohra-forest) !important;
+  background: rgba(255,255,255,.58);
+  font-size: .84rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform .25s ease, background .25s ease, box-shadow .25s ease;
+}
+.bohra-map-link:hover {
+  transform: translateY(-2px);
+  background: rgba(255,255,255,.88);
+  box-shadow: 0 8px 18px rgba(36,74,58,.1);
+}
+.bohra-additional-events {
+  margin: 26px auto 0;
+}
+.bohra-additional-events > .bohra-section-kicker { margin-bottom: 12px; }
+.bohra-extra-event {
+  margin-top: 10px;
+  padding: 17px 20px;
+  border-radius: 18px;
+}
+.bohra-extra-event h3 {
+  margin: 0 0 5px;
+  color: var(--bohra-forest);
+  font-family: Georgia, serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+.bohra-extra-event p {
+  margin: 5px 0;
+  color: var(--bohra-muted);
+  line-height: 1.6;
+}
+.bohra-extra-event a {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--bohra-forest);
+  font-weight: 700;
+}
+.bohra-compliments {
+  margin: clamp(25px, 4vw, 40px) auto 0;
+  text-align: center;
+}
+.bohra-compliments p {
+  max-width: 590px;
+  margin: 10px auto 0;
+  color: var(--bohra-ink);
+  font-size: 1rem;
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+.bohra-family-notes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 13px;
+  margin: 25px auto 0;
+}
+.bohra-note-panel {
+  min-width: 0;
+  padding: 17px 16px;
+  border-radius: 20px;
+  text-align: center;
+}
+.bohra-note-title {
+  display: block;
+  margin-bottom: 8px;
+  color: #8d6b31;
+  font-size: .73rem;
+  font-weight: 750;
+  letter-spacing: .1em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.bohra-note-panel p {
+  margin: 0;
+  color: var(--bohra-ink);
+  font-size: .92rem;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+.bohra-sender-footer {
+  max-width: 600px;
+  margin: 26px auto 0;
+  padding-top: 22px;
+  border-top: 1px solid rgba(177,138,66,.32);
+  text-align: center;
+}
+.bohra-sender-footer strong {
+  color: var(--bohra-forest);
+  font-size: 1rem;
+}
+.bohra-sender-footer p {
+  margin: 5px 0;
+  color: var(--bohra-muted);
+  font-size: .88rem;
+  line-height: 1.6;
+}
+.bohra-wizard-page {
+  background:
+    radial-gradient(ellipse at 5% 8%, rgba(166, 195, 164, .24), transparent 32%),
+    radial-gradient(ellipse at 94% 92%, rgba(211, 185, 124, .23), transparent 33%),
+    #f8f4e9;
+}
+.bohra-wizard-page .wizard-card,
+.bohra-wizard-page .repeat-card {
+  border: 1px solid rgba(177, 138, 66, .28);
+  background: rgba(255, 255, 255, .62);
+  box-shadow: 0 22px 55px rgba(32, 62, 43, .075), inset 0 1px 0 rgba(255,255,255,.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+.bohra-wizard-page .wizard-card { border-radius: 28px; }
+.bohra-wizard-page .wizard-header h1 { color: #244a3a; }
+.bohra-wizard-page .step.active { color: #244a3a; }
+.bohra-wizard-page .step.active span,
+.bohra-wizard-page .step.done span {
+  color: #fff;
+  background: #244a3a;
+}
+.bohra-wizard-page .primary-button {
+  background: linear-gradient(135deg, #315a43, #1d3f30);
+  box-shadow: 0 8px 20px rgba(36,74,58,.17);
+}
+.bohra-wizard-page .form-grid input,
+.bohra-wizard-page .form-grid textarea,
+.bohra-wizard-page .form-grid select {
+  border-color: rgba(125, 145, 116, .34);
+  border-radius: 13px;
+  background: rgba(255,255,255,.77);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9);
+}
+.bohra-wizard-page .form-grid input:focus,
+.bohra-wizard-page .form-grid textarea:focus,
+.bohra-wizard-page .form-grid select:focus {
+  border-color: rgba(177,138,66,.85);
+  box-shadow: 0 0 0 4px rgba(177,138,66,.13);
+}
+.bohra-template-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-top: 22px;
+  padding: 17px 18px;
+  border: 1px solid rgba(177,138,66,.30);
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(255,255,255,.74), rgba(234,239,224,.55));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.bohra-template-note-mark {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  place-items: center;
+  border: 1px solid rgba(177,138,66,.42);
+  border-radius: 50%;
+  color: #967130;
+  background: rgba(255,255,255,.72);
+}
+.bohra-template-note strong {
+  display: block;
+  color: #244a3a;
+}
+.bohra-template-note p {
+  margin: 5px 0 0;
+  color: #657365;
+  font-size: .9rem;
+  line-height: 1.6;
+}
+.bohra-admin-section > h2,
+.bohra-review-section > h2 {
+  color: #244a3a;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.9rem, 5vw, 2.5rem);
+}
+.bohra-admin-group {
+  margin-top: 22px;
+  padding: clamp(15px, 3vw, 24px);
+  border: 1px solid rgba(177,138,66,.24);
+  border-radius: 22px;
+  background: rgba(255,255,255,.42);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
+  backdrop-filter: blur(13px);
+  -webkit-backdrop-filter: blur(13px);
+}
+.bohra-admin-group h3 {
+  margin: 0 0 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(177,138,66,.25);
+  color: #315642;
+  font-family: Georgia, serif;
+  font-weight: 500;
+}
+.bohra-admin-section .repeat-card {
+  padding: clamp(14px, 3vw, 22px);
+  border-radius: 22px;
+}
+.bohra-form-note {
+  padding: 5px 2px 20px;
+}
+.bohra-review-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 13px;
+  margin-top: 24px;
+}
+.bohra-review-grid > div {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid rgba(177,138,66,.28);
+  border-radius: 18px;
+  background: rgba(255,255,255,.64);
+}
+.bohra-review-grid span {
+  color: #947039;
+  font-size: .72rem;
+  font-weight: 750;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.bohra-review-grid strong {
+  color: #294135;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 600px) {
+  .bohra-public-page { padding: 8px; }
+  .bohra-invitation-body { padding: 4px 0; }
+  .bohra-invitation-card { padding: 10px; border-radius: 22px; }
+  .bohra-card-inner-frame { padding: 19px 10px 23px; border-radius: 15px; }
+  .bohra-card-emblem { width: 35px; height: 35px; margin-bottom: 5px; }
+  .bohra-bismillah { margin-bottom: 13px; }
+  .bohra-host-families { margin-top: 22px; }
+  .bohra-couple-panel { padding: 25px 9px 20px; border-radius: 20px; }
+  .bohra-couple-panel::before { inset: 5px; border-radius: 16px; }
+  .bohra-couple-names { grid-template-columns: minmax(0,1fr); gap: 5px; }
+  .bohra-couple-names h1 { font-size: clamp(2.3rem, 12vw, 3.6rem); }
+  .bohra-weds { padding: 0 0 2px; }
+  .bohra-programme-panel { padding: 20px 14px; border-radius: 21px; }
+  .bohra-family-notes { grid-template-columns: minmax(0,1fr); gap: 10px; }
+  .bohra-review-grid { grid-template-columns: minmax(0,1fr); }
+  .bohra-admin-group { border-radius: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bohra-map-link { transition: none; }
+}
