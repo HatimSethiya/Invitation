@@ -127,10 +127,6 @@ function PublicInvitation() {
   if (invitation.theme === "bohraNikah") {
     const details = invitation.bohraDetails || {};
     const hasValue = (value) => typeof value === "string" && value.trim().length > 0;
-    const programmeVenue = details.programmeVenue || invitation.venue?.name || "";
-    const programmeAddress = [invitation.venue?.address, invitation.venue?.city]
-      .filter(Boolean)
-      .join(", ");
 
     return (
       <main
