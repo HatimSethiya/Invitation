@@ -56,63 +56,13 @@ function CardStationery({
     >
       <div className={`stationery-card ${usePosterCover ? "stationery-card-poster" : ""}`}>
         {usePosterCover ? (
-          <div className="poster-glass-face">
-            <div className="poster-glass-sheen" aria-hidden="true" />
-            <div className="poster-glass-frame" aria-hidden="true">
-              <span className="poster-corner poster-corner-tl" aria-hidden="true">✾</span>
-              <span className="poster-corner poster-corner-tr" aria-hidden="true">✾</span>
-              <span className="poster-corner poster-corner-bl" aria-hidden="true">✾</span>
-              <span className="poster-corner poster-corner-br" aria-hidden="true">✾</span>
-            </div>
-
-            <div className="poster-monogram" aria-label="M Z monogram">
-              <span className="poster-monogram-m">M</span>
-              <span className="poster-monogram-z">Z</span>
-              <svg
-                className="poster-monogram-botanical"
-                viewBox="0 0 240 150"
-                fill="none"
-                aria-hidden="true"
-              >
-                <g className="poster-botanical-stems">
-                  <path d="M17 132C44 113 65 86 87 39C96 23 105 13 119 6" />
-                  <path d="M40 111C70 86 97 66 131 51C155 42 180 38 221 44" />
-                  <path d="M76 77C57 68 47 52 47 35C65 40 77 54 76 77Z" />
-                  <path d="M90 51C76 35 77 19 87 7C101 22 101 39 90 51Z" />
-                  <path d="M112 22C119 7 135 2 148 8C139 23 126 29 112 22Z" />
-                  <path d="M49 104C30 105 18 93 15 78C34 78 48 88 49 104Z" />
-                  <path d="M67 87C48 81 40 67 44 51C61 60 70 73 67 87Z" />
-                  <path d="M119 61C105 45 108 31 118 20C132 34 132 49 119 61Z" />
-                  <path d="M142 48C151 31 168 27 182 34C171 49 157 54 142 48Z" />
-                  <path d="M160 46C172 57 188 56 201 46C187 36 172 37 160 46Z" />
-                  <path d="M87 77C75 65 76 52 85 41C97 53 98 66 87 77Z" />
-                  <path d="M104 66C115 81 132 85 147 78C137 63 120 59 104 66Z" />
-                  <path d="M32 126C27 113 31 101 41 94C49 108 45 120 32 126Z" />
-                </g>
-              </svg>
-            </div>
-
-            <div className="poster-cover-title">
-              <span>Mufaddal</span>
-              <span className="poster-cover-weds">Weds</span>
-              <span>Zainab</span>
-            </div>
-
-            <div className="poster-cover-ornament" aria-hidden="true">
-              <span />
-              <b>✦</b>
-              <span />
-            </div>
-
-            <p className="poster-cover-tagline">Our Forever Begins</p>
-            <p className="poster-cover-date">17.12.2026</p>
-
-            <div className="poster-cover-bottom-ornament" aria-hidden="true">
-              <span />
-              <b>❧</b>
-              <span />
-            </div>
-          </div>
+          <img
+            className="poster-card-art"
+            src="/mufaddal-zainab-card.svg"
+            alt="Mufaddal Weds Zainab — Our Forever Begins, 17.12.2026"
+            draggable="false"
+            fetchPriority="high"
+          />
         ) : (
           <>
         {/* Subtle Paper Texture & Watermark */}
