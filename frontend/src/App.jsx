@@ -17,6 +17,7 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/invitations/new" element={<InvitationWizard />} />
+            <Route path="/admin/invitations/:id/edit" element={<InvitationWizard />} />
           </Route>
           <Route path="/i/:slug" element={<PublicInvitation />} />
           <Route path="*" element={<Navigate to="/" replace />} />
