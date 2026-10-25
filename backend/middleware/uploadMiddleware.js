@@ -72,8 +72,11 @@ const audioFilter = (_req, file, callback) => {
   return callback(null, true);
 };
 
+// Audio uploads use memory only while arriving, then are persisted in MongoDB GridFS.
+// Render instances have ephemeral local filesystems, so keeping audio on disk would
+// make uploaded invitation music disappear after the next deployment/restart.
 const audioUpload = multer({
-  storage,
+  storage: multer.memoryStorage(),
   fileFilter: audioFilter,
   limits: {
     fileSize: 25 * 1024 * 1024,
