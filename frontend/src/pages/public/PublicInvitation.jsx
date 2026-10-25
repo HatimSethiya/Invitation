@@ -146,7 +146,7 @@ function PublicInvitation() {
             />
           )}
         </AnimatePresence>
-        <InvitationMusicPlayer music={invitation.music} visible={isInvitationInteractive} audioRef={musicAudioRef} />
+        <InvitationMusicPlayer music={invitation.music} visible={isInvitationInteractive} audioRef={musicAudioRef} showControls={false} />
 
         <motion.div
           className="invitation-body bohra-invitation-body"
@@ -212,54 +212,18 @@ function PublicInvitation() {
                 </section>
               )}
 
-              <section className="bohra-programme-panel glass-panel">
-                <span className="bohra-section-kicker">{details.programmeHeading || "Programme Insha Allah"}</span>
-                <h2>{details.programmeTitle || "Wedding Programme"}</h2>
-                <div className="bohra-programme-rule" aria-hidden="true"><span>✦</span></div>
-                <div className="bohra-programme-details">
-                  <div className="bohra-detail-row">
-                    <span className="bohra-detail-icon" aria-hidden="true">▦</span>
-                    <div>
-                      <strong>{formatDate(invitation.weddingDate)}</strong>
-                      {hasValue(details.hijriDate) && <span>{details.hijriDate}</span>}
-                    </div>
-                  </div>
-                  {hasValue(details.programmeTime) && (
-                    <div className="bohra-detail-row">
-                      <span className="bohra-detail-icon" aria-hidden="true">◷</span>
-                      <div><strong>{details.programmeTime}</strong></div>
-                    </div>
-                  )}
-                  {(hasValue(programmeVenue) || hasValue(programmeAddress)) && (
-                    <div className="bohra-detail-row">
-                      <span className="bohra-detail-icon" aria-hidden="true">⌖</span>
-                      <div>
-                        <strong>{programmeVenue || "Venue"}</strong>
-                        {hasValue(programmeAddress) && <span>{programmeAddress}</span>}
-                      </div>
-                    </div>
-                  )}
-                </div>
-                {hasValue(details.invitees) && <p className="bohra-invitees">{details.invitees}</p>}
-                {hasValue(invitation.venue?.mapUrl) && (
-                  <a className="bohra-map-link" href={invitation.venue.mapUrl} target="_blank" rel="noreferrer">
-                    View venue directions <span aria-hidden="true">↗</span>
-                  </a>
-                )}
-              </section>
-
               {Array.isArray(invitation.events) && invitation.events.some((event) =>
                 hasValue(event.title) || hasValue(event.venue) || hasValue(event.time) || event.date || hasValue(event.description)
               ) && (
                 <section className="bohra-additional-events">
                   <motion.span
-                    className="bohra-section-kicker"
+                    className="bohra-section-kicker bohra-programme-heading"
                     initial={{ opacity: 0, y: 14 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.6 }}
                     transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                   >
-                    Additional Programme
+                    {details.programmeHeading || "Programme Insha Allah"}
                   </motion.span>
                   <div className="bohra-events-stagger">
                     {invitation.events.filter((event) =>
@@ -278,7 +242,6 @@ function PublicInvitation() {
                         }}
                       >
                         <div className="bohra-extra-event-topline">
-                          <span>Additional Celebration</span>
                           <span className="bohra-extra-event-number">{String(index + 1).padStart(2, "0")}</span>
                         </div>
                         <h3>{event.title || event.type || "Celebration"}</h3>
