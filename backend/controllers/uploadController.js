@@ -132,7 +132,7 @@ const getUploadedAudioFile = async (req, res) => {
 
     const rangeHeader = req.headers.range;
     if (rangeHeader) {
-      const match = /^bytes=(\\d*)-(\\d*)$/.exec(rangeHeader.trim());
+      const match = /^bytes=(\d*)-(\d*)$/.exec(rangeHeader.trim());
       if (!match || (!match[1] && !match[2])) {
         res.set("Content-Range", `bytes */${totalSize}`);
         return res.status(416).end();
