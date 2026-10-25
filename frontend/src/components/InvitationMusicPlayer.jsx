@@ -1,8 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 
-function InvitationMusicPlayer({ music, visible, audioRef: sharedAudioRef, showControls = true }) {
+function InvitationMusicPlayer({
+  music,
+  visible,
+  audioRef: sharedAudioRef,
+  startRequestedRef: sharedStartRequestedRef,
+  showControls = true,
+}) {
   const localAudioRef = useRef(null);
   const audioRef = sharedAudioRef || localAudioRef;
+  const localStartRequestedRef = useRef(false);
+  const startRequestedRef = sharedStartRequestedRef || localStartRequestedRef;
   const [isPlaying, setIsPlaying] = useState(false);
   const [playError, setPlayError] = useState("");
 
@@ -19,8 +27,12 @@ function InvitationMusicPlayer({ music, visible, audioRef: sharedAudioRef, showC
     const audio = audioRef.current;
     if (!audio || !visible || !music?.autoplay || !music?.audioUrl) return;
 
+    startRequestedRef.current = true;
     audio.play()
-      .then(() => setIsPlaying(true))
+      .then(() => {
+        startRequestedRef.current = false;
+        setIsPlaying(true);
+      })
       .catch(() => setIsPlaying(false));
   }, [visible, music?.autoplay, music?.audioUrl]);
 
@@ -35,50 +47,70 @@ function InvitationMusicPlayer({ music, visible, audioRef: sharedAudioRef, showC
       return;
     }
 
+    startRequestedRef.current = true;
     try {
       await audio.play();
+      startRequestedRef.current = false;
       setIsPlaying(true);
     } catch {
       setIsPlaying(false);
-      setPlayError("Music could not start. Tap the music icon to retry.");
+      setPlayError("Music could not start. Check the selected audio source.");
     }
   };
 
   if (!music?.audioUrl) return null;
 
+  const retryRequestedPlayback = () => {
+    const audio = audioRef.current;
+    if (!audio || !startRequestedRef.current || !audio.paused) return;
+
+    audio.play()
+      .then(() => {
+        startRequestedRef.current = false;
+        setIsPlaying(true);
+      })
+      .catch(() => setIsPlaying(false));
+  };
+
   return (
-    <aside
-      className={`invitation-music-player ${visible ? "music-player-visible" : "music-player-hidden"}`}
-      aria-label="Wedding invitation music"
-      aria-hidden={!visible}
-      inert={!visible}
-    >
+    <>
       <audio
         ref={audioRef}
         src={music.audioUrl}
         loop={music.loop !== false}
-        preload="none"
-        onPlay={() => setIsPlaying(true)}
+        preload="auto"
+        onCanPlay={retryRequestedPlayback}
+        onPlay={() => {
+          startRequestedRef.current = false;
+          setIsPlaying(true);
+        }}
         onPause={() => setIsPlaying(false)}
         onError={() => {
+          startRequestedRef.current = false;
           setIsPlaying(false);
-          setPlayError("This stream is temporarily unavailable.");
+          setPlayError("This audio source is unavailable or unsupported.");
         }}
       />
       {showControls && (
-        <button
-          className="music-player-toggle music-player-icon-toggle"
-          type="button"
-          onClick={togglePlayback}
-          aria-label={isPlaying ? "Pause wedding music" : "Resume wedding music"}
-          title={playError || (isPlaying ? "Pause music" : "Resume music")}
-          aria-pressed={isPlaying}
+        <aside
+          className={`invitation-music-player ${visible ? "music-player-visible" : "music-player-hidden"}`}
+          aria-label="Wedding invitation music"
+          aria-hidden={!visible}
+          inert={!visible}
         >
-          <span className="music-player-glyph" aria-hidden="true">{isPlaying ? "Ⅱ" : "♫"}</span>
-        </button>
+          <button
+            className="music-player-toggle music-player-icon-toggle"
+            type="button"
+            onClick={togglePlayback}
+            aria-label={isPlaying ? "Pause wedding music" : "Resume wedding music"}
+            title={playError || (isPlaying ? "Pause music" : "Resume music")}
+            aria-pressed={isPlaying}
+          >
+            <span className="music-player-glyph" aria-hidden="true">{isPlaying ? "Ⅱ" : "♫"}</span>
+          </button>
+        </aside>
       )}
-
-    </aside>
+    </>
   );
 }
 

@@ -56,16 +56,25 @@ function PublicInvitation() {
   const [isUnboxed, setIsUnboxed] = useState(false);
   const [isHandoffStarted, setIsHandoffStarted] = useState(false);
   const musicAudioRef = useRef(null);
+  const musicStartRequestedRef = useRef(false);
   const isInvitationInteractive = isHandoffStarted || isUnboxed;
 
   const startMusicFromOpenTap = useCallback(() => {
     const audio = musicAudioRef.current;
     if (!audio || !invitation?.music?.audioUrl) return;
 
-    // Start within the tap handler so browsers recognize this as user-initiated playback.
-    audio.play().catch(() => {
-      // The player displays playback failures and lets the guest retry manually.
-    });
+    // Invoke play synchronously from the tap, before starting any curtain timers.
+    musicStartRequestedRef.current = true;
+    audio.muted = false;
+    audio.volume = 1;
+    const playback = audio.play();
+
+    // The audio element will retry on canplay if the source needed time to buffer.
+    if (playback && typeof playback.catch === "function") {
+      playback.catch(() => {
+        // Keep the request pending so InvitationMusicPlayer can retry once ready.
+      });
+    }
   }, [invitation?.music?.audioUrl]);
 
   useEffect(() => {
@@ -142,7 +151,7 @@ function PublicInvitation() {
             />
           )}
         </AnimatePresence>
-        <InvitationMusicPlayer music={invitation.music} visible={isInvitationInteractive} audioRef={musicAudioRef} showControls={false} />
+        <InvitationMusicPlayer music={invitation.music} visible={isInvitationInteractive} audioRef={musicAudioRef} startRequestedRef={musicStartRequestedRef} showControls={false} />
 
         <motion.div
           className="invitation-body bohra-invitation-body"
@@ -335,7 +344,7 @@ function PublicInvitation() {
           />
         )}
       </AnimatePresence>
-      <InvitationMusicPlayer music={invitation.music} visible={isInvitationInteractive} audioRef={musicAudioRef} />
+      <InvitationMusicPlayer music={invitation.music} visible={isInvitationInteractive} audioRef={musicAudioRef} startRequestedRef={musicStartRequestedRef} />
 
       {/* Main Guest-Facing Invitation Body Animated via Motion */}
       <motion.div

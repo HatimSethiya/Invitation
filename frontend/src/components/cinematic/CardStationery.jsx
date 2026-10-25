@@ -56,12 +56,56 @@ function CardStationery({
     >
       <div className={`stationery-card ${usePosterCover ? "stationery-card-poster" : ""}`}>
         {usePosterCover ? (
-          <img
-            className="stationery-poster-image"
-            src="/mufaddal-zainab-cover.webp"
-            alt="Mufaddal weds Zainab wedding invitation"
-            draggable="false"
-          />
+          <div className="poster-glass-face">
+            <div className="poster-glass-sheen" aria-hidden="true" />
+            <div className="poster-glass-frame" aria-hidden="true">
+              <span className="poster-corner poster-corner-tl">❧</span>
+              <span className="poster-corner poster-corner-tr">❧</span>
+              <span className="poster-corner poster-corner-bl">❧</span>
+              <span className="poster-corner poster-corner-br">❧</span>
+            </div>
+
+            <div className="poster-monogram" aria-label="M Z monogram">
+              <span className="poster-monogram-m">M</span>
+              <span className="poster-monogram-z">Z</span>
+              <svg
+                className="poster-monogram-botanical"
+                viewBox="0 0 180 110"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path d="M25 91C49 77 62 57 83 18" />
+                <path d="M52 63C34 63 23 51 21 36C39 36 51 45 52 63Z" />
+                <path d="M64 45C48 39 43 25 48 12C63 20 69 31 64 45Z" />
+                <path d="M77 29C79 14 91 6 105 8C99 24 89 31 77 29Z" />
+                <path d="M47 74C30 78 16 70 11 57C28 54 41 61 47 74Z" />
+                <path d="M86 20C105 37 120 40 146 35" />
+                <path d="M112 37C113 22 125 13 139 15C133 30 123 38 112 37Z" />
+                <path d="M126 38C137 48 151 47 162 38C149 29 136 30 126 38Z" />
+              </svg>
+            </div>
+
+            <div className="poster-cover-title">
+              <span>Mufaddal</span>
+              <span className="poster-cover-weds">Weds</span>
+              <span>Zainab</span>
+            </div>
+
+            <div className="poster-cover-ornament" aria-hidden="true">
+              <span />
+              <b>✦</b>
+              <span />
+            </div>
+
+            <p className="poster-cover-tagline">Our Forever Begins</p>
+            <p className="poster-cover-date">17.12.2026</p>
+
+            <div className="poster-cover-bottom-ornament" aria-hidden="true">
+              <span />
+              <b>❧</b>
+              <span />
+            </div>
+          </div>
         ) : (
           <>
         {/* Subtle Paper Texture & Watermark */}
