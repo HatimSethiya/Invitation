@@ -300,7 +300,7 @@ function InvitationWizard() {
 
   return (
     <main className={`wizard-page ${isBohraTemplate ? "bohra-wizard-page" : ""}`}>
-      <header className="wizard-header"><div><span className="eyebrow">{isEditing ? "Edit Invitation" : "Create Invitation"}</span><h1>{isEditing ? "Refine your wedding invitation" : isBohraTemplate ? "Create a Bohra Nikah invitation" : "Build your wedding story"}</h1><p>{isBohraTemplate ? "Add the family wording, Nikah programme and sender details from your card reference." : "Everything you add here will power the guest-facing invitation."}</p></div><Link className="secondary-button" to="/admin/dashboard">Save & Exit</Link></header>
+      <header className="wizard-header"><div><span className="eyebrow">{isEditing ? "Edit Invitation" : "Create Invitation"}</span><h1>{isEditing ? "Refine your wedding invitation" : isBohraTemplate ? "Create a Bohra Nikah invitation" : "Build your wedding story"}</h1><p>{isBohraTemplate ? "Add the family wording, Nikah programme and sender details from your card reference." : "Everything you add here will power the guest-facing invitation."}</p></div>{isEditing ? <button className="secondary-button" type="button" onClick={save} disabled={saving || audioUploading}>{saving ? "Saving..." : "Save & Exit"}</button> : <Link className="secondary-button" to="/admin/dashboard">Save & Exit</Link>}</header>
       <nav className="stepper">{steps.map((label, index) => <button key={label} className={index === step ? "step active" : index < step ? "step done" : "step"} onClick={() => index <= step && setStep(index)}><span>{index + 1}</span>{label === "Bohra Details" && !isBohraTemplate ? "Optional Details" : label}</button>)}</nav>
 
       <section className="wizard-card">
