@@ -251,40 +251,70 @@ function PublicInvitation() {
               {Array.isArray(invitation.events) && invitation.events.some((event) =>
                 hasValue(event.title) || hasValue(event.venue) || hasValue(event.time) || event.date || hasValue(event.description)
               ) && (
-                <motion.section
-                  className="bohra-additional-events"
-                  variants={sectionVariants}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, margin: "-45px" }}
-                >
-                  <span className="bohra-section-kicker">Additional Programme</span>
-                  <motion.div
-                    className="bohra-events-stagger"
-                    variants={staggerContainerVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-45px" }}
+                <section className="bohra-additional-events">
+                  <motion.span
+                    className="bohra-section-kicker"
+                    initial={{ opacity: 0, y: 14 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.6 }}
+                    transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                   >
+                    Additional Programme
+                  </motion.span>
+                  <div className="bohra-events-stagger">
                     {invitation.events.filter((event) =>
                       hasValue(event.title) || hasValue(event.venue) || hasValue(event.time) || event.date || hasValue(event.description)
-                    ).map((event) => (
+                    ).map((event, index) => (
                       <motion.article
                         className="bohra-extra-event glass-panel"
-                        key={event._id || event.title}
-                        variants={cardItemVariants}
+                        key={event._id || event.title || `event-${index}`}
+                        initial={{ opacity: 0, y: 54, scale: 0.96, filter: "blur(7px)" }}
+                        whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+                        viewport={{ once: true, amount: 0.22, margin: "0px 0px -70px 0px" }}
+                        transition={{
+                          duration: 0.78,
+                          delay: Math.min(index * 0.08, 0.24),
+                          ease: [0.22, 1, 0.36, 1],
+                        }}
                       >
-                        <h3>{event.title || event.type}</h3>
-                        {event.date && <p>{formatDate(event.date)}</p>}
-                        {hasValue(event.time) && <p>{event.time}</p>}
-                        {hasValue(event.venue) && <strong>{event.venue}</strong>}
-                        {hasValue(event.address) && <p>{event.address}</p>}
-                        {hasValue(event.description) && <p>{event.description}</p>}
-                        {hasValue(event.mapUrl) && <a href={event.mapUrl} target="_blank" rel="noreferrer">Open Maps ↗</a>}
+                        <div className="bohra-extra-event-topline">
+                          <span>Additional Celebration</span>
+                          <span className="bohra-extra-event-number">{String(index + 1).padStart(2, "0")}</span>
+                        </div>
+                        <h3>{event.title || event.type || "Celebration"}</h3>
+                        <div className="bohra-programme-rule bohra-extra-event-rule" aria-hidden="true"><span>✦</span></div>
+                        <div className="bohra-programme-details bohra-extra-event-details">
+                          {event.date && (
+                            <div className="bohra-detail-row">
+                              <span className="bohra-detail-icon" aria-hidden="true">▦</span>
+                              <div><strong>{formatDate(event.date)}</strong></div>
+                            </div>
+                          )}
+                          {hasValue(event.time) && (
+                            <div className="bohra-detail-row">
+                              <span className="bohra-detail-icon" aria-hidden="true">◷</span>
+                              <div><strong>{event.time}</strong></div>
+                            </div>
+                          )}
+                          {hasValue(event.venue) && (
+                            <div className="bohra-detail-row">
+                              <span className="bohra-detail-icon" aria-hidden="true">⌖</span>
+                              <div><strong>{event.venue}</strong></div>
+                            </div>
+                          )}
+                          {hasValue(event.address) && (
+                            <div className="bohra-detail-row">
+                              <span className="bohra-detail-icon" aria-hidden="true">⌂</span>
+                              <div><span>{event.address}</span></div>
+                            </div>
+                          )}
+                        </div>
+                        {hasValue(event.description) && <p className="bohra-extra-event-description">{event.description}</p>}
+                        {hasValue(event.mapUrl) && <a className="bohra-extra-event-map-link" href={event.mapUrl} target="_blank" rel="noreferrer">Open Maps <span aria-hidden="true">↗</span></a>}
                       </motion.article>
                     ))}
-                  </motion.div>
-                </motion.section>
+                  </div>
+                </section>
               )}
 
               {hasValue(details.complimentsFrom) && (
@@ -440,25 +470,29 @@ function PublicInvitation() {
 
         {/* Ceremonies & Events Section */}
         {invitation.events?.length > 0 && (
-          <motion.section
-            className="public-section"
-            variants={sectionVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-40px" }}
-          >
-            <span className="eyebrow">The Celebrations</span>
-            <motion.div
-              variants={staggerContainerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-30px" }}
+          <section className="public-section public-celebrations-section">
+            <motion.span
+              className="eyebrow"
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.6 }}
+              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             >
-              {invitation.events.map((event) => (
+              The Celebrations
+            </motion.span>
+            <div className="public-event-list">
+              {invitation.events.map((event, index) => (
                 <motion.article
                   className="event-card"
-                  key={event._id || event.title}
-                  variants={cardItemVariants}
+                  key={event._id || event.title || `event-${index}`}
+                  initial={{ opacity: 0, y: 48, scale: 0.97, filter: "blur(6px)" }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+                  viewport={{ once: true, amount: 0.2, margin: "0px 0px -60px 0px" }}
+                  transition={{
+                    duration: 0.72,
+                    delay: Math.min(index * 0.08, 0.24),
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
                 >
                   <span className="event-dot" />
                   <h2>{event.title || event.type}</h2>
@@ -481,8 +515,8 @@ function PublicInvitation() {
                   )}
                 </motion.article>
               ))}
-            </motion.div>
-          </motion.section>
+            </div>
+          </section>
         )}
 
         {/* Family Blessings Section */}
