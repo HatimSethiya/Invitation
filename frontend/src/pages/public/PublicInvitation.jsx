@@ -190,7 +190,7 @@ function PublicInvitation() {
               )}
 
               <section className="bohra-couple-panel glass-panel">
-                <span className="bohra-section-kicker">Wedding Invitation</span>
+                
                 <div className="bohra-couple-names">
                   <h1>{groom}</h1>
                   <span className="bohra-weds">Weds</span>
@@ -228,8 +228,8 @@ function PublicInvitation() {
                       <motion.article
                         className="bohra-extra-event glass-panel"
                         key={event._id || event.title || `event-${index}`}
-                        initial={{ opacity: 0, y: 54, scale: 0.96, filter: "blur(7px)" }}
-                        whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+                        initial={{ opacity: 0, y: 32, scale: 0.985 }}
+                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
                         viewport={{ once: true, amount: 0.22, margin: "0px 0px -70px 0px" }}
                         transition={{
                           duration: 0.78,
