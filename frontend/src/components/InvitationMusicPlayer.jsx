@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 
-function InvitationMusicPlayer({ music, visible, audioRef: sharedAudioRef, startRequestedRef: sharedStartRequestedRef, showControls = true }) {
+function InvitationMusicPlayer({
+  music,
+  visible,
+  audioRef: sharedAudioRef,
+  startRequestedRef: sharedStartRequestedRef,
+  showControls = true,
+}) {
   const localAudioRef = useRef(null);
   const audioRef = sharedAudioRef || localAudioRef;
   const localStartRequestedRef = useRef(false);
