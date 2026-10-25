@@ -741,22 +741,22 @@
    MZ SIGNATURE COVER — IVORY GLASS, EMBOSSED GOLD & LUMINOUS GLASS EDGES
    -------------------------------------------------------------------------- */
 .stationery-card.stationery-card-poster {
-  width: min(88vw, 390px);
-  height: min(76vh, 590px);
-  min-height: 440px;
-  padding: clamp(20px, 4.2vw, 30px) 22px;
+  width: min(88vw, 500px);
+  height: min(76vh, 700px);
+  min-height: 0;
+  padding: clamp(16px, 3vw, 24px) 20px;
   border: 1px solid rgba(255, 222, 157, .92);
-  border-radius: 26px;
+  border-radius: 30px;
   color: #163e2e;
   background:
     radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, .96), transparent 54%),
-    linear-gradient(145deg, rgba(255, 254, 248, .91), rgba(246, 237, 215, .78) 52%, rgba(255, 253, 245, .88));
+    linear-gradient(145deg, rgba(255, 254, 248, .97), rgba(246, 237, 215, .90) 52%, rgba(255, 253, 245, .96));
   backdrop-filter: blur(15px) saturate(1.25);
   -webkit-backdrop-filter: blur(15px) saturate(1.25);
   box-shadow:
     0 0 0 1px rgba(255, 248, 220, .7),
-    0 0 14px rgba(255, 215, 127, .78),
-    0 0 34px rgba(228, 168, 62, .42),
+    0 0 18px rgba(255, 221, 139, .96),
+    0 0 42px rgba(228, 168, 62, .56),
     0 28px 70px -18px rgba(0, 0, 0, .88),
     0 10px 24px -5px rgba(0, 0, 0, .43),
     inset 0 1px 0 rgba(255, 255, 255, .98),
@@ -785,12 +785,12 @@
   align-items: center;
   justify-content: space-between;
   overflow: hidden;
-  border-radius: 17px;
-  padding: 6px 2px 0;
+  border-radius: 19px;
+  padding: 8px 4px 6px;
   background:
-    radial-gradient(ellipse at 16% 5%, rgba(255, 255, 255, .94), transparent 32%),
+    radial-gradient(ellipse at 16% 5%, rgba(255, 255, 255, .99), transparent 32%),
     radial-gradient(ellipse at 92% 88%, rgba(241, 210, 143, .28), transparent 38%),
-    linear-gradient(140deg, rgba(255, 255, 251, .72), rgba(248, 239, 218, .52) 50%, rgba(255, 255, 255, .76));
+    linear-gradient(140deg, rgba(255, 255, 251, .93), rgba(248, 239, 218, .82) 50%, rgba(255, 255, 255, .94));
   box-shadow:
     inset 0 0 0 1px rgba(184, 137, 51, .35),
     inset 0 0 24px rgba(255, 255, 255, .7);
@@ -821,10 +821,10 @@
 
 .poster-glass-frame {
   position: absolute;
-  inset: 10px;
+  inset: 12px;
   z-index: 2;
-  border: 1px solid rgba(194, 143, 45, .86);
-  border-radius: 12px;
+  border: 1.2px solid rgba(194, 143, 45, .96);
+  border-radius: 14px;
   box-shadow:
     inset 0 0 0 4px rgba(255, 255, 255, .44),
     inset 0 0 0 5px rgba(184, 133, 39, .28);
@@ -849,9 +849,9 @@
   position: relative;
   z-index: 3;
   display: flex;
-  flex: 0 0 36%;
+  flex: 0 0 37%;
   width: 100%;
-  min-height: 135px;
+  min-height: 172px;
   align-items: center;
   justify-content: center;
   margin-top: 2px;
@@ -862,7 +862,7 @@
   position: absolute;
   top: 9px;
   font-family: "Bodoni MT", Didot, "Times New Roman", serif;
-  font-size: clamp(6.2rem, 19vw, 8.6rem);
+  font-size: clamp(8rem, 18vw, 11.5rem);
   font-style: italic;
   font-weight: 600;
   line-height: .95;
@@ -874,23 +874,34 @@
   -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 2px 0 rgba(255, 255, 255, .65));
 }
-.poster-monogram-m { left: calc(50% - 105px); }
-.poster-monogram-z { left: calc(50% - 14px); top: 25px; }
+.poster-monogram-m { left: calc(50% - 142px); }
+.poster-monogram-z { left: calc(50% - 13px); top: 30px; }
 
 .poster-monogram-botanical {
   position: absolute;
-  top: 18px;
-  left: calc(50% - 94px);
+  top: 28px;
+  left: calc(50% - 126px);
   z-index: 2;
-  width: min(46%, 176px);
+  width: min(58%, 245px);
   height: auto;
   overflow: visible;
   stroke: #b98630;
-  stroke-width: 2.1;
+  stroke-width: 1.7;
   stroke-linecap: round;
   stroke-linejoin: round;
-  filter: drop-shadow(0 1px 1px rgba(255, 255, 255, .9));
+  filter: drop-shadow(0 1px 1px rgba(255, 255, 255, .9)) drop-shadow(0 0 4px rgba(190, 139, 45, .23));
   opacity: .92;
+}
+
+.poster-monogram-botanical path:nth-child(2n) {
+  fill: rgba(24, 70, 47, .24);
+}
+.poster-monogram-botanical path:nth-child(2n + 3) {
+  fill: rgba(199, 151, 52, .22);
+}
+.poster-monogram-botanical path:first-child,
+.poster-monogram-botanical path:nth-child(6) {
+  fill: none;
 }
 
 .poster-cover-title {
@@ -900,24 +911,24 @@
   width: 100%;
   align-items: baseline;
   justify-content: center;
-  gap: clamp(3px, 1vw, 7px);
+  gap: clamp(4px, .8vw, 8px);
   margin-top: 2px;
   white-space: nowrap;
   color: #1b4432;
   font-family: "Segoe Script", "Brush Script MT", cursive;
-  font-size: clamp(1.14rem, 4.4vw, 1.72rem);
-  font-weight: 600;
+  font-size: clamp(1.65rem, 2.2vw, 2.25rem);
+  font-weight: 700;
   line-height: 1.3;
-  letter-spacing: -.055em;
+  letter-spacing: -.035em;
   text-shadow: 0 1px 0 rgba(255, 255, 255, .98), 0 0 9px rgba(209, 166, 75, .18);
 }
 
 .poster-cover-weds {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: .72em;
+  font-family: "Segoe Script", "Brush Script MT", cursive;
+  font-size: .76em;
   font-style: italic;
-  font-weight: 400;
-  letter-spacing: -.01em;
+  font-weight: 500;
+  letter-spacing: -.045em;
   color: #b17d2d;
 }
 
@@ -926,10 +937,10 @@
   position: relative;
   z-index: 3;
   display: flex;
-  width: 82%;
+  width: 88%;
   align-items: center;
   justify-content: center;
-  gap: 11px;
+  gap: 12px;
   color: #be8d37;
   margin: 2px 0;
 }
@@ -952,7 +963,7 @@
   margin: 4px 0 0;
   color: #153e2c;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(.86rem, 3vw, 1.08rem);
+  font-size: clamp(1rem, 2.3vw, 1.24rem);
   font-weight: 600;
   letter-spacing: .035em;
   line-height: 1.4;
@@ -966,7 +977,7 @@
   margin: 0;
   color: #194432;
   font-family: "Bodoni MT", Didot, Georgia, serif;
-  font-size: clamp(1.3rem, 4.7vw, 1.85rem);
+  font-size: clamp(1.6rem, 2.6vw, 2.15rem);
   font-weight: 600;
   letter-spacing: .035em;
   line-height: 1.3;
@@ -974,7 +985,7 @@
 }
 
 .poster-cover-bottom-ornament {
-  width: 74%;
+  width: 82%;
   margin: 0 0 4px;
 }
 .poster-cover-bottom-ornament b {
@@ -992,28 +1003,28 @@
 
 @media (max-width: 600px) {
   .stationery-card.stationery-card-poster {
-    width: min(88vw, 350px);
-    height: min(75vh, 540px);
-    min-height: 430px;
-    padding: 20px 17px;
-    border-radius: 23px;
+    width: min(88vw, 365px);
+    height: min(74vh, 540px);
+    min-height: 0;
+    padding: 17px 15px;
+    border-radius: 27px;
   }
 
   .poster-glass-frame { inset: 8px; }
   .poster-monogram {
-    flex-basis: 34%;
-    min-height: 122px;
+    flex-basis: 36%;
+    min-height: 130px;
   }
-  .poster-monogram-m { left: calc(50% - 91px); }
-  .poster-monogram-z { left: calc(50% - 8px); top: 23px; }
+  .poster-monogram-m { left: calc(50% - 114px); }
+  .poster-monogram-z { left: calc(50% - 9px); top: 25px; }
   .poster-monogram-botanical {
-    left: calc(50% - 79px);
-    top: 20px;
-    width: min(45%, 148px);
+    left: calc(50% - 97px);
+    top: 24px;
+    width: min(56%, 195px);
   }
-  .poster-cover-title { font-size: clamp(1.02rem, 4.8vw, 1.36rem); }
+  .poster-cover-title { font-size: clamp(1.34rem, 5.2vw, 1.75rem); }
   .poster-cover-tagline { letter-spacing: .015em; }
-  .poster-cover-date { font-size: clamp(1.23rem, 5.2vw, 1.55rem); }
+  .poster-cover-date { font-size: clamp(1.48rem, 5.8vw, 1.85rem); }
 }
 
 @media (prefers-reduced-motion: reduce) {
