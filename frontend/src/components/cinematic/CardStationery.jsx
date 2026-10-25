@@ -58,7 +58,7 @@ function CardStationery({
         {usePosterCover ? (
           <img
             className="poster-card-art"
-            src="/mufaddal-zainab-card.svg"
+            src="/mufaddal-zainab-cover.webp"
             alt="Mufaddal Weds Zainab — Our Forever Begins, 17.12.2026"
             draggable="false"
             fetchPriority="high"
