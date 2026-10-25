@@ -1194,3 +1194,176 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
   .invitation-row, .event-card, .bohra-extra-event { transition: none; }
   .invitation-row:hover, .event-card:hover, .bohra-extra-event:hover { transform: none; }
 }
+
+
+/* Stronger glassmorphism and clearly staged scroll reveals for event cards. */
+.bohra-public-page .bohra-additional-events {
+  position: relative;
+  margin: clamp(28px, 5vw, 46px) auto 0;
+  padding-top: 4px;
+}
+.bohra-public-page .bohra-additional-events > .bohra-section-kicker {
+  margin-bottom: 20px;
+  text-shadow: 0 1px 0 rgba(255,255,255,.6);
+}
+.bohra-public-page .bohra-events-stagger,
+.public-event-list {
+  display: grid;
+  gap: clamp(15px, 2.3vw, 22px);
+}
+.bohra-public-page .bohra-extra-event {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin: 0;
+  padding: clamp(21px, 4vw, 32px) clamp(18px, 4vw, 30px);
+  border: 1px solid rgba(177, 138, 66, .48);
+  border-radius: 26px;
+  background:
+    radial-gradient(ellipse at 12% 0%, rgba(255,255,255,.6), transparent 46%),
+    linear-gradient(135deg, rgba(255,255,255,.46), rgba(251,247,235,.23)),
+    rgba(255,255,255,.18);
+  box-shadow:
+    0 22px 48px rgba(36,74,58,.11),
+    0 5px 16px rgba(177,138,66,.07),
+    inset 0 1px 0 rgba(255,255,255,.95),
+    inset 0 -1px 0 rgba(177,138,66,.12);
+  backdrop-filter: blur(24px) saturate(1.38);
+  -webkit-backdrop-filter: blur(24px) saturate(1.38);
+  transition: border-color .3s ease, box-shadow .3s ease, background .3s ease;
+  will-change: opacity, transform, filter;
+}
+.bohra-public-page .bohra-extra-event::before {
+  position: absolute;
+  z-index: -1;
+  inset: 6px;
+  border: 1px solid rgba(177,138,66,.2);
+  border-radius: 20px;
+  content: "";
+  pointer-events: none;
+}
+.bohra-public-page .bohra-extra-event::after {
+  position: absolute;
+  top: 0;
+  left: clamp(24px, 5vw, 38px);
+  width: 74px;
+  height: 3px;
+  border-radius: 0 0 999px 999px;
+  background: linear-gradient(90deg, #9c7838, rgba(177,138,66,.08));
+  content: "";
+  pointer-events: none;
+}
+.bohra-public-page .bohra-extra-event:hover {
+  border-color: rgba(177,138,66,.72);
+  background:
+    radial-gradient(ellipse at 12% 0%, rgba(255,255,255,.72), transparent 46%),
+    linear-gradient(135deg, rgba(255,255,255,.55), rgba(251,247,235,.29)),
+    rgba(255,255,255,.22);
+  box-shadow:
+    0 27px 56px rgba(36,74,58,.15),
+    0 7px 22px rgba(177,138,66,.1),
+    inset 0 1px 0 rgba(255,255,255,.98),
+    inset 0 -1px 0 rgba(177,138,66,.14);
+}
+.bohra-extra-event-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0 0 10px;
+  color: #8c6b32;
+  font-size: .66rem;
+  font-weight: 800;
+  letter-spacing: .16em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.bohra-extra-event-number {
+  display: inline-grid;
+  min-width: 31px;
+  height: 31px;
+  padding: 0 7px;
+  place-items: center;
+  border: 1px solid rgba(177,138,66,.37);
+  border-radius: 50%;
+  background: rgba(255,255,255,.36);
+  color: #8b6b34;
+  font-family: Georgia, serif;
+  font-size: .78rem;
+  letter-spacing: .04em;
+}
+.bohra-public-page .bohra-extra-event h3 {
+  margin: 0;
+  color: var(--bohra-forest);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.55rem, 5vw, 2.1rem);
+  font-weight: 500;
+  line-height: 1.1;
+  text-align: center;
+  text-wrap: balance;
+}
+.bohra-public-page .bohra-extra-event-rule {
+  margin: 15px auto 20px;
+}
+.bohra-extra-event-details {
+  max-width: 515px;
+  gap: 12px;
+}
+.bohra-extra-event-description {
+  max-width: 515px;
+  margin: 18px auto 0;
+  padding: 12px 15px;
+  border-left: 2px solid rgba(177,138,66,.42);
+  border-radius: 0 12px 12px 0;
+  background: rgba(255,255,255,.22);
+  color: var(--bohra-muted);
+  font-size: .92rem;
+  line-height: 1.7;
+}
+.bohra-public-page .bohra-extra-event-map-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 19px auto 0;
+  padding: 10px 17px;
+  border: 1px solid rgba(177,138,66,.48);
+  border-radius: 999px;
+  background: rgba(255,255,255,.34);
+  color: var(--bohra-forest);
+  font-size: .82rem;
+  font-weight: 750;
+  text-decoration: none;
+  transition: background .25s ease, box-shadow .25s ease;
+}
+.bohra-public-page .bohra-extra-event-map-link:hover {
+  background: rgba(255,255,255,.64);
+  box-shadow: 0 8px 18px rgba(36,74,58,.1);
+}
+.public-event-list { margin-top: 18px; }
+.public-celebrations-section .event-card {
+  background:
+    radial-gradient(ellipse at 10% 0%, rgba(255,255,255,.65), transparent 50%),
+    linear-gradient(135deg, rgba(255,255,255,.50), rgba(255,250,252,.26)),
+    rgba(255,255,255,.18);
+  border-color: rgba(161,106,127,.34);
+  box-shadow: 0 20px 44px rgba(72,42,55,.085), inset 0 1px 0 rgba(255,255,255,.94);
+  backdrop-filter: blur(22px) saturate(1.25);
+  -webkit-backdrop-filter: blur(22px) saturate(1.25);
+  will-change: opacity, transform, filter;
+}
+.public-celebrations-section .event-card:hover {
+  border-color: rgba(161,106,127,.5);
+  box-shadow: 0 24px 50px rgba(72,42,55,.13), inset 0 1px 0 rgba(255,255,255,.98);
+}
+@media (max-width: 600px) {
+  .bohra-public-page .bohra-extra-event {
+    padding: 20px 17px;
+    border-radius: 22px;
+  }
+  .bohra-public-page .bohra-extra-event::before { inset: 5px; border-radius: 17px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bohra-public-page .bohra-extra-event,
+  .public-celebrations-section .event-card { will-change: auto; transition: none; }
+}
