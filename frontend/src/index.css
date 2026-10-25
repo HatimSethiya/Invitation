@@ -1093,3 +1093,104 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
   .music-dialog-backdrop,
   .music-dialog { animation: none; }
 }
+
+
+/* Premium invitation cards and native audio attachments */
+.invitation-row {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(176, 145, 157, .28);
+  background: linear-gradient(125deg, rgba(255,255,255,.94), rgba(255,250,252,.74));
+  box-shadow: 0 14px 38px rgba(72,42,55,.055), inset 0 1px 0 rgba(255,255,255,.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: transform .28s ease, border-color .28s ease, box-shadow .28s ease;
+}
+.invitation-row::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: linear-gradient(180deg, #b18a42, #b8859b, #4c3340);
+  opacity: .8;
+}
+.invitation-row:hover {
+  transform: translateY(-2px);
+  border-color: rgba(161,106,127,.42);
+  box-shadow: 0 20px 48px rgba(72,42,55,.095), inset 0 1px 0 rgba(255,255,255,.95);
+}
+.invitation-info { position: relative; z-index: 1; flex: 1; min-width: 0; }
+.row-actions { position: relative; z-index: 1; }
+.edit-invitation-button {
+  color: #fff;
+  border-color: #4c3340;
+  background: linear-gradient(135deg, #674657, #4c3340);
+  box-shadow: 0 5px 12px rgba(76,51,64,.15);
+}
+.edit-invitation-button:hover { filter: brightness(1.07); }
+.event-card {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(177,138,66,.3);
+  background: linear-gradient(135deg, rgba(255,255,255,.72), rgba(247,242,226,.55));
+  box-shadow: 0 18px 42px rgba(36,74,58,.08), inset 0 1px 0 rgba(255,255,255,.92);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+}
+.event-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(177,138,66,.5);
+  box-shadow: 0 22px 48px rgba(36,74,58,.13), inset 0 1px 0 rgba(255,255,255,.95);
+}
+.bohra-events-stagger { display: grid; gap: 10px; }
+.bohra-extra-event {
+  border: 1px solid rgba(177,138,66,.34);
+  background: linear-gradient(135deg, rgba(255,255,255,.7), rgba(249,245,233,.57));
+  box-shadow: 0 18px 42px rgba(36,74,58,.09), inset 0 1px 0 rgba(255,255,255,.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  transition: transform .32s ease, box-shadow .32s ease, border-color .32s ease;
+}
+.bohra-extra-event:hover {
+  transform: translateY(-3px);
+  border-color: rgba(177,138,66,.52);
+  box-shadow: 0 23px 48px rgba(36,74,58,.13), inset 0 1px 0 rgba(255,255,255,.96);
+}
+.bohra-sender-from {
+  display: block;
+  margin-bottom: 7px;
+  color: #8d6b31;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .18em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.audio-attachment-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 18px 0;
+  padding: 17px 18px;
+  border: 1px solid rgba(161,106,127,.24);
+  border-radius: 18px;
+  background: linear-gradient(120deg, rgba(255,255,255,.86), rgba(250,241,245,.78));
+  box-shadow: 0 12px 30px rgba(72,42,55,.055), inset 0 1px 0 rgba(255,255,255,.92);
+}
+.audio-attachment-copy strong { display: block; color: #4c3340; }
+.audio-attachment-copy p { margin: 5px 0 0; color: #806f76; font-size: .86rem; line-height: 1.5; }
+.audio-file-picker { flex-shrink: 0; cursor: pointer; }
+.audio-file-picker input { display: none; }
+.audio-file-picker.is-uploading { opacity: .7; pointer-events: none; }
+.uploaded-audio-preview { display: block; width: 100%; margin: 0 0 18px; }
+@media (max-width: 600px) {
+  .audio-attachment-panel { align-items: stretch; flex-direction: column; }
+  .audio-file-picker { text-align: center; }
+  .invitation-row { padding: 16px 14px 16px 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .invitation-row, .event-card, .bohra-extra-event { transition: none; }
+  .invitation-row:hover, .event-card:hover, .bohra-extra-event:hover { transform: none; }
+}
