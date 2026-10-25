@@ -59,10 +59,10 @@ function CardStationery({
           <div className="poster-glass-face">
             <div className="poster-glass-sheen" aria-hidden="true" />
             <div className="poster-glass-frame" aria-hidden="true">
-              <span className="poster-corner poster-corner-tl">❧</span>
-              <span className="poster-corner poster-corner-tr">❧</span>
-              <span className="poster-corner poster-corner-bl">❧</span>
-              <span className="poster-corner poster-corner-br">❧</span>
+              <span className="poster-corner poster-corner-tl" aria-hidden="true">✾</span>
+              <span className="poster-corner poster-corner-tr" aria-hidden="true">✾</span>
+              <span className="poster-corner poster-corner-bl" aria-hidden="true">✾</span>
+              <span className="poster-corner poster-corner-br" aria-hidden="true">✾</span>
             </div>
 
             <div className="poster-monogram" aria-label="M Z monogram">
