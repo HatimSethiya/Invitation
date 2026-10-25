@@ -862,7 +862,7 @@
   position: absolute;
   top: 9px;
   font-family: "Bodoni MT", Didot, "Times New Roman", serif;
-  font-size: clamp(8rem, 18vw, 11.5rem);
+  font-size: clamp(8rem, 18vw, 14rem);
   font-style: italic;
   font-weight: 600;
   line-height: .95;
