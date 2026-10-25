@@ -59,10 +59,10 @@ function CardStationery({
           <div className="poster-glass-face">
             <div className="poster-glass-sheen" aria-hidden="true" />
             <div className="poster-glass-frame" aria-hidden="true">
-              <span className="poster-corner poster-corner-tl">❧</span>
-              <span className="poster-corner poster-corner-tr">❧</span>
-              <span className="poster-corner poster-corner-bl">❧</span>
-              <span className="poster-corner poster-corner-br">❧</span>
+              <span className="poster-corner poster-corner-tl" aria-hidden="true">✾</span>
+              <span className="poster-corner poster-corner-tr" aria-hidden="true">✾</span>
+              <span className="poster-corner poster-corner-bl" aria-hidden="true">✾</span>
+              <span className="poster-corner poster-corner-br" aria-hidden="true">✾</span>
             </div>
 
             <div className="poster-monogram" aria-label="M Z monogram">
@@ -70,18 +70,25 @@ function CardStationery({
               <span className="poster-monogram-z">Z</span>
               <svg
                 className="poster-monogram-botanical"
-                viewBox="0 0 180 110"
+                viewBox="0 0 240 150"
                 fill="none"
                 aria-hidden="true"
               >
-                <path d="M25 91C49 77 62 57 83 18" />
-                <path d="M52 63C34 63 23 51 21 36C39 36 51 45 52 63Z" />
-                <path d="M64 45C48 39 43 25 48 12C63 20 69 31 64 45Z" />
-                <path d="M77 29C79 14 91 6 105 8C99 24 89 31 77 29Z" />
-                <path d="M47 74C30 78 16 70 11 57C28 54 41 61 47 74Z" />
-                <path d="M86 20C105 37 120 40 146 35" />
-                <path d="M112 37C113 22 125 13 139 15C133 30 123 38 112 37Z" />
-                <path d="M126 38C137 48 151 47 162 38C149 29 136 30 126 38Z" />
+                <g className="poster-botanical-stems">
+                  <path d="M17 132C44 113 65 86 87 39C96 23 105 13 119 6" />
+                  <path d="M40 111C70 86 97 66 131 51C155 42 180 38 221 44" />
+                  <path d="M76 77C57 68 47 52 47 35C65 40 77 54 76 77Z" />
+                  <path d="M90 51C76 35 77 19 87 7C101 22 101 39 90 51Z" />
+                  <path d="M112 22C119 7 135 2 148 8C139 23 126 29 112 22Z" />
+                  <path d="M49 104C30 105 18 93 15 78C34 78 48 88 49 104Z" />
+                  <path d="M67 87C48 81 40 67 44 51C61 60 70 73 67 87Z" />
+                  <path d="M119 61C105 45 108 31 118 20C132 34 132 49 119 61Z" />
+                  <path d="M142 48C151 31 168 27 182 34C171 49 157 54 142 48Z" />
+                  <path d="M160 46C172 57 188 56 201 46C187 36 172 37 160 46Z" />
+                  <path d="M87 77C75 65 76 52 85 41C97 53 98 66 87 77Z" />
+                  <path d="M104 66C115 81 132 85 147 78C137 63 120 59 104 66Z" />
+                  <path d="M32 126C27 113 31 101 41 94C49 108 45 120 32 126Z" />
+                </g>
               </svg>
             </div>
 
