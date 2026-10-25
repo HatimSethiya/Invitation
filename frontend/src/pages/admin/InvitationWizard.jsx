@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import api from "../../services/api";
 import ImageUpload from "../../components/ImageUpload";
 
@@ -7,12 +7,22 @@ const steps = ["Basic & Style", "Couple", "Bohra Details", "Events", "Family & S
 const eventTemplate = { type: "Wedding", title: "", date: "", time: "", venue: "", address: "", description: "", mapUrl: "" };
 const familyTemplate = { name: "", relation: "", side: "other" };
 const galleryTemplate = { imageUrl: "", caption: "" };
+const toDateInput = (value) => {
+  if (!value) return "";
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? "" : date.toISOString().slice(0, 10);
+};
 
 function InvitationWizard() {
   const navigate = useNavigate();
+  const { id: editId } = useParams();
+  const isEditing = Boolean(editId);
   const [step, setStep] = useState(0);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [loadingInvitation, setLoadingInvitation] = useState(Boolean(editId));
+  const [invitationStatus, setInvitationStatus] = useState("draft");
+  const [audioUploading, setAudioUploading] = useState(false);
   const [musicQuery, setMusicQuery] = useState("");
   const [musicTracks, setMusicTracks] = useState([]);
   const [musicLoading, setMusicLoading] = useState(false);
@@ -60,6 +70,52 @@ function InvitationWizard() {
   });
 
   const isBohraTemplate = form.theme === "bohraNikah";
+
+  useEffect(() => {
+    if (!editId) return undefined;
+
+    let active = true;
+    setLoadingInvitation(true);
+    setError("");
+
+    api.get(`/invitations/${editId}`)
+      .then(({ data }) => {
+        if (!active) return;
+        const invitation = data.invitation;
+        setInvitationStatus(invitation.status || "draft");
+        setForm((current) => ({
+          ...current,
+          title: invitation.title || "",
+          slug: invitation.slug || "",
+          weddingDate: toDateInput(invitation.weddingDate),
+          theme: invitation.theme || "bohraNikah",
+          couple: { ...current.couple, ...(invitation.couple || {}) },
+          bohraDetails: { ...current.bohraDetails, ...(invitation.bohraDetails || {}) },
+          events: Array.isArray(invitation.events) && invitation.events.length
+            ? invitation.events.map((event) => ({ ...event, date: toDateInput(event.date) }))
+            : [{ ...eventTemplate }],
+          family: Array.isArray(invitation.family) && invitation.family.length
+            ? invitation.family
+            : [{ ...familyTemplate }],
+          story: Array.isArray(invitation.story) && invitation.story.length
+            ? invitation.story
+            : [{ title: "", content: "", image: "" }],
+          gallery: Array.isArray(invitation.gallery) && invitation.gallery.length
+            ? invitation.gallery
+            : [{ ...galleryTemplate }],
+          venue: { ...current.venue, ...(invitation.venue || {}) },
+          music: { ...current.music, ...(invitation.music || {}) },
+        }));
+      })
+      .catch((err) => {
+        if (active) setError(err.response?.data?.message || "Unable to load invitation for editing.");
+      })
+      .finally(() => {
+        if (active) setLoadingInvitation(false);
+      });
+
+    return () => { active = false; };
+  }, [editId]);
 
   const loadMusicTracks = useCallback(async ({ query = "", offset = 0, append = false } = {}) => {
     const requestId = ++musicRequestRef.current;
@@ -136,6 +192,60 @@ function InvitationWizard() {
     setMusicError("");
   };
 
+  const handleAudioFileChange = async (event) => {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+    if (!file) return;
+
+    const allowedExtensions = /\.(mp3|mpeg|wav|ogg|m4a|aac|flac|webm)$/i;
+    const allowedMimeTypes = [
+      "audio/mpeg", "audio/mp3", "audio/mp4", "audio/x-m4a",
+      "audio/wav", "audio/x-wav", "audio/ogg", "application/ogg",
+      "audio/aac", "audio/flac", "audio/x-flac", "audio/webm",
+      "application/octet-stream",
+    ];
+
+    if (!allowedExtensions.test(file.name) || (file.type && !allowedMimeTypes.includes(file.type))) {
+      setMusicError("Choose an MP3/MPEG, WAV, OGG, M4A, AAC, FLAC or WebM audio file.");
+      return;
+    }
+    if (file.size > 25 * 1024 * 1024) {
+      setMusicError("Audio files must be 25 MB or smaller.");
+      return;
+    }
+
+    setAudioUploading(true);
+    setMusicError("");
+    const payload = new FormData();
+    payload.append("audio", file);
+
+    try {
+      const response = await api.post("/uploads/audio", payload, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      const fileTitle = file.name.replace(/\.[^.]+$/, "");
+      setForm((current) => ({
+        ...current,
+        music: {
+          ...current.music,
+          audioUrl: response.data.path,
+          title: fileTitle || "Uploaded audio",
+          artist: "",
+          provider: "custom",
+          trackId: "",
+          shareUrl: "",
+          licenseUrl: "",
+          attribution: "",
+          autoplay: false,
+        },
+      }));
+    } catch (err) {
+      setMusicError(err.response?.data?.message || "Unable to upload this audio file. Please try another file.");
+    } finally {
+      setAudioUploading(false);
+    }
+  };
+
   const clearMusicTrack = () => {
     setForm((current) => ({
       ...current,
@@ -171,17 +281,25 @@ function InvitationWizard() {
   const save = async () => {
     setSaving(true); setError("");
     try {
-      const payload = { ...form, status: "draft", events: form.events.filter((x) => x.title || x.venue || x.date), family: form.family.filter((x) => x.name), story: form.story.filter((x) => x.title || x.content), gallery: form.gallery.filter((x) => x.imageUrl) };
-      await api.post("/invitations", payload);
+      const payload = { ...form, status: isEditing ? invitationStatus : "draft", events: form.events.filter((x) => x.title || x.venue || x.date), family: form.family.filter((x) => x.name), story: form.story.filter((x) => x.title || x.content), gallery: form.gallery.filter((x) => x.imageUrl) };
+      if (isEditing) {
+        await api.put(`/invitations/${editId}`, payload);
+      } else {
+        await api.post("/invitations", payload);
+      }
       navigate("/admin/dashboard", { replace: true });
     } catch (err) {
-      setError(err.response?.data?.message || "Unable to create invitation.");
+      setError(err.response?.data?.message || (isEditing ? "Unable to save invitation changes." : "Unable to create invitation."));
     } finally { setSaving(false); }
   };
 
+  if (isEditing && loadingInvitation) {
+    return <main className="wizard-page"><div className="empty-state">Loading invitation details…</div></main>;
+  }
+
   return (
     <main className={`wizard-page ${isBohraTemplate ? "bohra-wizard-page" : ""}`}>
-      <header className="wizard-header"><div><span className="eyebrow">Create Invitation</span><h1>{isBohraTemplate ? "Create a Bohra Nikah invitation" : "Build your wedding story"}</h1><p>{isBohraTemplate ? "Add the family wording, Nikah programme and sender details from your card reference." : "Everything you add here will power the guest-facing invitation."}</p></div><Link className="secondary-button" to="/admin/dashboard">Save & Exit</Link></header>
+      <header className="wizard-header"><div><span className="eyebrow">{isEditing ? "Edit Invitation" : "Create Invitation"}</span><h1>{isEditing ? "Refine your wedding invitation" : isBohraTemplate ? "Create a Bohra Nikah invitation" : "Build your wedding story"}</h1><p>{isBohraTemplate ? "Add the family wording, Nikah programme and sender details from your card reference." : "Everything you add here will power the guest-facing invitation."}</p></div><Link className="secondary-button" to="/admin/dashboard">Save & Exit</Link></header>
       <nav className="stepper">{steps.map((label, index) => <button key={label} className={index === step ? "step active" : index < step ? "step done" : "step"} onClick={() => index <= step && setStep(index)}><span>{index + 1}</span>{label === "Bohra Details" && !isBohraTemplate ? "Optional Details" : label}</button>)}</nav>
 
       <section className="wizard-card">
@@ -247,7 +365,7 @@ function InvitationWizard() {
           <div className="section-title-row music-library-heading">
             <div>
               <h2>Instrumental music library</h2>
-              <p className="section-note">Preview and attach a streamed instrumental track. No MP3 will be uploaded or copied into your project.</p>
+              <p className="section-note">Search the instrumental library or attach your own audio file, including MP3/MPEG.</p>
             </div>
           </div>
 
@@ -262,6 +380,27 @@ function InvitationWizard() {
               </div>
               <button className="small-button" type="button" onClick={clearMusicTrack}>Remove</button>
             </div>
+          )}
+
+          <div className="audio-attachment-panel">
+            <div className="audio-attachment-copy">
+              <strong>Or attach your own music</strong>
+              <p>MP3 / MPEG, WAV, OGG, M4A, AAC, FLAC or WebM · Up to 25 MB.</p>
+            </div>
+            <label className={`small-button audio-file-picker ${audioUploading ? "is-uploading" : ""}`}>
+              {audioUploading ? "Uploading…" : "Browse audio file"}
+              <input
+                type="file"
+                accept=".mp3,.mpeg,.wav,.ogg,.m4a,.aac,.flac,.webm,audio/mpeg,audio/mp3,audio/mp4,audio/wav,audio/ogg,audio/aac,audio/flac,audio/webm"
+                onChange={handleAudioFileChange}
+                disabled={audioUploading}
+              />
+            </label>
+          </div>
+          {form.music.provider === "custom" && form.music.audioUrl && (
+            <audio className="uploaded-audio-preview" controls preload="metadata" src={form.music.audioUrl}>
+              Your browser does not support audio playback.
+            </audio>
           )}
 
           <div className="music-search-row">
@@ -354,10 +493,10 @@ function InvitationWizard() {
           }} />
         </div>}
 
-{step === 7 && <div className="form-section bohra-review-section"><h2>Review your invitation</h2><p className="section-note">Check the key details before creating the draft.</p><div className="bohra-review-grid"><div><span>Design</span><strong>{form.theme === "bohraNikah" ? "Bohra Nikah · Emerald / Ivory / Gold" : form.theme === "royalRose" ? "Royal Rose" : form.theme === "emeraldGarden" ? "Emerald Garden" : "Ivory Heritage"}</strong></div><div><span>Couple</span><strong>{[form.couple.groomName, form.couple.brideName].filter(Boolean).join(" Weds ") || "Names not entered yet"}</strong></div><div><span>Programme</span><strong>{form.bohraDetails.programmeTitle || "Not specified"}</strong></div><div><span>Date</span><strong>{form.weddingDate ? new Date(form.weddingDate + "T12:00:00").toLocaleDateString(undefined, { dateStyle: "long" }) : "Not specified"}</strong></div></div><div className="publish-note"><strong>Ready to create?</strong><span>This saves as a draft first. Publish the guest link from the dashboard. Bohra Nikah layout does not display couple photos or a gallery.</span></div></div>}
+{step === 7 && <div className="form-section bohra-review-section"><h2>Review your invitation</h2><p className="section-note">Check the key details before creating the draft.</p><div className="bohra-review-grid"><div><span>Design</span><strong>{form.theme === "bohraNikah" ? "Bohra Nikah · Emerald / Ivory / Gold" : form.theme === "royalRose" ? "Royal Rose" : form.theme === "emeraldGarden" ? "Emerald Garden" : "Ivory Heritage"}</strong></div><div><span>Couple</span><strong>{[form.couple.groomName, form.couple.brideName].filter(Boolean).join(" Weds ") || "Names not entered yet"}</strong></div><div><span>Programme</span><strong>{form.bohraDetails.programmeTitle || "Not specified"}</strong></div><div><span>Date</span><strong>{form.weddingDate ? new Date(form.weddingDate + "T12:00:00").toLocaleDateString(undefined, { dateStyle: "long" }) : "Not specified"}</strong></div></div><div className="publish-note"><strong>Ready to create?</strong><span>{isEditing ? "Your changes will be saved without changing the current publication status." : "This saves as a draft first. Publish the guest link from the dashboard."} Bohra Nikah layout does not display couple photos or a gallery.</span></div></div>}
 
         {error && <div className="auth-error wizard-error">{error}</div>}
-        <footer className="wizard-footer"><button className="secondary-button" onClick={() => setStep((current) => Math.max(0, current - 1))} disabled={step === 0 || saving}>Back</button>{step < steps.length - 1 ? <button className="primary-button" onClick={next}>Continue</button> : <button className="primary-button" onClick={save} disabled={saving}>{saving ? "Creating..." : "Create Draft"}</button>}</footer>
+        <footer className="wizard-footer"><button className="secondary-button" onClick={() => setStep((current) => Math.max(0, current - 1))} disabled={step === 0 || saving}>Back</button>{step < steps.length - 1 ? <button className="primary-button" onClick={next}>Continue</button> : <button className="primary-button" onClick={save} disabled={saving}>{saving ? (isEditing ? "Saving..." : "Creating...") : (isEditing ? "Save Changes" : "Create Draft")}</button>}</footer>
       </section>
     </main>
   );
