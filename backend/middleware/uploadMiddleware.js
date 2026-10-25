@@ -46,6 +46,7 @@ const audioExtensions = new Set([".mp3", ".mpeg", ".wav", ".ogg", ".m4a", ".aac"
 const audioMimeTypes = new Set([
   "audio/mpeg",
   "audio/mp3",
+  "video/mpeg",
   "audio/mp4",
   "audio/x-m4a",
   "audio/wav",
@@ -62,7 +63,9 @@ const audioMimeTypes = new Set([
 const audioFilter = (_req, file, callback) => {
   const extension = path.extname(file.originalname).toLowerCase();
 
-  if (!audioExtensions.has(extension) || (file.mimetype && !audioMimeTypes.has(file.mimetype))) {
+  const isMpegMimeAlias = extension === ".mpeg" && file.mimetype === "video/mpeg";
+
+  if (!audioExtensions.has(extension) || (file.mimetype && !audioMimeTypes.has(file.mimetype) && !isMpegMimeAlias)) {
     return callback(new Error("Choose an MP3/MPEG, WAV, OGG, M4A, AAC, FLAC or WebM audio file."));
   }
 
