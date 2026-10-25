@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-function InvitationMusicPlayer({ music, visible, audioRef: sharedAudioRef }) {
+function InvitationMusicPlayer({ music, visible, audioRef: sharedAudioRef, showControls = true }) {
   const localAudioRef = useRef(null);
   const audioRef = sharedAudioRef || localAudioRef;
   const [isPlaying, setIsPlaying] = useState(false);
@@ -65,16 +65,18 @@ function InvitationMusicPlayer({ music, visible, audioRef: sharedAudioRef }) {
           setPlayError("This stream is temporarily unavailable.");
         }}
       />
-      <button
-        className="music-player-toggle music-player-icon-toggle"
-        type="button"
-        onClick={togglePlayback}
-        aria-label={isPlaying ? "Pause wedding music" : "Resume wedding music"}
-        title={playError || (isPlaying ? "Pause music" : "Resume music")}
-        aria-pressed={isPlaying}
-      >
-        <span className="music-player-glyph" aria-hidden="true">{isPlaying ? "Ⅱ" : "♫"}</span>
-      </button>
+      {showControls && (
+        <button
+          className="music-player-toggle music-player-icon-toggle"
+          type="button"
+          onClick={togglePlayback}
+          aria-label={isPlaying ? "Pause wedding music" : "Resume wedding music"}
+          title={playError || (isPlaying ? "Pause music" : "Resume music")}
+          aria-pressed={isPlaying}
+        >
+          <span className="music-player-glyph" aria-hidden="true">{isPlaying ? "Ⅱ" : "♫"}</span>
+        </button>
+      )}
 
     </aside>
   );

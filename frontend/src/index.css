@@ -1367,3 +1367,83 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
   .bohra-public-page .bohra-extra-event,
   .public-celebrations-section .event-card { will-change: auto; transition: none; }
 }
+
+
+/* Refined Bohra programme heading and family compliments: dark antique gold glow. */
+.bohra-public-page .bohra-programme-heading {
+  display: block;
+  margin: 0 auto clamp(20px, 3.5vw, 28px);
+  color: #765019;
+  font-size: clamp(.86rem, 2.7vw, 1rem);
+  font-weight: 900;
+  line-height: 1.6;
+  letter-spacing: .19em;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow:
+    0 1px 0 rgba(255, 251, 231, .94),
+    0 0 5px rgba(166, 115, 29, .22),
+    0 2px 14px rgba(139, 89, 19, .22);
+}
+
+.bohra-public-page .bohra-extra-event-topline {
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.bohra-public-page .bohra-extra-event {
+  transition:
+    transform .55s cubic-bezier(.22, 1, .36, 1),
+    border-color .4s ease,
+    box-shadow .55s cubic-bezier(.22, 1, .36, 1),
+    background-position .7s ease;
+  animation: bohra-event-luster 7.5s ease-in-out infinite;
+}
+
+.bohra-public-page .bohra-extra-event:nth-child(2n) {
+  animation-delay: -3.75s;
+}
+
+.bohra-public-page .bohra-extra-event:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 30px 58px rgba(36, 74, 58, .16),
+    0 10px 22px rgba(124, 83, 27, .10),
+    inset 0 1px 0 rgba(255, 255, 255, .98);
+}
+
+.bohra-public-page .bohra-compliments p {
+  color: #765019;
+  font-size: clamp(1.02rem, 3.4vw, 1.18rem);
+  font-weight: 800;
+  letter-spacing: .012em;
+  line-height: 1.75;
+  text-shadow:
+    0 1px 0 rgba(255, 251, 231, .92),
+    0 0 6px rgba(166, 115, 29, .19),
+    0 2px 13px rgba(139, 89, 19, .24);
+}
+
+@keyframes bohra-event-luster {
+  0%, 100% {
+    box-shadow:
+      0 20px 42px rgba(36, 74, 58, .10),
+      0 4px 13px rgba(124, 83, 27, .05),
+      inset 0 1px 0 rgba(255, 255, 255, .98),
+      inset 0 -1px 0 rgba(177, 138, 66, .14);
+  }
+  50% {
+    box-shadow:
+      0 24px 48px rgba(36, 74, 58, .13),
+      0 7px 18px rgba(124, 83, 27, .09),
+      inset 0 1px 0 rgba(255, 255, 255, .98),
+      inset 0 -1px 0 rgba(177, 138, 66, .2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bohra-public-page .bohra-extra-event {
+    animation: none;
+    transition: none;
+  }
+}
