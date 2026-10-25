@@ -735,3 +735,28 @@
   opacity: 0;
   transition: opacity 1.90s cubic-bezier(0.22, 1, 0.36, 1) 0.50s;
 }
+
+
+/* Poster artwork for the Mufaddal and Zainab opening cover. */
+.stationery-card.stationery-card-poster {
+  padding: 0;
+  border: 1px solid rgba(197, 160, 89, .72);
+  border-radius: 22px;
+  background: #e9efdf;
+  box-shadow:
+    0 32px 75px -15px rgba(0, 0, 0, .82),
+    0 10px 24px -5px rgba(0, 0, 0, .45),
+    0 0 0 1px rgba(255, 255, 255, .28),
+    inset 0 0 0 1px rgba(255, 255, 255, .72);
+}
+.stationery-poster-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+  object-position: center;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
