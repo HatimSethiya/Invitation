@@ -122,6 +122,7 @@ function AdminDashboard() {
                 </label>
               </div>
               <div className="row-actions">
+                <Link className="small-button edit-invitation-button" to={`/admin/invitations/${invitation._id}/edit`}>Edit</Link>
                 {invitation.status === "published" ? <a className="small-button" href={`/i/${invitation.slug}`} target="_blank" rel="noreferrer">View</a> : <button className="small-button" onClick={() => updateStatus(invitation._id, "published")}>Publish</button>}
                 <button className="small-button" onClick={() => setMusicInvitation(invitation)} disabled={musicSaving}>{invitation.music?.audioUrl ? "Change music" : "Add music"}</button>
                 {invitation.status !== "archived" && <button className="small-button danger" onClick={() => removeInvitation(invitation._id)}>Delete</button>}
