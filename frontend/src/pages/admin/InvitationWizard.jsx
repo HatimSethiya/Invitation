@@ -199,13 +199,14 @@ function InvitationWizard() {
 
     const allowedExtensions = /\.(mp3|mpeg|wav|ogg|m4a|aac|flac|webm)$/i;
     const allowedMimeTypes = [
-      "audio/mpeg", "audio/mp3", "audio/mp4", "audio/x-m4a",
+      "audio/mpeg", "audio/mp3", "audio/mp4", "audio/x-m4a", "video/mpeg",
       "audio/wav", "audio/x-wav", "audio/ogg", "application/ogg",
       "audio/aac", "audio/flac", "audio/x-flac", "audio/webm",
       "application/octet-stream",
     ];
 
-    if (!allowedExtensions.test(file.name) || (file.type && !allowedMimeTypes.includes(file.type))) {
+    const isMpegMimeAlias = /\.mpeg$/i.test(file.name) && file.type === "video/mpeg";
+    if (!allowedExtensions.test(file.name) || (file.type && !allowedMimeTypes.includes(file.type) && !isMpegMimeAlias)) {
       setMusicError("Choose an MP3/MPEG, WAV, OGG, M4A, AAC, FLAC or WebM audio file.");
       return;
     }
@@ -391,7 +392,7 @@ function InvitationWizard() {
               {audioUploading ? "Uploading…" : "Browse audio file"}
               <input
                 type="file"
-                accept=".mp3,.mpeg,.wav,.ogg,.m4a,.aac,.flac,.webm,audio/mpeg,audio/mp3,audio/mp4,audio/wav,audio/ogg,audio/aac,audio/flac,audio/webm"
+                accept=".mp3,.mpeg,.wav,.ogg,.m4a,.aac,.flac,.webm,audio/mpeg,audio/mp3,audio/mp4,audio/wav,audio/ogg,audio/aac,audio/flac,audio/webm,video/mpeg"
                 onChange={handleAudioFileChange}
                 disabled={audioUploading}
               />
