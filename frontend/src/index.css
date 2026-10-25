@@ -1393,15 +1393,14 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
 
 .bohra-public-page .bohra-extra-event {
   transition:
-    transform .55s cubic-bezier(.22, 1, .36, 1),
-    border-color .4s ease,
-    box-shadow .55s cubic-bezier(.22, 1, .36, 1),
-    background-position .7s ease;
-  animation: bohra-event-luster 7.5s ease-in-out infinite;
+    transform .42s cubic-bezier(.22, 1, .36, 1),
+    border-color .3s ease,
+    box-shadow .3s ease;
+  animation: none;
 }
 
 .bohra-public-page .bohra-extra-event:nth-child(2n) {
-  animation-delay: -3.75s;
+  animation-delay: 0s;
 }
 
 .bohra-public-page .bohra-extra-event:hover {
@@ -1424,26 +1423,70 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
     0 2px 13px rgba(139, 89, 19, .24);
 }
 
-@keyframes bohra-event-luster {
-  0%, 100% {
-    box-shadow:
-      0 20px 42px rgba(36, 74, 58, .10),
-      0 4px 13px rgba(124, 83, 27, .05),
-      inset 0 1px 0 rgba(255, 255, 255, .98),
-      inset 0 -1px 0 rgba(177, 138, 66, .14);
-  }
-  50% {
-    box-shadow:
-      0 24px 48px rgba(36, 74, 58, .13),
-      0 7px 18px rgba(124, 83, 27, .09),
-      inset 0 1px 0 rgba(255, 255, 255, .98),
-      inset 0 -1px 0 rgba(177, 138, 66, .2);
-  }
-}
 
 @media (prefers-reduced-motion: reduce) {
   .bohra-public-page .bohra-extra-event {
     animation: none;
     transition: none;
   }
+}
+
+
+/* Extra celebrations: stronger glass shine while keeping scroll animation lightweight. */
+.bohra-public-page .bohra-extra-event {
+  border: 1px solid rgba(184, 139, 49, .55);
+  background:
+    radial-gradient(ellipse at 8% 0%, rgba(255, 255, 255, .88), transparent 47%),
+    linear-gradient(135deg, rgba(255, 255, 255, .74), rgba(244, 235, 211, .48) 52%, rgba(255, 255, 255, .62)),
+    rgba(255, 253, 245, .48);
+  box-shadow:
+    0 18px 38px rgba(36, 74, 58, .12),
+    0 4px 16px rgba(177, 138, 66, .10),
+    inset 0 1px 0 rgba(255, 255, 255, .98),
+    inset 0 -1px 0 rgba(177, 138, 66, .20);
+  backdrop-filter: blur(10px) saturate(1.22);
+  -webkit-backdrop-filter: blur(10px) saturate(1.22);
+  will-change: auto;
+}
+
+.bohra-public-page .bohra-extra-event::before {
+  border-color: rgba(177, 138, 66, .34);
+  background: linear-gradient(135deg, rgba(255,255,255,.17), transparent 58%);
+}
+
+.bohra-public-page .bohra-extra-event::after {
+  width: 88px;
+  height: 3px;
+  opacity: .82;
+  background: linear-gradient(90deg, #89601e, #d2b064 48%, rgba(177,138,66,.08));
+  animation: bohra-gold-edge-glow 4.8s ease-in-out infinite;
+}
+
+.bohra-public-page .bohra-extra-event:nth-child(2n)::after {
+  animation-delay: -2.4s;
+}
+
+.bohra-public-page .bohra-extra-event:hover {
+  transform: translateY(-3px);
+  border-color: rgba(157, 111, 36, .82);
+  box-shadow:
+    0 23px 42px rgba(36, 74, 58, .15),
+    0 7px 22px rgba(177, 138, 66, .17),
+    inset 0 1px 0 rgba(255,255,255,.99);
+}
+
+@keyframes bohra-gold-edge-glow {
+  0%, 100% { opacity: .62; }
+  50% { opacity: 1; }
+}
+
+@media (max-width: 600px) {
+  .bohra-public-page .bohra-extra-event {
+    backdrop-filter: blur(7px) saturate(1.16);
+    -webkit-backdrop-filter: blur(7px) saturate(1.16);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bohra-public-page .bohra-extra-event::after { animation: none; }
 }
