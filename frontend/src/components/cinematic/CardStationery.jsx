@@ -36,6 +36,7 @@ function CardStationery({
   const groomInitial = (groom?.[0] || "G").toUpperCase();
   const brideInitial = (bride?.[0] || "B").toUpperCase();
   const monogram = `${groomInitial}&${brideInitial}`;
+  const usePosterCover = invitation?.slug === "mufaddalweddinginvitation";
 
   return (
     <div
@@ -53,7 +54,16 @@ function CardStationery({
       }}
       aria-label="Wedding invitation card. Click or tap to open."
     >
-      <div className="stationery-card">
+      <div className={`stationery-card ${usePosterCover ? "stationery-card-poster" : ""}`}>
+        {usePosterCover ? (
+          <img
+            className="stationery-poster-image"
+            src="/mufaddal-zainab-cover.webp"
+            alt="Mufaddal weds Zainab wedding invitation"
+            draggable="false"
+          />
+        ) : (
+          <>
         {/* Subtle Paper Texture & Watermark */}
         <div className="card-paper-texture" />
 
@@ -106,6 +116,8 @@ function CardStationery({
             </p>
           )}
         </footer>
+          </>
+        )}
       </div>
 
       {/* Understated Tap Prompt (Fades out immediately on interaction) */}
