@@ -741,8 +741,8 @@
    MZ SIGNATURE COVER — IVORY GLASS, EMBOSSED GOLD & LUMINOUS GLASS EDGES
    -------------------------------------------------------------------------- */
 .stationery-card.stationery-card-poster {
-  width: min(88vw, 500px);
-  height: min(76vh, 700px);
+  width: min(88vw, 510px);
+  height: min(88vh, 700px);
   min-height: 0;
   padding: clamp(16px, 3vw, 24px) 20px;
   border: 1px solid rgba(255, 222, 157, .92);
@@ -862,7 +862,7 @@
   position: absolute;
   top: 9px;
   font-family: "Bodoni MT", Didot, "Times New Roman", serif;
-  font-size: clamp(8rem, 18vw, 14rem);
+  font-size: clamp(9rem, 22vw, 17rem);
   font-style: italic;
   font-weight: 600;
   line-height: .95;
@@ -874,15 +874,15 @@
   -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 2px 0 rgba(255, 255, 255, .65));
 }
-.poster-monogram-m { left: calc(50% - 142px); }
+.poster-monogram-m { left: calc(50% - 156px); }
 .poster-monogram-z { left: calc(50% - 13px); top: 30px; }
 
 .poster-monogram-botanical {
   position: absolute;
-  top: 28px;
-  left: calc(50% - 126px);
+  top: 24px;
+  left: calc(50% - 145px);
   z-index: 2;
-  width: min(58%, 245px);
+  width: min(66%, 290px);
   height: auto;
   overflow: visible;
   stroke: #b98630;
@@ -891,6 +891,22 @@
   stroke-linejoin: round;
   filter: drop-shadow(0 1px 1px rgba(255, 255, 255, .9)) drop-shadow(0 0 4px rgba(190, 139, 45, .23));
   opacity: .92;
+}
+
+
+.poster-botanical-stems path {
+  stroke: #b98226;
+  stroke-width: 1.65;
+  fill: none;
+}
+.poster-botanical-stems path:nth-child(n + 3) {
+  fill: rgba(198, 150, 57, .22);
+  stroke: #c39137;
+  stroke-width: 1.35;
+}
+.poster-botanical-stems path:nth-child(3n + 1) {
+  fill: rgba(28, 72, 49, .32);
+  stroke: #a87a27;
 }
 
 .poster-monogram-botanical path:nth-child(2n) {
@@ -916,7 +932,7 @@
   white-space: nowrap;
   color: #1b4432;
   font-family: "Segoe Script", "Brush Script MT", cursive;
-  font-size: clamp(1.65rem, 2.2vw, 2.25rem);
+  font-size: clamp(1.8rem, 2.5vw, 2.55rem);
   font-weight: 700;
   line-height: 1.3;
   letter-spacing: -.035em;
@@ -963,7 +979,7 @@
   margin: 4px 0 0;
   color: #153e2c;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1rem, 2.3vw, 1.24rem);
+  font-size: clamp(1.08rem, 2.1vw, 1.45rem);
   font-weight: 600;
   letter-spacing: .035em;
   line-height: 1.4;
@@ -977,7 +993,7 @@
   margin: 0;
   color: #194432;
   font-family: "Bodoni MT", Didot, Georgia, serif;
-  font-size: clamp(1.6rem, 2.6vw, 2.15rem);
+  font-size: clamp(1.55rem, 2.5vw, 2.05rem);
   font-weight: 600;
   letter-spacing: .035em;
   line-height: 1.3;
@@ -1003,8 +1019,8 @@
 
 @media (max-width: 600px) {
   .stationery-card.stationery-card-poster {
-    width: min(88vw, 365px);
-    height: min(74vh, 540px);
+    width: min(88vw, 375px);
+    height: min(84vh, 540px);
     min-height: 0;
     padding: 17px 15px;
     border-radius: 27px;
@@ -1015,14 +1031,14 @@
     flex-basis: 36%;
     min-height: 130px;
   }
-  .poster-monogram-m { left: calc(50% - 114px); }
+  .poster-monogram-m { left: calc(50% - 123px); }
   .poster-monogram-z { left: calc(50% - 9px); top: 25px; }
   .poster-monogram-botanical {
-    left: calc(50% - 97px);
-    top: 24px;
-    width: min(56%, 195px);
+    left: calc(50% - 110px);
+    top: 22px;
+    width: min(62%, 218px);
   }
-  .poster-cover-title { font-size: clamp(1.34rem, 5.2vw, 1.75rem); }
+  .poster-cover-title { font-size: clamp(1.42rem, 5.7vw, 1.9rem); }
   .poster-cover-tagline { letter-spacing: .015em; }
   .poster-cover-date { font-size: clamp(1.48rem, 5.8vw, 1.85rem); }
 }
