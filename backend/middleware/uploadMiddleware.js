@@ -42,4 +42,39 @@ const uploadImage = multer({
   },
 });
 
-module.exports = { uploadImage };
+const audioExtensions = new Set([".mp3", ".mpeg", ".wav", ".ogg", ".m4a", ".aac", ".flac", ".webm"]);
+const audioMimeTypes = new Set([
+  "audio/mpeg",
+  "audio/mp3",
+  "audio/mp4",
+  "audio/x-m4a",
+  "audio/wav",
+  "audio/x-wav",
+  "audio/ogg",
+  "application/ogg",
+  "audio/aac",
+  "audio/flac",
+  "audio/x-flac",
+  "audio/webm",
+  "application/octet-stream",
+]);
+
+const audioFilter = (_req, file, callback) => {
+  const extension = path.extname(file.originalname).toLowerCase();
+
+  if (!audioExtensions.has(extension) || (file.mimetype && !audioMimeTypes.has(file.mimetype))) {
+    return callback(new Error("Choose an MP3/MPEG, WAV, OGG, M4A, AAC, FLAC or WebM audio file."));
+  }
+
+  return callback(null, true);
+};
+
+const audioUpload = multer({
+  storage,
+  fileFilter: audioFilter,
+  limits: {
+    fileSize: 25 * 1024 * 1024,
+  },
+});
+
+module.exports = { uploadImage, audioUpload };
