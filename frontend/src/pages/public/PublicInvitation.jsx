@@ -444,8 +444,8 @@ function PublicInvitation() {
                 <motion.article
                   className="event-card"
                   key={event._id || event.title || `event-${index}`}
-                  initial={{ opacity: 0, y: 48, scale: 0.97, filter: "blur(6px)" }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+                  initial={{ opacity: 0, y: 32, scale: 0.985 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
                   viewport={{ once: true, amount: 0.2, margin: "0px 0px -60px 0px" }}
                   transition={{
                     duration: 0.72,
