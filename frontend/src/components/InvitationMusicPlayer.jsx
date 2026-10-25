@@ -66,16 +66,16 @@ function InvitationMusicPlayer({ music, visible, audioRef: sharedAudioRef, showC
         }}
       />
       {showControls && (
-      <button
-        className="music-player-toggle music-player-icon-toggle"
-        type="button"
-        onClick={togglePlayback}
-        aria-label={isPlaying ? "Pause wedding music" : "Resume wedding music"}
-        title={playError || (isPlaying ? "Pause music" : "Resume music")}
-        aria-pressed={isPlaying}
-      >
-        <span className="music-player-glyph" aria-hidden="true">{isPlaying ? "Ⅱ" : "♫"}</span>
-      </button>
+        <button
+          className="music-player-toggle music-player-icon-toggle"
+          type="button"
+          onClick={togglePlayback}
+          aria-label={isPlaying ? "Pause wedding music" : "Resume wedding music"}
+          title={playError || (isPlaying ? "Pause music" : "Resume music")}
+          aria-pressed={isPlaying}
+        >
+          <span className="music-player-glyph" aria-hidden="true">{isPlaying ? "Ⅱ" : "♫"}</span>
+        </button>
       )}
 
     </aside>
