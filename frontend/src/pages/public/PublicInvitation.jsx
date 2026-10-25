@@ -251,22 +251,40 @@ function PublicInvitation() {
               {Array.isArray(invitation.events) && invitation.events.some((event) =>
                 hasValue(event.title) || hasValue(event.venue) || hasValue(event.time) || event.date || hasValue(event.description)
               ) && (
-                <section className="bohra-additional-events">
+                <motion.section
+                  className="bohra-additional-events"
+                  variants={sectionVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-45px" }}
+                >
                   <span className="bohra-section-kicker">Additional Programme</span>
-                  {invitation.events.filter((event) =>
-                    hasValue(event.title) || hasValue(event.venue) || hasValue(event.time) || event.date || hasValue(event.description)
-                  ).map((event) => (
-                    <article className="bohra-extra-event glass-panel" key={event._id || event.title}>
-                      <h3>{event.title || event.type}</h3>
-                      {event.date && <p>{formatDate(event.date)}</p>}
-                      {hasValue(event.time) && <p>{event.time}</p>}
-                      {hasValue(event.venue) && <strong>{event.venue}</strong>}
-                      {hasValue(event.address) && <p>{event.address}</p>}
-                      {hasValue(event.description) && <p>{event.description}</p>}
-                      {hasValue(event.mapUrl) && <a href={event.mapUrl} target="_blank" rel="noreferrer">Open Maps ↗</a>}
-                    </article>
-                  ))}
-                </section>
+                  <motion.div
+                    className="bohra-events-stagger"
+                    variants={staggerContainerVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-45px" }}
+                  >
+                    {invitation.events.filter((event) =>
+                      hasValue(event.title) || hasValue(event.venue) || hasValue(event.time) || event.date || hasValue(event.description)
+                    ).map((event) => (
+                      <motion.article
+                        className="bohra-extra-event glass-panel"
+                        key={event._id || event.title}
+                        variants={cardItemVariants}
+                      >
+                        <h3>{event.title || event.type}</h3>
+                        {event.date && <p>{formatDate(event.date)}</p>}
+                        {hasValue(event.time) && <p>{event.time}</p>}
+                        {hasValue(event.venue) && <strong>{event.venue}</strong>}
+                        {hasValue(event.address) && <p>{event.address}</p>}
+                        {hasValue(event.description) && <p>{event.description}</p>}
+                        {hasValue(event.mapUrl) && <a href={event.mapUrl} target="_blank" rel="noreferrer">Open Maps ↗</a>}
+                      </motion.article>
+                    ))}
+                  </motion.div>
+                </motion.section>
               )}
 
               {hasValue(details.complimentsFrom) && (
@@ -296,6 +314,7 @@ function PublicInvitation() {
               {(hasValue(details.senderName) || hasValue(details.senderFirm) ||
                 hasValue(details.senderAddress) || hasValue(details.senderContacts)) && (
                 <footer className="bohra-sender-footer">
+                  {hasValue(details.senderName) && <span className="bohra-sender-from">From</span>}
                   {hasValue(details.senderName) && <strong>{details.senderName}</strong>}
                   {hasValue(details.senderFirm) && <p>{details.senderFirm}</p>}
                   {hasValue(details.senderAddress) && <p>{details.senderAddress}</p>}
