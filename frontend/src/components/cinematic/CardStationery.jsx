@@ -54,72 +54,16 @@ function CardStationery({
       }}
       aria-label="Wedding invitation card. Click or tap to open."
     >
-      <div className={`stationery-card ${usePosterCover ? "stationery-card-poster" : ""}`}>
-        {usePosterCover ? (
-          <img
-            className="poster-card-art"
-            src="/mufaddal-zainab-cover.webp"
-            alt="Mufaddal Weds Zainab — Our Forever Begins, 17.12.2026"
-            draggable="false"
-            fetchPriority="high"
-          />
-        ) : (
-          <>
-        {/* Subtle Paper Texture & Watermark */}
-        <div className="card-paper-texture" />
+      
+<div className="stationery-card stationery-card-poster">
+  <img
+    className="poster-card-art"
+    src="/mufaddal-zainab-cover.png"
+    alt="Mufaddal Weds Zainab — Our Forever Begins, 17.12.2026"
+    draggable="false"
+  />
+</div>
 
-        {/* Delicate Antique Gold Double Border */}
-        <div className="card-gold-border-outer">
-          <div className="card-gold-border-inner" />
-          <span className="card-corner-notch tl" />
-          <span className="card-corner-notch tr" />
-          <span className="card-corner-notch bl" />
-          <span className="card-corner-notch br" />
-        </div>
-
-        {/* Card Header */}
-        <header className="stationery-header">
-          <span className="card-eyebrow">A Wedding Invitation</span>
-          <p className="card-family-intro">Together with their families</p>
-        </header>
-
-        {/* Embossed Gold Monogram Crest */}
-        <div className="card-monogram-crest">
-          <span className="crest-ring-outer" />
-          <span className="crest-ring-inner" />
-          <span className="crest-initials">{monogram}</span>
-        </div>
-
-        {/* Couple Names */}
-        <div className="card-couple-block">
-          <h1 className="card-couple-name">{groom}</h1>
-          <span className="card-ampersand">&amp;</span>
-          <h1 className="card-couple-name">{bride}</h1>
-        </div>
-
-        {/* Delicate Floral / Gold Divider */}
-        <div className="card-ornament-divider">
-          <span className="divider-rule" />
-          <span className="divider-gem">✦</span>
-          <span className="divider-rule" />
-        </div>
-
-        {/* Date & Venue Details */}
-        <footer className="stationery-footer">
-          <p className="card-wedding-date">
-            {formatDate(invitation?.weddingDate)}
-          </p>
-
-          {invitation?.venue?.name && (
-            <p className="card-wedding-venue">
-              {invitation.venue.name}
-              {invitation.venue.city ? ` · ${invitation.venue.city}` : ""}
-            </p>
-          )}
-        </footer>
-          </>
-        )}
-      </div>
 
       {/* Understated Tap Prompt (Fades out immediately on interaction) */}
       <div className="card-open-prompt">
