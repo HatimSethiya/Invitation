@@ -197,7 +197,7 @@ function InvitationWizard() {
     event.target.value = "";
     if (!file) return;
 
-    const allowedExtensions = /\\.(mp3|mpeg|wav|ogg|m4a|aac|flac|webm)$/i;
+    const allowedExtensions = /\.(mp3|mpeg|wav|ogg|m4a|aac|flac|webm)$/i;
     const allowedMimeTypes = [
       "audio/mpeg", "audio/mp3", "audio/mp4", "audio/x-m4a",
       "audio/wav", "audio/x-wav", "audio/ogg", "application/ogg",
@@ -223,7 +223,7 @@ function InvitationWizard() {
       const response = await api.post("/uploads/audio", payload, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      const fileTitle = file.name.replace(/\\.[^.]+$/, "");
+      const fileTitle = file.name.replace(/\.[^.]+$/, "");
       setForm((current) => ({
         ...current,
         music: {
