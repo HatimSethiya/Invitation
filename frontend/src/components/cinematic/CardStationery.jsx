@@ -23,10 +23,17 @@ function removeBlackBackground(event) {
     return;
   }
 
-  const width = image.naturalWidth;
-  const height = image.naturalHeight;
+  const sourceWidth = image.naturalWidth;
+  const sourceHeight = image.naturalHeight;
 
-  if (!width || !height) return;
+  if (!sourceWidth || !sourceHeight) return;
+
+  // The card is displayed at about 400 CSS pixels wide. Process a suitably
+  // sized copy instead of millions of source pixels to avoid blocking mobile.
+  const maxProcessingWidth = 600;
+  const scale = Math.min(1, maxProcessingWidth / sourceWidth);
+  const width = Math.max(1, Math.round(sourceWidth * scale));
+  const height = Math.max(1, Math.round(sourceHeight * scale));
 
   // Keep the black source canvas from flashing while its transparent version is prepared.
   image.dataset.processing = "true";
