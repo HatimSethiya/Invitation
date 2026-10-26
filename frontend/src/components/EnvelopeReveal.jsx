@@ -1,18 +1,14 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import VelvetCurtains from "./cinematic/VelvetCurtains";
-import CardStationery from "./cinematic/CardStationery";
 import "./cinematic/CinematicOpening.css";
 
 /**
- * EnvelopeReveal coordinates a clean invitation opening:
- * 1. The stationery responds gently to the guest's tap.
- * 2. Velvet curtains part.
- * 3. The stationery fades and scales away without glow or particles.
- * 4. The real invitation page fades and scales into view.
+ * EnvelopeReveal automatically opens the invitation:
+ * 1. Velvet curtains begin to part as soon as the public invitation is ready.
+ * 2. The real invitation page fades in behind the curtains.
+ * 3. The staging overlay fades away without an extra Tap to Open card.
  */
-function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
-  const [isAnticipating, setIsAnticipating] = useState(false);
-  const [isDissolving, setIsDissolving] = useState(false);
+function EnvelopeReveal({ onOpenMusic, onHandoffStart, onOpened }) {
   const [isCurtainsOpening, setIsCurtainsOpening] = useState(false);
   const [isHandoffActive, setIsHandoffActive] = useState(false);
   const [isDissolvingOut, setIsDissolvingOut] = useState(false);
@@ -26,30 +22,30 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
     return id;
   }, []);
 
-  // Cleanup all timers on unmount
+  // Clear pending timers on unmount, including the React StrictMode dev cycle.
   useEffect(() => {
     return () => {
       timersRef.current.forEach((id) => clearTimeout(id));
       timersRef.current = [];
+      hasTriggeredRef.current = false;
     };
   }, []);
 
-  // Main Orchestrated Cinematic Sequence
+  // Main automatic cinematic sequence.
   const triggerSequence = useCallback(() => {
     if (hasTriggeredRef.current) return;
     hasTriggeredRef.current = true;
 
-    // Start the selected music directly from the guest's Tap to Open gesture.
+    // Best-effort music start. Browser autoplay policies may require using the
+    // visible music control after the invitation has appeared.
     if (onOpenMusic) onOpenMusic();
 
-    // Check for user-preferred reduced motion
     const prefersReducedMotion =
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (prefersReducedMotion) {
       setIsCurtainsOpening(true);
-      setIsDissolving(true);
       setIsHandoffActive(true);
       setIsDissolvingOut(true);
       if (onHandoffStart) onHandoffStart();
@@ -59,32 +55,32 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
       return;
     }
 
-    // Keep the stationery in place while the curtains begin to part.
-    setIsAnticipating(true);
+    // Start the curtain reveal immediately; no stationery card or extra tap.
     setIsCurtainsOpening(true);
 
-    // Begin the page crossfade after the curtains have had time to travel, while
-    // the stationery still remains visible to bridge both scenes.
+    // Reveal the invitation content while the curtains finish travelling.
     addTimer(() => {
       setIsHandoffActive(true);
       if (onHandoffStart) onHandoffStart();
     }, 1900);
 
-    // Let the card dissolve slowly after the page begins to appear behind it.
-    addTimer(() => {
-      setIsDissolving(true);
-    }, 2100);
-
-    // Fade the stage only after the curtain blend has mostly completed.
+    // Fade the staging overlay after the curtain transition is nearly complete.
     addTimer(() => {
       setIsDissolvingOut(true);
     }, 4200);
 
-    // Keep the overlay mounted until the page transition has finished.
+    // Unmount the overlay only after its fade has finished.
     addTimer(() => {
       if (onOpened) onOpened();
     }, 5500);
   }, [addTimer, onHandoffStart, onOpenMusic, onOpened]);
+
+  // Defer the trigger by one task so StrictMode's setup/cleanup cycle can cancel
+  // its first scheduled start safely in development.
+  useEffect(() => {
+    const startTimer = setTimeout(triggerSequence, 0);
+    return () => clearTimeout(startTimer);
+  }, [triggerSequence]);
 
   return (
     <div
@@ -93,16 +89,7 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
       } ${isDissolvingOut ? "stage-dissolving-out" : ""}`}
       aria-label="Wedding invitation cinematic opening"
     >
-      {/* Layer 1: Realistic Heavy Velvet Theatre Curtains */}
       <VelvetCurtains isOpening={isCurtainsOpening} />
-
-      {/* Invitation stationery fades away cleanly after the curtains open. */}
-      <CardStationery
-        invitation={invitation}
-        isAnticipating={isAnticipating}
-        isDissolving={isDissolving}
-        onCardTap={triggerSequence}
-      />
     </div>
   );
 }
