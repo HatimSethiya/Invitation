@@ -19,10 +19,7 @@ app.use(cors());
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/uploads", (req, res, next) => {
-  req.params.filename = path.basename(req.path);
-  return getUploadedImageFile(req, res, next);
-});
+app.get("/uploads/:filename", getUploadedImageFile);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/invitations", invitationRoutes);
