@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import api from "../../services/api";
+import api, { resolveMediaUrl } from "../../services/api";
 import ImageUpload from "../../components/ImageUpload";
 
 const steps = ["Basic & Style", "Couple", "Bohra Details", "Events", "Family & Story", "Venue", "Music", "Review"];
@@ -399,7 +399,7 @@ function InvitationWizard() {
             </label>
           </div>
           {form.music.provider === "custom" && form.music.audioUrl && (
-            <audio className="uploaded-audio-preview" controls preload="metadata" src={form.music.audioUrl}>
+            <audio className="uploaded-audio-preview" controls preload="metadata" src={resolveMediaUrl(form.music.audioUrl)}>
               Your browser does not support audio playback.
             </audio>
           )}
