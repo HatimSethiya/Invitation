@@ -1,12 +1,14 @@
 const express = require("express");
-const { uploadImageFile, uploadAudioFile, getUploadedAudioFile } = require("../controllers/uploadController");
+const { uploadAudioFile, getUploadedAudioFile } = require("../controllers/uploadController");
+const { uploadImageFile, getUploadedImageFile } = require("../controllers/imageGridFsController");
 const { protect, requireAdmin } = require("../middleware/authMiddleware");
 const { uploadImage, audioUpload } = require("../middleware/uploadMiddleware");
 
 const router = express.Router();
 
-// Public playback endpoint: GridFS keeps uploaded music available between deploys.
+// Public playback endpoints: GridFS keeps uploaded media available between deploys.
 router.get("/audio/:id", getUploadedAudioFile);
+router.get("/image/:filename", getUploadedImageFile);
 
 router.post(
   "/image",
