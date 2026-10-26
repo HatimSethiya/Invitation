@@ -1,28 +1,5 @@
 const multer = require("multer");
 const path = require("path");
-const fs = require("fs");
-
-const uploadDirectory = path.join(__dirname, "..", "uploads");
-
-if (!fs.existsSync(uploadDirectory)) {
-  fs.mkdirSync(uploadDirectory, { recursive: true });
-}
-
-const storage = multer.diskStorage({
-  destination: (_req, _file, callback) => {
-    callback(null, uploadDirectory);
-  },
-  filename: (_req, file, callback) => {
-    const extension = path.extname(file.originalname).toLowerCase();
-    const baseName = path
-      .basename(file.originalname, extension)
-      .replace(/[^a-z0-9-_]/gi, "-")
-      .replace(/-+/g, "-")
-      .toLowerCase();
-
-    callback(null, `${Date.now()}-${Math.round(Math.random() * 1e9)}-${baseName || "image"}${extension}`);
-  },
-});
 
 const imageFilter = (_req, file, callback) => {
   const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
@@ -34,8 +11,10 @@ const imageFilter = (_req, file, callback) => {
   callback(null, true);
 };
 
+// Vercel functions have a read-only deployment filesystem. Keep uploads in memory
+// for the request and persist them in MongoDB GridFS in the controller.
 const uploadImage = multer({
-  storage,
+  storage: multer.memoryStorage(),
   fileFilter: imageFilter,
   limits: {
     fileSize: 5 * 1024 * 1024,
@@ -62,7 +41,6 @@ const audioMimeTypes = new Set([
 
 const audioFilter = (_req, file, callback) => {
   const extension = path.extname(file.originalname).toLowerCase();
-
   const isMpegMimeAlias = extension === ".mpeg" && file.mimetype === "video/mpeg";
 
   if (!audioExtensions.has(extension) || (file.mimetype && !audioMimeTypes.has(file.mimetype) && !isMpegMimeAlias)) {
@@ -72,9 +50,7 @@ const audioFilter = (_req, file, callback) => {
   return callback(null, true);
 };
 
-// Audio uploads use memory only while arriving, then are persisted in MongoDB GridFS.
-// Render instances have ephemeral local filesystems, so keeping audio on disk would
-// make uploaded invitation music disappear after the next deployment/restart.
+// Audio uploads are persisted in MongoDB GridFS, not on ephemeral local disk.
 const audioUpload = multer({
   storage: multer.memoryStorage(),
   fileFilter: audioFilter,
