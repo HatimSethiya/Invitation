@@ -19,19 +19,29 @@ function formatDate(value) {
 function removeBlackBackground(event) {
   const image = event.currentTarget;
 
-  if (image.dataset.backgroundRemoved === "true") return;
+  if (image.dataset.backgroundRemoved === "true" || image.dataset.processing === "true") {
+    return;
+  }
 
   const width = image.naturalWidth;
   const height = image.naturalHeight;
 
   if (!width || !height) return;
 
+  // Keep the black source canvas from flashing while its transparent version is prepared.
+  image.dataset.processing = "true";
+  image.style.opacity = "0";
+
   const canvas = document.createElement("canvas");
   canvas.width = width;
   canvas.height = height;
 
   const context = canvas.getContext("2d", { willReadFrequently: true });
-  if (!context) return;
+  if (!context) {
+    image.style.opacity = "1";
+    delete image.dataset.processing;
+    return;
+  }
 
   try {
     context.drawImage(image, 0, 0, width, height);
@@ -64,7 +74,6 @@ function removeBlackBackground(event) {
       stackSize += 1;
     };
 
-    // Seed all four edges, so enclosed dark details on the card remain intact.
     for (let x = 0; x < width; x += 1) {
       enqueueIfBackground(x);
       enqueueIfBackground((height - 1) * width + x);
@@ -90,10 +99,27 @@ function removeBlackBackground(event) {
     }
 
     context.putImageData(imageData, 0, 0);
-    image.dataset.backgroundRemoved = "true";
-    image.src = canvas.toDataURL("image/png");
+    const transparentImageUrl = canvas.toDataURL("image/png");
+    const processedImage = new Image();
+
+    processedImage.onload = () => {
+      image.src = transparentImageUrl;
+      image.dataset.backgroundRemoved = "true";
+      delete image.dataset.processing;
+      image.style.opacity = "1";
+    };
+
+    processedImage.onerror = () => {
+      // Preserve the original artwork if the transparent copy cannot be loaded.
+      delete image.dataset.processing;
+      image.style.opacity = "1";
+    };
+
+    processedImage.src = transparentImageUrl;
   } catch (error) {
     console.error("Could not remove the invitation image background.", error);
+    delete image.dataset.processing;
+    image.style.opacity = "1";
   }
 }
 
