@@ -1073,6 +1073,8 @@
   height: 100%;
   object-fit: contain;
   object-position: center;
+  /* Hide the cover's black matte immediately on mobile without canvas work. */
+  mix-blend-mode: screen;
   user-select: none;
   pointer-events: none;
   filter:
