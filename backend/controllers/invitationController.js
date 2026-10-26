@@ -159,7 +159,7 @@ const updateInvitationTheme = async (req, res) => {
         hostBridge: "Thereafter",
         invitationWording: "Cordially Invite & Request The Honor Of Your Presence To Grace The Wedding Ceremony Of Their Grand Son",
         nikahOfficiantIntro: "Nikah Solemnised On The Hand Mubarak Of His Holiness",
-        programmeHeading: "Programme Insha Allah",
+        programmeHeading: "Programe Inshallah",
         programmeTitle: "Daris & Dinner",
         programmeTime: firstEvent?.time || "",
         programmeVenue: invitation.venue?.name || firstEvent?.venue || "",
