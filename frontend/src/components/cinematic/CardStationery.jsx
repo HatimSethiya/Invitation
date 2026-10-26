@@ -23,6 +23,22 @@ function removeBlackBackground(event) {
     return;
   }
 
+  // Paint the original cover first. Do the expensive pixel work only after
+  // the browser has had a chance to display the invitation.
+  image.dataset.processing = "true";
+  image.style.opacity = "1";
+
+  window.requestAnimationFrame(() => {
+    window.setTimeout(() => processBlackBackground(image), 0);
+  });
+}
+
+function processBlackBackground(image) {
+  if (image.dataset.backgroundRemoved === "true") {
+    delete image.dataset.processing;
+    return;
+  }
+
   const sourceWidth = image.naturalWidth;
   const sourceHeight = image.naturalHeight;
 
@@ -34,10 +50,6 @@ function removeBlackBackground(event) {
   const scale = Math.min(1, maxProcessingWidth / sourceWidth);
   const width = Math.max(1, Math.round(sourceWidth * scale));
   const height = Math.max(1, Math.round(sourceHeight * scale));
-
-  // Keep the black source canvas from flashing while its transparent version is prepared.
-  image.dataset.processing = "true";
-  image.style.opacity = "0";
 
   const canvas = document.createElement("canvas");
   canvas.width = width;
