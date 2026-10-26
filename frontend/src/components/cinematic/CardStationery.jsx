@@ -129,13 +129,13 @@ function CardStationery({
       className={`stationery-card-container ${
         isAnticipating ? "is-anticipating" : ""
       } ${isDissolving ? "is-dissolving" : ""}`}
-      onClick={onCardTap}
+      onClick={() => onCardTap?.()}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
-          onCardTap();
+          onCardTap?.();
         }
       }}
       aria-label="Wedding invitation card. Click or tap to open."
