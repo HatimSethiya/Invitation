@@ -70,7 +70,7 @@ function processBlackBackground(image) {
     const pixelCount = width * height;
     const visited = new Uint8Array(pixelCount);
     const stack = new Uint32Array(pixelCount);
-    const backgroundThreshold = 80;
+    const backgroundThreshold = 48;
     let stackSize = 0;
 
     const enqueueIfBackground = (index) => {
