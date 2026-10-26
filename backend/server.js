@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const path = require("path");
+const fs = require("fs");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const invitationRoutes = require("./routes/invitationRoutes");
@@ -28,7 +29,11 @@ app.use("/api/uploads", uploadRoutes);
 
 // In production, serve the Vite build from the same origin as the API.
 const frontendDistPath = path.join(__dirname, "../frontend/dist");
-app.use(express.static(frontendDistPath));
+const frontendIndexPath = path.join(frontendDistPath, "index.html");
+
+if (fs.existsSync(frontendDistPath)) {
+  app.use(express.static(frontendDistPath));
+}
 
 app.use((req, res, next) => {
   const isApiRequest = req.path === "/api" || req.path.startsWith("/api/");
@@ -38,7 +43,14 @@ app.use((req, res, next) => {
     return next();
   }
 
-  return res.sendFile(path.join(frontendDistPath, "index.html"), (error) => {
+  if (!fs.existsSync(frontendIndexPath)) {
+    return res.status(404).json({
+      success: false,
+      message: "Frontend is hosted separately from this API.",
+    });
+  }
+
+  return res.sendFile(frontendIndexPath, (error) => {
     if (error) next(error);
   });
 });
