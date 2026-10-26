@@ -20,6 +20,13 @@ app.use(cors());
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
 
+app.get("/api/health", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Wedding Invitation API is running",
+  });
+});
+
 app.get("/uploads/:filename", getUploadedImageFile);
 
 app.use("/api/auth", authRoutes);
