@@ -7,6 +7,7 @@ const authRoutes = require("./routes/authRoutes");
 const invitationRoutes = require("./routes/invitationRoutes");
 const musicRoutes = require("./routes/musicRoutes");
 const uploadRoutes = require("./routes/uploadRoutes");
+const { getUploadedImageFile } = require("./controllers/imageGridFsController");
 const seedAdmin = require("./services/adminSeed");
 
 dotenv.config();
@@ -18,23 +19,17 @@ app.use(cors());
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", (req, res, next) => {
+  req.params.filename = path.basename(req.path);
+  return getUploadedImageFile(req, res, next);
+});
 
 app.use("/api/auth", authRoutes);
 app.use("/api/invitations", invitationRoutes);
 app.use("/api/music", musicRoutes);
 app.use("/api/uploads", uploadRoutes);
 
-app.get("/api/health", (req, res) => {
-  res.json({
-    success: true,
-    message: "Wedding Invitation API is running",
-    environment: process.env.NODE_ENV || "development",
-  });
-});
-
 // In production, serve the Vite build from the same origin as the API.
-// This keeps public invitation routes and API calls working on one hosted URL.
 const frontendDistPath = path.join(__dirname, "../frontend/dist");
 app.use(express.static(frontendDistPath));
 
