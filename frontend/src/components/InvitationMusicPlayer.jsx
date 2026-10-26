@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { resolveMediaUrl } from "../services/api";
 
 function InvitationMusicPlayer({
   music,
@@ -76,7 +77,7 @@ function InvitationMusicPlayer({
     <>
       <audio
         ref={audioRef}
-        src={music.audioUrl}
+        src={resolveMediaUrl(music.audioUrl)}
         loop={music.loop !== false}
         preload="auto"
         onCanPlay={retryRequestedPlayback}
