@@ -124,11 +124,8 @@ function PublicInvitation() {
 
   if (!invitation) {
     return (
-      <main className="public-page">
-        <section className="public-card">
-          <div className="loading-orb" />
-          <p>Preparing invitation...</p>
-        </section>
+      <main className="public-page theme-royalRose invitation-locked">
+        <EnvelopeReveal invitation={null} />
       </main>
     );
   }
