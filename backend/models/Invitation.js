@@ -98,7 +98,7 @@ const bohraDetailsSchema = new mongoose.Schema(
     brideFamilyLine: { type: String, trim: true, default: "" },
     nikahOfficiantIntro: { type: String, trim: true, default: "Nikah Solemnised On The Hand Mubarak Of His Holiness" },
     nikahOfficiant: { type: String, trim: true, default: "" },
-    programmeHeading: { type: String, trim: true, default: "Programme Insha Allah" },
+    programmeHeading: { type: String, trim: true, default: "Programe Inshallah" },
     programmeTitle: { type: String, trim: true, default: "Daris & Dinner" },
     hijriDate: { type: String, trim: true, default: "" },
     programmeTime: { type: String, trim: true, default: "" },
