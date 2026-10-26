@@ -59,11 +59,11 @@ function PublicInvitation() {
   const musicStartRequestedRef = useRef(false);
   const isInvitationInteractive = isHandoffStarted || isUnboxed;
 
-  const startMusicOnOpening = useCallback(() => {
+  const startMusicFromOpenTap = useCallback(() => {
     const audio = musicAudioRef.current;
     if (!audio || !invitation?.music?.audioUrl) return;
 
-    // Attempt playback when the automatic opening begins; browsers may require the music control.
+    // Invoke play synchronously from the tap, before starting any curtain timers.
     musicStartRequestedRef.current = true;
     audio.muted = false;
     audio.volume = 1;
@@ -144,13 +144,14 @@ function PublicInvitation() {
         <AnimatePresence>
           {!isUnboxed && (
             <EnvelopeReveal
-              onOpenMusic={startMusicOnOpening}
+              invitation={invitation}
+              onOpenMusic={startMusicFromOpenTap}
               onHandoffStart={() => setIsHandoffStarted(true)}
               onOpened={() => setIsUnboxed(true)}
             />
           )}
         </AnimatePresence>
-        <InvitationMusicPlayer music={invitation.music} visible={isInvitationInteractive} audioRef={musicAudioRef} startRequestedRef={musicStartRequestedRef} />
+        <InvitationMusicPlayer music={invitation.music} visible={isInvitationInteractive} audioRef={musicAudioRef} startRequestedRef={musicStartRequestedRef} showControls={false} />
 
         <motion.div
           className="invitation-body bohra-invitation-body"
@@ -336,7 +337,8 @@ function PublicInvitation() {
       <AnimatePresence>
         {!isUnboxed && (
           <EnvelopeReveal
-            onOpenMusic={startMusicOnOpening}
+            invitation={invitation}
+            onOpenMusic={startMusicFromOpenTap}
             onHandoffStart={() => setIsHandoffStarted(true)}
             onOpened={() => setIsUnboxed(true)}
           />
