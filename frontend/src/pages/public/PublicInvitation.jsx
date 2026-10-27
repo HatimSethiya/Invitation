@@ -132,13 +132,13 @@ function PublicInvitation() {
     );
   }
 
-  if (invitation.theme === "bohraNikah") {
+  if (invitation.theme === "bohraNikah" || invitation.theme === "purpleWhite") {
     const details = invitation.bohraDetails || {};
     const hasValue = (value) => typeof value === "string" && value.trim().length > 0;
 
     return (
       <main
-        className={`public-page bohra-public-page ${isInvitationInteractive ? "invitation-revealed" : "invitation-locked"}`}
+        className={`public-page bohra-public-page ${invitation.theme === "purpleWhite" ? "theme-purpleWhite" : "theme-bohraNikah"} ${isInvitationInteractive ? "invitation-revealed" : "invitation-locked"}`}
       >
         <AnimatePresence>
           {!isUnboxed && (
