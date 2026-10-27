@@ -294,7 +294,7 @@ function PublicInvitation() {
               {(hasValue(details.specialRequest) || hasValue(details.heavenlyBlessings)) && (
                 <section className="bohra-family-notes">
                   {hasValue(details.specialRequest) && (
-                    <div className="bohra-note-panel glass-panel">
+                    <div className="bohra-note-panel bohra-special-request-panel glass-panel">
                       <span className="bohra-note-title">Special Request</span>
                       <p>{details.specialRequest}</p>
                     </div>
