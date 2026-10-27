@@ -125,9 +125,11 @@ function PublicInvitation() {
   }
 
   // Avoid flashing a generic placeholder card while invitation data loads.
-  // The real cover and selected theme are rendered once the invitation is available.
+  // Keep a quiet pearl/lavender backdrop until the real cover and theme are ready.
   if (!invitation) {
-    return null;
+    return (
+      <main className="public-page invitation-loading-screen" aria-busy="true" />
+    );
   }
 
   if (invitation.theme === "bohraNikah" || invitation.theme === "purpleWhite") {
