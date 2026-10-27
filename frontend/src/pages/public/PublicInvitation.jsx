@@ -124,12 +124,10 @@ function PublicInvitation() {
     );
   }
 
+  // Avoid flashing a generic placeholder card while invitation data loads.
+  // The real cover and selected theme are rendered once the invitation is available.
   if (!invitation) {
-    return (
-      <main className="public-page theme-royalRose invitation-locked">
-        <EnvelopeReveal invitation={null} />
-      </main>
-    );
+    return null;
   }
 
   if (invitation.theme === "bohraNikah" || invitation.theme === "purpleWhite") {
@@ -198,7 +196,6 @@ function PublicInvitation() {
               )}
 
               <section className="bohra-couple-panel glass-panel">
-                
                 <div className="bohra-couple-names">
                   <h1>{groom}</h1>
                   <span className="bohra-weds">Weds</span>
@@ -208,6 +205,18 @@ function PublicInvitation() {
                   <p className="bohra-bride-family">{details.brideFamilyLine}</p>
                 )}
               </section>
+
+              {invitation.cardType === "double" &&
+                (hasValue(invitation.secondCouple?.groomName) ||
+                  hasValue(invitation.secondCouple?.brideName)) && (
+                  <section className="bohra-couple-panel bohra-second-couple-panel glass-panel">
+                    <div className="bohra-couple-names">
+                      <h1>{invitation.secondCouple?.groomName || "Groom"}</h1>
+                      <span className="bohra-weds">Weds</span>
+                      <h1>{invitation.secondCouple?.brideName || "Bride"}</h1>
+                    </div>
+                  </section>
+                )}
 
               {(hasValue(details.nikahOfficiantIntro) || hasValue(details.nikahOfficiant)) && (
                 <section className="bohra-officiant-panel glass-panel">
