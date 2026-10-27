@@ -70,7 +70,7 @@ function InvitationWizard() {
     music: { audioUrl: "", title: "", artist: "", provider: "", trackId: "", shareUrl: "", licenseUrl: "", attribution: "", autoplay: false, loop: true }
   });
 
-  const isBohraTemplate = form.theme === "bohraNikah";
+  const isBohraTemplate = form.theme === "bohraNikah" || form.theme === "purpleWhite";
 
   useEffect(() => {
     if (!editId) return undefined;
@@ -280,6 +280,7 @@ function InvitationWizard() {
   const next = () => {
     setError("");
     if (step === 0 && (!form.title.trim() || !form.weddingDate)) return setError("Invitation title and wedding date are required.");
+    if (step === 1 && form.cardType === "double" && (!form.secondCouple.brideName.trim() || !form.secondCouple.groomName.trim())) return setError("Enter both names for the second couple.");
     setStep((current) => Math.min(current + 1, steps.length - 1));
   };
 
