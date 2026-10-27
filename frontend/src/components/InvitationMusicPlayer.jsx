@@ -10,6 +10,7 @@ function InvitationMusicPlayer({
 }) {
   const localAudioRef = useRef(null);
   const audioRef = sharedAudioRef || localAudioRef;
+  const previousAudioUrlRef = useRef(music?.audioUrl);
   const localStartRequestedRef = useRef(false);
   const startRequestedRef = sharedStartRequestedRef || localStartRequestedRef;
   const [isPlaying, setIsPlaying] = useState(false);
@@ -17,8 +18,9 @@ function InvitationMusicPlayer({
 
   useEffect(() => {
     const audio = audioRef.current;
-    if (!audio) return;
+    if (!audio || previousAudioUrlRef.current === music?.audioUrl) return;
 
+    previousAudioUrlRef.current = music?.audioUrl;
     audio.pause();
     setIsPlaying(false);
     setPlayError("");
