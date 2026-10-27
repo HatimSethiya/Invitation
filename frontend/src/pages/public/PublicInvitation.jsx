@@ -55,11 +55,13 @@ function PublicInvitation() {
   const [error, setError] = useState("");
   const [isUnboxed, setIsUnboxed] = useState(false);
   const [isHandoffStarted, setIsHandoffStarted] = useState(false);
+  const [isMusicStartRequested, setIsMusicStartRequested] = useState(false);
   const musicAudioRef = useRef(null);
   const musicStartRequestedRef = useRef(false);
   const isInvitationInteractive = isHandoffStarted || isUnboxed;
 
   const startMusicFromOpenTap = useCallback(() => {
+    setIsMusicStartRequested(true);
     const audio = musicAudioRef.current;
     if (!audio || !invitation?.music?.audioUrl) return;
 
@@ -148,7 +150,7 @@ function PublicInvitation() {
             />
           )}
         </AnimatePresence>
-        <InvitationMusicPlayer music={invitation.music} visible={isInvitationInteractive} audioRef={musicAudioRef} startRequestedRef={musicStartRequestedRef} showControls={false} />
+        <InvitationMusicPlayer music={invitation.music} visible={isInvitationInteractive || isMusicStartRequested} audioRef={musicAudioRef} startRequestedRef={musicStartRequestedRef} showControls={false} />
 
         <motion.div
           className="invitation-body bohra-invitation-body"
