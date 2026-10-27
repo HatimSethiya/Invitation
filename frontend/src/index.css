@@ -1595,7 +1595,21 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
 .bohra-public-page.theme-purpleWhite .bohra-couple-panel::before,
 .bohra-public-page.theme-purpleWhite .bohra-sender-footer {
   border-color: rgba(141, 105, 187, .25);
-  background-color: transparent;
+  background: linear-gradient(90deg, transparent, rgba(141, 105, 187, .42), transparent);
+}
+.bohra-public-page.theme-purpleWhite .bohra-couple-panel::before {
+  background: transparent;
+}
+.bohra-public-page.theme-purpleWhite .bohra-host-families p,
+.bohra-public-page.theme-purpleWhite .bohra-extra-event h3,
+.bohra-public-page.theme-purpleWhite .bohra-officiant-panel strong,
+.bohra-public-page.theme-purpleWhite .bohra-sender-footer strong {
+  color: #68428f;
+}
+.bohra-public-page.theme-purpleWhite .bohra-template-note,
+.bohra-public-page.theme-purpleWhite .bohra-admin-group,
+.bohra-public-page.theme-purpleWhite .bohra-review-grid > div {
+  border-color: rgba(141, 105, 187, .28);
 }
 .bohra-public-page.theme-purpleWhite .bohra-card-ornament,
 .bohra-public-page.theme-purpleWhite .bohra-card-emblem,
