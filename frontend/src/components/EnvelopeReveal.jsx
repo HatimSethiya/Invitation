@@ -94,7 +94,7 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
       aria-label="Wedding invitation cinematic opening"
     >
       {/* Layer 1: Realistic Heavy Velvet Theatre Curtains */}
-      <VelvetCurtains isOpening={isCurtainsOpening} />
+      <VelvetCurtains isOpening={isCurtainsOpening} theme={invitation?.theme} />
 
       {/* Invitation stationery fades away cleanly after the curtains open. */}
       <CardStationery
