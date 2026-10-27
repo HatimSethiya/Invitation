@@ -55,13 +55,31 @@ function CardStationery({
       aria-label="Wedding invitation card. Click or tap to open."
     >
       
-<div className="stationery-card stationery-card-poster">
-  <img
-    className="poster-card-art"
-    src="/mufaddal-zainab-cover.png"
-    alt="Mufaddal Weds Zainab — Our Forever Begins, 17.12.2026"
-    draggable="false"
-  />
+<div className={`stationery-card stationery-card-poster ${invitation?.theme === "purpleWhite" ? "stationery-card-purple-white" : ""}`}>
+  {usePosterCover ? (
+    <img
+      className="poster-card-art"
+      src="/mufaddal-zainab-cover.png"
+      alt="Mufaddal Weds Zainab — Our Forever Begins, 17.12.2026"
+      draggable="false"
+    />
+  ) : invitation?.coverImageUrl ? (
+    <img
+      className="poster-card-art uploaded-cover-art"
+      src={invitation.coverImageUrl}
+      alt={`Wedding invitation for ${invitation.title || "the couple"} — tap to open`}
+      draggable="false"
+    />
+  ) : (
+    <div className="stationery-fallback-cover">
+      <span className="stationery-fallback-monogram">{monogram}</span>
+      <span className="stationery-fallback-names">{groom} <em>weds</em> {bride}</span>
+      {invitation?.cardType === "double" && invitation?.secondCouple && (
+        <span className="stationery-fallback-names">{invitation.secondCouple.groomName} <em>weds</em> {invitation.secondCouple.brideName}</span>
+      )}
+      <span className="stationery-fallback-tap">Tap to Open</span>
+    </div>
+  )}
 </div>
 
 
