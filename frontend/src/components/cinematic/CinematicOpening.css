@@ -1188,3 +1188,23 @@
   background: linear-gradient(180deg, transparent 5%, rgba(255, 255, 255, 0.8) 30%, rgba(238, 225, 255, 0.9) 60%, transparent 95%);
   box-shadow: 0 0 12px 2px rgba(226, 211, 248, 0.45);
 }
+
+/* Purple-White gets a cool amethyst glow, never the default gold lighting. */
+.cinematic-stage-overlay:has(.stationery-card-purple-white) .card-open-prompt,
+.cinematic-stage-overlay:has(.stationery-card-purple-white) .prompt-text {
+  color: #e8dcfb;
+  text-shadow: 0 2px 14px rgba(146, 105, 202, .4);
+}
+.cinematic-stage-overlay:has(.stationery-card-purple-white) .prompt-dot {
+  background: #b99be7;
+  box-shadow: 0 0 14px rgba(185, 155, 231, .7);
+}
+.stationery-card-purple-white .stationery-fallback-cover {
+  border-color: rgba(141, 105, 187, .52);
+  box-shadow: inset 0 0 0 5px rgba(255,255,255,.92), 0 28px 90px rgba(70, 39, 105, .2);
+}
+.stationery-card-purple-white .stationery-fallback-tap {
+  border-color: #8d69bb;
+  background: linear-gradient(135deg, #7650a5, #4f2d78);
+  box-shadow: 0 8px 24px rgba(93, 55, 137, .22);
+}
