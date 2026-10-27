@@ -135,7 +135,7 @@ const updateInvitationStatus = async (req, res) => {
 
 const updateInvitationTheme = async (req, res) => {
   try {
-    const allowedThemes = ["bohraNikah", "royalRose", "emeraldGarden", "ivoryHeritage"];
+    const allowedThemes = ["bohraNikah", "purpleWhite", "royalRose", "emeraldGarden", "ivoryHeritage"];
     const { theme } = req.body;
 
     if (!allowedThemes.includes(theme)) {
