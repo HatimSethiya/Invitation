@@ -47,7 +47,7 @@ function InvitationWizard() {
       brideFamilyLine: "",
       nikahOfficiantIntro: "Nikah Solemnised On The Hand Mubarak Of His Holiness",
       nikahOfficiant: "",
-      programmeHeading: "Programe Inshallah",
+      programmeHeading: "Programme Inshallah",
       programmeTitle: "Daris & Dinner",
       hijriDate: "",
       programmeTime: "",
