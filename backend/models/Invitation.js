@@ -145,6 +145,20 @@ const invitationSchema = new mongoose.Schema(
       default: "royalRose",
       trim: true,
     },
+    cardType: {
+      type: String,
+      enum: ["single", "double"],
+      default: "single",
+    },
+    coverImageUrl: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+    secondCouple: {
+      type: coupleSchema,
+      default: () => ({}),
+    },
     couple: {
       type: coupleSchema,
       default: () => ({}),
