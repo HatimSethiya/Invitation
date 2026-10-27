@@ -1543,3 +1543,83 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
   border-color: rgba(169, 139, 201, .38);
   background: rgba(255, 255, 255, .5);
 }
+
+/* A distinct pearl, amethyst and lavender visual system: no gold accents. */
+.bohra-public-page.theme-purpleWhite {
+  --bohra-gold: #8d69bb;
+  --bohra-gold-soft: rgba(141, 105, 187, .24);
+  --bohra-forest: #68428f;
+  --bohra-forest-deep: #3f245f;
+  --bohra-ink: #382747;
+  --bohra-muted: #776587;
+  background:
+    radial-gradient(ellipse at 12% 5%, rgba(189, 157, 231, .30), transparent 34%),
+    radial-gradient(ellipse at 88% 24%, rgba(230, 218, 249, .78), transparent 32%),
+    radial-gradient(ellipse at 50% 100%, rgba(157, 116, 211, .19), transparent 46%),
+    linear-gradient(145deg, #fff 0%, #f4edff 48%, #fff 100%);
+}
+.bohra-public-page.theme-purpleWhite::before {
+  opacity: .42;
+  background:
+    repeating-linear-gradient(45deg, transparent 0 25px, rgba(141, 105, 187, .09) 26px 27px, transparent 28px 52px),
+    repeating-linear-gradient(-45deg, transparent 0 25px, rgba(104, 66, 143, .055) 26px 27px, transparent 28px 52px);
+}
+.bohra-public-page.theme-purpleWhite .bohra-invitation-card {
+  border: 1px solid rgba(141, 105, 187, .38);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255,255,255,.99), transparent 46%),
+    linear-gradient(145deg, #fff 0%, #f7f1ff 54%, #fff 100%);
+  box-shadow: 0 32px 90px rgba(72, 42, 112, .15), 0 8px 24px rgba(141, 105, 187, .10), inset 0 1px 0 #fff;
+}
+.bohra-public-page.theme-purpleWhite .bohra-card-inner-frame,
+.bohra-public-page.theme-purpleWhite .bohra-couple-panel,
+.bohra-public-page.theme-purpleWhite .bohra-officiant-panel,
+.bohra-public-page.theme-purpleWhite .bohra-programme-panel,
+.bohra-public-page.theme-purpleWhite .bohra-extra-event,
+.bohra-public-page.theme-purpleWhite .bohra-note-panel {
+  border-color: rgba(141, 105, 187, .30);
+  background: linear-gradient(135deg, rgba(255,255,255,.92), rgba(243,235,255,.78));
+  box-shadow: 0 16px 38px rgba(79, 46, 119, .07), inset 0 1px 0 #fff;
+}
+.bohra-public-page.theme-purpleWhite .bohra-card-inner-frame::before,
+.bohra-public-page.theme-purpleWhite .bohra-card-inner-frame::after,
+.bohra-public-page.theme-purpleWhite .bohra-couple-panel::before,
+.bohra-public-page.theme-purpleWhite .bohra-sender-footer {
+  border-color: rgba(141, 105, 187, .25);
+  background-color: transparent;
+}
+.bohra-public-page.theme-purpleWhite .bohra-card-ornament,
+.bohra-public-page.theme-purpleWhite .bohra-card-emblem,
+.bohra-public-page.theme-purpleWhite .bohra-section-kicker,
+.bohra-public-page.theme-purpleWhite .bohra-weds,
+.bohra-public-page.theme-purpleWhite .bohra-note-title,
+.bohra-public-page.theme-purpleWhite .bohra-detail-icon,
+.bohra-public-page.theme-purpleWhite .bohra-programme-rule {
+  color: #8d69bb;
+}
+.bohra-public-page.theme-purpleWhite .bohra-card-emblem,
+.bohra-public-page.theme-purpleWhite .bohra-detail-icon {
+  border-color: rgba(141, 105, 187, .30);
+  background: rgba(255,255,255,.82);
+}
+.bohra-public-page.theme-purpleWhite .bohra-host-families p,
+.bohra-public-page.theme-purpleWhite .bohra-raza-line,
+.bohra-public-page.theme-purpleWhite .bohra-thereafter,
+.bohra-public-page.theme-purpleWhite .bohra-bride-family {
+  color: #76519d;
+}
+.bohra-public-page.theme-purpleWhite .bohra-programme-rule::before,
+.bohra-public-page.theme-purpleWhite .bohra-programme-rule::after {
+  background: linear-gradient(90deg, transparent, rgba(141,105,187,.45), transparent);
+}
+.bohra-public-page.theme-purpleWhite .bohra-map-link,
+.bohra-public-page.theme-purpleWhite .bohra-extra-event-map-link {
+  border-color: rgba(141,105,187,.38);
+  color: #68428f !important;
+  background: rgba(255,255,255,.82);
+}
+.bohra-public-page.theme-purpleWhite .bohra-invitation-card::before {
+  background:
+    repeating-linear-gradient(45deg, transparent 0 18px, rgba(141,105,187,.06) 19px 20px, transparent 21px 36px),
+    repeating-linear-gradient(-45deg, transparent 0 18px, rgba(104,66,143,.04) 19px 20px, transparent 21px 36px);
+}
