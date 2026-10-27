@@ -34,8 +34,9 @@ function InvitationWizard() {
   const previewAudioRef = useRef(null);
   const musicRequestRef = useRef(0);
   const [form, setForm] = useState({
-    title: "", slug: "", weddingDate: "", theme: "bohraNikah",
+    title: "", slug: "", weddingDate: "", theme: "bohraNikah", cardType: "single", coverImageUrl: "",
     couple: { brideName: "", groomName: "", bridePhoto: "", groomPhoto: "", couplePhoto: "", brideBio: "", groomBio: "" },
+    secondCouple: { brideName: "", groomName: "", bridePhoto: "", groomPhoto: "", couplePhoto: "", brideBio: "", groomBio: "" },
     bohraDetails: {
       openingBlessing: "With The Grace of Allah & Panjatan Pak (AS)",
       razaDuaLine: "With Raza & Dua Mubarak of",
@@ -89,7 +90,10 @@ function InvitationWizard() {
           slug: invitation.slug || "",
           weddingDate: toDateInput(invitation.weddingDate),
           theme: invitation.theme || "bohraNikah",
+          cardType: invitation.cardType || "single",
+          coverImageUrl: invitation.coverImageUrl || "",
           couple: { ...current.couple, ...(invitation.couple || {}) },
+          secondCouple: { ...current.secondCouple, ...(invitation.secondCouple || {}) },
           bohraDetails: { ...current.bohraDetails, ...(invitation.bohraDetails || {}) },
           events: Array.isArray(invitation.events) && invitation.events.length
             ? invitation.events.map((event) => ({ ...event, date: toDateInput(event.date) }))
