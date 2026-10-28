@@ -1773,3 +1773,117 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
     scroll-behavior: auto;
   }
 }
+
+
+/* Stronger visible finish for the Purple-White invitation only. */
+.bohra-public-page.theme-purpleWhite .bohra-invitation-body {
+  isolation: isolate;
+}
+.bohra-public-page.theme-purpleWhite .bohra-invitation-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(151, 111, 202, .48);
+  background:
+    radial-gradient(ellipse at 50% -8%, rgba(255,255,255,.98) 0%, rgba(255,255,255,.76) 28%, transparent 58%),
+    radial-gradient(ellipse at 0% 48%, rgba(201,176,235,.22), transparent 35%),
+    radial-gradient(ellipse at 100% 76%, rgba(180,146,223,.20), transparent 38%),
+    linear-gradient(145deg, #fff 0%, #f8f2ff 34%, #f0e6fc 68%, #fff 100%);
+  box-shadow:
+    0 36px 90px rgba(86, 51, 132, .17),
+    0 12px 32px rgba(132, 91, 184, .10),
+    inset 0 1px 0 rgba(255,255,255,.98),
+    inset 0 0 0 6px rgba(255,255,255,.45);
+}
+.bohra-public-page.theme-purpleWhite .bohra-card-inner-frame {
+  position: relative;
+  border: 1px solid rgba(154, 113, 204, .35);
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.62), rgba(249,244,255,.34) 48%, rgba(235,222,251,.28));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.98),
+    inset 0 0 0 4px rgba(255,255,255,.24),
+    0 8px 28px rgba(112, 72, 163, .035);
+  backdrop-filter: blur(20px) saturate(1.18);
+  -webkit-backdrop-filter: blur(20px) saturate(1.18);
+}
+.bohra-public-page.theme-purpleWhite .bohra-couple-panel {
+  border: 1px solid rgba(151, 109, 199, .48);
+  background:
+    radial-gradient(ellipse at 0% 50%, rgba(196,166,233,.24), transparent 42%),
+    radial-gradient(ellipse at 100% 100%, rgba(226,211,247,.76), transparent 48%),
+    linear-gradient(135deg, rgba(255,255,255,.96) 0%, rgba(250,246,255,.91) 35%, rgba(239,228,252,.84) 72%, rgba(255,255,255,.92) 100%);
+  box-shadow:
+    0 22px 48px rgba(88, 53, 135, .12),
+    0 5px 16px rgba(137, 95, 187, .08),
+    inset 0 1px 0 rgba(255,255,255,.98),
+    inset 0 0 0 5px rgba(255,255,255,.42);
+  backdrop-filter: blur(22px) saturate(1.2);
+  -webkit-backdrop-filter: blur(22px) saturate(1.2);
+}
+.bohra-public-page.theme-purpleWhite .bohra-couple-panel::before {
+  inset: 7px;
+  border: 1px solid rgba(153, 113, 203, .28);
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse at 0% 100%, rgba(176,139,221,.16), transparent 35%),
+    linear-gradient(125deg, rgba(255,255,255,.20), transparent 50%);
+  pointer-events: none;
+}
+.bohra-public-page.theme-purpleWhite .bohra-couple-names {
+  position: relative;
+  z-index: 1;
+}
+.bohra-public-page.theme-purpleWhite .bohra-couple-names h1 {
+  color: #65408c;
+  text-shadow: 0 3px 20px rgba(130, 86, 177, .14);
+}
+.bohra-public-page.theme-purpleWhite .bohra-weds {
+  color: #9a70c8;
+  letter-spacing: .06em;
+}
+.bohra-public-page.theme-purpleWhite .bohra-card-header {
+  position: relative;
+}
+.bohra-public-page.theme-purpleWhite .bohra-card-emblem {
+  border: 1px solid rgba(145, 101, 194, .34);
+  color: #8256b1;
+  background: linear-gradient(145deg, rgba(255,255,255,.98), rgba(239,226,253,.84));
+  box-shadow:
+    0 8px 24px rgba(108, 66, 159, .10),
+    inset 0 1px 0 rgba(255,255,255,.98);
+}
+.bohra-public-page.theme-purpleWhite .bohra-card-ornament-top {
+  color: #946bc2;
+  text-shadow: 0 2px 14px rgba(143, 101, 194, .18);
+}
+.bohra-public-page.theme-purpleWhite .bohra-programme-panel,
+.bohra-public-page.theme-purpleWhite .bohra-officiant-panel,
+.bohra-public-page.theme-purpleWhite .bohra-note-panel,
+.bohra-public-page.theme-purpleWhite .bohra-extra-event {
+  border: 1px solid rgba(151, 109, 199, .34);
+  background:
+    radial-gradient(ellipse at 0% 0%, rgba(255,255,255,.92), transparent 55%),
+    linear-gradient(135deg, rgba(255,255,255,.86), rgba(239,228,252,.70));
+  box-shadow:
+    0 14px 32px rgba(88, 53, 135, .075),
+    inset 0 1px 0 rgba(255,255,255,.96);
+  backdrop-filter: blur(16px) saturate(1.14);
+  -webkit-backdrop-filter: blur(16px) saturate(1.14);
+}
+.bohra-public-page.theme-purpleWhite .bohra-programme-rule span,
+.bohra-public-page.theme-purpleWhite .bohra-section-kicker,
+.bohra-public-page.theme-purpleWhite .bohra-note-title {
+  color: #8c60bb;
+}
+@media (max-width: 600px) {
+  .bohra-public-page.theme-purpleWhite .bohra-invitation-card {
+    box-shadow:
+      0 20px 48px rgba(86, 51, 132, .14),
+      inset 0 1px 0 rgba(255,255,255,.98),
+      inset 0 0 0 4px rgba(255,255,255,.38);
+  }
+  .bohra-public-page.theme-purpleWhite .bohra-couple-panel {
+    backdrop-filter: blur(14px) saturate(1.12);
+    -webkit-backdrop-filter: blur(14px) saturate(1.12);
+  }
+}
