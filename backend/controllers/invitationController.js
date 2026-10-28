@@ -22,6 +22,7 @@ const getAdminInvitations = async (req, res) => {
       total: invitations.length,
       published: invitations.filter((item) => item.status === "published").length,
       drafts: invitations.filter((item) => item.status === "draft").length,
+      paused: invitations.filter((item) => item.status === "paused").length,
       archived: invitations.filter((item) => item.status === "archived").length,
     };
     return res.json({ success: true, stats, invitations });
