@@ -262,43 +262,19 @@ function PublicInvitation() {
                 </section>
               )}
 
-              {invitation.cardType === "double" && (
-                <section className="bohra-programme-panel bohra-second-programme-panel glass-panel">
-                  <span className="bohra-section-kicker">{details.programmeHeading || "Programme Inshallah"}</span>
-                  <h2>{details.programmeTitle || "Wedding Programme"}</h2>
-                  <div className="bohra-programme-rule" aria-hidden="true"><span>✦</span></div>
-                  <div className="bohra-programme-details">
-                    {hasValue(details.hijriDate) && (
-                      <div className="bohra-detail-row"><span className="bohra-detail-icon" aria-hidden="true">▦</span><div><strong>{details.hijriDate}</strong></div></div>
-                    )}
-                    {hasValue(details.programmeTime) && (
-                      <div className="bohra-detail-row"><span className="bohra-detail-icon" aria-hidden="true">◷</span><div><strong>{details.programmeTime}</strong></div></div>
-                    )}
-                    {hasValue(details.programmeVenue) && (
-                      <div className="bohra-detail-row"><span className="bohra-detail-icon" aria-hidden="true">⌖</span><div><strong>{details.programmeVenue}</strong></div></div>
-                    )}
-                    {hasValue(details.invitees) && (
-                      <div className="bohra-detail-row"><span className="bohra-detail-icon" aria-hidden="true">♡</span><div><span>{details.invitees}</span></div></div>
-                    )}
-                  </div>
-                </section>
-              )}
-
               {Array.isArray(invitation.events) && invitation.events.some((event) =>
                 hasValue(event.title) || hasValue(event.venue) || hasValue(event.time) || event.date || hasValue(event.description)
               ) && (
                 <section className="bohra-additional-events">
-                  {invitation.cardType !== "double" && (
-                    <motion.span
-                      className="bohra-section-kicker bohra-programme-heading"
-                      initial={{ opacity: 0, y: 14 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.6 }}
-                      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                    >
-                      {details.programmeHeading === "Programe Inshallah" || details.programmeHeading === "Programme Insha Allah" ? "Programme Inshallah" : details.programmeHeading || "Programme Inshallah"}
-                    </motion.span>
-                  )}
+                  <motion.span
+                    className="bohra-section-kicker bohra-programme-heading"
+                    initial={{ opacity: 0, y: 14 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.6 }}
+                    transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    {details.programmeHeading === "Programe Inshallah" || details.programmeHeading === "Programme Insha Allah" ? "Programme Inshallah" : details.programmeHeading || "Programme Inshallah"}
+                  </motion.span>
                   <div className="bohra-events-stagger">
                     {invitation.events.filter((event) =>
                       hasValue(event.title) || hasValue(event.venue) || hasValue(event.time) || event.date || hasValue(event.description)
