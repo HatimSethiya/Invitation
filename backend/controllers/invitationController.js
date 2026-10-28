@@ -118,7 +118,7 @@ const deleteInvitation = async (req, res) => {
 
 const updateInvitationStatus = async (req, res) => {
   try {
-    const allowed = ["draft", "published", "archived"];
+    const allowed = ["draft", "published", "paused", "archived"];
     if (!allowed.includes(req.body.status)) return res.status(400).json({ success: false, message: "Invalid invitation status." });
 
     const invitation = await Invitation.findOneAndUpdate(
