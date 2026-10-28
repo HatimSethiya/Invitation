@@ -9,6 +9,7 @@ function AdminDashboard() {
   const [data, setData] = useState({ stats: { total: 0, published: 0, drafts: 0, archived: 0 }, invitations: [] });
   const [loading, setLoading] = useState(true);
   const [themeSaving, setThemeSaving] = useState("");
+  const [statusSaving, setStatusSaving] = useState("");
   const [actionError, setActionError] = useState("");
   const [musicInvitation, setMusicInvitation] = useState(null);
   const [musicSaving, setMusicSaving] = useState(false);
@@ -22,8 +23,16 @@ function AdminDashboard() {
   useEffect(() => { loadInvitations(); }, []);
 
   const updateStatus = async (id, status) => {
-    await api.patch(`/invitations/${id}/status`, { status });
-    await loadInvitations();
+    setStatusSaving(id);
+    setActionError("");
+    try {
+      await api.patch(`/invitations/${id}/status`, { status });
+      await loadInvitations();
+    } catch (err) {
+      setActionError(err.response?.data?.message || "Unable to update invitation status.");
+    } finally {
+      setStatusSaving("");
+    }
   };
 
   const updateTheme = async (id, theme) => {
@@ -101,7 +110,7 @@ function AdminDashboard() {
           <div className="invitation-list">{data.invitations.map((invitation) => (
             <article className="invitation-row" key={invitation._id}>
               <div className="invitation-info">
-                <span className={`status-pill status-${invitation.status}`}>{invitation.status}</span>
+                <span className={`status-pill status-${invitation.status}`}>{invitation.status === "paused" ? "On hold" : invitation.status}</span>
                 <h3>{invitation.title}</h3>
                 <p>{new Date(invitation.weddingDate).toLocaleDateString()} · /i/{invitation.slug}</p>
                 {invitation.music?.title && <p className="invitation-current-music">♫ {invitation.music.title}{invitation.music.artist ? ` · ${invitation.music.artist}` : ""}</p>}
@@ -124,8 +133,19 @@ function AdminDashboard() {
               </div>
               <div className="row-actions">
                 <Link className="small-button edit-invitation-button" to={`/admin/invitations/${invitation._id}/edit`}>Edit</Link>
-                {invitation.status === "published" ? <a className="small-button" href={`/i/${invitation.slug}`} target="_blank" rel="noreferrer">View</a> : <button className="small-button" onClick={() => updateStatus(invitation._id, "published")}>Publish</button>}
-                <button className="small-button" onClick={() => setMusicInvitation(invitation)} disabled={musicSaving}>{invitation.music?.audioUrl ? "Change music" : "Add music"}</button>
+                {invitation.status === "published" ? (
+                  <>
+                    <a className="small-button" href={`/i/${invitation.slug}`} target="_blank" rel="noreferrer">View</a>
+                    <button className="small-button" onClick={() => updateStatus(invitation._id, "paused")} disabled={statusSaving === invitation._id}>
+                      {statusSaving === invitation._id ? "Holding..." : "Hold"}
+                    </button>
+                  </>
+                ) : (
+                  <button className="small-button" onClick={() => updateStatus(invitation._id, "published")} disabled={statusSaving === invitation._id}>
+                    {statusSaving === invitation._id ? "Publishing..." : "Publish"}
+                  </button>
+                )}
+                <button className="small-button" onClick={() => setMusicInvitation(invitation)} disabled={musicSaving || statusSaving === invitation._id}>{invitation.music?.audioUrl ? "Change music" : "Add music"}</button>
                 {invitation.status !== "archived" && <button className="small-button danger" onClick={() => removeInvitation(invitation._id)}>Delete</button>}
               </div>
             </article>
