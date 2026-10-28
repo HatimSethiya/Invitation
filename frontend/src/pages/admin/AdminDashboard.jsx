@@ -114,6 +114,7 @@ function AdminDashboard() {
                     aria-label={`Change design for ${invitation.title}`}
                   >
                     <option value="bohraNikah">Bohra Nikah · Emerald / Ivory / Gold</option>
+                    <option value="purpleWhite">Purple–White Wedding</option>
                     <option value="royalRose">Royal Rose</option>
                     <option value="emeraldGarden">Emerald Garden</option>
                     <option value="ivoryHeritage">Ivory Heritage</option>

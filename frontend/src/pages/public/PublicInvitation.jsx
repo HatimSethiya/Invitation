@@ -124,21 +124,21 @@ function PublicInvitation() {
     );
   }
 
+  // Avoid flashing a generic placeholder card while invitation data loads.
+  // Keep a quiet pearl/lavender backdrop until the real cover and theme are ready.
   if (!invitation) {
     return (
-      <main className="public-page theme-royalRose invitation-locked">
-        <EnvelopeReveal invitation={null} />
-      </main>
+      <main className="public-page invitation-loading-screen" aria-busy="true" />
     );
   }
 
-  if (invitation.theme === "bohraNikah") {
+  if (invitation.theme === "bohraNikah" || invitation.theme === "purpleWhite") {
     const details = invitation.bohraDetails || {};
     const hasValue = (value) => typeof value === "string" && value.trim().length > 0;
 
     return (
       <main
-        className={`public-page bohra-public-page ${isInvitationInteractive ? "invitation-revealed" : "invitation-locked"}`}
+        className={`public-page bohra-public-page ${invitation.theme === "purpleWhite" ? "theme-purpleWhite" : "theme-bohraNikah"} ${isInvitationInteractive ? "invitation-revealed" : "invitation-locked"}`}
       >
         <AnimatePresence>
           {!isUnboxed && (
@@ -198,7 +198,6 @@ function PublicInvitation() {
               )}
 
               <section className="bohra-couple-panel glass-panel">
-                
                 <div className="bohra-couple-names">
                   <h1>{groom}</h1>
                   <span className="bohra-weds">Weds</span>
@@ -208,6 +207,26 @@ function PublicInvitation() {
                   <p className="bohra-bride-family">{details.brideFamilyLine}</p>
                 )}
               </section>
+
+              {invitation.cardType === "double" &&
+                (hasValue(invitation.secondCouple?.groomName) ||
+                  hasValue(invitation.secondCouple?.brideName)) && (
+                  <div className="bohra-double-couple-connector" aria-label="Both couples are joined by and">
+                    <span aria-hidden="true">&amp;</span>
+                  </div>
+                )}
+
+              {invitation.cardType === "double" &&
+                (hasValue(invitation.secondCouple?.groomName) ||
+                  hasValue(invitation.secondCouple?.brideName)) && (
+                  <section className="bohra-couple-panel bohra-second-couple-panel glass-panel">
+                    <div className="bohra-couple-names">
+                      <h1>{invitation.secondCouple?.groomName || "Groom"}</h1>
+                      <span className="bohra-weds">Weds</span>
+                      <h1>{invitation.secondCouple?.brideName || "Bride"}</h1>
+                    </div>
+                  </section>
+                )}
 
               {(hasValue(details.nikahOfficiantIntro) || hasValue(details.nikahOfficiant)) && (
                 <section className="bohra-officiant-panel glass-panel">

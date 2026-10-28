@@ -2,10 +2,10 @@
  * VelvetCurtains: Heavy luxury theatre velvet drapery with continuous vertical folds,
  * organic wavy/curved leading edges, uneven fold widths, and non-linear bunching physics.
  */
-function VelvetCurtains({ isOpening }) {
+function VelvetCurtains({ isOpening, theme }) {
   return (
     <div
-      className={`theatrical-curtains-stage ${isOpening ? "curtains-parting" : ""}`}
+      className={`theatrical-curtains-stage ${theme === "purpleWhite" ? "curtains-purple-white" : ""} ${isOpening ? "curtains-parting" : ""}`}
       aria-hidden="true"
     >
       {/* ------------------------------------------------------------------
