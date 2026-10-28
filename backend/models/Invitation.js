@@ -4,6 +4,7 @@ const coupleSchema = new mongoose.Schema(
   {
     brideName: { type: String, trim: true, default: "" },
     groomName: { type: String, trim: true, default: "" },
+    nameOrder: { type: String, enum: ["brideFirst", "groomFirst"], default: "groomFirst" },
     bridePhoto: { type: String, default: "" },
     groomPhoto: { type: String, default: "" },
     couplePhoto: { type: String, default: "" },
@@ -86,6 +87,17 @@ const musicSchema = new mongoose.Schema(
   { _id: false }
 );
 
+const firstNikahSchema = new mongoose.Schema(
+  {
+    heading: { type: String, trim: true, default: "First Nikah Ceremony" },
+    officiant: { type: String, trim: true, default: "" },
+    hijriDate: { type: String, trim: true, default: "" },
+    time: { type: String, trim: true, default: "" },
+    venue: { type: String, trim: true, default: "" },
+  },
+  { _id: false }
+);
+
 const bohraDetailsSchema = new mongoose.Schema(
   {
     openingBlessing: { type: String, trim: true, default: "With The Grace of Allah & Panjatan Pak (AS)" },
@@ -157,6 +169,10 @@ const invitationSchema = new mongoose.Schema(
     },
     secondCouple: {
       type: coupleSchema,
+      default: () => ({}),
+    },
+    firstNikah: {
+      type: firstNikahSchema,
       default: () => ({}),
     },
     couple: {
