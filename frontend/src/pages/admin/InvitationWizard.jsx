@@ -280,6 +280,12 @@ function InvitationWizard() {
   const back = () => {
     if (saving) return;
     setError("");
+
+    if (step === 0) {
+      navigate("/admin/dashboard");
+      return;
+    }
+
     setStep((current) => Math.max(0, current - 1));
   };
 
@@ -508,7 +514,7 @@ function InvitationWizard() {
 {step === 7 && <div className="form-section bohra-review-section"><h2>Review your invitation</h2><p className="section-note">Check the key details before creating the draft.</p><div className="bohra-review-grid"><div><span>Card type</span><strong>{form.cardType === "double" ? "Double Wedding" : "Single Wedding"}</strong></div><div><span>Design</span><strong>{form.theme === "bohraNikah" ? "Bohra Nikah · Emerald / Ivory / Gold" : form.theme === "purpleWhite" ? "Purple–White Wedding" : form.theme === "royalRose" ? "Royal Rose" : form.theme === "emeraldGarden" ? "Emerald Garden" : "Ivory Heritage"}</strong></div><div><span>Couples</span><strong>{[[form.couple.groomName, form.couple.brideName].filter(Boolean).join(" Weds "), ...(form.cardType === "double" ? [[form.secondCouple.groomName, form.secondCouple.brideName].filter(Boolean).join(" Weds ")] : [])].filter(Boolean).join(" · ") || "Names not entered yet"}</strong></div><div><span>Programme</span><strong>{form.bohraDetails.programmeTitle || "Not specified"}</strong></div><div><span>Date</span><strong>{form.weddingDate ? new Date(form.weddingDate + "T12:00:00").toLocaleDateString(undefined, { dateStyle: "long" }) : "Not specified"}</strong></div></div><div className="publish-note"><strong>Ready to create?</strong><span>{isEditing ? "Your changes will be saved without changing the current publication status." : "This saves as a draft first. Publish the guest link from the dashboard."} Bohra Nikah layout does not display couple photos or a gallery.</span></div></div>}
 
         {error && <div className="auth-error wizard-error">{error}</div>}
-        <footer className="wizard-footer"><button type="button" className="secondary-button" onClick={back} disabled={step === 0 || saving}>Back</button>{step < steps.length - 1 ? <button type="button" className="primary-button" onClick={next}>Continue</button> : <button type="button" className="primary-button" onClick={save} disabled={saving}>{saving ? (isEditing ? "Saving..." : "Creating...") : (isEditing ? "Save Changes" : "Create Draft")}</button>}</footer>
+        <footer className="wizard-footer"><button type="button" className="secondary-button" onClick={back} disabled={saving}>Back</button>{step < steps.length - 1 ? <button type="button" className="primary-button" onClick={next}>Continue</button> : <button type="button" className="primary-button" onClick={save} disabled={saving}>{saving ? (isEditing ? "Saving..." : "Creating...") : (isEditing ? "Save Changes" : "Create Draft")}</button>}</footer>
       </section>
     </main>
   );
