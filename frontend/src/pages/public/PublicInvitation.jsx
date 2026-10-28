@@ -211,6 +211,14 @@ function PublicInvitation() {
               {invitation.cardType === "double" &&
                 (hasValue(invitation.secondCouple?.groomName) ||
                   hasValue(invitation.secondCouple?.brideName)) && (
+                  <div className="bohra-double-couple-connector" aria-label="Both couples are joined by and">
+                    <span aria-hidden="true">&amp;</span>
+                  </div>
+                )}
+
+              {invitation.cardType === "double" &&
+                (hasValue(invitation.secondCouple?.groomName) ||
+                  hasValue(invitation.secondCouple?.brideName)) && (
                   <section className="bohra-couple-panel bohra-second-couple-panel glass-panel">
                     <div className="bohra-couple-names">
                       <h1>{invitation.secondCouple?.groomName || "Groom"}</h1>
