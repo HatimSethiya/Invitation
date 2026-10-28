@@ -212,7 +212,7 @@ function PublicInvitation() {
                 <p className="bohra-invitation-wording">{details.invitationWording}</p>
               )}
 
-              <section className={`bohra-couple-panel glass-panel ${invitation.cardType === "double" && invitation.theme === "purpleWhite" ? "bohra-floral-couple-panel" : ""}`}>
+              <section className="bohra-couple-panel glass-panel">
                 <div className="bohra-couple-names">
                   <h1>{primaryNames[0]}</h1>
                   <span className="bohra-weds">Weds</span>
@@ -256,7 +256,7 @@ function PublicInvitation() {
               {invitation.cardType === "double" &&
                 (hasValue(invitation.secondCouple?.groomName) ||
                   hasValue(invitation.secondCouple?.brideName)) && (
-                  <section className={`bohra-couple-panel bohra-second-couple-panel glass-panel ${invitation.theme === "purpleWhite" ? "bohra-floral-couple-panel" : ""}`}>
+                  <section className="bohra-couple-panel bohra-second-couple-panel glass-panel">
                     <div className="bohra-couple-names">
                       <h1>{secondNames[0]}</h1>
                       <span className="bohra-weds">Weds</span>
