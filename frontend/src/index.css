@@ -1887,3 +1887,72 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
     -webkit-backdrop-filter: blur(14px) saturate(1.12);
   }
 }
+
+
+/* Elegant ampersand connector between the two couples on double wedding cards. */
+.bohra-public-page.theme-purpleWhite .bohra-double-couple-connector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: clamp(12px, 2.2vw, 20px) auto;
+  color: #76509e;
+}
+.bohra-public-page.theme-purpleWhite .bohra-double-couple-connector::before,
+.bohra-public-page.theme-purpleWhite .bohra-double-couple-connector::after {
+  content: "";
+  width: clamp(54px, 13%, 112px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(133, 91, 179, .62));
+}
+.bohra-public-page.theme-purpleWhite .bohra-double-couple-connector::after {
+  transform: scaleX(-1);
+}
+.bohra-public-page.theme-purpleWhite .bohra-double-couple-connector span {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(145, 105, 193, .42);
+  border-radius: 50%;
+  background: linear-gradient(145deg, rgba(255,255,255,.96), rgba(231,215,249,.9));
+  box-shadow: 0 8px 22px rgba(105, 70, 151, .12), inset 0 1px 0 #fff;
+  color: #68428f;
+  font-family: Georgia, serif;
+  font-size: 1.65rem;
+  line-height: 1;
+}
+.bohra-public-page.theme-bohraNikah .bohra-double-couple-connector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 16px auto;
+  color: #8b6a2e;
+}
+.bohra-public-page.theme-bohraNikah .bohra-double-couple-connector::before,
+.bohra-public-page.theme-bohraNikah .bohra-double-couple-connector::after {
+  content: "";
+  width: clamp(54px, 13%, 112px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(174, 139, 73, .65));
+}
+.bohra-public-page.theme-bohraNikah .bohra-double-couple-connector span {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(174, 139, 73, .45);
+  border-radius: 50%;
+  background: linear-gradient(145deg, #fffdf7, #f2e8d1);
+  box-shadow: 0 6px 18px rgba(110, 85, 39, .10);
+  font-family: Georgia, serif;
+  font-size: 1.6rem;
+}
+@media (max-width: 600px) {
+  .bohra-double-couple-connector span {
+    width: 36px;
+    height: 36px;
+    font-size: 1.4rem;
+  }
+}
