@@ -1956,3 +1956,21 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
     font-size: 1.4rem;
   }
 }
+
+
+/* Keep the first Nikah card compact on double-wedding invitations. */
+.bohra-public-page .bohra-first-nikah-panel {
+  margin-top: clamp(16px, 2.5vw, 24px);
+  padding: clamp(14px, 2.4vw, 20px) clamp(16px, 3vw, 26px);
+}
+.bohra-public-page .bohra-first-nikah-panel h2 {
+  margin-top: 4px;
+  font-size: clamp(1.45rem, 4.5vw, 2rem);
+  line-height: 1.12;
+}
+.bohra-public-page .bohra-first-nikah-panel .bohra-programme-rule {
+  margin: 8px auto 12px;
+}
+.bohra-public-page .bohra-first-nikah-panel .bohra-programme-details {
+  gap: 9px;
+}
