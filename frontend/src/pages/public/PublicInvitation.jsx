@@ -134,6 +134,11 @@ function PublicInvitation() {
 
   if (invitation.theme === "bohraNikah" || invitation.theme === "purpleWhite") {
     const details = invitation.bohraDetails || {};
+    const firstNikah = invitation.firstNikah || {};
+    const primaryNames = invitation.couple?.nameOrder === "brideFirst" ? [bride, groom] : [groom, bride];
+    const secondBride = invitation.secondCouple?.brideName || "Bride";
+    const secondGroom = invitation.secondCouple?.groomName || "Groom";
+    const secondNames = invitation.secondCouple?.nameOrder === "brideFirst" ? [secondBride, secondGroom] : [secondGroom, secondBride];
     const hasValue = (value) => typeof value === "string" && value.trim().length > 0;
 
     return (
@@ -199,14 +204,36 @@ function PublicInvitation() {
 
               <section className="bohra-couple-panel glass-panel">
                 <div className="bohra-couple-names">
-                  <h1>{groom}</h1>
+                  <h1>{primaryNames[0]}</h1>
                   <span className="bohra-weds">Weds</span>
-                  <h1>{bride}</h1>
+                  <h1>{primaryNames[1]}</h1>
                 </div>
                 {hasValue(details.brideFamilyLine) && (
                   <p className="bohra-bride-family">{details.brideFamilyLine}</p>
                 )}
               </section>
+
+              {invitation.cardType === "double" && (
+                <section className="bohra-programme-panel bohra-first-nikah-panel glass-panel">
+                  <span className="bohra-section-kicker">First Nikah</span>
+                  <h2>{hasValue(firstNikah.heading) ? firstNikah.heading : "First Nikah Ceremony"}</h2>
+                  <div className="bohra-programme-rule" aria-hidden="true"><span>✦</span></div>
+                  <div className="bohra-programme-details">
+                    {hasValue(firstNikah.officiant) && (
+                      <div className="bohra-detail-row"><span className="bohra-detail-icon" aria-hidden="true">✦</span><div><strong>{firstNikah.officiant}</strong></div></div>
+                    )}
+                    {hasValue(firstNikah.hijriDate) && (
+                      <div className="bohra-detail-row"><span className="bohra-detail-icon" aria-hidden="true">▦</span><div><strong>{firstNikah.hijriDate}</strong></div></div>
+                    )}
+                    {hasValue(firstNikah.time) && (
+                      <div className="bohra-detail-row"><span className="bohra-detail-icon" aria-hidden="true">◷</span><div><strong>{firstNikah.time}</strong></div></div>
+                    )}
+                    {hasValue(firstNikah.venue) && (
+                      <div className="bohra-detail-row"><span className="bohra-detail-icon" aria-hidden="true">⌖</span><div><strong>{firstNikah.venue}</strong></div></div>
+                    )}
+                  </div>
+                </section>
+              )}
 
               {invitation.cardType === "double" &&
                 (hasValue(invitation.secondCouple?.groomName) ||
@@ -221,9 +248,9 @@ function PublicInvitation() {
                   hasValue(invitation.secondCouple?.brideName)) && (
                   <section className="bohra-couple-panel bohra-second-couple-panel glass-panel">
                     <div className="bohra-couple-names">
-                      <h1>{invitation.secondCouple?.groomName || "Groom"}</h1>
+                      <h1>{secondNames[0]}</h1>
                       <span className="bohra-weds">Weds</span>
-                      <h1>{invitation.secondCouple?.brideName || "Bride"}</h1>
+                      <h1>{secondNames[1]}</h1>
                     </div>
                   </section>
                 )}
@@ -235,19 +262,43 @@ function PublicInvitation() {
                 </section>
               )}
 
+              {invitation.cardType === "double" && (
+                <section className="bohra-programme-panel bohra-second-programme-panel glass-panel">
+                  <span className="bohra-section-kicker">{details.programmeHeading || "Programme Inshallah"}</span>
+                  <h2>{details.programmeTitle || "Wedding Programme"}</h2>
+                  <div className="bohra-programme-rule" aria-hidden="true"><span>✦</span></div>
+                  <div className="bohra-programme-details">
+                    {hasValue(details.hijriDate) && (
+                      <div className="bohra-detail-row"><span className="bohra-detail-icon" aria-hidden="true">▦</span><div><strong>{details.hijriDate}</strong></div></div>
+                    )}
+                    {hasValue(details.programmeTime) && (
+                      <div className="bohra-detail-row"><span className="bohra-detail-icon" aria-hidden="true">◷</span><div><strong>{details.programmeTime}</strong></div></div>
+                    )}
+                    {hasValue(details.programmeVenue) && (
+                      <div className="bohra-detail-row"><span className="bohra-detail-icon" aria-hidden="true">⌖</span><div><strong>{details.programmeVenue}</strong></div></div>
+                    )}
+                    {hasValue(details.invitees) && (
+                      <div className="bohra-detail-row"><span className="bohra-detail-icon" aria-hidden="true">♡</span><div><span>{details.invitees}</span></div></div>
+                    )}
+                  </div>
+                </section>
+              )}
+
               {Array.isArray(invitation.events) && invitation.events.some((event) =>
                 hasValue(event.title) || hasValue(event.venue) || hasValue(event.time) || event.date || hasValue(event.description)
               ) && (
                 <section className="bohra-additional-events">
-                  <motion.span
-                    className="bohra-section-kicker bohra-programme-heading"
-                    initial={{ opacity: 0, y: 14 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.6 }}
-                    transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    {details.programmeHeading === "Programe Inshallah" || details.programmeHeading === "Programme Insha Allah" ? "Programme Inshallah" : details.programmeHeading || "Programme Inshallah"}
-                  </motion.span>
+                  {invitation.cardType !== "double" && (
+                    <motion.span
+                      className="bohra-section-kicker bohra-programme-heading"
+                      initial={{ opacity: 0, y: 14 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.6 }}
+                      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                    >
+                      {details.programmeHeading === "Programe Inshallah" || details.programmeHeading === "Programme Insha Allah" ? "Programme Inshallah" : details.programmeHeading || "Programme Inshallah"}
+                    </motion.span>
+                  )}
                   <div className="bohra-events-stagger">
                     {invitation.events.filter((event) =>
                       hasValue(event.title) || hasValue(event.venue) || hasValue(event.time) || event.date || hasValue(event.description)

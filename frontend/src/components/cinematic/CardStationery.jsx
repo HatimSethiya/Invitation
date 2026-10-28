@@ -36,6 +36,10 @@ function CardStationery({
   const groomInitial = (groom?.[0] || "G").toUpperCase();
   const brideInitial = (bride?.[0] || "B").toUpperCase();
   const monogram = `${groomInitial}&${brideInitial}`;
+  const primaryNames = invitation?.couple?.nameOrder === "brideFirst" ? [bride, groom] : [groom, bride];
+  const secondBride = invitation?.secondCouple?.brideName || "Bride";
+  const secondGroom = invitation?.secondCouple?.groomName || "Groom";
+  const secondNames = invitation?.secondCouple?.nameOrder === "brideFirst" ? [secondBride, secondGroom] : [secondGroom, secondBride];
   const usePosterCover = invitation?.slug === "mufaddalweddinginvitation";
 
   return (
@@ -73,9 +77,9 @@ function CardStationery({
   ) : (
     <div className="stationery-fallback-cover">
       <span className="stationery-fallback-monogram">{monogram}</span>
-      <span className="stationery-fallback-names">{groom} <em>weds</em> {bride}</span>
+      <span className="stationery-fallback-names">{primaryNames[0]} <em>weds</em> {primaryNames[1]}</span>
       {invitation?.cardType === "double" && invitation?.secondCouple && (
-        <span className="stationery-fallback-names">{invitation.secondCouple.groomName} <em>weds</em> {invitation.secondCouple.brideName}</span>
+        <span className="stationery-fallback-names">{secondNames[0]} <em>weds</em> {secondNames[1]}</span>
       )}
       <span className="stationery-fallback-tap">Tap to Open</span>
     </div>
