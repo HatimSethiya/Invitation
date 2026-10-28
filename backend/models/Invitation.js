@@ -136,7 +136,7 @@ const invitationSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["draft", "published", "archived"],
+      enum: ["draft", "published", "paused", "archived"],
       default: "draft",
       index: true,
     },
