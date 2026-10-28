@@ -218,8 +218,8 @@ function PublicInvitation() {
                   <span className="bohra-weds">Weds</span>
                   <h1>{primaryNames[1]}</h1>
                 </div>
-                {hasValue(details.brideFamilyLine) && (
-                  <p className="bohra-bride-family">{details.brideFamilyLine}</p>
+                {hasValue(details.firstCoupleBrideFamilyLine || details.brideFamilyLine) && (
+                  <p className="bohra-bride-family">{details.firstCoupleBrideFamilyLine || details.brideFamilyLine}</p>
                 )}
               </section>
 
@@ -262,6 +262,9 @@ function PublicInvitation() {
                       <span className="bohra-weds">Weds</span>
                       <h1>{secondNames[1]}</h1>
                     </div>
+                    {hasValue(details.secondCoupleBrideFamilyLine) && (
+                      <p className="bohra-bride-family">{details.secondCoupleBrideFamilyLine}</p>
+                    )}
                   </section>
                 )}
 

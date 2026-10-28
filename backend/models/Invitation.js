@@ -108,6 +108,8 @@ const bohraDetailsSchema = new mongoose.Schema(
     hostFamilyTwo: { type: String, trim: true, default: "" },
     invitationWording: { type: String, trim: true, default: "Cordially Invite & Request The Honor Of Your Presence To Grace The Wedding Ceremony Of Their Grand Son" },
     brideFamilyLine: { type: String, trim: true, default: "" },
+    firstCoupleBrideFamilyLine: { type: String, trim: true, default: "" },
+    secondCoupleBrideFamilyLine: { type: String, trim: true, default: "" },
     nikahOfficiantIntro: { type: String, trim: true, default: "Nikah Solemnised On The Hand Mubarak Of His Holiness" },
     nikahOfficiant: { type: String, trim: true, default: "" },
     programmeHeading: { type: String, trim: true, default: "Programme Inshallah" },
