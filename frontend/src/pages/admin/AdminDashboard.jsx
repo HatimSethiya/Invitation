@@ -6,7 +6,7 @@ import MusicLibraryDialog from "../../components/MusicLibraryDialog";
 
 function AdminDashboard() {
   const { user, logout } = useAuth();
-  const [data, setData] = useState({ stats: { total: 0, published: 0, drafts: 0, archived: 0 }, invitations: [] });
+  const [data, setData] = useState({ stats: { total: 0, published: 0, drafts: 0, paused: 0, archived: 0 }, invitations: [] });
   const [loading, setLoading] = useState(true);
   const [themeSaving, setThemeSaving] = useState("");
   const [statusSaving, setStatusSaving] = useState("");
@@ -97,6 +97,7 @@ function AdminDashboard() {
         <div className="stat-card"><span>Total</span><strong>{data.stats.total}</strong></div>
         <div className="stat-card"><span>Published</span><strong>{data.stats.published}</strong></div>
         <div className="stat-card"><span>Drafts</span><strong>{data.stats.drafts}</strong></div>
+        <div className="stat-card"><span>On hold</span><strong>{data.stats.paused || 0}</strong></div>
         <div className="stat-card"><span>Archived</span><strong>{data.stats.archived}</strong></div>
       </section>
 
