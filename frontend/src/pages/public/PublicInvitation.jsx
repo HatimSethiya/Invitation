@@ -224,24 +224,9 @@ function PublicInvitation() {
               </section>
 
               {invitation.cardType === "double" && (
-                <section className="bohra-programme-panel bohra-first-nikah-panel glass-panel">
-                  <span className="bohra-section-kicker">First Nikah</span>
-                  <h2>{hasValue(firstNikah.heading) ? firstNikah.heading : "First Nikah Ceremony"}</h2>
-                  <div className="bohra-programme-rule" aria-hidden="true"><span>✦</span></div>
-                  <div className="bohra-programme-details">
-                    {hasValue(firstNikah.officiant) && (
-                      <div className="bohra-detail-row"><span className="bohra-detail-icon" aria-hidden="true">✦</span><div><strong>{firstNikah.officiant}</strong></div></div>
-                    )}
-                    {hasValue(firstNikah.hijriDate) && (
-                      <div className="bohra-detail-row"><span className="bohra-detail-icon" aria-hidden="true">▦</span><div><strong>{firstNikah.hijriDate}</strong></div></div>
-                    )}
-                    {hasValue(firstNikah.time) && (
-                      <div className="bohra-detail-row"><span className="bohra-detail-icon" aria-hidden="true">◷</span><div><strong>{firstNikah.time}</strong></div></div>
-                    )}
-                    {hasValue(firstNikah.venue) && (
-                      <div className="bohra-detail-row"><span className="bohra-detail-icon" aria-hidden="true">⌖</span><div><strong>{firstNikah.venue}</strong></div></div>
-                    )}
-                  </div>
+                <section className="bohra-officiant-panel glass-panel">
+                  <p>Nikah Solemnised On The Hand Mubarak Of</p>
+                  {hasValue(firstNikah.officiant) && <strong>{firstNikah.officiant}</strong>}
                 </section>
               )}
 
