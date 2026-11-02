@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const Invitation = require("../models/Invitation");
 
 const protect = (req, res, next) => {
   try {
@@ -24,8 +25,15 @@ const protect = (req, res, next) => {
   }
 };
 
-const requireInvitationUnlock = (req, res, next) => {
+const requireInvitationUnlock = async (req, res, next) => {
   try {
+    const invitation = await Invitation.findOne({ _id: req.params.id, createdBy: req.user.id }).select("+lockPasswordHash");
+    if (!invitation) {
+      return res.status(404).json({ success: false, message: "Invitation not found." });
+    }
+    // Backward compatibility: invitations created before password locking remain manageable.
+    if (!invitation.lockPasswordHash) return next();
+
     const token = req.headers["x-invitation-unlock"];
     if (!token) {
       return res.status(423).json({ success: false, message: "Unlock this invitation with its password first." });
