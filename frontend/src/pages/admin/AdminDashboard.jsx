@@ -26,6 +26,20 @@ function AdminDashboard() {
 
   useEffect(() => { loadInvitations(); }, []);
 
+  useEffect(() => {
+    const handleInvitationRelock = (event) => {
+      const invitationId = event.detail?.id;
+      if (!invitationId) return;
+      setUnlockedInvitations((current) => ({ ...current, [invitationId]: false }));
+      setUnlockPromptId("");
+      setUnlockPassword("");
+      loadInvitations();
+    };
+
+    window.addEventListener("invitation:locked", handleInvitationRelock);
+    return () => window.removeEventListener("invitation:locked", handleInvitationRelock);
+  }, []);
+
   const submitUnlock = async (id) => {
     if (!unlockPassword) {
       setActionError("Enter the card password to unlock this invitation.");
@@ -112,8 +126,13 @@ function AdminDashboard() {
 
   const removeInvitation = async (id) => {
     if (!window.confirm("Delete this invitation permanently?")) return;
-    await api.delete(`/invitations/${id}`);
-    await loadInvitations();
+    setActionError("");
+    try {
+      await api.delete(`/invitations/${id}`);
+      await loadInvitations();
+    } catch (err) {
+      setActionError(err.response?.data?.message || "Unable to delete invitation.");
+    }
   };
 
   return (
