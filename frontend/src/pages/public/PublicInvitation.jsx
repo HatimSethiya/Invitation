@@ -98,7 +98,7 @@ function PublicInvitation() {
   }, [slug]);
 
   const themeClass = useMemo(
-    () => `theme-${invitation?.theme || "royalRose"}`,
+    () => `theme-${invitation?.theme || "purpleWhite"}`,
     [invitation?.theme]
   );
 
