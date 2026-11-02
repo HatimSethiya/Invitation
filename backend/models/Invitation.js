@@ -209,6 +209,10 @@ const invitationSchema = new mongoose.Schema(
       type: musicSchema,
       default: () => ({}),
     },
+    lockPasswordHash: {
+      type: String,
+      select: false,
+    },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -218,6 +222,13 @@ const invitationSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    toJSON: {
+      transform(doc, ret) {
+        delete ret.lockPasswordHash;
+        ret.isPasswordLocked = Boolean(doc.lockPasswordHash);
+        return ret;
+      },
+    },
   }
 );
 

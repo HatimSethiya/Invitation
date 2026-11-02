@@ -22,6 +22,8 @@ function InvitationWizard() {
   const [error, setError] = useState("");
   const [loadingInvitation, setLoadingInvitation] = useState(Boolean(editId));
   const [invitationStatus, setInvitationStatus] = useState("draft");
+  const [lockPassword, setLockPassword] = useState("");
+  const [lockPasswordConfirmation, setLockPasswordConfirmation] = useState("");
   const [audioUploading, setAudioUploading] = useState(false);
   const [musicQuery, setMusicQuery] = useState("");
   const [musicTracks, setMusicTracks] = useState([]);
@@ -303,9 +305,19 @@ function InvitationWizard() {
   };
 
   const save = async () => {
-    setSaving(true); setError("");
+    setError("");
+    if (!isEditing && lockPassword.length < 6) {
+      setError("Set a card password with at least 6 characters.");
+      return;
+    }
+    if (!isEditing && lockPassword !== lockPasswordConfirmation) {
+      setError("The card password and confirmation do not match.");
+      return;
+    }
+
+    setSaving(true);
     try {
-      const payload = { ...form, status: isEditing ? invitationStatus : "draft", events: form.events.filter((x) => x.title || x.venue || x.date), family: form.family.filter((x) => x.name), story: form.story.filter((x) => x.title || x.content), gallery: form.gallery.filter((x) => x.imageUrl) };
+      const payload = { ...form, ...(isEditing ? {} : { lockPassword }), status: isEditing ? invitationStatus : "draft", events: form.events.filter((x) => x.title || x.venue || x.date), family: form.family.filter((x) => x.name), story: form.story.filter((x) => x.title || x.content), gallery: form.gallery.filter((x) => x.imageUrl) };
       if (isEditing) {
         await api.put(`/invitations/${editId}`, payload);
       } else {
@@ -527,6 +539,19 @@ function InvitationWizard() {
         </div>}
 
 {step === 7 && <div className="form-section bohra-review-section"><h2>Review your invitation</h2><p className="section-note">Check the key details before creating the draft.</p><div className="bohra-review-grid"><div><span>Card type</span><strong>{form.cardType === "double" ? "Double Wedding" : "Single Wedding"}</strong></div><div><span>Design</span><strong>{({"bohraNikah": "Ivory Gold · Nikah", "purpleWhite": "White Purple · Glass", "midnightNavy": "Midnight Navy", "sageBotanical": "Sage Botanical", "champagnePearl": "Champagne Pearl", "rubyVelvet": "Ruby Velvet", "oceanTeal": "Ocean Teal", "celestialBlack": "Celestial Onyx", "blushTerracotta": "Blush Terracotta", "desertSand": "Desert Sand", "sapphireSilver": "Sapphire Silver", "burgundyLuxe": "Burgundy Luxe", "jadeMarble": "Jade Marble", "sunsetCopper": "Sunset Copper"}[form.theme] || form.theme)}</strong></div><div><span>Couples</span><strong>{[[form.couple.groomName, form.couple.brideName].filter(Boolean).join(" Weds "), ...(form.cardType === "double" ? [[form.secondCouple.groomName, form.secondCouple.brideName].filter(Boolean).join(" Weds ")] : [])].filter(Boolean).join(" · ") || "Names not entered yet"}</strong></div><div><span>Programme</span><strong>{form.bohraDetails.programmeTitle || "Not specified"}</strong></div><div><span>Date</span><strong>{form.weddingDate ? new Date(form.weddingDate + "T12:00:00").toLocaleDateString(undefined, { dateStyle: "long" }) : "Not specified"}</strong></div></div><div className="publish-note"><strong>Ready to create?</strong><span>{isEditing ? "Your changes will be saved without changing the current publication status." : "This saves as a draft first. Publish the guest link from the dashboard."} Bohra Nikah layout does not display couple photos or a gallery.</span></div></div>}
+
+        {!isEditing && step === steps.length - 1 && <section className="invitation-password-setup">
+          <h3><span aria-hidden="true">🔒</span> Set card password</h3>
+          <p>This card will be locked on your dashboard after creation. Refresh or login again and enter this password to manage it.</p>
+          <div className="form-grid">
+            <label>Card password (minimum 6 characters)
+              <input type="password" autoComplete="new-password" minLength={6} required value={lockPassword} onChange={(event) => setLockPassword(event.target.value)} />
+            </label>
+            <label>Confirm card password
+              <input type="password" autoComplete="new-password" minLength={6} required value={lockPasswordConfirmation} onChange={(event) => setLockPasswordConfirmation(event.target.value)} />
+            </label>
+          </div>
+        </section>}
 
         {error && <div className="auth-error wizard-error">{error}</div>}
         <footer className="wizard-footer"><button type="button" className="secondary-button" onClick={back} disabled={saving}>Back</button>{step < steps.length - 1 ? <button type="button" className="primary-button" onClick={next}>Continue</button> : <button type="button" className="primary-button" onClick={save} disabled={saving}>{saving ? (isEditing ? "Saving..." : "Creating...") : (isEditing ? "Save Changes" : "Create Draft")}</button>}</footer>
