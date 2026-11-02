@@ -39,13 +39,20 @@ const requireInvitationUnlock = async (req, res, next) => {
       return res.status(423).json({ success: false, message: "Unlock this invitation with its password first." });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    let decoded;
+    try {
+      decoded = jwt.verify(token, process.env.JWT_SECRET);
+    } catch {
+      return res.status(423).json({ success: false, message: "Invitation is locked or the unlock session has expired." });
+    }
+
     if (decoded.type !== "invitation_unlock" || decoded.invitationId !== req.params.id || decoded.id !== req.user.id) {
       return res.status(423).json({ success: false, message: "Invitation is locked. Enter its password to continue." });
     }
-    next();
+    return next();
   } catch (error) {
-    return res.status(423).json({ success: false, message: "Invitation is locked or the unlock session has expired." });
+    console.error("Invitation unlock authorization error:", error);
+    return res.status(500).json({ success: false, message: "Unable to verify invitation access." });
   }
 };
 
