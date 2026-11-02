@@ -1,3 +1,5 @@
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const Invitation = require("../models/Invitation");
 
 const normalizeSlug = (value = "") =>
@@ -17,7 +19,14 @@ const uniqueSlug = async (value, excludeId = null) => {
 
 const getAdminInvitations = async (req, res) => {
   try {
-    const invitations = await Invitation.find({ createdBy: req.user.id }).sort({ createdAt: -1 }).lean();
+    const invitationsWithLockState = await Invitation.find({ createdBy: req.user.id })
+      .select("+lockPasswordHash")
+      .sort({ createdAt: -1 })
+      .lean();
+    const invitations = invitationsWithLockState.map(({ lockPasswordHash, ...invitation }) => ({
+      ...invitation,
+      isPasswordLocked: Boolean(lockPasswordHash),
+    }));
     const stats = {
       total: invitations.length,
       published: invitations.filter((item) => item.status === "published").length,
@@ -34,7 +43,7 @@ const getAdminInvitations = async (req, res) => {
 
 const getAdminInvitation = async (req, res) => {
   try {
-    const invitation = await Invitation.findOne({ _id: req.params.id, createdBy: req.user.id });
+    const invitation = await Invitation.findOne({ _id: req.params.id, createdBy: req.user.id }).select("+lockPasswordHash");
     if (!invitation) return res.status(404).json({ success: false, message: "Invitation not found." });
     return res.json({ success: true, invitation });
   } catch (error) {
@@ -44,13 +53,19 @@ const getAdminInvitation = async (req, res) => {
 
 const createInvitation = async (req, res) => {
   try {
-    const { title, slug, weddingDate, status, theme, cardType, coverImageUrl, couple, secondCouple, firstNikah, bohraDetails, events, family, story, gallery, venue, music } = req.body;
+    const { title, slug, weddingDate, status, theme, cardType, coverImageUrl, couple, secondCouple, firstNikah, bohraDetails, events, family, story, gallery, venue, music, lockPassword } = req.body;
     if (!title?.trim() || !weddingDate) {
       return res.status(400).json({ success: false, message: "Title and wedding date are required." });
     }
 
+    if (typeof lockPassword !== "string" || lockPassword.length < 6) {
+      return res.status(400).json({ success: false, message: "Set an invitation password with at least 6 characters." });
+    }
+
+    const lockPasswordHash = await bcrypt.hash(lockPassword, 12);
     const invitation = await Invitation.create({
       title: title.trim(),
+      lockPasswordHash,
       slug: await uniqueSlug(slug || title),
       weddingDate,
       status,
@@ -192,6 +207,36 @@ const updateInvitationTheme = async (req, res) => {
   }
 };
 
+const unlockInvitation = async (req, res) => {
+  try {
+    const { password } = req.body;
+    if (typeof password !== "string" || !password) {
+      return res.status(400).json({ success: false, message: "Invitation password is required." });
+    }
+
+    const invitation = await Invitation.findOne({ _id: req.params.id, createdBy: req.user.id }).select("+lockPasswordHash");
+    if (!invitation) return res.status(404).json({ success: false, message: "Invitation not found." });
+    if (!invitation.lockPasswordHash) {
+      return res.status(400).json({ success: false, message: "This invitation does not have a password lock." });
+    }
+
+    const passwordMatches = await bcrypt.compare(password, invitation.lockPasswordHash);
+    if (!passwordMatches) {
+      return res.status(401).json({ success: false, message: "Incorrect invitation password." });
+    }
+
+    const unlockToken = jwt.sign(
+      { id: req.user.id, invitationId: invitation._id.toString(), type: "invitation_unlock" },
+      process.env.JWT_SECRET,
+      { expiresIn: "12h" }
+    );
+    return res.json({ success: true, unlockToken });
+  } catch (error) {
+    console.error("Unlock invitation error:", error);
+    return res.status(500).json({ success: false, message: "Unable to unlock invitation." });
+  }
+};
+
 const getPublicInvitation = async (req, res) => {
   try {
     const invitation = await Invitation.findOne({ slug: req.params.slug.toLowerCase(), status: "published" }).lean();
@@ -210,5 +255,6 @@ module.exports = {
   deleteInvitation,
   updateInvitationStatus,
   updateInvitationTheme,
+  unlockInvitation,
   getPublicInvitation,
 };
