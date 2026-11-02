@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import api from "../../services/api";
+import api, { setInvitationUnlockToken, clearInvitationUnlockTokens } from "../../services/api";
 import { useAuth } from "../../context/AuthContext";
 import MusicLibraryDialog from "../../components/MusicLibraryDialog";
 
@@ -13,6 +13,10 @@ function AdminDashboard() {
   const [actionError, setActionError] = useState("");
   const [musicInvitation, setMusicInvitation] = useState(null);
   const [musicSaving, setMusicSaving] = useState(false);
+  const [unlockedInvitations, setUnlockedInvitations] = useState({});
+  const [unlockPromptId, setUnlockPromptId] = useState("");
+  const [unlockPassword, setUnlockPassword] = useState("");
+  const [unlockSaving, setUnlockSaving] = useState(false);
 
   const loadInvitations = async () => {
     try { const response = await api.get("/invitations"); setData(response.data); }
@@ -21,6 +25,31 @@ function AdminDashboard() {
   };
 
   useEffect(() => { loadInvitations(); }, []);
+
+  const submitUnlock = async (id) => {
+    if (!unlockPassword) {
+      setActionError("Enter the card password to unlock this invitation.");
+      return;
+    }
+    setUnlockSaving(true);
+    setActionError("");
+    try {
+      const { data: response } = await api.post(`/invitations/${id}/unlock`, { password: unlockPassword });
+      setInvitationUnlockToken(id, response.unlockToken);
+      setUnlockedInvitations((current) => ({ ...current, [id]: true }));
+      setUnlockPromptId("");
+      setUnlockPassword("");
+    } catch (err) {
+      setActionError(err.response?.data?.message || "Unable to unlock this invitation.");
+    } finally {
+      setUnlockSaving(false);
+    }
+  };
+
+  const handleLogout = () => {
+    clearInvitationUnlockTokens();
+    logout();
+  };
 
   const updateStatus = async (id, status) => {
     setStatusSaving(id);
@@ -90,7 +119,7 @@ function AdminDashboard() {
     <main className="studio-page">
       <header className="studio-header">
         <div><span className="eyebrow">Wedding Invitation Studio</span><h1>Good to see you, {user?.name || "Admin"}</h1><p>Create, manage and publish beautiful wedding invitations.</p></div>
-        <button className="secondary-button" onClick={logout}>Logout</button>
+        <button className="secondary-button" onClick={handleLogout}>Logout</button>
       </header>
 
       <section className="stats-grid">
@@ -109,7 +138,8 @@ function AdminDashboard() {
           <div className="empty-state"><div className="empty-icon">✦</div><h3>Your first invitation starts here</h3><p>Create a beautiful invitation and publish a shareable link for your guests.</p><Link className="primary-button" to="/admin/invitations/new">Create your first invitation</Link></div>
         ) : (
           <div className="invitation-list">{data.invitations.map((invitation) => (
-            <article className="invitation-row" key={invitation._id}>
+            <article className={`invitation-row ${invitation.isPasswordLocked && !unlockedInvitations[invitation._id] ? "invitation-row-locked" : ""}`} key={invitation._id}>
+              <div className="invitation-row-content" aria-hidden={Boolean(invitation.isPasswordLocked && !unlockedInvitations[invitation._id])} inert={Boolean(invitation.isPasswordLocked && !unlockedInvitations[invitation._id])}>
               <div className="invitation-info">
                 <span className={`status-pill status-${invitation.status}`}>{invitation.status === "paused" ? "On hold" : invitation.status}</span>
                 <h3>{invitation.title}</h3>
@@ -158,6 +188,24 @@ function AdminDashboard() {
                 <button className="small-button" onClick={() => setMusicInvitation(invitation)} disabled={musicSaving || statusSaving === invitation._id}>{invitation.music?.audioUrl ? "Change music" : "Add music"}</button>
                 {invitation.status !== "archived" && <button className="small-button danger" onClick={() => removeInvitation(invitation._id)}>Delete</button>}
               </div>
+              </div>
+              {invitation.isPasswordLocked && !unlockedInvitations[invitation._id] && <div className="invitation-lock-overlay">
+                {unlockPromptId === invitation._id ? <form className="invitation-unlock-form" onSubmit={(event) => { event.preventDefault(); submitUnlock(invitation._id); }}>
+                  <span className="invitation-lock-icon" aria-hidden="true">🔒</span>
+                  <strong>Card locked</strong>
+                  <label>Enter card password
+                    <input type="password" autoComplete="current-password" autoFocus required value={unlockPassword} onChange={(event) => setUnlockPassword(event.target.value)} />
+                  </label>
+                  <div className="invitation-unlock-actions">
+                    <button className="small-button" type="button" onClick={() => { setUnlockPromptId(""); setUnlockPassword(""); }} disabled={unlockSaving}>Cancel</button>
+                    <button className="small-button edit-invitation-button" type="submit" disabled={unlockSaving}>{unlockSaving ? "Unlocking…" : "Unlock"}</button>
+                  </div>
+                </form> : <button type="button" className="invitation-lock-prompt" onClick={() => { setActionError(""); setUnlockPromptId(invitation._id); setUnlockPassword(""); }}>
+                  <span className="invitation-lock-icon" aria-hidden="true">🔒</span>
+                  <strong>Card locked</strong>
+                  <span>Click to enter password</span>
+                </button>}
+              </div>}
             </article>
           ))}</div>
         )}
