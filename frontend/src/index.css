@@ -2230,3 +2230,193 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
 .theme-preview-burgundyLuxe{--preview-ink:#4c1022;--preview-accent:#9a344c;--preview-light:#fff7f7;background:linear-gradient(135deg,#fff7f7,#d9a2af 40%,#9a344c 70%,#4c1022);}
 .theme-preview-jadeMarble{--preview-ink:#185846;--preview-accent:#4e9580;--preview-light:#fbfff9;background:radial-gradient(ellipse at 20% 30%,#fbfff9,transparent 35%),linear-gradient(135deg,#edf8f1,#4e9580 55%,#185846);}
 .theme-preview-sunsetCopper{--preview-ink:#81482b;--preview-accent:#d18a58;--preview-light:#fffaf2;background:radial-gradient(ellipse at 85% 15%,#f4c28d,transparent 35%),linear-gradient(135deg,#fff0df,#d18a58 58%,#81482b);}
+
+
+/* Premium glass surfaces and high-contrast typography for every selectable invitation theme.
+   Keep theme-specific backgrounds and accents, while placing content on readable translucent panels. */
+.public-page[class*="theme-"] {
+  --invitation-glass-bg: rgba(255, 255, 255, 0.78);
+  --invitation-glass-border: rgba(255, 255, 255, 0.62);
+  --invitation-glass-shadow: 0 18px 48px rgba(20, 24, 40, 0.13);
+  --invitation-readable-ink: #292637;
+  --invitation-readable-muted: #514b5c;
+  --invitation-readable-accent: #65517d;
+}
+.public-page.theme-bohraNikah {
+  --invitation-glass-bg: rgba(255, 250, 240, 0.76);
+  --invitation-glass-border: rgba(177, 138, 66, 0.38);
+  --invitation-readable-ink: #294135;
+  --invitation-readable-muted: #526354;
+  --invitation-readable-accent: #8c6a2e;
+}
+.public-page.theme-purpleWhite {
+  --invitation-glass-bg: rgba(255, 255, 255, 0.76);
+  --invitation-glass-border: rgba(255, 255, 255, 0.76);
+  --invitation-readable-ink: #48345f;
+  --invitation-readable-muted: #62566f;
+  --invitation-readable-accent: #7954a5;
+}
+.public-page.theme-midnightNavy {
+  --invitation-glass-bg: rgba(250, 248, 242, 0.86);
+  --invitation-glass-border: rgba(216, 181, 109, 0.48);
+  --invitation-readable-ink: #18243a;
+  --invitation-readable-muted: #3c4b63;
+  --invitation-readable-accent: #8b6728;
+}
+.public-page.theme-sageBotanical {
+  --invitation-glass-bg: rgba(250, 253, 247, 0.84);
+  --invitation-glass-border: rgba(255, 255, 255, 0.72);
+  --invitation-readable-ink: #263d2c;
+  --invitation-readable-muted: #465d4a;
+  --invitation-readable-accent: #4c7554;
+}
+.public-page.theme-champagnePearl {
+  --invitation-glass-bg: rgba(255, 253, 248, 0.84);
+  --invitation-glass-border: rgba(255, 255, 255, 0.78);
+  --invitation-readable-ink: #58442e;
+  --invitation-readable-muted: #6d5a43;
+  --invitation-readable-accent: #92713d;
+}
+.public-page.theme-rubyVelvet {
+  --invitation-glass-bg: rgba(255, 246, 242, 0.88);
+  --invitation-glass-border: rgba(229, 183, 162, 0.54);
+  --invitation-readable-ink: #4b1728;
+  --invitation-readable-muted: #6a3547;
+  --invitation-readable-accent: #8a2947;
+}
+.public-page.theme-oceanTeal {
+  --invitation-glass-bg: rgba(246, 255, 253, 0.84);
+  --invitation-glass-border: rgba(255, 255, 255, 0.76);
+  --invitation-readable-ink: #174643;
+  --invitation-readable-muted: #356460;
+  --invitation-readable-accent: #247c77;
+}
+.public-page.theme-celestialBlack {
+  --invitation-glass-bg: rgba(249, 247, 255, 0.88);
+  --invitation-glass-border: rgba(198, 183, 255, 0.56);
+  --invitation-readable-ink: #252139;
+  --invitation-readable-muted: #51496b;
+  --invitation-readable-accent: #6957a2;
+}
+.public-page.theme-blushTerracotta {
+  --invitation-glass-bg: rgba(255, 250, 247, 0.86);
+  --invitation-glass-border: rgba(255, 255, 255, 0.72);
+  --invitation-readable-ink: #60382f;
+  --invitation-readable-muted: #795047;
+  --invitation-readable-accent: #a85f52;
+}
+.public-page.theme-desertSand {
+  --invitation-glass-bg: rgba(255, 251, 241, 0.86);
+  --invitation-glass-border: rgba(255, 255, 255, 0.76);
+  --invitation-readable-ink: #5c4528;
+  --invitation-readable-muted: #735d3e;
+  --invitation-readable-accent: #9a743d;
+}
+.public-page.theme-sapphireSilver {
+  --invitation-glass-bg: rgba(250, 253, 255, 0.88);
+  --invitation-glass-border: rgba(255, 255, 255, 0.78);
+  --invitation-readable-ink: #20365e;
+  --invitation-readable-muted: #40577e;
+  --invitation-readable-accent: #4169a6;
+}
+.public-page.theme-burgundyLuxe {
+  --invitation-glass-bg: rgba(255, 248, 249, 0.88);
+  --invitation-glass-border: rgba(255, 255, 255, 0.76);
+  --invitation-readable-ink: #501a2b;
+  --invitation-readable-muted: #71394a;
+  --invitation-readable-accent: #8d2e48;
+}
+.public-page.theme-jadeMarble {
+  --invitation-glass-bg: rgba(249, 255, 251, 0.86);
+  --invitation-glass-border: rgba(255, 255, 255, 0.76);
+  --invitation-readable-ink: #194b3b;
+  --invitation-readable-muted: #3b6858;
+  --invitation-readable-accent: #347d68;
+}
+.public-page.theme-sunsetCopper {
+  --invitation-glass-bg: rgba(255, 250, 244, 0.88);
+  --invitation-glass-border: rgba(255, 255, 255, 0.76);
+  --invitation-readable-ink: #643b25;
+  --invitation-readable-muted: #80583d;
+  --invitation-readable-accent: #a96537;
+}
+.public-page[class*="theme-"] .public-hero,
+.public-page[class*="theme-"] .public-section,
+.public-page[class*="theme-"] .event-card,
+.public-page[class*="theme-"] .public-card:not(.bohra-invitation-card),
+.public-page[class*="theme-"] .family-line {
+  color: var(--invitation-readable-ink);
+  background: var(--invitation-glass-bg);
+  border: 1px solid var(--invitation-glass-border);
+  box-shadow: var(--invitation-glass-shadow);
+  backdrop-filter: blur(18px) saturate(145%);
+  -webkit-backdrop-filter: blur(18px) saturate(145%);
+}
+.public-page[class*="theme-"] .public-hero,
+.public-page[class*="theme-"] .public-section {
+  border-radius: 24px;
+  margin: 16px auto;
+}
+.public-page[class*="theme-"] .public-hero h1,
+.public-page[class*="theme-"] .public-hero h1 span,
+.public-page[class*="theme-"] .public-section h2,
+.public-page[class*="theme-"] .event-card h3,
+.public-page[class*="theme-"] .event-card strong {
+  color: var(--invitation-readable-ink);
+  text-shadow: none;
+}
+.public-page[class*="theme-"] .public-date,
+.public-page[class*="theme-"] .public-section p,
+.public-page[class*="theme-"] .public-section li,
+.public-page[class*="theme-"] .family-line span,
+.public-page[class*="theme-"] .public-gallery figcaption {
+  color: var(--invitation-readable-muted);
+  text-shadow: none;
+}
+.public-page[class*="theme-"] .event-card a,
+.public-page[class*="theme-"] .public-section a {
+  color: var(--invitation-readable-accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.public-page[class*="theme-"] .family-line {
+  border-radius: 12px;
+  padding: 13px 16px;
+  margin: 8px 0;
+}
+.public-page[class*="theme-"] .public-gallery img,
+.public-page[class*="theme-"] .couple-photo {
+  border: 1px solid var(--invitation-glass-border);
+  box-shadow: 0 16px 38px rgba(20, 24, 40, 0.16);
+}
+.public-page[class*="theme-"] .bohra-couple-panel,
+.public-page[class*="theme-"] .bohra-officiant-panel,
+.public-page[class*="theme-"] .bohra-extra-event,
+.public-page[class*="theme-"] .bohra-note-panel {
+  background: var(--invitation-glass-bg);
+  border-color: var(--invitation-glass-border);
+  box-shadow: var(--invitation-glass-shadow);
+  backdrop-filter: blur(18px) saturate(145%);
+  -webkit-backdrop-filter: blur(18px) saturate(145%);
+}
+.public-page[class*="theme-"] .bohra-couple-names,
+.public-page[class*="theme-"] .bohra-couple-names *,
+.public-page[class*="theme-"] .bohra-officiant-panel *,
+.public-page[class*="theme-"] .bohra-extra-event *,
+.public-page[class*="theme-"] .bohra-note-panel * {
+  color: var(--invitation-readable-ink);
+  text-shadow: none;
+}
+@supports not (backdrop-filter: blur(1px)) {
+  .public-page[class*="theme-"] .public-hero,
+  .public-page[class*="theme-"] .public-section,
+  .public-page[class*="theme-"] .event-card,
+  .public-page[class*="theme-"] .public-card:not(.bohra-invitation-card),
+  .public-page[class*="theme-"] .family-line,
+  .public-page[class*="theme-"] .bohra-couple-panel,
+  .public-page[class*="theme-"] .bohra-officiant-panel,
+  .public-page[class*="theme-"] .bohra-extra-event,
+  .public-page[class*="theme-"] .bohra-note-panel {
+    background: rgba(255, 255, 255, 0.94);
+  }
+}
