@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import api from "../services/api";
+import api, { clearInvitationUnlockTokens } from "../services/api";
 
 const AuthContext = createContext(null);
 const TOKEN_KEY = "wedding_admin_token";
@@ -55,6 +55,7 @@ export function AuthProvider({ children }) {
   };
 
   function logout() {
+    clearInvitationUnlockTokens();
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(USER_KEY);
     delete api.defaults.headers.common.Authorization;
