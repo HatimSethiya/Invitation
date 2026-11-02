@@ -156,7 +156,7 @@ const invitationSchema = new mongoose.Schema(
     },
     theme: {
       type: String,
-      default: "royalRose",
+      default: "purpleWhite",
       trim: true,
     },
     cardType: {

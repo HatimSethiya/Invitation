@@ -118,16 +118,25 @@ function AdminDashboard() {
                 <label className="invitation-design-control">
                   <span>Invitation design</span>
                   <select
-                    value={invitation.theme || "royalRose"}
+                    value={invitation.theme || "purpleWhite"}
                     disabled={themeSaving === invitation._id}
                     onChange={(event) => updateTheme(invitation._id, event.target.value)}
                     aria-label={`Change design for ${invitation.title}`}
                   >
-                    <option value="bohraNikah">Bohra Nikah · Emerald / Ivory / Gold</option>
-                    <option value="purpleWhite">Purple–White Wedding</option>
-                    <option value="royalRose">Royal Rose</option>
-                    <option value="emeraldGarden">Emerald Garden</option>
-                    <option value="ivoryHeritage">Ivory Heritage</option>
+                    <option value="bohraNikah">Ivory Gold · Nikah</option>
+                    <option value="purpleWhite">White Purple · Glass</option>
+                    <option value="midnightNavy">Midnight Navy</option>
+                    <option value="sageBotanical">Sage Botanical</option>
+                    <option value="champagnePearl">Champagne Pearl</option>
+                    <option value="rubyVelvet">Ruby Velvet</option>
+                    <option value="oceanTeal">Ocean Teal</option>
+                    <option value="celestialBlack">Celestial Onyx</option>
+                    <option value="blushTerracotta">Blush Terracotta</option>
+                    <option value="desertSand">Desert Sand</option>
+                    <option value="sapphireSilver">Sapphire Silver</option>
+                    <option value="burgundyLuxe">Burgundy Luxe</option>
+                    <option value="jadeMarble">Jade Marble</option>
+                    <option value="sunsetCopper">Sunset Copper</option>
                   </select>
                   {themeSaving === invitation._id && <small>Saving design…</small>}
                 </label>
