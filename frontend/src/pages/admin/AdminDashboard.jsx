@@ -123,11 +123,20 @@ function AdminDashboard() {
                     onChange={(event) => updateTheme(invitation._id, event.target.value)}
                     aria-label={`Change design for ${invitation.title}`}
                   >
-                    <option value="bohraNikah">Bohra Nikah · Emerald / Ivory / Gold</option>
-                    <option value="purpleWhite">Purple–White Wedding</option>
-                    <option value="royalRose">Royal Rose</option>
-                    <option value="emeraldGarden">Emerald Garden</option>
-                    <option value="ivoryHeritage">Ivory Heritage</option>
+                    <option value="bohraNikah">Ivory Gold · Nikah</option>
+                    <option value="purpleWhite">White Purple · Glass</option>
+                    <option value="midnightNavy">undefined</option>
+                    <option value="sageBotanical">undefined</option>
+                    <option value="champagnePearl">undefined</option>
+                    <option value="rubyVelvet">undefined</option>
+                    <option value="oceanTeal">undefined</option>
+                    <option value="celestialBlack">undefined</option>
+                    <option value="blushTerracotta">undefined</option>
+                    <option value="desertSand">undefined</option>
+                    <option value="sapphireSilver">undefined</option>
+                    <option value="burgundyLuxe">undefined</option>
+                    <option value="jadeMarble">undefined</option>
+                    <option value="sunsetCopper">undefined</option>
                   </select>
                   {themeSaving === invitation._id && <small>Saving design…</small>}
                 </label>
