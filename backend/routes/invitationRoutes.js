@@ -10,7 +10,7 @@ const {
   unlockInvitation,
   getPublicInvitation,
 } = require("../controllers/invitationController");
-const { protect, requireAdmin } = require("../middleware/authMiddleware");
+const { protect, requireAdmin, requireInvitationUnlock } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
