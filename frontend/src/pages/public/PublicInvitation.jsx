@@ -132,7 +132,7 @@ function PublicInvitation() {
     );
   }
 
-  if (invitation.theme === "bohraNikah" || invitation.theme === "purpleWhite") {
+  if (invitation) {
     const details = invitation.bohraDetails || {};
     const firstNikah = invitation.firstNikah || {};
     const primaryNames = invitation.couple?.nameOrder === "brideFirst" ? [bride, groom] : [groom, bride];
@@ -143,7 +143,7 @@ function PublicInvitation() {
 
     return (
       <main
-        className={`public-page bohra-public-page ${invitation.theme === "purpleWhite" ? "theme-purpleWhite" : "theme-bohraNikah"} ${isInvitationInteractive ? "invitation-revealed" : "invitation-locked"}`}
+        className={`public-page bohra-public-page ${themeClass} ${isInvitationInteractive ? "invitation-revealed" : "invitation-locked"}`}
       >
         <AnimatePresence>
           {!isUnboxed && (
@@ -188,8 +188,7 @@ function PublicInvitation() {
                 )}
               </header>
 
-              {invitation.theme === "purpleWhite" &&
-                hasValue(details.spiritualLeader) &&
+              {hasValue(details.spiritualLeader) &&
                 (hasValue(details.hostFamilyOne) || hasValue(details.hostFamilyTwo)) && (
                   <div className="bohra-host-divider" aria-hidden="true">
                     <span>✧</span>
