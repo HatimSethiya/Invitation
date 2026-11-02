@@ -18,9 +18,13 @@ export function clearInvitationUnlockTokens() {
 }
 
 api.interceptors.request.use((config) => {
-  const match = String(config.url || "").match(/invitations\/([a-f\d]{24})(?:\/|$)/i);
+  const requestUrl = String(config.url || "");
+  const match = requestUrl.match(/invitations\/([a-f\d]{24})(?:\/|$)/i);
   const unlockToken = match ? invitationUnlockTokens.get(match[1]) : null;
   if (unlockToken) config.headers["X-Invitation-Unlock"] = unlockToken;
+  if (/(?:^|\/)invitations\/?$/.test(requestUrl)) {
+    config.headers["X-Invitation-Unlocks"] = JSON.stringify(Object.fromEntries(invitationUnlockTokens));
+  }
   return config;
 });
 
