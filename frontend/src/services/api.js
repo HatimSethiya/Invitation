@@ -17,6 +17,21 @@ export function clearInvitationUnlockTokens() {
   invitationUnlockTokens.clear();
 }
 
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const requestUrl = String(error.config?.url || "");
+    const match = requestUrl.match(/invitations\/([a-f\d]{24})(?:\/|$)/i);
+    if (error.response?.status === 423 && match) {
+      setInvitationUnlockToken(match[1], null);
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(new CustomEvent("invitation:locked", { detail: { id: match[1] } }));
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 api.interceptors.request.use((config) => {
   const requestUrl = String(config.url || "");
   const match = requestUrl.match(/invitations\/([a-f\d]{24})(?:\/|$)/i);
