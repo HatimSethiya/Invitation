@@ -37,6 +37,7 @@ function AdminDashboard() {
       const { data: response } = await api.post(`/invitations/${id}/unlock`, { password: unlockPassword });
       setInvitationUnlockToken(id, response.unlockToken);
       setUnlockedInvitations((current) => ({ ...current, [id]: true }));
+      await loadInvitations();
       setUnlockPromptId("");
       setUnlockPassword("");
     } catch (err) {
