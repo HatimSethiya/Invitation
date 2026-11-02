@@ -19,14 +19,50 @@ const uniqueSlug = async (value, excludeId = null) => {
 
 const getAdminInvitations = async (req, res) => {
   try {
+    let unlockTokens = {};
+    try {
+      const parsedTokens = JSON.parse(req.headers["x-invitation-unlocks"] || "{}");
+      if (parsedTokens && typeof parsedTokens === "object" && !Array.isArray(parsedTokens)) {
+        unlockTokens = parsedTokens;
+      }
+    } catch {
+      unlockTokens = {};
+    }
+
     const invitationsWithLockState = await Invitation.find({ createdBy: req.user.id })
       .select("+lockPasswordHash")
       .sort({ createdAt: -1 })
       .lean();
-    const invitations = invitationsWithLockState.map(({ lockPasswordHash, ...invitation }) => ({
-      ...invitation,
-      isPasswordLocked: Boolean(lockPasswordHash),
-    }));
+    const invitations = invitationsWithLockState.map(({ lockPasswordHash, ...invitation }) => {
+      const isPasswordLocked = Boolean(lockPasswordHash);
+      let tokenIsValid = false;
+      if (isPasswordLocked && typeof unlockTokens[invitation._id.toString()] === "string") {
+        try {
+          const decoded = jwt.verify(unlockTokens[invitation._id.toString()], process.env.JWT_SECRET);
+          tokenIsValid = decoded.type === "invitation_unlock"
+            && decoded.invitationId === invitation._id.toString()
+            && decoded.id === req.user.id;
+        } catch {
+          tokenIsValid = false;
+        }
+      }
+
+      if (isPasswordLocked && !tokenIsValid) {
+        return {
+          _id: invitation._id,
+          title: invitation.title,
+          slug: invitation.slug,
+          weddingDate: invitation.weddingDate,
+          status: invitation.status,
+          theme: invitation.theme,
+          createdAt: invitation.createdAt,
+          updatedAt: invitation.updatedAt,
+          isPasswordLocked: true,
+        };
+      }
+
+      return { ...invitation, isPasswordLocked };
+    });
     const stats = {
       total: invitations.length,
       published: invitations.filter((item) => item.status === "published").length,
