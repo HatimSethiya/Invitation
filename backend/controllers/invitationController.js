@@ -151,6 +151,12 @@ const updateInvitation = async (req, res) => {
     if (gallery !== undefined) invitation.gallery = gallery;
     if (venue !== undefined) invitation.venue = venue;
     if (music !== undefined) invitation.music = music;
+    if (req.body.lockPassword !== undefined) {
+      if (typeof req.body.lockPassword !== "string" || req.body.lockPassword.length < 6) {
+        return res.status(400).json({ success: false, message: "Set an invitation password with at least 6 characters." });
+      }
+      invitation.lockPasswordHash = await bcrypt.hash(req.body.lockPassword, 12);
+    }
 
     await invitation.save();
     return res.json({ success: true, invitation });
