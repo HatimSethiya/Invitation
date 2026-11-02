@@ -7,6 +7,23 @@ const api = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
+// Invitation unlocks are intentionally memory-only: a browser refresh or logout relocks cards.
+const invitationUnlockTokens = new Map();
+export function setInvitationUnlockToken(invitationId, token) {
+  if (token) invitationUnlockTokens.set(invitationId, token);
+  else invitationUnlockTokens.delete(invitationId);
+}
+export function clearInvitationUnlockTokens() {
+  invitationUnlockTokens.clear();
+}
+
+api.interceptors.request.use((config) => {
+  const match = String(config.url || "").match(/(?:^|\\/)invitations\\/([a-f\\d]{24})(?:\\/|$)/i);
+  const unlockToken = match ? invitationUnlockTokens.get(match[1]) : null;
+  if (unlockToken) config.headers["X-Invitation-Unlock"] = unlockToken;
+  return config;
+});
+
 const token = localStorage.getItem("wedding_admin_token");
 if (token) api.defaults.headers.common.Authorization = `Bearer ${token}`;
 
