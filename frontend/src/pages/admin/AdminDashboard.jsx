@@ -118,7 +118,7 @@ function AdminDashboard() {
                 <label className="invitation-design-control">
                   <span>Invitation design</span>
                   <select
-                    value={invitation.theme || "royalRose"}
+                    value={invitation.theme || "purpleWhite"}
                     disabled={themeSaving === invitation._id}
                     onChange={(event) => updateTheme(invitation._id, event.target.value)}
                     aria-label={`Change design for ${invitation.title}`}
