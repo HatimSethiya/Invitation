@@ -125,18 +125,18 @@ function AdminDashboard() {
                   >
                     <option value="bohraNikah">Ivory Gold · Nikah</option>
                     <option value="purpleWhite">White Purple · Glass</option>
-                    <option value="midnightNavy">undefined</option>
-                    <option value="sageBotanical">undefined</option>
-                    <option value="champagnePearl">undefined</option>
-                    <option value="rubyVelvet">undefined</option>
-                    <option value="oceanTeal">undefined</option>
-                    <option value="celestialBlack">undefined</option>
-                    <option value="blushTerracotta">undefined</option>
-                    <option value="desertSand">undefined</option>
-                    <option value="sapphireSilver">undefined</option>
-                    <option value="burgundyLuxe">undefined</option>
-                    <option value="jadeMarble">undefined</option>
-                    <option value="sunsetCopper">undefined</option>
+                    <option value="midnightNavy">Midnight Navy</option>
+                    <option value="sageBotanical">Sage Botanical</option>
+                    <option value="champagnePearl">Champagne Pearl</option>
+                    <option value="rubyVelvet">Ruby Velvet</option>
+                    <option value="oceanTeal">Ocean Teal</option>
+                    <option value="celestialBlack">Celestial Onyx</option>
+                    <option value="blushTerracotta">Blush Terracotta</option>
+                    <option value="desertSand">Desert Sand</option>
+                    <option value="sapphireSilver">Sapphire Silver</option>
+                    <option value="burgundyLuxe">Burgundy Luxe</option>
+                    <option value="jadeMarble">Jade Marble</option>
+                    <option value="sunsetCopper">Sunset Copper</option>
                   </select>
                   {themeSaving === invitation._id && <small>Saving design…</small>}
                 </label>
