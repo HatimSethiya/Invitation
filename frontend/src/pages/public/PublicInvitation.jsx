@@ -141,7 +141,12 @@ function PublicInvitation() {
     const secondNames = invitation.secondCouple?.nameOrder === "brideFirst" ? [secondBride, secondGroom] : [secondGroom, secondBride];
     const hasValue = (value) => typeof value === "string" && value.trim().length > 0;
 
-    const isLegacyProtectedDesign = ["mufaddalweddinginvitation", "mariya"].includes((invitation.slug || "").toLowerCase());
+    const protectedDesignSlugs = new Set(["mufaddalweddinginvitation", "mariya"]);
+    const normalizedSlug = (invitation.slug || "").toLowerCase();
+    const normalizedTitle = (invitation.title || "").toLowerCase();
+    const isLegacyProtectedDesign = protectedDesignSlugs.has(normalizedSlug)
+      || normalizedSlug.includes("mariya")
+      || normalizedTitle.includes("mariya");
     const useEnhancedNewDesign = !isLegacyProtectedDesign;
 
     return (
