@@ -141,9 +141,12 @@ function PublicInvitation() {
     const secondNames = invitation.secondCouple?.nameOrder === "brideFirst" ? [secondBride, secondGroom] : [secondGroom, secondBride];
     const hasValue = (value) => typeof value === "string" && value.trim().length > 0;
 
+    const isLegacyProtectedDesign = ["mufaddalweddinginvitation", "mariya"].includes((invitation.slug || "").toLowerCase());
+    const useEnhancedNewDesign = !isLegacyProtectedDesign;
+
     return (
       <main
-        className={`public-page bohra-public-page ${themeClass} ${isInvitationInteractive ? "invitation-revealed" : "invitation-locked"}`}
+        className={`public-page bohra-public-page ${themeClass} ${useEnhancedNewDesign ? "new-design-enhanced" : ""} ${isInvitationInteractive ? "invitation-revealed" : "invitation-locked"}`}
       >
         <AnimatePresence>
           {!isUnboxed && (
