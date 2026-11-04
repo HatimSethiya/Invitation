@@ -1208,3 +1208,81 @@
   background: linear-gradient(135deg, #7650a5, #4f2d78);
   box-shadow: 0 8px 24px rgba(93, 55, 137, .22);
 }
+
+
+/* Enhanced typography and matching velvet palettes for newly created invitations only. */
+.new-design-enhanced .bohra-invitation-card,
+.new-design-enhanced .bohra-invitation-card h1,
+.new-design-enhanced .bohra-invitation-card h2,
+.new-design-enhanced .bohra-invitation-card h3,
+.new-design-enhanced .bohra-invitation-card strong,
+.new-design-enhanced .bohra-invitation-card .bohra-section-kicker,
+.new-design-enhanced .bohra-invitation-card .bohra-note-title {
+  color: var(--invitation-readable-ink, var(--bohra-ink)) !important;
+}
+
+.new-design-enhanced .bohra-invitation-card .bohra-section-kicker,
+.new-design-enhanced .bohra-invitation-card .bohra-note-title {
+  color: color-mix(in srgb, var(--invitation-readable-ink, var(--bohra-ink)) 88%, #000) !important;
+}
+
+.new-design-enhanced .bohra-invitation-card strong,
+.new-design-enhanced .bohra-invitation-card h1,
+.new-design-enhanced .bohra-invitation-card h2,
+.new-design-enhanced .bohra-invitation-card h3 {
+  font-weight: 700;
+  text-shadow: 0 0.25px 0 currentColor;
+}
+
+/* Deep, theme-matched velvet for every current invitation palette. */
+.new-design-enhanced .curtain-fabric-base {
+  background: var(--curtain-base, linear-gradient(180deg, #170d1d 0%, #24132b 52%, #100912 100%));
+}
+
+.new-design-enhanced .pleat-crest,
+.new-design-enhanced .curtain-left .pleat-leading-edge,
+.new-design-enhanced .curtain-right .pleat-leading-edge {
+  background:
+    linear-gradient(180deg, rgba(8, 1, 4, .76) 0%, transparent 18%, transparent 78%, rgba(8, 1, 4, .88) 100%),
+    var(--curtain-crest, linear-gradient(90deg, #24142c 0%, #573764 48%, #8a6799 58%, #382340 100%));
+}
+
+.new-design-enhanced .pleat-valley {
+  background:
+    linear-gradient(180deg, rgba(5, 0, 2, .9) 0%, transparent 18%, transparent 78%, rgba(5, 0, 2, .94) 100%),
+    var(--curtain-valley, linear-gradient(90deg, #0d0711 0%, #24132c 50%, #100912 100%));
+}
+
+.new-design-enhanced .pleat-1 {
+  background: var(--curtain-pleat, linear-gradient(90deg, #170d1d 0%, #382340 45%, #160b1b 100%));
+}
+
+.new-design-enhanced .leading-edge-light-rim {
+  background: linear-gradient(180deg, transparent 5%, var(--curtain-rim, rgba(210, 180, 230, .62)) 44%, transparent 95%);
+  box-shadow: 0 0 12px 2px var(--curtain-rim-glow, rgba(180, 140, 205, .34));
+}
+
+.new-design-enhanced .theatrical-curtains-stage {
+  --curtain-base: linear-gradient(180deg, #170d1d 0%, #24132b 52%, #100912 100%);
+  --curtain-crest: linear-gradient(90deg, #24142c 0%, #573764 48%, #8a6799 58%, #382340 100%);
+  --curtain-valley: linear-gradient(90deg, #0d0711 0%, #24132c 50%, #100912 100%);
+  --curtain-pleat: linear-gradient(90deg, #170d1d 0%, #382340 45%, #160b1b 100%);
+  --curtain-rim: rgba(210, 180, 230, .62);
+  --curtain-rim-glow: rgba(180, 140, 205, .34);
+}
+
+.new-design-enhanced .curtains-theme-bohraNikah { --curtain-base: linear-gradient(180deg,#14251d,#344b34 52%,#17251d); --curtain-crest: linear-gradient(90deg,#102019 0%,#294b35 48%,#55795b 58%,#1a3022 100%); --curtain-valley: linear-gradient(90deg,#09150e 0%,#1a3022 50%,#0b180f 100%); --curtain-pleat: linear-gradient(90deg,#14251d 0%,#294b35 45%,#102019 100%); --curtain-rim:rgba(220,190,120,.7); --curtain-rim-glow:rgba(201,164,88,.38); }
+.new-design-enhanced .curtains-theme-purpleWhite { --curtain-base:linear-gradient(180deg,#21152d,#49315f 52%,#21152d); --curtain-crest:linear-gradient(90deg,#21152d 0%,#51366b 48%,#8968a5 58%,#2b1a3a 100%); --curtain-valley:linear-gradient(90deg,#120b1b 0%,#302040 50%,#160e20 100%); --curtain-pleat:linear-gradient(90deg,#21152d 0%,#49315f 45%,#21152d 100%); --curtain-rim:rgba(220,195,250,.72); --curtain-rim-glow:rgba(185,150,225,.42); }
+.new-design-enhanced .curtains-theme-midnightNavy { --curtain-base:linear-gradient(180deg,#071427,#18365c 52%,#08172b); --curtain-crest:linear-gradient(90deg,#071427 0%,#18365c 48%,#42668e 58%,#0b1d35 100%); --curtain-valley:linear-gradient(90deg,#030a15 0%,#102744 50%,#050e1c 100%); --curtain-pleat:linear-gradient(90deg,#071427 0%,#18365c 45%,#071427 100%); --curtain-rim:rgba(190,210,240,.68); --curtain-rim-glow:rgba(135,170,220,.4); }
+.new-design-enhanced .curtains-theme-sageBotanical { --curtain-base:linear-gradient(180deg,#10271a,#3e5c3b 55%,#172c1e); --curtain-crest:linear-gradient(90deg,#10271a 0%,#345438 48%,#65805b 58%,#172c1e 100%); --curtain-valley:linear-gradient(90deg,#07170e 0%,#1c3823 50%,#091b10 100%); --curtain-pleat:linear-gradient(90deg,#10271a 0%,#345438 45%,#10271a 100%); --curtain-rim:rgba(203,220,170,.65); --curtain-rim-glow:rgba(160,190,130,.38); }
+.new-design-enhanced .curtains-theme-champagnePearl { --curtain-base:linear-gradient(180deg,#261a10,#5a4125 50%,#2a1b11); --curtain-crest:linear-gradient(90deg,#261a10 0%,#624729 48%,#a17a43 58%,#2a1b11 100%); --curtain-valley:linear-gradient(90deg,#120b05 0%,#382713 50%,#160d07 100%); --curtain-pleat:linear-gradient(90deg,#261a10 0%,#624729 45%,#261a10 100%); --curtain-rim:rgba(239,211,157,.72); --curtain-rim-glow:rgba(210,170,100,.4); }
+.new-design-enhanced .curtains-theme-rubyVelvet { --curtain-base:linear-gradient(180deg,#260b17,#5c1e34 52%,#290b18); --curtain-crest:linear-gradient(90deg,#260b17 0%,#68213c 48%,#a04460 58%,#290b18 100%); --curtain-valley:linear-gradient(90deg,#10030a 0%,#3a1022 50%,#160611 100%); --curtain-pleat:linear-gradient(90deg,#260b17 0%,#68213c 45%,#260b17 100%); --curtain-rim:rgba(245,180,198,.7); --curtain-rim-glow:rgba(220,115,150,.4); }
+.new-design-enhanced .curtains-theme-oceanTeal { --curtain-base:linear-gradient(180deg,#062426,#145052 52%,#062a2b); --curtain-crest:linear-gradient(90deg,#062426 0%,#176366 48%,#47938e 58%,#062a2b 100%); --curtain-valley:linear-gradient(90deg,#031416 0%,#0d393a 50%,#041b1d 100%); --curtain-pleat:linear-gradient(90deg,#062426 0%,#176366 45%,#062426 100%); --curtain-rim:rgba(170,225,215,.68); --curtain-rim-glow:rgba(100,190,180,.38); }
+.new-design-enhanced .curtains-theme-celestialBlack { --curtain-base:linear-gradient(180deg,#11101a,#30263e 52%,#12101b); --curtain-crest:linear-gradient(90deg,#11101a 0%,#39304f 48%,#756394 58%,#12101b 100%); --curtain-valley:linear-gradient(90deg,#07060d 0%,#211b30 50%,#0c0a13 100%); --curtain-pleat:linear-gradient(90deg,#11101a 0%,#39304f 45%,#11101a 100%); --curtain-rim:rgba(209,195,250,.7); --curtain-rim-glow:rgba(160,140,220,.4); }
+.new-design-enhanced .curtains-theme-blushTerracotta { --curtain-base:linear-gradient(180deg,#2a1511,#65382b 52%,#2c1712); --curtain-crest:linear-gradient(90deg,#2a1511 0%,#744433 48%,#a56b54 58%,#2c1712 100%); --curtain-valley:linear-gradient(90deg,#160907 0%,#3f2119 50%,#1a0d09 100%); --curtain-pleat:linear-gradient(90deg,#2a1511 0%,#744433 45%,#2a1511 100%); --curtain-rim:rgba(238,190,168,.7); --curtain-rim-glow:rgba(205,135,110,.4); }
+.new-design-enhanced .curtains-theme-desertSand { --curtain-base:linear-gradient(180deg,#261b0d,#5b4223 55%,#2b1e0e); --curtain-crest:linear-gradient(90deg,#261b0d 0%,#684c25 48%,#a4824a 58%,#2b1e0e 100%); --curtain-valley:linear-gradient(90deg,#140e05 0%,#3b2a14 50%,#190f06 100%); --curtain-pleat:linear-gradient(90deg,#261b0d 0%,#684c25 45%,#261b0d 100%); --curtain-rim:rgba(238,211,158,.7); --curtain-rim-glow:rgba(202,164,95,.4); }
+.new-design-enhanced .curtains-theme-sapphireSilver { --curtain-base:linear-gradient(180deg,#08152b,#1b3761 52%,#0a1b34); --curtain-crest:linear-gradient(90deg,#08152b 0%,#24436d 48%,#6788b5 58%,#0a1b34 100%); --curtain-valley:linear-gradient(90deg,#030a17 0%,#142846 50%,#061126 100%); --curtain-pleat:linear-gradient(90deg,#08152b 0%,#24436d 45%,#08152b 100%); --curtain-rim:rgba(199,219,246,.7); --curtain-rim-glow:rgba(140,177,228,.4); }
+.new-design-enhanced .curtains-theme-burgundyLuxe { --curtain-base:linear-gradient(180deg,#240a15,#571b30 52%,#270b17); --curtain-crest:linear-gradient(90deg,#240a15 0%,#67233b 48%,#a24b65 58%,#270b17 100%); --curtain-valley:linear-gradient(90deg,#10030a 0%,#3a1021 50%,#160611 100%); --curtain-pleat:linear-gradient(90deg,#240a15 0%,#67233b 45%,#240a15 100%); --curtain-rim:rgba(244,186,204,.7); --curtain-rim-glow:rgba(218,115,147,.4); }
+.new-design-enhanced .curtains-theme-jadeMarble { --curtain-base:linear-gradient(180deg,#08251a,#17523a 52%,#09291d); --curtain-crest:linear-gradient(90deg,#08251a 0%,#1e6044 48%,#5b9978 58%,#09291d 100%); --curtain-valley:linear-gradient(90deg,#03170e 0%,#10402c 50%,#061f15 100%); --curtain-pleat:linear-gradient(90deg,#08251a 0%,#1e6044 45%,#08251a 100%); --curtain-rim:rgba(183,226,198,.7); --curtain-rim-glow:rgba(100,180,135,.4); }
+.new-design-enhanced .curtains-theme-sunsetCopper { --curtain-base:linear-gradient(180deg,#291308,#62351c 52%,#2b160a); --curtain-crest:linear-gradient(90deg,#291308 0%,#774323 48%,#b77b4a 58%,#2b160a 100%); --curtain-valley:linear-gradient(90deg,#170a03 0%,#422313 50%,#1b0d05 100%); --curtain-pleat:linear-gradient(90deg,#291308 0%,#774323 45%,#291308 100%); --curtain-rim:rgba(245,202,161,.7); --curtain-rim-glow:rgba(218,150,100,.4); }
+
