@@ -582,9 +582,7 @@ function PublicInvitation() {
                           ease: [0.22, 1, 0.36, 1],
                         }}
                       >
-                        <div className="bohra-extra-event-topline">
-                          <span className="bohra-extra-event-number">{String(index + 1).padStart(2, "0")}</span>
-                        </div>
+
                         <h3>{event.title || event.type || "Celebration"}</h3>
                         <div className="bohra-programme-rule bohra-extra-event-rule" aria-hidden="true"><span>✦</span></div>
                         <div className="bohra-programme-details bohra-extra-event-details">
