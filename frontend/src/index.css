@@ -3126,3 +3126,178 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
     animation:none;
   }
 }
+
+
+/* White Rose Gold Royale — inner-card couture detailing only. */
+.bohra-public-page.theme-whiteRoseGold .bohra-card-inner-frame {
+  background:
+    radial-gradient(ellipse at 50% 8%,rgba(255,255,255,.98),transparent 34%),
+    radial-gradient(ellipse at 0% 42%,rgba(229,184,145,.13),transparent 22%),
+    radial-gradient(ellipse at 100% 72%,rgba(224,166,147,.14),transparent 24%),
+    repeating-linear-gradient(90deg,transparent 0 42px,rgba(190,137,72,.035) 43px 44px,transparent 45px 86px),
+    var(--theme-paper-texture);
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-card-header {
+  position:relative;
+  padding:8px 0 16px;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-card-header::after {
+  content:"✧  ·  ❦  ·  ✧";
+  display:block;
+  margin:12px auto 0;
+  color:#c18a42;
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-size:18px;
+  letter-spacing:.22em;
+  text-shadow:0 0 9px rgba(218,167,111,.38);
+  animation:roseGoldFiligreePulse 6s ease-in-out infinite;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-couple-panel {
+  isolation:isolate;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse at 50% 0%,rgba(255,255,255,.98),transparent 48%),
+    radial-gradient(ellipse at 0% 50%,rgba(229,184,145,.22),transparent 32%),
+    radial-gradient(ellipse at 100% 50%,rgba(224,166,147,.2),transparent 32%),
+    linear-gradient(145deg,rgba(255,254,250,.98),rgba(248,226,213,.9));
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-couple-panel::after {
+  content:"";
+  position:absolute;
+  z-index:0;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  opacity:.58;
+  background:
+    radial-gradient(circle at 12% 18%,rgba(255,255,255,.96) 0 1px,transparent 2.4px),
+    radial-gradient(circle at 23% 72%,rgba(219,169,108,.88) 0 1px,transparent 2.6px),
+    radial-gradient(circle at 78% 24%,rgba(255,255,255,.98) 0 1px,transparent 2.5px),
+    radial-gradient(circle at 88% 78%,rgba(218,157,126,.86) 0 1px,transparent 2.6px),
+    radial-gradient(circle at 50% 12%,rgba(255,255,255,.9) 0 1px,transparent 2.5px),
+    radial-gradient(circle at 50% 88%,rgba(210,158,102,.78) 0 1px,transparent 2.6px),
+    radial-gradient(ellipse at 0% 0%,rgba(217,164,118,.20),transparent 34%),
+    radial-gradient(ellipse at 100% 100%,rgba(217,164,118,.18),transparent 34%);
+  background-size:100% 100%;
+  animation:roseGoldInnerGlitter 8s ease-in-out infinite alternate;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-couple-panel > * {
+  position:relative;
+  z-index:1;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-couple-names {
+  margin-top:16px;
+  gap:clamp(5px,1vw,10px);
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-couple-names h1 {
+  letter-spacing:-.035em;
+  text-shadow:0 1px 0 #fff,0 0 1px #fff,0 5px 22px rgba(196,137,84,.2);
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-weds {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  width:100%;
+  letter-spacing:.18em;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-weds::before,
+.bohra-public-page.theme-whiteRoseGold .bohra-weds::after {
+  content:"";
+  width:clamp(24px,8vw,62px);
+  height:1px;
+  background:linear-gradient(90deg,transparent,#c18a42,transparent);
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-host-families {
+  position:relative;
+  padding:10px 0 2px;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-host-families::before {
+  content:"❧   ✦   ❧";
+  display:block;
+  margin:0 auto 8px;
+  color:#c18a42;
+  font-size:19px;
+  letter-spacing:.18em;
+  text-shadow:0 0 10px rgba(218,167,111,.24);
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-invitation-wording {
+  position:relative;
+  padding-top:10px;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-invitation-wording::before {
+  content:"✧";
+  display:block;
+  margin:0 auto 5px;
+  color:#c18a42;
+  font-size:18px;
+  text-shadow:0 0 12px rgba(218,167,111,.5);
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-programme-heading {
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  margin-bottom:16px;
+  letter-spacing:.16em;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-programme-heading::before,
+.bohra-public-page.theme-whiteRoseGold .bohra-programme-heading::after {
+  content:"";
+  width:clamp(20px,7vw,56px);
+  height:1px;
+  background:linear-gradient(90deg,transparent,#c18a42,#e5bd91);
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-programme-heading::after {
+  transform:scaleX(-1);
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-extra-event {
+  position:relative;
+  overflow:hidden;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-extra-event::after {
+  content:"✦";
+  position:absolute;
+  top:12px;
+  right:15px;
+  color:rgba(193,138,66,.52);
+  font-size:15px;
+  text-shadow:0 0 10px rgba(218,167,111,.32);
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-compliments {
+  position:relative;
+  padding-top:14px;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-compliments::before {
+  content:"❦  ✧  ❦";
+  display:block;
+  margin:0 auto 8px;
+  color:#c18a42;
+  font-size:17px;
+  letter-spacing:.2em;
+  text-shadow:0 0 9px rgba(218,167,111,.32);
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-detail-icon {
+  box-shadow:inset 0 1px 0 #fff,0 0 0 3px rgba(218,167,111,.08),0 4px 12px rgba(181,116,72,.1);
+}
+@keyframes roseGoldInnerGlitter {
+  0% { opacity:.32; background-position:0 0,0 0,0 0,0 0,0 0,0 0,0 0,0 0; }
+  50% { opacity:.68; background-position:2px -3px,-2px 4px,3px 1px,-3px -2px,0 3px,2px -2px,0 0,0 0; }
+  100% { opacity:.48; background-position:-2px 3px,3px -2px,-2px 4px,2px 2px,-3px -1px,-2px 3px,0 0,0 0; }
+}
+@keyframes roseGoldFiligreePulse {
+  0%,100% { opacity:.62; text-shadow:0 0 6px rgba(218,167,111,.22); }
+  50% { opacity:1; text-shadow:0 0 14px rgba(218,167,111,.52); }
+}
+@media (max-width:600px) {
+  .bohra-public-page.theme-whiteRoseGold .bohra-card-header { padding:5px 0 10px; }
+  .bohra-public-page.theme-whiteRoseGold .bohra-card-header::after { margin-top:8px; font-size:16px; }
+  .bohra-public-page.theme-whiteRoseGold .bohra-couple-panel::after { opacity:.42; }
+  .bohra-public-page.theme-whiteRoseGold .bohra-host-families::before,
+  .bohra-public-page.theme-whiteRoseGold .bohra-compliments::before { font-size:15px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .bohra-public-page.theme-whiteRoseGold .bohra-card-header::after,
+  .bohra-public-page.theme-whiteRoseGold .bohra-couple-panel::after { animation:none; }
+}
