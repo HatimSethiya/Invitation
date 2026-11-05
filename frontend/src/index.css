@@ -2949,3 +2949,180 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
 .theme-preview-whiteRoseGold .theme-preview-ornament{color:#bd805f;text-shadow:0 1px 0 #fff,0 0 12px #d6a58b55;}
 .theme-preview-whiteRoseGold .theme-preview-kicker,.theme-preview-whiteRoseGold .theme-preview-footer{color:#633b30;}
 .theme-preview-whiteRoseGold strong{color:#633b30;text-shadow:0 1px 0 #fff;}
+
+
+/* White Rose Gold Royale — elevated floral couture finish (theme-scoped). */
+.bohra-public-page.theme-whiteRoseGold {
+  --bohra-forest:#8c5147;
+  --bohra-forest-deep:#a26750;
+  --bohra-emerald:#c88775;
+  --bohra-ivory:#fffdf9;
+  --bohra-paper:#f9eee7;
+  --bohra-gold:#c18a42;
+  --bohra-gold-soft:rgba(193,138,66,.46);
+  --bohra-ink:#704238;
+  --bohra-muted:#986b5b;
+  --theme-backdrop:
+    radial-gradient(ellipse at 50% 8%,rgba(255,250,235,.98) 0%,transparent 38%),
+    radial-gradient(ellipse at 12% 85%,rgba(232,177,158,.56),transparent 36%),
+    radial-gradient(ellipse at 90% 18%,rgba(241,207,157,.58),transparent 32%),
+    linear-gradient(135deg,#f8e8d5 0%,#e9c3ad 48%,#f7e9d9 100%);
+  --theme-card-surface:linear-gradient(145deg,#fffefa 0%,#fff8f1 36%,#f8e6dc 72%,#fffaf3 100%);
+  --theme-border:#d5a06e;
+  --theme-frame:rgba(199,143,83,.72);
+  --theme-glass-surface:linear-gradient(145deg,rgba(255,254,250,.97),rgba(250,230,218,.86));
+  --theme-glass-border:rgba(202,145,99,.68);
+  --theme-divider:rgba(195,139,75,.9);
+  --theme-emblem-surface:linear-gradient(145deg,#fffdf7,#f5dfd0);
+  --theme-shadow:rgba(126,70,48,.24);
+  --theme-paper-texture:
+    radial-gradient(ellipse at 50% 0%,rgba(255,255,255,.96),transparent 48%),
+    repeating-linear-gradient(135deg,transparent 0 26px,rgba(194,139,83,.07) 27px 28px,transparent 29px 54px),
+    linear-gradient(145deg,#fffdf9,#f9eee5 70%,#fffaf4);
+  --theme-pattern:
+    radial-gradient(ellipse at 50% 8%,rgba(255,250,235,.98) 0%,transparent 38%),
+    radial-gradient(ellipse at 12% 85%,rgba(232,177,158,.56),transparent 36%),
+    radial-gradient(ellipse at 90% 18%,rgba(241,207,157,.58),transparent 32%),
+    linear-gradient(135deg,#f8e8d5 0%,#e9c3ad 48%,#f7e9d9 100%);
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-invitation-card {
+  border-color:#d5a06e;
+  background:
+    radial-gradient(ellipse at 50% 0%,rgba(255,255,255,.99),transparent 45%),
+    linear-gradient(145deg,#fffefa 0%,#fff7ef 52%,#f8e6da 100%);
+  box-shadow:
+    0 30px 78px rgba(126,70,48,.22),
+    0 0 0 1px rgba(255,247,230,.94),
+    0 0 28px rgba(222,174,112,.22),
+    inset 0 1px 0 rgba(255,255,255,.99),
+    inset 0 0 0 7px rgba(202,145,83,.16);
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-invitation-card::before {
+  opacity:.42;
+  background:
+    radial-gradient(ellipse at 3% 4%,rgba(224,170,120,.28),transparent 25%),
+    radial-gradient(ellipse at 97% 4%,rgba(224,170,120,.28),transparent 25%),
+    radial-gradient(ellipse at 3% 96%,rgba(213,151,126,.22),transparent 25%),
+    radial-gradient(ellipse at 97% 96%,rgba(213,151,126,.22),transparent 25%),
+    repeating-linear-gradient(45deg,transparent 0 22px,rgba(194,139,83,.075) 23px 24px,transparent 25px 46px);
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-invitation-card::after {
+  content:"";
+  position:absolute;
+  z-index:0;
+  inset:10px;
+  border-radius:22px;
+  pointer-events:none;
+  opacity:.64;
+  background:
+    radial-gradient(ellipse 32px 48px at 4% 4%,rgba(221,169,125,.34) 0 20%,transparent 72%),
+    radial-gradient(ellipse 32px 48px at 96% 4%,rgba(221,169,125,.34) 0 20%,transparent 72%),
+    radial-gradient(ellipse 32px 48px at 4% 96%,rgba(215,150,133,.3) 0 20%,transparent 72%),
+    radial-gradient(ellipse 32px 48px at 96% 96%,rgba(215,150,133,.3) 0 20%,transparent 72%),
+    radial-gradient(circle at 4% 4%,#c18a42 0 2px,transparent 3px),
+    radial-gradient(circle at 96% 4%,#c18a42 0 2px,transparent 3px),
+    radial-gradient(circle at 4% 96%,#c18a42 0 2px,transparent 3px),
+    radial-gradient(circle at 96% 96%,#c18a42 0 2px,transparent 3px);
+  background-size:100% 100%;
+  animation:roseGoldCornerGleam 9s ease-in-out infinite alternate;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-card-inner-frame {
+  z-index:1;
+  border-color:rgba(202,145,99,.7);
+  background:linear-gradient(145deg,rgba(255,254,250,.72),rgba(250,230,218,.48));
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.9),inset 0 0 38px rgba(204,147,91,.10);
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-card-inner-frame::before,
+.bohra-public-page.theme-whiteRoseGold .bohra-card-inner-frame::after {
+  background:linear-gradient(90deg,transparent,#c18a42 22%,#e0b58a 50%,#c18a42 78%,transparent);
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-card-ornament {
+  color:#c18a42;
+  text-shadow:0 1px 0 #fff,0 0 16px rgba(218,167,111,.5);
+  animation:roseGoldOrnamentFloat 5.5s ease-in-out infinite;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-card-emblem {
+  border-color:#d5a06e;
+  color:#c18a42;
+  background:linear-gradient(145deg,#fffdf8,#f5dfd0);
+  box-shadow:0 0 0 4px rgba(218,167,111,.10),0 8px 24px rgba(181,116,72,.16),inset 0 1px 0 #fff;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-couple-panel,
+.bohra-public-page.theme-whiteRoseGold .bohra-officiant-panel,
+.bohra-public-page.theme-whiteRoseGold .bohra-extra-event,
+.bohra-public-page.theme-whiteRoseGold .bohra-note-panel {
+  border-color:rgba(202,145,99,.72);
+  background:
+    radial-gradient(ellipse at 50% 0%,rgba(255,255,255,.94),transparent 58%),
+    linear-gradient(145deg,rgba(255,254,250,.96),rgba(248,226,213,.86));
+  box-shadow:0 16px 34px rgba(126,70,48,.12),0 0 0 1px rgba(255,255,255,.78),inset 0 1px 0 rgba(255,255,255,.99);
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-couple-panel::before {
+  border-color:rgba(202,145,99,.64);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.8),0 0 20px rgba(218,167,111,.12);
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-couple-names h1 {
+  color:#7b4638;
+  text-shadow:0 1px 0 #fff,0 4px 22px rgba(196,137,84,.18);
+  animation:roseGoldNameGlow 6s ease-in-out infinite;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-weds,
+.bohra-public-page.theme-whiteRoseGold .bohra-section-kicker,
+.bohra-public-page.theme-whiteRoseGold .bohra-note-title,
+.bohra-public-page.theme-whiteRoseGold .bohra-programme-heading {
+  color:#bd8250;
+  text-shadow:0 1px 0 rgba(255,255,255,.96);
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-programme-rule::before,
+.bohra-public-page.theme-whiteRoseGold .bohra-programme-rule::after {
+  background:linear-gradient(90deg,transparent,#c18a42,#e5bd91,transparent);
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-programme-rule span,
+.bohra-public-page.theme-whiteRoseGold .bohra-detail-icon,
+.bohra-public-page.theme-whiteRoseGold .bohra-host-divider {
+  color:#c18a42;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-host-divider i {
+  border-color:#d5a06e;
+  background:linear-gradient(145deg,#fffdf8,#f5dfd0);
+  box-shadow:0 0 12px rgba(218,167,111,.18);
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-double-couple-connector span {
+  color:#c18a42;
+  text-shadow:0 1px 0 #fff;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-sender-footer {
+  border-color:rgba(202,145,99,.54);
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-card-header,
+.bohra-public-page.theme-whiteRoseGold .bohra-host-families,
+.bohra-public-page.theme-whiteRoseGold .bohra-invitation-wording,
+.bohra-public-page.theme-whiteRoseGold .bohra-compliments {
+  color:#7b5143;
+}
+@keyframes roseGoldCornerGleam {
+  from { opacity:.38; transform:scale(.995); }
+  to { opacity:.72; transform:scale(1.005); }
+}
+@keyframes roseGoldOrnamentFloat {
+  0%,100% { transform:translateX(-50%) translateY(0); }
+  50% { transform:translateX(-50%) translateY(-3px); }
+}
+@keyframes roseGoldNameGlow {
+  0%,100% { text-shadow:0 1px 0 #fff,0 3px 14px rgba(196,137,84,.12); }
+  50% { text-shadow:0 1px 0 #fff,0 4px 24px rgba(196,137,84,.24); }
+}
+@media (max-width:600px) {
+  .bohra-public-page.theme-whiteRoseGold .bohra-invitation-card {
+    border-radius:23px;
+    box-shadow:0 20px 52px rgba(126,70,48,.18),inset 0 0 0 4px rgba(202,145,83,.14);
+  }
+  .bohra-public-page.theme-whiteRoseGold .bohra-invitation-card::after { inset:7px; border-radius:16px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .bohra-public-page.theme-whiteRoseGold .bohra-invitation-card::after,
+  .bohra-public-page.theme-whiteRoseGold .bohra-card-ornament,
+  .bohra-public-page.theme-whiteRoseGold .bohra-couple-names h1 {
+    animation:none;
+  }
+}
