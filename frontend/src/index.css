@@ -3349,3 +3349,58 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
     opacity:.48;
   }
 }
+
+
+/* White Rose Gold polish: preserve the existing diagonal line texture only.
+   Remove the extra ornamental pseudo-art added in the prior pass. */
+.bohra-public-page.theme-whiteRoseGold .bohra-invitation-card::before {
+  opacity: .22;
+  background:
+    repeating-linear-gradient(45deg, transparent 0 16px, rgba(177, 138, 66, .10) 17px 18px, transparent 19px 32px),
+    repeating-linear-gradient(-45deg, transparent 0 16px, rgba(36, 74, 58, .07) 17px 18px, transparent 19px 32px);
+  mask-image: linear-gradient(to bottom, #000, transparent 68%);
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-invitation-card::after,
+.bohra-public-page.theme-whiteRoseGold .bohra-card-header::after,
+.bohra-public-page.theme-whiteRoseGold .bohra-couple-panel::after,
+.bohra-public-page.theme-whiteRoseGold .bohra-host-families::before,
+.bohra-public-page.theme-whiteRoseGold .bohra-invitation-wording::before,
+.bohra-public-page.theme-whiteRoseGold .bohra-programme-heading::before,
+.bohra-public-page.theme-whiteRoseGold .bohra-programme-heading::after,
+.bohra-public-page.theme-whiteRoseGold .bohra-extra-event::after,
+.bohra-public-page.theme-whiteRoseGold .bohra-compliments::before {
+  content: none;
+  display: none;
+  animation: none;
+}
+
+/* Reposition the real floral cutouts neatly inside opposite card corners. */
+.bohra-public-page.theme-whiteRoseGold .bohra-floral-sticker {
+  width: clamp(82px, 16vw, 132px);
+  opacity: .76;
+  filter: drop-shadow(0 3px 7px rgba(151, 91, 65, .10));
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-floral-sticker-top {
+  top: 28px;
+  right: 28px;
+  transform: rotate(-7deg);
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-floral-sticker-bottom {
+  bottom: 28px;
+  left: 28px;
+  transform: rotate(173deg);
+}
+@media (max-width: 600px) {
+  .bohra-public-page.theme-whiteRoseGold .bohra-floral-sticker {
+    width: clamp(68px, 22vw, 96px);
+    opacity: .72;
+  }
+  .bohra-public-page.theme-whiteRoseGold .bohra-floral-sticker-top {
+    top: 18px;
+    right: 18px;
+  }
+  .bohra-public-page.theme-whiteRoseGold .bohra-floral-sticker-bottom {
+    bottom: 18px;
+    left: 18px;
+  }
+}
