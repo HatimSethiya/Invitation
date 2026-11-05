@@ -1302,3 +1302,22 @@
 .new-design-enhanced .curtains-theme-whiteRoseGold .stage-top-drape-shadow {
   background:linear-gradient(180deg,rgba(123,69,51,.26),transparent);
 }
+
+
+/* White Rose Gold Royale — champagne-gold and dusty rose theatrical drapery. */
+.new-design-enhanced .curtains-theme-whiteRoseGold {
+  --curtain-base:linear-gradient(180deg,#b77e61 0%,#e7c5a0 24%,#c98d75 56%,#9c604e 100%);
+  --curtain-crest:linear-gradient(90deg,#a66b52 0%,#d8a47e 28%,#f3d7b3 48%,#e9c69e 58%,#b77760 100%);
+  --curtain-valley:linear-gradient(90deg,#8e5543 0%,#b77d61 35%,#d7ad88 58%,#a66a53 100%);
+  --curtain-pleat:linear-gradient(90deg,#b77e61 0%,#e4bd96 45%,#c78c72 100%);
+  --curtain-rim:rgba(255,238,204,.96);
+  --curtain-rim-glow:rgba(237,185,119,.76);
+}
+.new-design-enhanced .curtains-theme-whiteRoseGold .pleat-sheen {
+  background:linear-gradient(90deg,transparent 8%,rgba(255,248,226,.58) 48%,transparent 92%);
+}
+.new-design-enhanced .curtains-theme-whiteRoseGold .stage-top-drape-shadow {
+  background:
+    radial-gradient(ellipse at 50% 0%,rgba(255,239,205,.36),transparent 62%),
+    linear-gradient(180deg,rgba(112,56,39,.22),transparent);
+}
