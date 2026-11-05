@@ -3495,3 +3495,30 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
     left: 14px;
   }
 }
+
+
+/* White Rose Gold: visible, balanced natural floral corner stickers. */
+.bohra-public-page.theme-whiteRoseGold .bohra-floral-sticker {
+  width: clamp(142px, 25vw, 210px);
+  opacity: 1;
+  filter: drop-shadow(0 5px 10px rgba(151, 91, 65, .18));
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-floral-sticker-top {
+  top: 12px;
+  right: 12px;
+  transform: rotate(0deg);
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-floral-sticker-bottom {
+  bottom: 12px;
+  left: 12px;
+  transform: rotate(180deg);
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-invitation-card::after {
+  content: none;
+  display: none;
+}
+@media (max-width: 600px) {
+  .bohra-public-page.theme-whiteRoseGold .bohra-floral-sticker {
+    width: clamp(112px, 32vw, 148px);
+  }
+}
