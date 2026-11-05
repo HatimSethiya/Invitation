@@ -1286,3 +1286,19 @@
 .new-design-enhanced .curtains-theme-jadeMarble { --curtain-base:linear-gradient(180deg,#08251a,#17523a 52%,#09291d); --curtain-crest:linear-gradient(90deg,#08251a 0%,#1e6044 48%,#5b9978 58%,#09291d 100%); --curtain-valley:linear-gradient(90deg,#03170e 0%,#10402c 50%,#061f15 100%); --curtain-pleat:linear-gradient(90deg,#08251a 0%,#1e6044 45%,#08251a 100%); --curtain-rim:rgba(183,226,198,.7); --curtain-rim-glow:rgba(100,180,135,.4); }
 .new-design-enhanced .curtains-theme-sunsetCopper { --curtain-base:linear-gradient(180deg,#291308,#62351c 52%,#2b160a); --curtain-crest:linear-gradient(90deg,#291308 0%,#774323 48%,#b77b4a 58%,#2b160a 100%); --curtain-valley:linear-gradient(90deg,#170a03 0%,#422313 50%,#1b0d05 100%); --curtain-pleat:linear-gradient(90deg,#291308 0%,#774323 45%,#291308 100%); --curtain-rim:rgba(245,202,161,.7); --curtain-rim-glow:rgba(218,150,100,.4); }
 
+
+/* White Rose Gold Royale cinematic opening: warm champagne pearl fabric with rose-gold light. */
+.new-design-enhanced .curtains-theme-whiteRoseGold {
+  --curtain-base:linear-gradient(180deg,#fffaf7 0%,#f3ded4 48%,#d9b09a 100%);
+  --curtain-crest:linear-gradient(90deg,#f8e9e1 0%,#e7c4b1 42%,#fff7f2 58%,#c99173 100%);
+  --curtain-valley:linear-gradient(90deg,#d8ad96 0%,#f1d8cb 48%,#c58a6d 100%);
+  --curtain-pleat:linear-gradient(90deg,#fffaf7 0%,#e9c8b6 46%,#f7e7de 100%);
+  --curtain-rim:rgba(255,238,224,.92);
+  --curtain-rim-glow:rgba(224,163,127,.68);
+}
+.new-design-enhanced .curtains-theme-whiteRoseGold .pleat-sheen {
+  background:linear-gradient(90deg,transparent,rgba(255,250,246,.62),transparent);
+}
+.new-design-enhanced .curtains-theme-whiteRoseGold .stage-top-drape-shadow {
+  background:linear-gradient(180deg,rgba(123,69,51,.26),transparent);
+}
