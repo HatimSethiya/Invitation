@@ -389,22 +389,76 @@ function PublicInvitation() {
           <article className="bohra-invitation-card">
             {invitation.theme === "whiteRoseGold" && (
               <>
-                <img
+                <svg
                   className="bohra-floral-sticker bohra-floral-sticker-top"
-                  src="https://w7.pngwing.com/pngs/580/297/png-transparent-wedding-floral-corner-beautiful-floral-arrangement-with-leaves.png"
-                  alt=""
+                  viewBox="0 0 3708 3876"
                   aria-hidden="true"
-                  loading="eager"
-                  decoding="async"
-                />
-                <img
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <defs>
+                    <filter id="roseGoldFloralRedTop" colorInterpolationFilters="sRGB">
+                      <feColorMatrix
+                        type="matrix"
+                        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  2 -1 -1 0 0"
+                      />
+                    </filter>
+                    <filter id="roseGoldFloralGreenTop" colorInterpolationFilters="sRGB">
+                      <feColorMatrix
+                        type="matrix"
+                        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  -1 2 -1 0 0"
+                      />
+                    </filter>
+                  </defs>
+                  <image
+                    href="https://w7.pngwing.com/pngs/580/297/png-transparent-wedding-floral-corner-beautiful-floral-arrangement-with-leaves.png"
+                    width="100%"
+                    height="100%"
+                    preserveAspectRatio="xMidYMid meet"
+                    filter="url(#roseGoldFloralRedTop)"
+                  />
+                  <image
+                    href="https://w7.pngwing.com/pngs/580/297/png-transparent-wedding-floral-corner-beautiful-floral-arrangement-with-leaves.png"
+                    width="100%"
+                    height="100%"
+                    preserveAspectRatio="xMidYMid meet"
+                    filter="url(#roseGoldFloralGreenTop)"
+                  />
+                </svg>
+                <svg
                   className="bohra-floral-sticker bohra-floral-sticker-bottom"
-                  src="https://w7.pngwing.com/pngs/580/297/png-transparent-wedding-floral-corner-beautiful-floral-arrangement-with-leaves.png"
-                  alt=""
+                  viewBox="0 0 3708 3876"
                   aria-hidden="true"
-                  loading="eager"
-                  decoding="async"
-                />
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <defs>
+                    <filter id="roseGoldFloralRedBottom" colorInterpolationFilters="sRGB">
+                      <feColorMatrix
+                        type="matrix"
+                        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  2 -1 -1 0 0"
+                      />
+                    </filter>
+                    <filter id="roseGoldFloralGreenBottom" colorInterpolationFilters="sRGB">
+                      <feColorMatrix
+                        type="matrix"
+                        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  -1 2 -1 0 0"
+                      />
+                    </filter>
+                  </defs>
+                  <image
+                    href="https://w7.pngwing.com/pngs/580/297/png-transparent-wedding-floral-corner-beautiful-floral-arrangement-with-leaves.png"
+                    width="100%"
+                    height="100%"
+                    preserveAspectRatio="xMidYMid meet"
+                    filter="url(#roseGoldFloralRedBottom)"
+                  />
+                  <image
+                    href="https://w7.pngwing.com/pngs/580/297/png-transparent-wedding-floral-corner-beautiful-floral-arrangement-with-leaves.png"
+                    width="100%"
+                    height="100%"
+                    preserveAspectRatio="xMidYMid meet"
+                    filter="url(#roseGoldFloralGreenBottom)"
+                  />
+                </svg>
                 <canvas
                   className="bohra-rose-gold-effects"
                   ref={roseGoldEffectsCanvasRef}
