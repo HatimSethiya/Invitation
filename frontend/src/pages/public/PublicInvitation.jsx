@@ -391,18 +391,18 @@ function PublicInvitation() {
               <>
                 <img
                   className="bohra-floral-sticker bohra-floral-sticker-top"
-                  src="https://pixabay.com/get/gcd53a5c1f225abb0a3549db52c803c16f59429c1c22a4d5447e7e75f42c476e557bafed25f2ea55762b1cb2c2d456df0_1920.png"
+                  src="https://w7.pngwing.com/pngs/65/1015/png-transparent-wedding-floral-corner-orange-rose-flowers-in-bloom.png"
                   alt=""
                   aria-hidden="true"
-                  loading="lazy"
+                  loading="eager"
                   decoding="async"
                 />
                 <img
                   className="bohra-floral-sticker bohra-floral-sticker-bottom"
-                  src="https://pixabay.com/get/gcd53a5c1f225abb0a3549db52c803c16f59429c1c22a4d5447e7e75f42c476e557bafed25f2ea55762b1cb2c2d456df0_1920.png"
+                  src="https://w7.pngwing.com/pngs/65/1015/png-transparent-wedding-floral-corner-orange-rose-flowers-in-bloom.png"
                   alt=""
                   aria-hidden="true"
-                  loading="lazy"
+                  loading="eager"
                   decoding="async"
                 />
                 <canvas
