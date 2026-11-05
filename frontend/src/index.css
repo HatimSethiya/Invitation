@@ -3522,3 +3522,39 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
     width: clamp(112px, 32vw, 148px);
   }
 }
+
+
+/* White Rose Gold: use transparent floral corner art with balanced, card-safe placement. */
+.bohra-public-page.theme-whiteRoseGold .bohra-floral-sticker {
+  width: clamp(108px, 17vw, 146px);
+  height: auto;
+  object-fit: contain;
+  background: transparent;
+  opacity: .96;
+  z-index: 2;
+  filter: drop-shadow(0 3px 7px rgba(133, 89, 61, .14));
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-floral-sticker-top {
+  top: 8px;
+  right: 8px;
+  transform: none;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-floral-sticker-bottom {
+  bottom: 8px;
+  left: 8px;
+  transform: rotate(180deg);
+}
+@media (max-width: 600px) {
+  .bohra-public-page.theme-whiteRoseGold .bohra-floral-sticker {
+    width: clamp(82px, 24vw, 112px);
+    opacity: .94;
+  }
+  .bohra-public-page.theme-whiteRoseGold .bohra-floral-sticker-top {
+    top: 10px;
+    right: 10px;
+  }
+  .bohra-public-page.theme-whiteRoseGold .bohra-floral-sticker-bottom {
+    bottom: 10px;
+    left: 10px;
+  }
+}
