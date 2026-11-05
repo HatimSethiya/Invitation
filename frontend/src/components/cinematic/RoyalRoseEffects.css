@@ -1,0 +1,336 @@
+.royal-rose-card {
+  --rose-ink: #57363d;
+  --rose-gold: #b9855c;
+  position: relative;
+  isolation: isolate;
+  width: min(100%, 1080px);
+  min-height: 100vh;
+  margin: 24px auto 72px;
+  padding: clamp(24px, 5.2vw, 70px) clamp(14px, 3vw, 32px);
+  overflow: hidden;
+  border: 1px solid rgba(181, 133, 92, 0.58);
+  border-radius: 5px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.98), transparent 49%),
+    radial-gradient(ellipse at 100% 52%, rgba(235, 207, 197, 0.2), transparent 39%),
+    radial-gradient(ellipse at 0% 50%, rgba(240, 218, 210, 0.22), transparent 43%),
+    linear-gradient(135deg, #fffdfa 0%, #fffaf5 48%, #fffdfb 100%);
+  box-shadow:
+    0 34px 100px rgba(73, 42, 44, 0.15),
+    0 8px 26px rgba(128, 83, 68, 0.08),
+    inset 0 0 0 5px rgba(255, 255, 255, 0.76),
+    inset 0 0 70px rgba(199, 157, 125, 0.1);
+}
+
+.royal-rose-card::before {
+  position: absolute;
+  z-index: 4;
+  inset: 12px;
+  border: 1px solid rgba(185, 133, 92, 0.42);
+  content: "";
+  pointer-events: none;
+}
+
+.royal-rose-card .public-hero,
+.royal-rose-card .public-section,
+.royal-rose-card .invitation-closing {
+  position: relative;
+  z-index: 3;
+}
+
+.royal-rose-card .public-hero {
+  padding-top: clamp(58px, 9vw, 100px);
+}
+
+.royal-rose-card .public-hero h1 {
+  color: #633d43;
+  background: linear-gradient(105deg, #805844 4%, #d0a76e 28%, #9b6657 48%, #f0d7a0 60%, #805844 88%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 12px 30px rgba(147, 101, 72, 0.15);
+  animation: royalRoseNameGlow 5.8s ease-in-out infinite;
+}
+
+.royal-rose-card .public-hero h1 span,
+.royal-rose-card .eyebrow {
+  color: #b17c6b;
+  -webkit-text-fill-color: initial;
+}
+
+.royal-rose-card .hero-script,
+.royal-rose-card .public-date {
+  color: #70575a;
+}
+
+.royal-rose-card .public-section {
+  border-color: rgba(179, 137, 108, 0.26);
+}
+
+.royal-rose-card .event-card {
+  border-color: rgba(186, 143, 111, 0.4);
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.9), rgba(250, 239, 233, 0.75));
+  box-shadow: 0 12px 34px rgba(98, 65, 53, 0.08);
+}
+
+.royal-rose-card .invitation-closing {
+  padding: 48px 18px 34px;
+  color: #71514f;
+  text-align: center;
+}
+
+.royal-rose-effects {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.royal-rose-particles {
+  position: sticky;
+  z-index: 0;
+  top: 0;
+  display: block;
+  max-width: 100%;
+  opacity: 0.9;
+}
+
+.royal-rose-metallic-sweep {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  height: 100vh;
+  margin-top: -100vh;
+  overflow: hidden;
+}
+
+.royal-rose-metallic-sweep::before {
+  position: absolute;
+  inset: -35% auto -35% -65%;
+  width: 48%;
+  background:
+    linear-gradient(
+      105deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.03) 24%,
+      rgba(218, 177, 121, 0.12) 39%,
+      rgba(255, 250, 228, 0.42) 48%,
+      rgba(255, 255, 255, 0.13) 53%,
+      rgba(196, 139, 104, 0.12) 61%,
+      transparent 78%
+    );
+  filter: blur(1.5px);
+  transform: skewX(-14deg);
+  animation: royalRoseMetallicSweep 9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  content: "";
+}
+
+.royal-rose-floral {
+  position: absolute;
+  z-index: 1;
+  width: clamp(145px, 24vw, 235px);
+  height: clamp(170px, 27vw, 260px);
+  opacity: 0.82;
+  filter: drop-shadow(0 10px 12px rgba(124, 77, 65, 0.13));
+}
+
+.royal-rose-floral-top {
+  top: 2px;
+  right: 0;
+}
+
+.royal-rose-floral-bottom {
+  bottom: 4px;
+  left: 0;
+  transform: rotate(180deg);
+}
+
+.rose-bloom {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse 20% 27% at 52% 43%, #ffe9db 0%, #ce8f83 75%, transparent 100%),
+    radial-gradient(ellipse 31% 42% at 50% 21%, #fff5eb 0%, #e8bdb0 68%, transparent 74%),
+    radial-gradient(ellipse 34% 41% at 79% 40%, #fff4ea 0%, #d9a79c 68%, transparent 75%),
+    radial-gradient(ellipse 35% 42% at 69% 73%, #fff8ef 0%, #e3b4a8 69%, transparent 75%),
+    radial-gradient(ellipse 34% 42% at 31% 74%, #fff5ec 0%, #d69c91 68%, transparent 75%),
+    radial-gradient(ellipse 32% 42% at 20% 39%, #fff9f0 0%, #e7b6a9 67%, transparent 74%),
+    radial-gradient(circle at 50% 51%, #b47868 0%, #d19b87 8%, transparent 18%);
+  box-shadow: inset 0 0 12px rgba(255, 252, 242, 0.7);
+}
+
+.bloom-one {
+  top: 15px;
+  right: 22px;
+  transform: rotate(12deg);
+}
+
+.bloom-two {
+  top: 78px;
+  right: 75px;
+  width: 48px;
+  height: 48px;
+  transform: rotate(-15deg);
+}
+
+.bloom-three {
+  top: 105px;
+  right: 10px;
+  width: 39px;
+  height: 39px;
+  transform: rotate(26deg);
+}
+
+.rose-leaf {
+  position: absolute;
+  z-index: 1;
+  display: block;
+  width: 59px;
+  height: 27px;
+  border: 1px solid rgba(193, 149, 103, 0.62);
+  border-radius: 100% 0 100% 0;
+  background:
+    linear-gradient(140deg, rgba(232, 217, 191, 0.96), rgba(151, 156, 122, 0.82) 48%, rgba(234, 212, 181, 0.92));
+  box-shadow: inset 0 1px 5px rgba(255, 255, 255, 0.82);
+}
+
+.leaf-one {
+  top: 79px;
+  right: 124px;
+  transform: rotate(-28deg);
+}
+
+.leaf-two {
+  top: 133px;
+  right: 66px;
+  transform: rotate(30deg) scale(0.8);
+}
+
+.leaf-three {
+  top: 57px;
+  right: 0;
+  transform: rotate(62deg) scale(0.72);
+}
+
+.royal-rose-corner {
+  position: absolute;
+  z-index: 4;
+  width: 82px;
+  height: 82px;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.royal-rose-corner::before,
+.royal-rose-corner::after {
+  position: absolute;
+  border-color: rgba(179, 128, 86, 0.72);
+  border-style: solid;
+  content: "";
+}
+
+.royal-rose-corner-top {
+  top: 13px;
+  left: 13px;
+}
+
+.royal-rose-corner-top::before {
+  inset: 0 24px 24px 0;
+  border-width: 1px 0 0 1px;
+  border-top-left-radius: 32px;
+}
+
+.royal-rose-corner-top::after {
+  inset: 10px 36px 36px 10px;
+  border-width: 1px 0 0 1px;
+  border-top-left-radius: 24px;
+}
+
+.royal-rose-corner-bottom {
+  right: 13px;
+  bottom: 13px;
+  transform: rotate(180deg);
+}
+
+.royal-rose-corner-bottom::before {
+  inset: 0 24px 24px 0;
+  border-width: 1px 0 0 1px;
+  border-top-left-radius: 32px;
+}
+
+.royal-rose-corner-bottom::after {
+  inset: 10px 36px 36px 10px;
+  border-width: 1px 0 0 1px;
+  border-top-left-radius: 24px;
+}
+
+@keyframes royalRoseMetallicSweep {
+  0%, 22% {
+    transform: translateX(0) skewX(-14deg);
+    opacity: 0;
+  }
+  34% { opacity: 0.9; }
+  73% { opacity: 0.68; }
+  100% {
+    transform: translateX(360%) skewX(-14deg);
+    opacity: 0;
+  }
+}
+
+@keyframes royalRoseNameGlow {
+  0%, 100% {
+    filter: drop-shadow(0 4px 12px rgba(185, 133, 92, 0.12));
+  }
+  50% {
+    filter: drop-shadow(0 7px 22px rgba(185, 133, 92, 0.25));
+  }
+}
+
+@media (max-width: 600px) {
+  .royal-rose-card {
+    width: calc(100% - 14px);
+    margin: 8px auto 24px;
+    padding: 20px 8px 24px;
+    box-shadow:
+      0 20px 50px rgba(73, 42, 44, 0.14),
+      inset 0 0 0 4px rgba(255, 255, 255, 0.76),
+      inset 0 0 40px rgba(199, 157, 125, 0.1);
+  }
+
+  .royal-rose-card::before {
+    inset: 8px;
+  }
+
+  .royal-rose-card .public-hero {
+    padding-top: 174px;
+  }
+
+  .royal-rose-floral {
+    opacity: 0.68;
+  }
+
+  .royal-rose-floral-top {
+    right: -24px;
+  }
+
+  .royal-rose-floral-bottom {
+    left: -24px;
+  }
+
+  .royal-rose-corner {
+    width: 58px;
+    height: 58px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .royal-rose-metallic-sweep::before,
+  .royal-rose-card .public-hero h1 {
+    animation: none;
+  }
+}

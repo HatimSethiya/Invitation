@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "motion/react";
 import api from "../../services/api";
 import EnvelopeReveal from "../../components/EnvelopeReveal";
 import InvitationMusicPlayer from "../../components/InvitationMusicPlayer";
+import RoyalRoseEffects from "../../components/cinematic/RoyalRoseEffects";
 
 function formatDate(value, options = { dateStyle: "long" }) {
   if (!value) return "";
@@ -366,7 +367,9 @@ function PublicInvitation() {
 
       {/* Main Guest-Facing Invitation Body Animated via Motion */}
       <motion.div
-        className="invitation-body"
+        className={`invitation-body ${
+          invitation.theme === "royalRose" ? "royal-rose-card" : ""
+        }`}
         initial={{ opacity: 0, y: 24, scale: 0.985 }}
         animate={{
           opacity: isHandoffStarted || isUnboxed ? 1 : 0,
@@ -388,6 +391,9 @@ function PublicInvitation() {
           },
         }}
       >
+        {invitation.theme === "royalRose" && isInvitationInteractive && (
+          <RoyalRoseEffects />
+        )}
         {/* Hero Section */}
         <motion.section
           className="public-hero"
