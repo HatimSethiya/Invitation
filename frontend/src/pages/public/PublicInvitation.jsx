@@ -391,7 +391,7 @@ function PublicInvitation() {
               <>
                 <img
                   className="bohra-floral-sticker bohra-floral-sticker-top"
-                  src="https://w7.pngwing.com/pngs/65/1015/png-transparent-wedding-floral-corner-orange-rose-flowers-in-bloom.png"
+                  src="https://w7.pngwing.com/pngs/580/297/png-transparent-wedding-floral-corner-beautiful-floral-arrangement-with-leaves.png"
                   alt=""
                   aria-hidden="true"
                   loading="eager"
@@ -399,7 +399,7 @@ function PublicInvitation() {
                 />
                 <img
                   className="bohra-floral-sticker bohra-floral-sticker-bottom"
-                  src="https://w7.pngwing.com/pngs/65/1015/png-transparent-wedding-floral-corner-orange-rose-flowers-in-bloom.png"
+                  src="https://w7.pngwing.com/pngs/580/297/png-transparent-wedding-floral-corner-beautiful-floral-arrangement-with-leaves.png"
                   alt=""
                   aria-hidden="true"
                   loading="eager"
