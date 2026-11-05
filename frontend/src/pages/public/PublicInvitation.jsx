@@ -391,7 +391,7 @@ function PublicInvitation() {
               <>
                 <img
                   className="bohra-floral-sticker bohra-floral-sticker-top"
-                  src="https://pixabay.com/get/gcd53a5c1f225abb0a3549db52c803c16f59429c1c22a4d5447e7e75f42c476e557bafed25f2ea55762b1cb2c2d456df0_1920.png?longlived="
+                  src="https://pixabay.com/get/gcd53a5c1f225abb0a3549db52c803c16f59429c1c22a4d5447e7e75f42c476e557bafed25f2ea55762b1cb2c2d456df0_1920.png"
                   alt=""
                   aria-hidden="true"
                   loading="lazy"
@@ -399,7 +399,7 @@ function PublicInvitation() {
                 />
                 <img
                   className="bohra-floral-sticker bohra-floral-sticker-bottom"
-                  src="https://pixabay.com/get/gcd53a5c1f225abb0a3549db52c803c16f59429c1c22a4d5447e7e75f42c476e557bafed25f2ea55762b1cb2c2d456df0_1920.png?longlived="
+                  src="https://pixabay.com/get/gcd53a5c1f225abb0a3549db52c803c16f59429c1c22a4d5447e7e75f42c476e557bafed25f2ea55762b1cb2c2d456df0_1920.png"
                   alt=""
                   aria-hidden="true"
                   loading="lazy"
