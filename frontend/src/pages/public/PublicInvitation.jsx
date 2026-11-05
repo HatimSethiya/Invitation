@@ -134,11 +134,11 @@ function PublicInvitation() {
       return {
         x,
         y,
-        radius: random(0.55, isScrollBurst ? 2.15 : 1.65),
-        speed: random(0.32, isScrollBurst ? 1.85 : 1.1),
+        radius: random(0.85, isScrollBurst ? 2.8 : 2.1),
+        speed: random(0.42, isScrollBurst ? 2.0 : 1.35),
         drift: random(-0.28, 0.28),
         phase: random(0, Math.PI * 2),
-        opacity: random(0.28, 0.76),
+        opacity: random(0.48, 0.92),
         life,
         initialLife: life,
         isScrollBurst,
@@ -157,7 +157,7 @@ function PublicInvitation() {
 
       const particleCount = Math.min(
         115,
-        Math.max(65, Math.round((width * height) / 18000))
+        Math.max(80, Math.round((width * height) / 15000))
       );
       particles = Array.from({ length: particleCount }, () =>
         createParticle(random(0, width), random(0, height))
@@ -193,13 +193,13 @@ function PublicInvitation() {
           ? Math.max(0, particle.life / particle.initialLife)
           : 1;
         const twinkle = reducedMotion
-          ? 0.72
-          : 0.58 + Math.sin(timestampSeconds * 2.2 + particle.phase) * 0.28;
+          ? 0.82
+          : 0.72 + Math.sin(timestampSeconds * 2.2 + particle.phase) * 0.22;
         const alpha = particle.opacity * lifeOpacity * twinkle;
         const goldTone =
           particle.phase % 3 > 2
-            ? `rgba(214,156,133,${alpha})`
-            : `rgba(202,151,74,${alpha})`;
+            ? `rgba(226,163,139,${alpha})`
+            : `rgba(218,157,67,${alpha})`;
 
         context.fillStyle = goldTone;
         context.beginPath();
@@ -220,9 +220,9 @@ function PublicInvitation() {
         return true;
       });
 
-      // A soft metallic light band sweeps across the card every 2.8 seconds.
+      // A soft metallic light band sweeps across the card every 3.5 seconds.
       if (!reducedMotion) {
-        const cycleProgress = (timestampSeconds % 2.8) / 2.8;
+        const cycleProgress = (timestampSeconds % 3.5) / 3.5;
         const bandWidth = Math.max(115, width * 0.34);
         const bandX = cycleProgress * (width + bandWidth) - bandWidth;
 
@@ -391,7 +391,7 @@ function PublicInvitation() {
               <>
                 <img
                   className="bohra-floral-sticker bohra-floral-sticker-top"
-                  src="https://cdn.pixabay.com/photo/2017/06/11/21/38/flowers-2393618_1280.png"
+                  src="https://pixabay.com/get/gcd53a5c1f225abb0a3549db52c803c16f59429c1c22a4d5447e7e75f42c476e557bafed25f2ea55762b1cb2c2d456df0_1920.png?longlived="
                   alt=""
                   aria-hidden="true"
                   loading="lazy"
@@ -399,7 +399,7 @@ function PublicInvitation() {
                 />
                 <img
                   className="bohra-floral-sticker bohra-floral-sticker-bottom"
-                  src="https://cdn.pixabay.com/photo/2017/06/11/21/38/flowers-2393618_1280.png"
+                  src="https://pixabay.com/get/gcd53a5c1f225abb0a3549db52c803c16f59429c1c22a4d5447e7e75f42c476e557bafed25f2ea55762b1cb2c2d456df0_1920.png?longlived="
                   alt=""
                   aria-hidden="true"
                   loading="lazy"
