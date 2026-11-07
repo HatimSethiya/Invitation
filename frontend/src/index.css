@@ -3568,3 +3568,53 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
   position: relative;
   z-index: 4;
 }
+
+/* Purple White Glass: preserve the white/lilac palette while replacing diagonal
+   cross-lines with a subtle, tactile leather-grain finish. */
+.bohra-public-page.theme-purpleWhite {
+  --theme-paper-texture:
+    radial-gradient(ellipse at 18% 16%, rgba(255,255,255,.72), transparent 34%),
+    radial-gradient(ellipse at 82% 78%, rgba(190,168,218,.12), transparent 38%),
+    repeating-radial-gradient(circle at 37% 43%, rgba(93,66,125,.045) 0 .45px, transparent .7px 3.2px),
+    linear-gradient(145deg, #fff, #f0e7fc 68%, #fff);
+  --theme-pattern:
+    radial-gradient(ellipse at 16% 18%, rgba(222,205,244,.12), transparent 34%),
+    radial-gradient(ellipse at 82% 76%, rgba(182,151,216,.09), transparent 38%),
+    repeating-radial-gradient(circle at 40% 52%, rgba(230,216,247,.055) 0 .45px, transparent .7px 3.2px),
+    linear-gradient(135deg, #21152d, #49315f 52%, #21152d);
+}
+.bohra-public-page.theme-purpleWhite::before {
+  opacity: .42;
+  background: var(--theme-pattern);
+}
+.bohra-public-page.theme-purpleWhite .bohra-invitation-card {
+  background:
+    repeating-radial-gradient(circle at 42% 38%, rgba(105,75,143,.025) 0 .45px, transparent .7px 3.2px),
+    var(--theme-card-surface);
+}
+.bohra-public-page.theme-purpleWhite .bohra-invitation-card::before {
+  opacity: .18;
+  background:
+    radial-gradient(ellipse at 20% 18%, rgba(255,255,255,.72), transparent 35%),
+    radial-gradient(ellipse at 80% 76%, rgba(190,168,218,.12), transparent 40%),
+    repeating-radial-gradient(circle at 42% 38%, rgba(105,75,143,.045) 0 .45px, transparent .7px 3.2px);
+  mask-image: none;
+}
+.bohra-public-page.theme-purpleWhite .bohra-card-inner-frame {
+  background: var(--theme-paper-texture);
+}
+
+/* Keep the couple identity readable on the dashboard's password-lock overlay. */
+.invitation-lock-couple-names {
+  display: block;
+  max-width: 100%;
+  color: #432d3e;
+  font-size: clamp(.98rem, 2.2vw, 1.12rem);
+  font-weight: 750;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+.invitation-unlock-form .invitation-lock-couple-names {
+  margin-bottom: 2px;
+}

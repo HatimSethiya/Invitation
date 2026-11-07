@@ -55,6 +55,15 @@ const getAdminInvitations = async (req, res) => {
           weddingDate: invitation.weddingDate,
           status: invitation.status,
           theme: invitation.theme,
+          cardType: invitation.cardType,
+          couple: {
+            brideName: invitation.couple?.brideName || "",
+            groomName: invitation.couple?.groomName || "",
+          },
+          secondCouple: {
+            brideName: invitation.secondCouple?.brideName || "",
+            groomName: invitation.secondCouple?.groomName || "",
+          },
           createdAt: invitation.createdAt,
           updatedAt: invitation.updatedAt,
           isPasswordLocked: true,

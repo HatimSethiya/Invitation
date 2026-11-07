@@ -4,6 +4,23 @@ import api, { setInvitationUnlockToken, clearInvitationUnlockTokens } from "../.
 import { useAuth } from "../../context/AuthContext";
 import MusicLibraryDialog from "../../components/MusicLibraryDialog";
 
+const formatCoupleNames = (couple) =>
+  [couple?.brideName, couple?.groomName]
+    .map((name) => (typeof name === "string" ? name.trim() : ""))
+    .filter(Boolean)
+    .join(" & ");
+
+const getInvitationCoupleLabel = (invitation) => {
+  const firstCouple = formatCoupleNames(invitation.couple);
+  const secondCouple = formatCoupleNames(invitation.secondCouple);
+
+  if (invitation.cardType === "double") {
+    return [firstCouple, secondCouple].filter(Boolean).join(" · ") || invitation.title;
+  }
+
+  return firstCouple || invitation.title;
+};
+
 function AdminDashboard() {
   const { user, logout } = useAuth();
   const [data, setData] = useState({ stats: { total: 0, published: 0, drafts: 0, paused: 0, archived: 0 }, invitations: [] });
@@ -211,6 +228,7 @@ function AdminDashboard() {
               </div>
               {invitation.isPasswordLocked && !unlockedInvitations[invitation._id] && <div className="invitation-lock-overlay">
                 {unlockPromptId === invitation._id ? <form className="invitation-unlock-form" onSubmit={(event) => { event.preventDefault(); submitUnlock(invitation._id); }}>
+                  <span className="invitation-lock-couple-names">{getInvitationCoupleLabel(invitation)}</span>
                   <span className="invitation-lock-icon" aria-hidden="true">🔒</span>
                   <strong>Card locked</strong>
                   <label>Enter card password
@@ -221,6 +239,7 @@ function AdminDashboard() {
                     <button className="small-button edit-invitation-button" type="submit" disabled={unlockSaving}>{unlockSaving ? "Unlocking…" : "Unlock"}</button>
                   </div>
                 </form> : <button type="button" className="invitation-lock-prompt" onClick={() => { setActionError(""); setUnlockPromptId(invitation._id); setUnlockPassword(""); }}>
+                  <span className="invitation-lock-couple-names">{getInvitationCoupleLabel(invitation)}</span>
                   <span className="invitation-lock-icon" aria-hidden="true">🔒</span>
                   <strong>Card locked</strong>
                   <span>Click to enter password</span>
