@@ -736,6 +736,56 @@ function PublicInvitation() {
                 </section>
               )}
 
+              {(hasValue(invitation.venue?.name) ||
+                hasValue(invitation.venue?.address) ||
+                hasValue(invitation.venue?.city) ||
+                hasValue(invitation.venue?.mapUrl)) && (
+                <section className="bohra-additional-events bohra-venue-section">
+                  <motion.span
+                    className="bohra-section-kicker bohra-programme-heading"
+                    initial={{ opacity: 0, y: 14 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.6 }}
+                    transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    Venue &amp; Directions
+                  </motion.span>
+                  <motion.article
+                    className="bohra-extra-event bohra-main-venue-panel glass-panel"
+                    initial={{ opacity: 0, y: 32, scale: 0.985 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    viewport={{ once: true, amount: 0.22, margin: "0px 0px -70px 0px" }}
+                    transition={{ duration: 0.78, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <h3>{invitation.venue?.name || "Wedding Venue"}</h3>
+                    <div className="bohra-programme-details bohra-extra-event-details">
+                      {hasValue(invitation.venue?.address) && (
+                        <div className="bohra-detail-row">
+                          <span className="bohra-detail-icon" aria-hidden="true">⌖</span>
+                          <div><span>{invitation.venue.address}</span></div>
+                        </div>
+                      )}
+                      {hasValue(invitation.venue?.city) && (
+                        <div className="bohra-detail-row">
+                          <span className="bohra-detail-icon" aria-hidden="true">⌂</span>
+                          <div><strong>{invitation.venue.city}</strong></div>
+                        </div>
+                      )}
+                    </div>
+                    {hasValue(invitation.venue?.mapUrl) && (
+                      <a
+                        className="bohra-extra-event-map-link"
+                        href={invitation.venue.mapUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Open Venue Map <span aria-hidden="true">↗</span>
+                      </a>
+                    )}
+                  </motion.article>
+                </section>
+              )}
+
               {hasValue(details.complimentsFrom) && (
                 <section className="bohra-compliments">
                   <span className="bohra-section-kicker">With The Best Compliments From</span>
