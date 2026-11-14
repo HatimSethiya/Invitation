@@ -2044,3 +2044,89 @@
     transform: translate(-50%, -82%) scale(1) !important;
   }
 }
+
+
+/* ==========================================================================
+   MOBILE LUXURY ENVELOPE — larger portrait proportions + full-card pop-up
+   The insert is staged centered over the envelope, expands from a pocket-like
+   mask into a complete cover, holds briefly, then fades before page handoff.
+   ========================================================================== */
+.cinematic-envelope-opening .luxury-envelope-wrap {
+  width: min(96vw, 460px) !important;
+  gap: clamp(16px, 2.4vh, 22px) !important;
+}
+
+.cinematic-envelope-opening .luxury-envelope {
+  aspect-ratio: 1.20 / 1 !important;
+  max-height: 48vh !important;
+}
+
+.cinematic-envelope-opening .luxury-envelope-insert.has-uploaded-cover-art {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: min(84vw, 360px) !important;
+  height: min(64vh, 590px) !important;
+  max-width: 90vw !important;
+  z-index: 8 !important;
+  opacity: 0 !important;
+  transform: translate(-50%, -50%) scale(.72) !important;
+  transform-origin: center center !important;
+  clip-path: inset(38% 0 38% round 14px) !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  box-shadow:
+    0 30px 75px rgba(12, 4, 8, .48),
+    0 0 0 3px rgba(255, 250, 244, .78),
+    0 0 0 5px var(--envelope-edge) !important;
+  transition:
+    transform 1.22s cubic-bezier(.18, .82, .22, 1) .42s,
+    opacity .42s ease .42s,
+    clip-path 1.22s cubic-bezier(.18, .82, .22, 1) .42s,
+    box-shadow .75s ease !important;
+}
+
+.cinematic-envelope-opening .envelope-is-opening .luxury-envelope-insert.has-uploaded-cover-art {
+  z-index: 8 !important;
+  opacity: 1 !important;
+  transform: translate(-50%, -50%) scale(1) !important;
+  clip-path: inset(0 0 0 0 round 16px) !important;
+  transition-delay: .42s, .42s, .42s, 0s !important;
+}
+
+.cinematic-envelope-opening .envelope-insert-dissolving .luxury-envelope-insert.has-uploaded-cover-art {
+  opacity: 0 !important;
+  transform: translate(-50%, -50%) scale(1.035) !important;
+  clip-path: inset(0 0 0 0 round 16px) !important;
+  transition:
+    opacity .72s ease,
+    transform .72s cubic-bezier(.2, .72, .2, 1),
+    clip-path .72s ease,
+    box-shadow .72s ease !important;
+  transition-delay: 0s !important;
+}
+
+.cinematic-envelope-opening .envelope-insert-cover-art {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  background: transparent !important;
+}
+
+@media (max-width: 600px) {
+  .cinematic-envelope-opening .luxury-envelope-wrap {
+    width: min(96vw, 460px) !important;
+  }
+  .cinematic-envelope-opening .luxury-envelope {
+    aspect-ratio: .90 / 1 !important;
+    max-height: 48vh !important;
+  }
+  .cinematic-envelope-opening .luxury-envelope-insert.has-uploaded-cover-art {
+    width: min(84vw, 360px) !important;
+    height: min(64vh, 590px) !important;
+  }
+}
