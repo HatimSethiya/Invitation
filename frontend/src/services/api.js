@@ -71,6 +71,11 @@ export function resolveMediaUrl(value) {
       return new URL(mediaUrl, apiOrigin).toString();
     }
 
+    // Upgrade remote HTTP media to HTTPS to avoid mixed-content blocks on secure pages.
+    if (parsedUrl.protocol === "http:" && !/^(localhost|127\\.0\\.0\\.1|\\[::1\\])$/i.test(parsedUrl.hostname)) {
+      parsedUrl.protocol = "https:";
+    }
+
     return parsedUrl.toString();
   } catch {
     return mediaUrl;
