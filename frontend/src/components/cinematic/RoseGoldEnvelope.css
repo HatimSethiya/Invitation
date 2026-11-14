@@ -1,0 +1,104 @@
+/* Royal Rose Gold Envelope — surface-only override.
+   Preserve the existing envelope geometry, extraction animation, timing, and z-index choreography. */
+.cinematic-envelope-opening .luxury-envelope-back {
+  background:
+    radial-gradient(ellipse at 50% 10%, rgba(255,246,232,.42), transparent 44%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='180' viewBox='0 0 160 180'%3E%3Cg fill='none' stroke='%23f5d5c7' stroke-opacity='.28' stroke-width='1.2'%3E%3Cpath d='M80 8C62 28 44 34 30 52 49 54 64 68 68 85 75 76 79 64 80 51 81 64 85 76 92 85 96 68 111 54 130 52 116 34 98 28 80 8Z M80 45C63 61 55 78 60 98 70 90 76 80 80 68 84 80 90 90 100 98 105 78 97 61 80 45Z M80 102C62 122 44 128 30 146 49 148 64 162 68 179 75 170 79 158 80 145 81 158 85 170 92 179 96 162 111 148 130 146 116 128 98 122 80 102Z'/%3E%3C/g%3E%3C/svg%3E"),
+    repeating-linear-gradient(118deg, rgba(255,255,255,.045) 0 1px, rgba(110,49,62,.035) 1px 3px),
+    linear-gradient(135deg, #f7e1d9 0%, #e9bdb5 28%, #d99e9b 55%, #c78383 78%, #e6b7a8 100%) !important;
+  box-shadow:
+    inset 0 0 0 2px #fff0df,
+    inset 0 0 0 4px #c99562,
+    inset 0 0 0 6px rgba(255,233,211,.94),
+    inset 0 0 0 9px rgba(174,103,83,.55),
+    inset 0 18px 30px rgba(255,255,255,.26),
+    inset 0 -24px 34px rgba(119,48,59,.14),
+    0 4px 0 #a76b61,
+    0 18px 40px rgba(8,10,24,.4) !important;
+}
+.cinematic-envelope-opening .luxury-envelope-back::before {
+  inset: 13px !important;
+  border: 1px solid rgba(255,226,199,.95) !important;
+  border-radius: 10px 10px 17px 17px !important;
+  box-shadow: inset 0 0 0 1px rgba(190,126,89,.52), 0 0 0 1px rgba(255,241,221,.5) !important;
+  background:
+    linear-gradient(45deg, transparent 48.9%, rgba(196,133,91,.22) 49.5%, transparent 50.1%),
+    linear-gradient(-45deg, transparent 48.9%, rgba(196,133,91,.22) 49.5%, transparent 50.1%) !important;
+}
+.cinematic-envelope-opening .luxury-envelope-back::after {
+  content: "❧  ✧  ❦  ✧  ❧" !important;
+  bottom: 8.5% !important;
+  color: #f9e1c4 !important;
+  font-size: clamp(18px, 2.7vw, 27px) !important;
+  letter-spacing: .16em !important;
+  opacity: .96 !important;
+  text-shadow: 0 1px 1px rgba(104,44,47,.7), 0 0 9px rgba(255,220,180,.36) !important;
+}
+.cinematic-envelope-opening .luxury-envelope-flap {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23f3d2b3' stroke-opacity='.55' stroke-width='1'%3E%3Cpath d='M60 7C48 23 35 26 22 39 38 42 49 53 53 66 58 59 60 49 60 40 60 49 62 59 67 66 71 53 82 42 98 39 85 26 72 23 60 7Z M60 50C45 63 44 78 60 94 76 78 75 63 60 50Z'/%3E%3C/g%3E%3C/svg%3E"),
+    repeating-linear-gradient(118deg, rgba(255,255,255,.06) 0 1px, rgba(112,54,58,.035) 1px 3px),
+    linear-gradient(150deg, #fff0e3 0%, #f0d1c2 38%, #dfafa5 68%, #c98782 100%) !important;
+  filter: drop-shadow(0 8px 8px rgba(76,35,35,.28)) drop-shadow(0 0 1px #f4d5b5) !important;
+}
+.cinematic-envelope-opening .luxury-envelope-flap::after {
+  content: "✧  ❦  ✧" !important;
+  color: rgba(166,94,75,.9) !important;
+  text-shadow: 0 1px 0 rgba(255,244,224,.95), 0 0 8px rgba(244,198,157,.38) !important;
+}
+.cinematic-envelope-opening .luxury-envelope-flap::before {
+  background: linear-gradient(145deg, rgba(255,246,225,.9), rgba(188,120,83,.62)) !important;
+  opacity: .96 !important;
+  filter: drop-shadow(0 0 2px rgba(255,239,213,.8)) !important;
+}
+.cinematic-envelope-opening .luxury-envelope-pocket {
+  background:
+    linear-gradient(145deg, transparent 49.35%, rgba(123,59,54,.35) 50%, rgba(255,231,203,.76) 50.45%, transparent 51%),
+    linear-gradient(35deg, #ca8e87 0 49.8%, transparent 50%),
+    linear-gradient(-35deg, #e8b9ad 0 49.8%, transparent 50%),
+    linear-gradient(180deg, #eac2b4, #c98f86) !important;
+  filter: drop-shadow(0 -1px 0 rgba(255,246,226,.94)) drop-shadow(0 1px 0 rgba(119,62,51,.38)) !important;
+}
+.cinematic-envelope-opening .luxury-envelope-pocket::before {
+  inset: 8px !important;
+  border: 1px solid rgba(255,229,200,.86) !important;
+  box-shadow: inset 0 0 0 1px rgba(190,126,89,.5), 0 0 0 1px rgba(255,248,229,.25) !important;
+  background: linear-gradient(145deg, rgba(255,247,230,.2), transparent 38%, rgba(125,58,52,.1)) !important;
+}
+.cinematic-envelope-opening .luxury-envelope-pocket::after {
+  color: rgba(255,226,196,.9) !important;
+  text-shadow: 0 1px 1px rgba(115,57,51,.56) !important;
+}
+.cinematic-envelope-opening .luxury-envelope-seal {
+  border: 2px solid #ffe8c8 !important;
+  background:
+    radial-gradient(circle at 27% 19%, rgba(255,244,222,.98), transparent 30%),
+    radial-gradient(circle at 72% 78%, rgba(112,47,45,.48), transparent 53%),
+    linear-gradient(145deg, #e7b58e 0%, #c98572 32%, #b66d65 58%, #8f4c4b 100%) !important;
+  box-shadow:
+    0 6px 0 #814647,
+    0 15px 25px rgba(54,20,24,.42),
+    inset 0 0 0 3px rgba(255,245,224,.7),
+    inset 0 0 0 6px rgba(205,151,93,.82),
+    inset 0 2px 7px rgba(255,249,228,.55) !important;
+}
+.cinematic-envelope-opening .envelope-seal-monogram {
+  color: #fff0d7 !important;
+  font-family: "Palatino Linotype", "Book Antiqua", Georgia, serif !important;
+  font-size: clamp(.82rem, 3vw, 1.02rem) !important;
+  font-style: italic !important;
+  font-weight: 700 !important;
+  letter-spacing: .035em !important;
+  text-shadow: 0 1px 0 rgba(255,246,222,.82), 0 -1px 1px rgba(92,40,34,.68) !important;
+}
+.cinematic-envelope-opening .envelope-seal-ornament {
+  color: #f5d5a8 !important;
+  text-shadow: 0 1px 1px rgba(92,40,34,.72) !important;
+}
+.cinematic-envelope-opening .envelope-open-prompt {
+  border-color: rgba(255,226,194,.82) !important;
+  background: linear-gradient(145deg, #bd8178, #985b5a 58%, #754247) !important;
+  color: #fff0d7 !important;
+  box-shadow: inset 0 0 0 1px rgba(255,245,218,.28), 0 7px 18px rgba(62,20,28,.38) !important;
+  text-shadow: 0 1px 2px rgba(91,38,39,.72) !important;
+}
