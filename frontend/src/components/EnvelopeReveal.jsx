@@ -18,6 +18,8 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
   const [isCurtainsOpening, setIsCurtainsOpening] = useState(false);
   const [isHandoffActive, setIsHandoffActive] = useState(false);
   const [isDissolvingOut, setIsDissolvingOut] = useState(false);
+  const [isCardEmerging, setIsCardEmerging] = useState(false);
+  const [isCardPresented, setIsCardPresented] = useState(false);
 
   const hasTriggeredRef = useRef(false);
   const timersRef = useRef([]);
@@ -61,25 +63,33 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
       return;
     }
 
-    // Keep the stationery in place while the curtains begin to part.
     setIsAnticipating(true);
     setIsCurtainsOpening(true);
 
-    // Envelope sequence: cover pops fully into the foreground, holds, fades,
-    // then the underlying invitation begins its handoff. Keep curtain timing
-    // unchanged for all non-envelope opening styles.
-    const handoffDelay = isEnvelopeOpening ? 4250 : 1900;
-    const dissolveDelay = isEnvelopeOpening ? 3450 : 2100;
-    const stageExitDelay = isEnvelopeOpening ? 5250 : 4200;
-    const completionDelay = isEnvelopeOpening ? 6350 : 5500;
+    if (isEnvelopeOpening) {
+      // Three intentional phases: rise from the pocket, present fully in front,
+      // then fade the card AND envelope together while the preloaded invitation
+      // underneath starts its reveal.
+      addTimer(() => setIsCardEmerging(true), 420);
+      addTimer(() => setIsCardPresented(true), 1480);
+      addTimer(() => {
+        setIsDissolving(true);
+        setIsHandoffActive(true);
+        if (onHandoffStart) onHandoffStart();
+      }, 3300);
+      addTimer(() => setIsDissolvingOut(true), 4250);
+      addTimer(() => { if (onOpened) onOpened(); }, 5200);
+      return;
+    }
 
+    // Preserve the existing handoff sequence for non-envelope opening styles.
     addTimer(() => {
       setIsHandoffActive(true);
       if (onHandoffStart) onHandoffStart();
-    }, handoffDelay);
-    addTimer(() => setIsDissolving(true), dissolveDelay);
-    addTimer(() => setIsDissolvingOut(true), stageExitDelay);
-    addTimer(() => { if (onOpened) onOpened(); }, completionDelay);
+    }, 1900);
+    addTimer(() => setIsDissolving(true), 2100);
+    addTimer(() => setIsDissolvingOut(true), 4200);
+    addTimer(() => { if (onOpened) onOpened(); }, 5500);
   }, [addTimer, isEnvelopeOpening, onHandoffStart, onOpenMusic, onOpened]);
 
   const handleEnvelopeSurfaceTap = useCallback((event) => {
@@ -94,7 +104,7 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
 
   return (
     <div
-      className={"cinematic-stage-overlay " + (isHandoffActive ? "stage-handoff-active " : "") + (isDissolvingOut ? "stage-dissolving-out " : "") + (isEnvelopeOpening ? "cinematic-envelope-opening" : "")}
+      className={"cinematic-stage-overlay " + (isHandoffActive ? "stage-handoff-active " : "") + (isDissolvingOut ? "stage-dissolving-out " : "") + (isEnvelopeOpening ? "cinematic-envelope-opening" : "") + (isCardEmerging ? " envelope-card-emerging" : "") + (isCardPresented ? " envelope-card-presented" : "")}
       aria-label="Wedding invitation cinematic opening"
     >
       {isEnvelopeOpening ? (
