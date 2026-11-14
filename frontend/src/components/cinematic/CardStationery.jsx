@@ -59,7 +59,7 @@ function CardStationery({
       aria-label="Wedding invitation card. Click or tap to open."
     >
       
-<div className={`stationery-card stationery-card-poster ${invitation?.theme === "purpleWhite" ? "stationery-card-purple-white" : ""}`}>
+<div className={`stationery-card stationery-card-poster ${invitation?.theme === "purpleWhite" ? "stationery-card-purple-white" : ""} ${invitation?.theme === "whiteRoseGold" ? "stationery-card-white-rose-gold" : ""}`}>
   {usePosterCover ? (
     <img
       className="poster-card-art"
@@ -74,6 +74,30 @@ function CardStationery({
       alt={`Wedding invitation for ${invitation.title || "the couple"} — tap to open`}
       draggable="false"
     />
+  ) : invitation?.theme === "whiteRoseGold" ? (
+    <div className="stationery-rose-gold-cover">
+      <span className="rose-gold-cover-ornament rose-gold-cover-ornament-top" aria-hidden="true">❧</span>
+      <span className="rose-gold-cover-monogram">{monogram}</span>
+      <span className="rose-gold-cover-seal" aria-hidden="true">
+        <span>{groomInitial}</span>
+        <i>&amp;</i>
+        <span>{brideInitial}</span>
+      </span>
+      <div className="rose-gold-cover-couple">
+        <span>{primaryNames[0]}</span>
+        <em>Weds</em>
+        <span>{primaryNames[1]}</span>
+      </div>
+      {invitation?.cardType === "double" && invitation?.secondCouple && (
+        <div className="rose-gold-cover-second-couple">
+          <span>{secondNames[0]}</span>
+          <em>Weds</em>
+          <span>{secondNames[1]}</span>
+        </div>
+      )}
+      <span className="rose-gold-cover-tap">Tap to Open</span>
+      <span className="rose-gold-cover-ornament rose-gold-cover-ornament-bottom" aria-hidden="true">❧</span>
+    </div>
   ) : (
     <div className="stationery-fallback-cover">
       <span className="stationery-fallback-monogram">{monogram}</span>
