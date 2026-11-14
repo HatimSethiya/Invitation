@@ -72,7 +72,7 @@ export function resolveMediaUrl(value) {
     }
 
     // Upgrade remote HTTP media to HTTPS to avoid mixed-content blocks on secure pages.
-    if (parsedUrl.protocol === "http:" && !/^(localhost|127\\.0\\.0\\.1|\\[::1\\])$/i.test(parsedUrl.hostname)) {
+    if (parsedUrl.protocol === "http:" && parsedUrl.hostname !== "localhost" && parsedUrl.hostname !== "127.0.0.1" && parsedUrl.hostname !== "::1" && parsedUrl.hostname !== "[::1]") {
       parsedUrl.protocol = "https:";
     }
 
