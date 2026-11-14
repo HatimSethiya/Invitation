@@ -1586,3 +1586,181 @@
     transform: translate(-50%, -46%) scale(1);
   }
 }
+
+
+/* ==========================================================================
+   ENVELOPE OPENING — refined luxury presentation
+   Scoped to the envelope variant; curtain opening and invitation themes remain
+   untouched. Adds dimensional folds, a richer stage, and a paper-framed reveal.
+   ========================================================================== */
+.cinematic-envelope-opening {
+  background:
+    radial-gradient(ellipse at 50% 42%, var(--envelope-stage-glow, rgba(255, 232, 211, .24)), transparent 54%),
+    radial-gradient(ellipse at 50% 82%, rgba(8, 3, 7, .22), transparent 48%),
+    var(--envelope-stage-bg, linear-gradient(145deg, #261b20, #49313a 52%, #20131a));
+}
+
+.luxury-envelope-wrap {
+  width: min(94vw, 520px);
+  gap: clamp(20px, 3.2vh, 30px);
+  transform: translateY(-1.2vh);
+  transform-style: preserve-3d;
+}
+
+.luxury-envelope {
+  aspect-ratio: 1.34 / 1;
+  transform: rotateX(2deg);
+  filter: drop-shadow(0 32px 42px var(--envelope-shadow, rgba(15, 8, 10, .48)));
+}
+
+.luxury-envelope-back {
+  overflow: hidden;
+  border-radius: 18px 18px 26px 26px;
+  background:
+    linear-gradient(155deg, rgba(255, 255, 255, .34), transparent 34%),
+    linear-gradient(135deg, var(--envelope-flap-light, #fffaf5), var(--envelope-back, #e7c5b1) 48%, var(--envelope-pocket, #d8a98e));
+  box-shadow:
+    inset 0 0 0 4px var(--envelope-edge-soft, rgba(255, 250, 244, .72)),
+    inset 0 0 0 6px var(--envelope-edge, #c58a69),
+    inset 0 18px 32px rgba(255, 255, 255, .32),
+    0 4px 0 var(--envelope-edge, #c58a69),
+    0 14px 30px rgba(38, 17, 12, .2);
+}
+
+.luxury-envelope-pocket {
+  clip-path: polygon(0 0, 50% 58%, 100% 0, 100% 100%, 0 100%);
+  border: 0;
+  border-radius: 0 0 22px 22px;
+  background:
+    linear-gradient(145deg, transparent 49.4%, rgba(105, 57, 38, .22) 50%, rgba(255, 245, 233, .18) 50.45%, transparent 51%),
+    linear-gradient(35deg, var(--envelope-pocket, #d8a98e) 0 49.8%, transparent 50%),
+    linear-gradient(-35deg, var(--envelope-back, #e7c5b1) 0 49.8%, transparent 50%);
+  filter: drop-shadow(0 -1px 0 rgba(255, 250, 244, .44));
+}
+
+.luxury-envelope-pocket::before {
+  position: absolute;
+  inset: 8px;
+  content: "";
+  clip-path: polygon(0 0, 50% 58%, 100% 0, 100% 100%, 0 100%);
+  background: linear-gradient(145deg, rgba(255, 250, 244, .26), transparent 42%, rgba(105, 57, 38, .08));
+  pointer-events: none;
+}
+
+.luxury-envelope-flap {
+  height: 64%;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, .42), transparent 48%),
+    linear-gradient(155deg, var(--envelope-flap-light, #fffaf5), var(--envelope-flap, #c58b6c) 78%);
+  filter: drop-shadow(0 10px 10px rgba(54, 27, 18, .2));
+  transition:
+    transform 1.12s cubic-bezier(.2, .82, .2, 1),
+    filter .9s ease;
+}
+
+.luxury-envelope-insert.has-uploaded-cover-art {
+  width: min(74vw, 344px);
+  max-width: 80%;
+  height: min(65vh, 570px);
+  bottom: -7%;
+  border: 1px solid var(--envelope-edge, #c58a69);
+  border-radius: 18px;
+  background:
+    radial-gradient(ellipse at 50% 10%, rgba(255, 255, 255, .8), transparent 58%),
+    linear-gradient(145deg, var(--envelope-insert-bg, #fffaf6), var(--envelope-back, #e7c5b1));
+  box-shadow:
+    0 20px 38px rgba(35, 14, 10, .28),
+    0 0 0 4px rgba(255, 250, 244, .56),
+    0 0 0 5px var(--envelope-edge, #c58a69),
+    inset 0 0 0 1px rgba(255, 255, 255, .78);
+  transform: translate(-50%, 72%) scale(.9) rotateX(5deg);
+  transition:
+    transform 1.55s cubic-bezier(.16, .82, .2, 1),
+    opacity .72s ease,
+    box-shadow .8s ease;
+}
+
+.luxury-envelope-insert.has-uploaded-cover-art::before {
+  position: absolute;
+  z-index: 2;
+  inset: 9px;
+  content: "";
+  border: 1px solid rgba(183, 119, 82, .38);
+  border-radius: 11px;
+  box-shadow: inset 0 0 0 3px rgba(255, 255, 255, .22);
+  pointer-events: none;
+}
+
+.envelope-insert-cover-art {
+  object-fit: contain;
+  object-position: center;
+  mix-blend-mode: multiply;
+  background: transparent;
+}
+
+.envelope-is-opening .luxury-envelope-insert.has-uploaded-cover-art {
+  transform: translate(-50%, -50%) scale(1) rotateX(0deg);
+  box-shadow:
+    0 30px 58px rgba(35, 14, 10, .34),
+    0 0 0 4px rgba(255, 250, 244, .64),
+    0 0 0 5px var(--envelope-edge, #c58a69),
+    0 0 34px var(--envelope-stage-glow, rgba(255, 232, 211, .22));
+  transition-delay: .16s;
+}
+
+.envelope-is-opening .luxury-envelope-flap {
+  transform: rotateX(180deg);
+  filter: drop-shadow(0 -8px 10px rgba(40, 18, 12, .14));
+}
+
+.envelope-is-opening .luxury-envelope-seal {
+  transform: translate(-50%, -50%) scale(.42) rotate(-28deg);
+  filter: brightness(1.18);
+  opacity: 0;
+  transition:
+    transform .48s cubic-bezier(.2, .82, .2, 1),
+    opacity .36s ease,
+    filter .36s ease;
+}
+
+.envelope-open-prompt {
+  letter-spacing: .16em;
+  font-size: clamp(.68rem, 2.7vw, .84rem);
+  text-shadow: 0 2px 14px rgba(0, 0, 0, .42);
+}
+
+@media (max-width: 600px) {
+  .luxury-envelope-wrap {
+    width: min(94vw, 460px);
+    gap: 20px;
+    transform: translateY(-.6vh);
+  }
+
+  .luxury-envelope {
+    aspect-ratio: 1.32 / 1;
+  }
+
+  .luxury-envelope-insert.has-uploaded-cover-art {
+    width: min(76vw, 332px);
+    height: min(64vh, 560px);
+    bottom: -6%;
+    border-radius: 16px;
+  }
+
+  .envelope-is-opening .luxury-envelope-insert.has-uploaded-cover-art {
+    transform: translate(-50%, -48%) scale(1) rotateX(0deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .luxury-envelope,
+  .luxury-envelope-insert.has-uploaded-cover-art {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .envelope-is-opening .luxury-envelope-insert.has-uploaded-cover-art {
+    opacity: 1;
+  }
+}
