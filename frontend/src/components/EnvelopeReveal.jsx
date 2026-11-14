@@ -20,6 +20,7 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
   const [isDissolvingOut, setIsDissolvingOut] = useState(false);
   const [isCardEmerging, setIsCardEmerging] = useState(false);
   const [isCardPresented, setIsCardPresented] = useState(false);
+  const [isCoverReady, setIsCoverReady] = useState(!invitation?.coverImageUrl);
 
   const hasTriggeredRef = useRef(false);
   const timersRef = useRef([]);
@@ -30,7 +31,7 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
     return id;
   }, []);
 
-  // Cleanup all timers on unmount
+  // Decode uploaded cover art before enabling the opening gesture, so it never pops in mid-animation.\n  useEffect(() => {\n    const coverUrl = invitation?.coverImageUrl ? resolveMediaUrl(invitation.coverImageUrl) : null;\n    if (!coverUrl) { setIsCoverReady(true); return; }\n    setIsCoverReady(false);\n    const image = new Image();\n    image.onload = () => setIsCoverReady(true);\n    image.onerror = () => setIsCoverReady(true);\n    image.src = coverUrl;\n    if (typeof image.decode === "function") image.decode().then(() => setIsCoverReady(true)).catch(() => {});\n    return () => { image.onload = null; image.onerror = null; };\n  }, [invitation?.coverImageUrl]);\n\n  // Cleanup all timers on unmount
   useEffect(() => {
     return () => {
       timersRef.current.forEach((id) => clearTimeout(id));
@@ -40,7 +41,7 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
 
   // Main Orchestrated Cinematic Sequence
   const triggerSequence = useCallback(() => {
-    if (hasTriggeredRef.current) return;
+    if (hasTriggeredRef.current || (isEnvelopeOpening && invitation?.coverImageUrl && !isCoverReady)) return;
     hasTriggeredRef.current = true;
 
     // Start the selected music directly from the guest's Tap to Open gesture.
@@ -90,7 +91,7 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
     addTimer(() => setIsDissolving(true), 2100);
     addTimer(() => setIsDissolvingOut(true), 4200);
     addTimer(() => { if (onOpened) onOpened(); }, 5500);
-  }, [addTimer, isEnvelopeOpening, onHandoffStart, onOpenMusic, onOpened]);
+  }, [addTimer, isEnvelopeOpening, invitation?.coverImageUrl, isCoverReady, onHandoffStart, onOpenMusic, onOpened]);
 
   const handleEnvelopeSurfaceTap = useCallback((event) => {
     if (event.target.closest("button")) return;
@@ -132,11 +133,11 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
               </div>
               <div className="luxury-envelope-pocket" />
               <div className="luxury-envelope-flap" />
-              <button className="luxury-envelope-seal" type="button" onClick={triggerSequence} disabled={hasTriggeredRef.current} aria-label="Tap the wax seal to open the wedding invitation">
+              <button className="luxury-envelope-seal" type="button" onClick={triggerSequence} disabled={hasTriggeredRef.current || !isCoverReady} aria-label="Tap the wax seal to open the wedding invitation">
                 <span className="envelope-seal-monogram">{monogram}</span><span className="envelope-seal-ornament" aria-hidden="true">❦</span>
               </button>
             </div>
-            <button className="envelope-open-prompt" type="button" onClick={triggerSequence} disabled={hasTriggeredRef.current} aria-label="Tap to open the wedding invitation"><span aria-hidden="true">✦</span> Tap to open invitation <span aria-hidden="true">✦</span></button>
+            <button className="envelope-open-prompt" type="button" onClick={triggerSequence} disabled={hasTriggeredRef.current || !isCoverReady} aria-label="Tap to open the wedding invitation"><span aria-hidden="true">✦</span> {isCoverReady ? "Tap to open invitation" : "Preparing invitation…"} <span aria-hidden="true">✦</span></button>
           </div>
         </div>
       ) : (
