@@ -152,7 +152,7 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
             </div>
             <button className="envelope-open-prompt" type="button" onClick={triggerSequence} disabled={hasTriggeredRef.current || !isCoverReady} aria-label="Tap to open the wedding invitation"><span aria-hidden="true">✦</span> {isCoverReady ? "Tap to open invitation" : "Preparing invitation…"} <span aria-hidden="true">✦</span></button>
           </div>
-          {invitation?.coverImageUrl && (isCardEmerging || isCardPresented) && (
+          {invitation?.coverImageUrl && (
             <img
               className="envelope-extracted-cover-card"
               src={resolveMediaUrl(invitation.coverImageUrl)}
