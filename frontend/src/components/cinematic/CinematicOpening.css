@@ -2442,9 +2442,9 @@
 }
 
 
-/* FINAL ENVELOPE CARD EXTRACTION — single authoritative override.
-   Animate a real progressive reveal (mask + upward travel) into the viewport center.
-   Keep this block last to neutralize legacy conflicting envelope CSS overrides. */
+/* FINAL ENVELOPE EXTRACTION — transition-driven, no keyframe phase snap.
+   The card begins masked in the envelope pocket. React advances only after the
+   clip-path transition completes; no keyframe animation is interrupted. */
 .cinematic-envelope-opening .luxury-envelope-wrap {
   width: min(78vw, 38vh, 340px) !important;
   gap: clamp(14px, 2vh, 20px) !important;
@@ -2453,7 +2453,7 @@
 .cinematic-envelope-opening .luxury-envelope {
   aspect-ratio: .68 / 1 !important;
   max-height: 62vh !important;
-  overflow: hidden !important;
+  overflow: visible !important;
   isolation: isolate !important;
   border-radius: 14px 14px 22px 22px !important;
 }
@@ -2462,15 +2462,15 @@
 .cinematic-envelope-opening .luxury-envelope-flap { z-index: 6 !important; }
 .cinematic-envelope-opening .luxury-envelope-seal { z-index: 7 !important; }
 
-/* The envelope's small printed insert is hidden once the flap begins opening.
-   Only the separate pre-mounted foreground card participates in extraction. */
+/* Suppress the nested cover-art duplicate after the envelope starts opening. */
 .cinematic-envelope-opening .envelope-is-opening .luxury-envelope-insert.has-uploaded-cover-art {
   opacity: 0 !important;
   clip-path: inset(100% 0 0 0) !important;
   transition: opacity .12s linear !important;
 }
 
-/* Card begins visually tucked into the lower pocket, small and mostly masked. */
+/* Independent, pre-mounted card: only its upper 18% is initially visible.
+   It is clipped to a progressive reveal while moving from pocket to center. */
 .cinematic-envelope-opening .envelope-extracted-cover-card {
   position: absolute !important;
   left: 50% !important;
@@ -2483,73 +2483,50 @@
   object-position: center !important;
   border-radius: 12px !important;
   opacity: 0 !important;
-  clip-path: inset(0 0 84% 0 round 12px) !important;
-  transform: translate(-50%, calc(-50% + 27vh)) scale(.48) !important;
+  clip-path: inset(0 0 82% 0 round 12px) !important;
+  transform: translate(-50%, calc(-50% + 25vh)) scale(.52) !important;
   transform-origin: center center !important;
   filter: drop-shadow(0 12px 24px rgba(10,3,8,.28)) !important;
   pointer-events: none !important;
   user-select: none !important;
   will-change: transform, clip-path, opacity !important;
   animation: none !important;
-  transition: none !important;
+  transition:
+    clip-path 2.35s cubic-bezier(.22,.72,.18,1),
+    transform 2.35s cubic-bezier(.22,.72,.18,1),
+    opacity .16s linear,
+    filter .7s ease !important;
 }
 
-/* Reveal the card progressively as it physically rises out of the envelope.
-   The clip mask grows from the top edge; the whole card does not pop at once. */
+/* On emergence, reveal the complete card progressively and lift it forward. */
 .cinematic-envelope-opening.envelope-card-emerging .envelope-extracted-cover-card {
   opacity: 1 !important;
-  animation: invitation-card-pocket-extract-v2 2.5s cubic-bezier(.22,.72,.18,1) both !important;
-}
-@keyframes invitation-card-pocket-extract-v2 {
-  0% {
-    clip-path: inset(0 0 84% 0 round 12px);
-    transform: translate(-50%, calc(-50% + 27vh)) scale(.48);
-    filter: drop-shadow(0 12px 24px rgba(10,3,8,.28));
-  }
-  20% {
-    clip-path: inset(0 0 70% 0 round 12px);
-    transform: translate(-50%, calc(-50% + 19vh)) scale(.58);
-  }
-  46% {
-    clip-path: inset(0 0 48% 0 round 12px);
-    transform: translate(-50%, calc(-50% + 9vh)) scale(.70);
-  }
-  72% {
-    clip-path: inset(0 0 22% 0 round 12px);
-    transform: translate(-50%, calc(-50% - 1vh)) scale(.84);
-  }
-  100% {
-    clip-path: inset(0 0 0 0 round 12px);
-    transform: translate(-50%, -50%) scale(.94);
-    filter: drop-shadow(0 28px 54px rgba(10,3,8,.42));
-  }
+  clip-path: inset(0 0 0 0 round 12px) !important;
+  transform: translate(-50%, -50%) scale(.94) !important;
+  transition:
+    clip-path 2.35s cubic-bezier(.22,.72,.18,1),
+    transform 2.35s cubic-bezier(.22,.72,.18,1),
+    opacity .16s linear,
+    filter .7s ease !important;
 }
 
-/* Once fully extracted, scale gently to its premium foreground presentation. */
+/* After the clip-path transition end, settle gently at the full foreground size. */
 .cinematic-envelope-opening.envelope-card-presented .envelope-extracted-cover-card {
   opacity: 1 !important;
   clip-path: inset(0 0 0 0 round 12px) !important;
   transform: translate(-50%, -50%) scale(1) !important;
   filter: drop-shadow(0 32px 70px rgba(10,3,8,.48)) !important;
-  animation: invitation-card-pocket-settle-v2 .5s cubic-bezier(.16,1,.3,1) both !important;
-}
-@keyframes invitation-card-pocket-settle-v2 {
-  from { transform: translate(-50%, -50%) scale(.94); }
-  to { transform: translate(-50%, -50%) scale(1); }
+  transition:
+    transform .48s cubic-bezier(.16,1,.3,1),
+    clip-path .12s linear,
+    opacity .2s linear,
+    filter .7s ease !important;
 }
 
-/* Exit as one synchronized layer: card and envelope shell dissolve together. */
-.cinematic-envelope-opening.envelope-insert-dissolving .envelope-extracted-cover-card {
+/* The outer overlay dissolves the card and envelope together at handoff. */
+.cinematic-envelope-opening.stage-dissolving-out {
   opacity: 0 !important;
-  clip-path: inset(0 0 0 0 round 12px) !important;
-  transform: translate(-50%, -50%) scale(1.025) !important;
-  animation: none !important;
-  transition: opacity .82s cubic-bezier(.22,.72,.18,1), transform .82s cubic-bezier(.22,.72,.18,1) !important;
-}
-.cinematic-envelope-opening.envelope-insert-dissolving .luxury-envelope-wrap {
-  opacity: 0 !important;
-  transform: translateY(-.5vh) scale(.985) !important;
-  transition: opacity .82s cubic-bezier(.22,.72,.18,1), transform .82s cubic-bezier(.22,.72,.18,1) !important;
+  transition: opacity .9s cubic-bezier(.22,.72,.18,1) !important;
   pointer-events: none !important;
 }
 @media (max-width: 600px) {
@@ -2558,12 +2535,5 @@
   .cinematic-envelope-opening .envelope-extracted-cover-card {
     width: min(92vw, 440px) !important;
     height: min(76vh, 720px) !important;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .cinematic-envelope-opening .envelope-extracted-cover-card,
-  .cinematic-envelope-opening .luxury-envelope-wrap {
-    transition-duration: .01ms !important;
-    animation-duration: .01ms !important;
   }
 }
