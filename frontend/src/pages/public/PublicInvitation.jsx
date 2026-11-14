@@ -83,10 +83,49 @@ function PublicInvitation() {
   useEffect(() => {
     let active = true;
 
+    const preloadImage = (source) =>
+      new Promise((resolve) => {
+        if (!source) {
+          resolve(false);
+          return;
+        }
+        const image = new Image();
+        image.onload = () => resolve(true);
+        image.onerror = () => resolve(false);
+        image.src = source;
+        if (image.complete) resolve(image.naturalWidth > 0);
+      });
+
     api
       .get(`/invitations/public/${slug}`)
-      .then((response) => {
-        if (active) setInvitation(response.data.invitation);
+      .then(async (response) => {
+        const loadedInvitation = response.data.invitation;
+        // Warm the cover and invitation media before mounting the envelope.
+        // The guest can tap only after the artwork and the main invitation's
+        // image assets have finished loading (failed assets resolve gracefully).
+        const imageSources = [
+          loadedInvitation?.coverImageUrl && resolveMediaUrl(loadedInvitation.coverImageUrl),
+          loadedInvitation?.couple?.couplePhoto,
+          ...(loadedInvitation?.story || []).map((item) => item?.image),
+          ...(loadedInvitation?.gallery || []).map((item) =>
+            item?.imageUrl && resolveMediaUrl(item.imageUrl)
+          ),
+        ];
+
+        if (loadedInvitation?.theme === "whiteRoseGold") {
+          imageSources.push(
+            "https://w7.pngwing.com/pngs/580/297/png-transparent-wedding-floral-corner-beautiful-floral-arrangement-with-leaves.png"
+          );
+        }
+
+        await Promise.all([
+          ...imageSources.filter(Boolean).map(preloadImage),
+          typeof document !== "undefined" && document.fonts?.ready
+            ? document.fonts.ready.catch(() => undefined)
+            : Promise.resolve(),
+        ]);
+
+        if (active) setInvitation(loadedInvitation);
       })
       .catch((err) => {
         if (active)
