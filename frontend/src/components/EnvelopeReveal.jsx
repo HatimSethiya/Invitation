@@ -85,17 +85,17 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
       // then fade the card AND envelope together while the preloaded invitation
       // underneath starts its reveal.
       addTimer(() => setIsCardEmerging(true), 350);
-      // Let the full extraction animation finish before switching to the settled presentation.
-      // The old 1750ms timer interrupted the CSS extraction at its final frame, causing a snap.
-      addTimer(() => setIsCardPresented(true), 2550);
-      // Hold the fully presented card briefly, then dissolve the card and envelope together.
+      // Keep the extraction animation alive for its complete 2.5s keyframe timeline.
+      addTimer(() => setIsCardPresented(true), 2850);
+      // Hold the fully extracted card in the foreground before synchronously fading
+      // the card and envelope shell together into the already-prepared invitation.
       addTimer(() => {
         setIsDissolving(true);
         setIsDissolvingOut(true);
         setIsHandoffActive(true);
         if (onHandoffStart) onHandoffStart();
-      }, 3650);
-      addTimer(() => { if (onOpened) onOpened(); }, 4850);
+      }, 4100);
+      addTimer(() => { if (onOpened) onOpened(); }, 5100);
       return;
     }
 
