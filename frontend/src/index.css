@@ -3940,3 +3940,71 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
 .bohra-public-page.theme-whiteRoseGold .bohra-card-header .bohra-leader-line {
   font-weight: 500;
 }
+
+
+/* White Rose Gold layout correction: keep the Jaman description on the same
+   icon/text grid as the date and time rows, with a shared left text edge. */
+.bohra-public-page.theme-whiteRoseGold .bohra-description-detail-row {
+  grid-template-columns: 30px minmax(0, 1fr);
+  align-items: center;
+  column-gap: 12px;
+  width: 100%;
+  max-width: 510px;
+  margin-inline: auto;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-description-detail-row > .bohra-detail-icon {
+  align-self: center;
+  margin: 0;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-description-detail-row > div {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-description-detail-row .bohra-extra-event-description-inline {
+  width: 100%;
+  margin: 0;
+  text-align: left;
+  line-height: 1.5;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+/* Keep the Arabic Bismillah as one centered calligraphic line, with enough
+   vertical breathing room for its diacritics beneath the emblem. */
+.bohra-public-page.theme-whiteRoseGold .bohra-card-header .bohra-bismillah-calligraphy {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto 18px;
+  font-size: clamp(1.45rem, 4.8vw, 2.1rem);
+  line-height: 1.7;
+  text-wrap: nowrap;
+  white-space: nowrap;
+  overflow: visible;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-card-header .bohra-card-emblem {
+  margin-bottom: 12px;
+}
+
+/* Raza/Dua and spiritual-leader copy should flow together in one centered row
+   on roomy screens, returning to natural wrapping on narrow phones. */
+.bohra-public-page.theme-whiteRoseGold .bohra-card-header .bohra-raza-line,
+.bohra-public-page.theme-whiteRoseGold .bohra-card-header .bohra-leader-line {
+  display: inline-block;
+  width: auto;
+  max-width: 100%;
+  margin: 0 3px;
+  vertical-align: baseline;
+  line-height: 1.55;
+  white-space: nowrap;
+}
+@media (max-width: 480px) {
+  .bohra-public-page.theme-whiteRoseGold .bohra-card-header .bohra-raza-line,
+  .bohra-public-page.theme-whiteRoseGold .bohra-card-header .bohra-leader-line {
+    white-space: normal;
+  }
+  .bohra-public-page.theme-whiteRoseGold .bohra-description-detail-row {
+    column-gap: 10px;
+  }
+}
