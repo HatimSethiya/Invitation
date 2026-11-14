@@ -3888,3 +3888,23 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
   position: relative;
   z-index: 1;
 }
+
+/* Couple family details now sit directly under their matching name. */
+.bohra-public-page .bohra-couple-names > .bohra-couple-family-inline {
+  width: 100%;
+  max-width: min(100%, 520px);
+  margin: 0 !important;
+  padding: 0;
+  font-size: clamp(.76rem, 2.35vw, .94rem);
+  line-height: 1.45;
+  text-align: center;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.bohra-public-page.theme-whiteRoseGold .bohra-couple-names > .bohra-couple-family-inline {
+  color: #8c6654;
+  text-shadow: none;
+}
