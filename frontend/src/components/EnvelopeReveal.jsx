@@ -65,11 +65,13 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
     setIsAnticipating(true);
     setIsCurtainsOpening(true);
 
-    // Envelope reveal is shorter; the existing curtain timing is preserved.
-    const handoffDelay = isEnvelopeOpening ? 1250 : 1900;
-    const dissolveDelay = isEnvelopeOpening ? 2850 : 2100;
-    const stageExitDelay = isEnvelopeOpening ? 3850 : 4200;
-    const completionDelay = isEnvelopeOpening ? 4850 : 5500;
+    // Envelope sequence: cover pops fully into the foreground, holds, fades,
+    // then the underlying invitation begins its handoff. Keep curtain timing
+    // unchanged for all non-envelope opening styles.
+    const handoffDelay = isEnvelopeOpening ? 4250 : 1900;
+    const dissolveDelay = isEnvelopeOpening ? 3450 : 2100;
+    const stageExitDelay = isEnvelopeOpening ? 5250 : 4200;
+    const completionDelay = isEnvelopeOpening ? 6350 : 5500;
 
     addTimer(() => {
       setIsHandoffActive(true);
