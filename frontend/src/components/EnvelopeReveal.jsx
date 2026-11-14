@@ -3,6 +3,7 @@ import VelvetCurtains from "./cinematic/VelvetCurtains";
 import CardStationery from "./cinematic/CardStationery";
 import { resolveMediaUrl } from "../services/api";
 import "./cinematic/CinematicOpening.css";
+import "./cinematic/RoyalEnvelopeFinish.css";
 
 /**
  * EnvelopeReveal coordinates a clean invitation opening:
