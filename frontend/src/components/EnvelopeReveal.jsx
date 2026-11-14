@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import VelvetCurtains from "./cinematic/VelvetCurtains";
 import CardStationery from "./cinematic/CardStationery";
+import { resolveMediaUrl } from "../services/api";
 import "./cinematic/CinematicOpening.css";
 
 /**
@@ -79,6 +80,11 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
     addTimer(() => { if (onOpened) onOpened(); }, completionDelay);
   }, [addTimer, isEnvelopeOpening, onHandoffStart, onOpenMusic, onOpened]);
 
+  const handleEnvelopeSurfaceTap = useCallback((event) => {
+    if (event.target.closest("button")) return;
+    triggerSequence();
+  }, [triggerSequence]);
+
   const bride = invitation?.couple?.brideName || "Bride";
   const groom = invitation?.couple?.groomName || "Groom";
   const primaryNames = invitation?.couple?.nameOrder === "brideFirst" ? [bride, groom] : [groom, bride];
@@ -91,14 +97,14 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
     >
       {isEnvelopeOpening ? (
         <div className={"luxury-envelope-stage envelope-theme-" + (invitation?.theme || "bohraNikah") + (isCurtainsOpening ? " envelope-is-opening" : "") + (isDissolving ? " envelope-insert-dissolving" : "")}>
-          <div className="luxury-envelope-wrap">
+          <div className="luxury-envelope-wrap" onClick={handleEnvelopeSurfaceTap}>
             <div className="luxury-envelope" aria-label={"Wedding invitation envelope for " + primaryNames[0] + " and " + primaryNames[1]}>
               <div className="luxury-envelope-back" />
               <div className={"luxury-envelope-insert" + (invitation?.coverImageUrl ? " has-uploaded-cover-art" : "")}>
                 {invitation?.coverImageUrl ? (
                   <img
                     className="envelope-insert-cover-art"
-                    src={invitation.coverImageUrl}
+                    src={resolveMediaUrl(invitation.coverImageUrl)}
                     alt={"Uploaded invitation cover for " + primaryNames[0] + " and " + primaryNames[1]}
                     draggable="false"
                   />
@@ -118,7 +124,7 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
                 <span className="envelope-seal-monogram">{monogram}</span><span className="envelope-seal-ornament" aria-hidden="true">❦</span>
               </button>
             </div>
-            <p className="envelope-open-prompt"><span aria-hidden="true">✦</span> Tap the seal to unveil your invitation <span aria-hidden="true">✦</span></p>
+            <button className="envelope-open-prompt" type="button" onClick={triggerSequence} disabled={hasTriggeredRef.current} aria-label="Tap to open the wedding invitation"><span aria-hidden="true">✦</span> Tap to open invitation <span aria-hidden="true">✦</span></button>
           </div>
         </div>
       ) : (
