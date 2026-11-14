@@ -1321,3 +1321,103 @@
     radial-gradient(ellipse at 50% 0%,rgba(255,239,205,.36),transparent 62%),
     linear-gradient(180deg,rgba(112,56,39,.22),transparent);
 }
+
+
+/* White Rose Gold Royale: embossed pearl stationery with a dimensional rose-gold seal. */
+.cinematic-stage-overlay:has(.stationery-card-white-rose-gold) {
+  background: radial-gradient(ellipse at 50% 42%, rgba(255, 248, 241, 0.22), transparent 58%), linear-gradient(180deg, #6f4436 0%, #b98568 45%, #6b4032 100%);
+}
+.stationery-card.stationery-card-white-rose-gold {
+  position: relative; isolation: isolate; overflow: visible; border-radius: 28px;
+  filter: drop-shadow(0 24px 28px rgba(70, 34, 22, 0.38));
+  transform: translateY(-2px) rotateX(1.2deg);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), filter 0.55s ease;
+}
+.stationery-card.stationery-card-white-rose-gold::before {
+  display: block; position: absolute; z-index: 3; inset: 7px; content: "";
+  border: 1px solid rgba(255, 239, 221, 0.92); border-radius: 22px;
+  box-shadow: inset 0 0 0 1px rgba(177, 111, 77, 0.52), inset 0 0 0 5px rgba(255, 250, 244, 0.18), 0 0 0 1px rgba(194, 130, 94, 0.55);
+  pointer-events: none;
+}
+.stationery-card.stationery-card-white-rose-gold::after {
+  position: absolute; z-index: 4; inset: 0; content: ""; border-radius: inherit;
+  background: linear-gradient(115deg, transparent 18%, rgba(255, 250, 241, 0.22) 42%, transparent 58%);
+  opacity: 0.58; pointer-events: none;
+}
+.stationery-card-white-rose-gold .uploaded-cover-art {
+  position: relative; z-index: 1; border-radius: 28px;
+  filter: drop-shadow(0 2px 0 rgba(255, 248, 238, 0.9)) drop-shadow(0 12px 18px rgba(112, 62, 43, 0.28));
+}
+.stationery-card-white-rose-gold .stationery-rose-gold-cover {
+  position: relative; display: flex; width: 100%; height: 100%; box-sizing: border-box;
+  flex-direction: column; align-items: center; justify-content: space-between; overflow: hidden;
+  padding: clamp(22px, 5.2vh, 42px) clamp(18px, 5vw, 32px);
+  border: 1px solid #c58a69; border-radius: 27px; color: #704331; text-align: center;
+  background: radial-gradient(ellipse at 50% 24%, rgba(255, 255, 255, 0.92), transparent 52%), repeating-linear-gradient(0deg, rgba(163, 111, 77, 0.025) 0px, rgba(163, 111, 77, 0.025) 1px, transparent 1px, transparent 4px), linear-gradient(145deg, #fffaf6 0%, #f7e9df 48%, #efd6c7 100%);
+  box-shadow: inset 0 0 0 5px rgba(255, 252, 247, 0.88), inset 0 0 0 6px rgba(197, 137, 101, 0.35), inset 0 14px 24px rgba(255, 255, 255, 0.48), 0 5px 0 #c48a6b, 0 9px 0 #e6c0a7, 0 18px 28px rgba(87, 45, 29, 0.3);
+}
+.stationery-card-white-rose-gold .stationery-rose-gold-cover::before {
+  position: absolute; inset: 13px; content: ""; border: 1px solid rgba(183, 119, 82, 0.42); border-radius: 18px;
+  box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.36); pointer-events: none;
+}
+.rose-gold-cover-ornament {
+  z-index: 1; color: #b77b59; font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.1rem, 8vw, 3.2rem); line-height: 0.8;
+  text-shadow: 0 1px 0 #fff8ee, 0 2px 2px rgba(120, 65, 39, 0.2);
+}
+.rose-gold-cover-ornament-top { transform: rotate(180deg); }
+.rose-gold-cover-monogram {
+  z-index: 1; margin-top: 4px; color: #a76543; font-family: "Bodoni MT", Didot, Georgia, serif;
+  font-size: clamp(2.4rem, 10vw, 4.1rem); letter-spacing: 0.08em;
+  text-shadow: 0 1px 0 #fff9f2, 0 2px 0 rgba(183, 119, 82, 0.25), 0 5px 10px rgba(115, 59, 35, 0.18);
+}
+.rose-gold-cover-seal {
+  z-index: 2; position: relative; display: flex; width: clamp(62px, 18vw, 82px); height: clamp(62px, 18vw, 82px);
+  align-items: center; justify-content: center; gap: 2px; margin: 2px 0;
+  border: 2px solid #b87c58; border-radius: 50%; color: #7a472f;
+  background: radial-gradient(circle at 30% 24%, #fff8ef 0%, #edc7ad 48%, #bd805c 100%);
+  box-shadow: 0 4px 0 #9d6345, 0 7px 12px rgba(105, 53, 32, 0.25), inset 0 2px 3px rgba(255, 255, 255, 0.9), inset 0 -3px 5px rgba(112, 57, 34, 0.25);
+  font-family: Georgia, "Times New Roman", serif; font-size: clamp(0.85rem, 3.5vw, 1.15rem); font-weight: 700;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+.rose-gold-cover-seal::before {
+  position: absolute; width: calc(100% - 10px); height: calc(100% - 10px); content: "";
+  border: 1px dashed rgba(126, 72, 44, 0.55); border-radius: 50%;
+}
+.rose-gold-cover-seal i { color: #b77b59; font-size: 0.72em; font-style: italic; }
+.rose-gold-cover-couple, .rose-gold-cover-second-couple {
+  z-index: 1; display: flex; flex-direction: column; align-items: center; gap: clamp(3px, 1vh, 8px);
+  max-width: 100%; color: #70412e; font-family: "Bodoni MT", Didot, Georgia, serif;
+  font-size: clamp(1.8rem, 7.4vw, 3rem); font-weight: 600; line-height: 1.08; overflow-wrap: anywhere;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.82), 0 2px 2px rgba(115, 61, 39, 0.15);
+}
+.rose-gold-cover-couple em, .rose-gold-cover-second-couple em {
+  color: #bd805c; font-size: 0.42em; font-style: italic; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase;
+}
+.rose-gold-cover-second-couple { gap: 3px; font-size: clamp(1.1rem, 4.8vw, 1.7rem); }
+.rose-gold-cover-tap {
+  z-index: 2; display: inline-flex; align-items: center; justify-content: center; margin-top: 4px;
+  padding: 11px clamp(18px, 5vw, 28px); border: 1px solid #b77b59; border-radius: 999px; color: #75452f;
+  background: linear-gradient(135deg, #fff8f1 0%, #e8c2a8 50%, #fff5eb 100%);
+  box-shadow: 0 4px 0 #bd805c, 0 7px 12px rgba(110, 58, 35, 0.2), inset 0 1px 2px #fff;
+  font-size: clamp(0.78rem, 3.2vw, 0.95rem); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+}
+.stationery-card-container.is-anticipating .stationery-card-white-rose-gold {
+  transform: translateY(-7px) rotateX(0deg) scale(1.018); filter: drop-shadow(0 30px 32px rgba(70, 34, 22, 0.42));
+}
+.cinematic-stage-overlay:has(.stationery-card-white-rose-gold) .card-open-prompt,
+.cinematic-stage-overlay:has(.stationery-card-white-rose-gold) .prompt-text {
+  color: #fff1e4; text-shadow: 0 2px 12px rgba(80, 38, 24, 0.7);
+}
+.cinematic-stage-overlay:has(.stationery-card-white-rose-gold) .prompt-dot {
+  background: #f1c49e; box-shadow: 0 0 12px 2px rgba(244, 197, 151, 0.7);
+}
+@media (max-width: 600px) {
+  .stationery-card.stationery-card-white-rose-gold { border-radius: 24px; transform: translateY(-1px) rotateX(0.8deg); }
+  .stationery-card-white-rose-gold .stationery-rose-gold-cover { border-radius: 23px; padding: clamp(17px, 4vh, 28px) 16px; }
+  .stationery-card.stationery-card-white-rose-gold::before { inset: 6px; border-radius: 19px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stationery-card.stationery-card-white-rose-gold,
+  .stationery-card-container.is-anticipating .stationery-card-white-rose-gold { transform: none; transition: none; }
+}
