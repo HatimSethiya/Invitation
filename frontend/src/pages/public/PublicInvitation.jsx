@@ -114,9 +114,7 @@ function PublicInvitation() {
         ];
 
         if (loadedInvitation?.theme === "whiteRoseGold") {
-          imageSources.push(
-            "https://w7.pngwing.com/pngs/580/297/png-transparent-wedding-floral-corner-beautiful-floral-arrangement-with-leaves.png"
-          );
+          imageSources.push("/white-rose-gold-realistic-floral-frame.png");
         }
 
         await Promise.all([
@@ -546,6 +544,15 @@ function PublicInvitation() {
               )}
 
               <section className="bohra-couple-panel glass-panel">
+                {invitation.theme === "whiteRoseGold" && (
+                  <img
+                    className="bohra-realistic-floral-frame"
+                    src="/white-rose-gold-realistic-floral-frame.png"
+                    alt=""
+                    aria-hidden="true"
+                    draggable="false"
+                  />
+                )}
                 <img className="bohra-couple-floral-frame" src="/rose-gold-floral-couple-frame.svg" alt="" aria-hidden="true" draggable="false" />
                 <div className="bohra-couple-names">
                   <h1>{primaryNames[0]}</h1>
@@ -589,6 +596,15 @@ function PublicInvitation() {
                 (hasValue(invitation.secondCouple?.groomName) ||
                   hasValue(invitation.secondCouple?.brideName)) && (
                   <section className="bohra-couple-panel bohra-second-couple-panel glass-panel">
+                    {invitation.theme === "whiteRoseGold" && (
+                      <img
+                        className="bohra-realistic-floral-frame"
+                        src="/white-rose-gold-realistic-floral-frame.png"
+                        alt=""
+                        aria-hidden="true"
+                        draggable="false"
+                      />
+                    )}
                     <img className="bohra-couple-floral-frame" src="/rose-gold-floral-couple-frame.svg" alt="" aria-hidden="true" draggable="false" />
                     <div className="bohra-couple-names">
                       <h1>{secondNames[0]}</h1>
