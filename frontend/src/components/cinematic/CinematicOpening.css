@@ -2537,3 +2537,24 @@
     height: min(76vh, 720px) !important;
   }
 }
+
+
+/* TAHER & ZAINAB COVER CLEANUP — hide the idle duplicate card and mask its
+   faint rectangular artwork backing to the invitation's ornamental silhouette. */
+.cinematic-envelope-opening:not(.envelope-card-emerging):not(.envelope-card-presented)
+  .luxury-envelope-insert.has-uploaded-cover-art {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+.cinematic-envelope-opening .envelope-insert-cover-art,
+.cinematic-envelope-opening .envelope-extracted-cover-card {
+  border: 0 !important;
+  border-radius: 0 !important;
+  clip-path: polygon(
+    50% 0%, 45% 5%, 35% 9%, 24% 12%, 13% 18%, 3% 23%, 0% 29%,
+    0% 79%, 5% 86%, 15% 91%, 25% 95%, 50% 100%,
+    75% 95%, 85% 91%, 95% 86%, 100% 79%, 100% 29%,
+    97% 23%, 87% 18%, 76% 12%, 65% 9%, 55% 5%
+  ) !important;
+}
