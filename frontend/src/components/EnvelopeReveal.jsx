@@ -23,6 +23,8 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
   const [isCoverReady, setIsCoverReady] = useState(!invitation?.coverImageUrl);
 
   const hasTriggeredRef = useRef(false);
+  const hasCardPresentedRef = useRef(false);
+  const hasCardFadeStartedRef = useRef(false);
   const timersRef = useRef([]);
 
   const addTimer = useCallback((fn, delayMs) => {
@@ -65,7 +67,7 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    if (prefersReducedMotion) {
+    if (prefersReducedMotion && !isEnvelopeOpening) {
       setIsCurtainsOpening(true);
       setIsDissolving(true);
       setIsHandoffActive(true);
@@ -81,21 +83,19 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
     setIsCurtainsOpening(true);
 
     if (isEnvelopeOpening) {
-      // Three intentional phases: rise from the pocket, present fully in front,
-      // then fade the card AND envelope together while the preloaded invitation
-      // underneath starts its reveal.
-      addTimer(() => setIsCardEmerging(true), 350);
-      // Keep the extraction animation alive for its complete 2.5s keyframe timeline.
-      addTimer(() => setIsCardPresented(true), 2850);
-      // Hold the fully extracted card in the foreground before synchronously fading
-      // the card and envelope shell together into the already-prepared invitation.
+      // Start a CSS transition that progressively unmasks and lifts the separate,
+      // already-mounted cover image from the envelope pocket.
       addTimer(() => {
-        setIsDissolving(true);
-        setIsDissolvingOut(true);
-        setIsHandoffActive(true);
-        if (onHandoffStart) onHandoffStart();
-      }, 4100);
-      addTimer(() => { if (onOpened) onOpened(); }, 5100);
+        setIsCardEmerging(true);
+        // Fallback only: the normal phase change is driven by clip-path transitionend.
+        // This prevents a stalled browser event from leaving the guest stuck.
+        addTimer(() => {
+          if (hasCardPresentedRef.current) return;
+          hasCardPresentedRef.current = true;
+          setIsCardPresented(true);
+          addTimer(beginEnvelopeFade, 1250);
+        }, 2700);
+      }, 350);
       return;
     }
 
@@ -108,6 +108,30 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
     addTimer(() => setIsDissolvingOut(true), 4200);
     addTimer(() => { if (onOpened) onOpened(); }, 5500);
   }, [addTimer, isEnvelopeOpening, invitation?.coverImageUrl, isCoverReady, onHandoffStart, onOpenMusic, onOpened]);
+
+  const beginEnvelopeFade = useCallback(() => {
+    if (hasCardFadeStartedRef.current) return;
+    hasCardFadeStartedRef.current = true;
+    setIsDissolving(true);
+    setIsDissolvingOut(true);
+    setIsHandoffActive(true);
+    if (onHandoffStart) onHandoffStart();
+    addTimer(() => { if (onOpened) onOpened(); }, 950);
+  }, [addTimer, onHandoffStart, onOpened]);
+
+  const handleCardExtractionTransitionEnd = useCallback((event) => {
+    if (
+      event.target !== event.currentTarget ||
+      event.propertyName !== "clip-path" ||
+      !isCardEmerging ||
+      hasCardPresentedRef.current
+    ) return;
+
+    hasCardPresentedRef.current = true;
+    setIsCardPresented(true);
+    // Let the card settle in the foreground, then fade envelope + card together.
+    addTimer(beginEnvelopeFade, 1250);
+  }, [addTimer, beginEnvelopeFade, isCardEmerging]);
 
   const handleEnvelopeSurfaceTap = useCallback((event) => {
     if (event.target.closest("button")) return;
@@ -158,6 +182,7 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
           {invitation?.coverImageUrl && (
             <img
               className="envelope-extracted-cover-card"
+              onTransitionEnd={handleCardExtractionTransitionEnd}
               src={resolveMediaUrl(invitation.coverImageUrl)}
               alt="Wedding invitation cover card"
               draggable="false"
