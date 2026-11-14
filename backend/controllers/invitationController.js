@@ -98,7 +98,7 @@ const getAdminInvitation = async (req, res) => {
 
 const createInvitation = async (req, res) => {
   try {
-    const { title, slug, weddingDate, status, theme, cardType, coverImageUrl, couple, secondCouple, firstNikah, bohraDetails, events, family, story, gallery, venue, music, lockPassword } = req.body;
+    const { title, slug, weddingDate, status, theme, cardType, openingAnimation, coverImageUrl, couple, secondCouple, firstNikah, bohraDetails, events, family, story, gallery, venue, music, lockPassword } = req.body;
     if (!title?.trim() || !weddingDate) {
       return res.status(400).json({ success: false, message: "Title and wedding date are required." });
     }
@@ -116,6 +116,7 @@ const createInvitation = async (req, res) => {
       status,
       theme,
       cardType,
+      openingAnimation,
       coverImageUrl,
       couple,
       secondCouple,
@@ -149,6 +150,7 @@ const updateInvitation = async (req, res) => {
     if (status !== undefined) invitation.status = status;
     if (theme !== undefined) invitation.theme = theme;
     if (req.body.cardType !== undefined) invitation.cardType = req.body.cardType;
+    if (req.body.openingAnimation !== undefined) invitation.openingAnimation = req.body.openingAnimation;
     if (req.body.coverImageUrl !== undefined) invitation.coverImageUrl = req.body.coverImageUrl;
     if (couple !== undefined) invitation.couple = couple;
     if (req.body.secondCouple !== undefined) invitation.secondCouple = req.body.secondCouple;

@@ -164,6 +164,11 @@ const invitationSchema = new mongoose.Schema(
       enum: ["single", "double"],
       default: "single",
     },
+    openingAnimation: {
+      type: String,
+      enum: ["curtains", "envelope"],
+      default: "curtains",
+    },
     coverImageUrl: {
       type: String,
       trim: true,
