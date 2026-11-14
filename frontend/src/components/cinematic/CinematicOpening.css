@@ -2199,7 +2199,7 @@
   opacity: 0 !important;
   transform: translateY(-1.8vh) scale(.97) !important;
   transition:
-    opacity .95s cubic-bezier(.22, .72, .18, 1) !important,
+    opacity .95s cubic-bezier(.22, .72, .18, 1),
     transform .95s cubic-bezier(.22, .72, .18, 1) !important;
   pointer-events: none !important;
 }
