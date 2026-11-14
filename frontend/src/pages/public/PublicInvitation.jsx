@@ -509,7 +509,7 @@ function PublicInvitation() {
             <div className="bohra-card-inner-frame">
               <header className="bohra-card-header">
                 <span className="bohra-card-emblem" aria-hidden="true">✦</span>
-                <p className="bohra-bismillah" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+                <p className="bohra-bismillah bohra-bismillah-calligraphy" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
                 {hasValue(details.openingBlessing) && (
                   <p className="bohra-opening-line">{details.openingBlessing}</p>
                 )}
@@ -661,7 +661,25 @@ function PublicInvitation() {
               {hasValue(details.complimentsFrom) && (
                 <section className="bohra-compliments">
                   <span className="bohra-section-kicker">With The Best Compliments From</span>
-                  <p>{details.complimentsFrom}</p>
+                  {(() => {
+                    const complimentsText = details.complimentsFrom.trim();
+                    const presenceNoteIndex = complimentsText.search(/your presence/i);
+                    const familyLine = presenceNoteIndex >= 0
+                      ? complimentsText.slice(0, presenceNoteIndex).trim()
+                      : complimentsText;
+                    const presenceNote = presenceNoteIndex >= 0
+                      ? complimentsText.slice(presenceNoteIndex).trim()
+                      : "";
+
+                    return (
+                      <>
+                        <p className="bohra-compliments-family">{familyLine}</p>
+                        {presenceNote && (
+                          <p className="bohra-compliments-note">{presenceNote}</p>
+                        )}
+                      </>
+                    );
+                  })()}
                 </section>
               )}
 
