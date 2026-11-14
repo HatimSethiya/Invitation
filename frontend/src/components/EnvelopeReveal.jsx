@@ -119,7 +119,6 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
       )}
     </div>
   );
-  );
 }
 
 export default EnvelopeReveal;
