@@ -1995,3 +1995,52 @@
   transform: translate(-50%, -62%) scale(1.025);
   transition-delay: 0s, 0s, 0s;
 }
+
+
+/* --------------------------------------------------------------------------
+   INSERT MUST START INSIDE THE ENVELOPE — correction after mobile playback.
+   The earlier 142% starting offset placed the stationery BELOW the envelope,
+   so its upward travel looked like it was coming from underneath.
+   Start the card tucked into the envelope cavity and extract it upward.
+   Pocket remains in front, masking the lower card like a physical sleeve.
+   -------------------------------------------------------------------------- */
+.cinematic-envelope-opening .luxury-envelope-insert.has-uploaded-cover-art {
+  transform: translate(-50%, 55%) scale(.96) !important;
+  transition:
+    transform 1.55s cubic-bezier(.16, .82, .2, 1) .92s,
+    opacity .3s ease .92s,
+    box-shadow .8s ease !important;
+}
+
+.cinematic-envelope-opening .envelope-is-opening .luxury-envelope-insert.has-uploaded-cover-art {
+  z-index: 2 !important;
+  opacity: 1 !important;
+  transform: translate(-50%, -82%) scale(1) !important;
+  transition-delay: .92s, .92s, 0s !important;
+}
+
+/* Keep the pocket in the foreground; only the card area above its lip shows. */
+.cinematic-envelope-opening .luxury-envelope-pocket {
+  z-index: 5 !important;
+  opacity: 1 !important;
+  transform: none !important;
+  clip-path: polygon(0 0, 50% 58%, 100% 0, 100% 100%, 0 100%);
+}
+
+/* When the insert's exit begins, fade it at its extracted position. */
+.cinematic-envelope-opening .envelope-insert-dissolving .luxury-envelope-insert.has-uploaded-cover-art {
+  opacity: 0 !important;
+  transform: translate(-50%, -82%) scale(1.015) !important;
+  transition-delay: 0s, 0s, 0s !important;
+}
+
+@media (max-width: 600px) {
+  .cinematic-envelope-opening .luxury-envelope-insert.has-uploaded-cover-art {
+    bottom: -6%;
+    height: min(62vh, 570px);
+    transform: translate(-50%, 55%) scale(.96) !important;
+  }
+  .cinematic-envelope-opening .envelope-is-opening .luxury-envelope-insert.has-uploaded-cover-art {
+    transform: translate(-50%, -82%) scale(1) !important;
+  }
+}
