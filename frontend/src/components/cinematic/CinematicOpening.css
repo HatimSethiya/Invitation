@@ -2547,8 +2547,7 @@
   visibility: hidden !important;
 }
 
-.cinematic-envelope-opening .envelope-insert-cover-art,
-.cinematic-envelope-opening .envelope-extracted-cover-card {
+.cinematic-envelope-opening .envelope-insert-cover-art {
   border: 0 !important;
   border-radius: 0 !important;
   clip-path: polygon(
