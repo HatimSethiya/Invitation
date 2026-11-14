@@ -50,6 +50,110 @@ const cardItemVariants = {
   },
 };
 
+function getWeddingCountdownTarget(invitation) {
+  const rawWeddingDate = invitation?.weddingDate;
+  const dateKey = typeof rawWeddingDate === "string"
+    ? rawWeddingDate.slice(0, 10)
+    : rawWeddingDate instanceof Date && !Number.isNaN(rawWeddingDate.getTime())
+      ? rawWeddingDate.toISOString().slice(0, 10)
+      : "";
+
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dateKey)) return null;
+
+  const [year, month, day] = dateKey.split("-").map(Number);
+  let target = new Date(year, month - 1, day, 0, 0, 0, 0);
+
+  // When a ceremony time is entered for the wedding date, count down to that
+  // local time; otherwise count down to the beginning of the wedding day.
+  const matchingEvent = (invitation.events || []).find((event) => {
+    const eventDate = typeof event?.date === "string"
+      ? event.date.slice(0, 10)
+      : event?.date instanceof Date && !Number.isNaN(event.date.getTime())
+        ? event.date.toISOString().slice(0, 10)
+        : "";
+    return eventDate === dateKey && typeof event?.time === "string" && event.time.trim();
+  });
+
+  const timeMatch = matchingEvent?.time.match(
+    /(\d{1,2})(?::(\d{2}))?\s*(a\.?m\.?|p\.?m\.?)/i
+  );
+
+  if (timeMatch) {
+    let hours = Number(timeMatch[1]);
+    const minutes = Number(timeMatch[2] || 0);
+    const meridiem = timeMatch[3].replace(/\./g, "").toLowerCase();
+
+    if (hours >= 1 && hours <= 12 && minutes >= 0 && minutes <= 59) {
+      if (meridiem === "p.m" || meridiem === "pm") hours = hours % 12 + 12;
+      if (meridiem === "a.m" || meridiem === "am") hours %= 12;
+      target = new Date(year, month - 1, day, hours, minutes, 0, 0);
+    }
+  }
+
+  return target;
+}
+
+function RoyalWeddingCountdown({ targetDate }) {
+  const targetTime = targetDate?.getTime() || 0;
+  const [remaining, setRemaining] = useState(() =>
+    Math.max(0, targetTime - Date.now())
+  );
+
+  useEffect(() => {
+    if (!targetTime) return undefined;
+
+    const updateRemaining = () => {
+      setRemaining(Math.max(0, targetTime - Date.now()));
+    };
+
+    updateRemaining();
+    const intervalId = window.setInterval(updateRemaining, 1000);
+    return () => window.clearInterval(intervalId);
+  }, [targetTime]);
+
+  const totalSeconds = Math.floor(remaining / 1000);
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  if (!targetTime) return null;
+
+  return (
+    <section className="bohra-royal-countdown-panel" aria-label="Wedding countdown">
+      <span className="bohra-countdown-overline">
+        {remaining > 0 ? "COUNTING DOWN TO OUR SPECIAL DAY" : "ALHAMDULILLAH · THE DAY IS HERE"}
+      </span>
+      <h2 className="bohra-countdown-title">
+        {remaining > 0 ? "A Beautiful Beginning Awaits" : "The Celebration Has Begun"}
+      </h2>
+      {remaining > 0 ? (
+        <div className="bohra-countdown-units" role="timer" aria-live="off">
+          {[
+            { value: days, label: "DAYS" },
+            { value: hours, label: "HOURS" },
+            { value: minutes, label: "MINUTES" },
+            { value: seconds, label: "SECONDS" },
+          ].map((unit) => (
+            <div className="bohra-countdown-unit" key={unit.label}>
+              <span className="bohra-countdown-value">{String(unit.value).padStart(2, "0")}</span>
+              <span className="bohra-countdown-label">{unit.label}</span>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="bohra-countdown-live-message">
+          With love, duas and blessings — the wedding day is now unfolding.
+        </p>
+      )}
+      <div className="bohra-countdown-ornament" aria-hidden="true">
+        <span>✧</span><i>❖</i><span>✧</span>
+      </div>
+      <p className="bohra-countdown-footer">Two hearts · One blessed beginning</p>
+    </section>
+  );
+}
+
 function PublicInvitation() {
   const { slug } = useParams();
   const [invitation, setInvitation] = useState(null);
@@ -385,6 +489,7 @@ function PublicInvitation() {
     const secondGroom = invitation.secondCouple?.groomName || "Groom";
     const secondNames = invitation.secondCouple?.nameOrder === "brideFirst" ? [secondBride, secondGroom] : [secondGroom, secondBride];
     const hasValue = (value) => typeof value === "string" && value.trim().length > 0;
+    const countdownTarget = getWeddingCountdownTarget(invitation);
 
     const protectedDesignSlugs = new Set(["mufaddalweddinginvitation", "mariya"]);
     const normalizedSlug = (invitation.slug || "").toLowerCase();
@@ -590,6 +695,10 @@ function PublicInvitation() {
                   )}
                 </div>
               </section>
+
+              {invitation.theme === "whiteRoseGold" && countdownTarget && (
+                <RoyalWeddingCountdown targetDate={countdownTarget} />
+              )}
 
               {invitation.cardType === "double" && (
                 <section className="bohra-officiant-panel glass-panel">
