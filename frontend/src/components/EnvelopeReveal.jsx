@@ -31,7 +31,20 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
     return id;
   }, []);
 
-  // Decode uploaded cover art before enabling the opening gesture, so it never pops in mid-animation.\n  useEffect(() => {\n    const coverUrl = invitation?.coverImageUrl ? resolveMediaUrl(invitation.coverImageUrl) : null;\n    if (!coverUrl) { setIsCoverReady(true); return; }\n    setIsCoverReady(false);\n    const image = new Image();\n    image.onload = () => setIsCoverReady(true);\n    image.onerror = () => setIsCoverReady(true);\n    image.src = coverUrl;\n    if (typeof image.decode === "function") image.decode().then(() => setIsCoverReady(true)).catch(() => {});\n    return () => { image.onload = null; image.onerror = null; };\n  }, [invitation?.coverImageUrl]);\n\n  // Cleanup all timers on unmount
+  // Decode uploaded cover art before enabling the opening gesture, so it never pops in mid-animation.
+  useEffect(() => {
+    const coverUrl = invitation?.coverImageUrl ? resolveMediaUrl(invitation.coverImageUrl) : null;
+    if (!coverUrl) { setIsCoverReady(true); return; }
+    setIsCoverReady(false);
+    const image = new Image();
+    image.onload = () => setIsCoverReady(true);
+    image.onerror = () => setIsCoverReady(true);
+    image.src = coverUrl;
+    if (typeof image.decode === "function") image.decode().then(() => setIsCoverReady(true)).catch(() => {});
+    return () => { image.onload = null; image.onerror = null; };
+  }, [invitation?.coverImageUrl]);
+
+  // Cleanup all timers on unmount
   useEffect(() => {
     return () => {
       timersRef.current.forEach((id) => clearTimeout(id));
@@ -71,15 +84,15 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
       // Three intentional phases: rise from the pocket, present fully in front,
       // then fade the card AND envelope together while the preloaded invitation
       // underneath starts its reveal.
-      addTimer(() => setIsCardEmerging(true), 420);
-      addTimer(() => setIsCardPresented(true), 1480);
+      addTimer(() => setIsCardEmerging(true), 700);
+      addTimer(() => setIsCardPresented(true), 2250);
       addTimer(() => {
         setIsDissolving(true);
+        setIsDissolvingOut(true);
         setIsHandoffActive(true);
         if (onHandoffStart) onHandoffStart();
-      }, 3300);
-      addTimer(() => setIsDissolvingOut(true), 4250);
-      addTimer(() => { if (onOpened) onOpened(); }, 5200);
+      }, 3900);
+      addTimer(() => { if (onOpened) onOpened(); }, 4900);
       return;
     }
 
