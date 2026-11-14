@@ -11,6 +11,7 @@ import "./cinematic/CinematicOpening.css";
  * 4. The real invitation page fades and scales into view.
  */
 function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
+  const isEnvelopeOpening = invitation?.openingAnimation === "envelope";
   const [isAnticipating, setIsAnticipating] = useState(false);
   const [isDissolving, setIsDissolving] = useState(false);
   const [isCurtainsOpening, setIsCurtainsOpening] = useState(false);
@@ -63,47 +64,61 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
     setIsAnticipating(true);
     setIsCurtainsOpening(true);
 
-    // Begin the page crossfade after the curtains have had time to travel, while
-    // the stationery still remains visible to bridge both scenes.
+    // Envelope reveal is shorter; the existing curtain timing is preserved.
+    const handoffDelay = isEnvelopeOpening ? 1250 : 1900;
+    const dissolveDelay = isEnvelopeOpening ? 1650 : 2100;
+    const stageExitDelay = isEnvelopeOpening ? 2850 : 4200;
+    const completionDelay = isEnvelopeOpening ? 3800 : 5500;
+
     addTimer(() => {
       setIsHandoffActive(true);
       if (onHandoffStart) onHandoffStart();
-    }, 1900);
+    }, handoffDelay);
+    addTimer(() => setIsDissolving(true), dissolveDelay);
+    addTimer(() => setIsDissolvingOut(true), stageExitDelay);
+    addTimer(() => { if (onOpened) onOpened(); }, completionDelay);
+  }, [addTimer, isEnvelopeOpening, onHandoffStart, onOpenMusic, onOpened]);
 
-    // Let the card dissolve slowly after the page begins to appear behind it.
-    addTimer(() => {
-      setIsDissolving(true);
-    }, 2100);
-
-    // Fade the stage only after the curtain blend has mostly completed.
-    addTimer(() => {
-      setIsDissolvingOut(true);
-    }, 4200);
-
-    // Keep the overlay mounted until the page transition has finished.
-    addTimer(() => {
-      if (onOpened) onOpened();
-    }, 5500);
-  }, [addTimer, onHandoffStart, onOpenMusic, onOpened]);
+  const bride = invitation?.couple?.brideName || "Bride";
+  const groom = invitation?.couple?.groomName || "Groom";
+  const primaryNames = invitation?.couple?.nameOrder === "brideFirst" ? [bride, groom] : [groom, bride];
+  const monogram = (primaryNames[0][0] || "G").toUpperCase() + "&" + (primaryNames[1][0] || "B").toUpperCase();
 
   return (
     <div
-      className={`cinematic-stage-overlay ${
-        isHandoffActive ? "stage-handoff-active" : ""
-      } ${isDissolvingOut ? "stage-dissolving-out" : ""}`}
+      className={"cinematic-stage-overlay " + (isHandoffActive ? "stage-handoff-active " : "") + (isDissolvingOut ? "stage-dissolving-out " : "") + (isEnvelopeOpening ? "cinematic-envelope-opening" : "")}
       aria-label="Wedding invitation cinematic opening"
     >
-      {/* Layer 1: Realistic Heavy Velvet Theatre Curtains */}
-      <VelvetCurtains isOpening={isCurtainsOpening} theme={invitation?.theme} />
-
-      {/* Invitation stationery fades away cleanly after the curtains open. */}
-      <CardStationery
-        invitation={invitation}
-        isAnticipating={isAnticipating}
-        isDissolving={isDissolving}
-        onCardTap={triggerSequence}
-      />
+      {isEnvelopeOpening ? (
+        <div className={"luxury-envelope-stage envelope-theme-" + (invitation?.theme || "bohraNikah") + (isCurtainsOpening ? " envelope-is-opening" : "") + (isDissolving ? " envelope-insert-dissolving" : "")}>
+          <div className="luxury-envelope-wrap">
+            <div className="luxury-envelope" aria-label={"Wedding invitation envelope for " + primaryNames[0] + " and " + primaryNames[1]}>
+              <div className="luxury-envelope-back" />
+              <div className="luxury-envelope-insert">
+                <span className="envelope-insert-ornament" aria-hidden="true">✦</span>
+                <span className="envelope-insert-monogram">{monogram}</span>
+                <span className="envelope-insert-couple"><span>{primaryNames[0]}</span><em>Weds</em><span>{primaryNames[1]}</span></span>
+                {invitation?.cardType === "double" && invitation?.secondCouple && <span className="envelope-insert-second-couple">{[invitation.secondCouple.groomName, invitation.secondCouple.brideName].filter(Boolean).join(" · ")}</span>}
+                <span className="envelope-insert-date">{invitation?.weddingDate ? new Date(invitation.weddingDate).toLocaleDateString(undefined, { month: "long", year: "numeric" }) : "Wedding Invitation"}</span>
+              </div>
+              <div className="luxury-envelope-pocket" />
+              <div className="luxury-envelope-flap" />
+              <button className="luxury-envelope-seal" type="button" onClick={triggerSequence} disabled={hasTriggeredRef.current} aria-label="Tap the wax seal to open the wedding invitation">
+                <span className="envelope-seal-monogram">{monogram}</span><span className="envelope-seal-ornament" aria-hidden="true">❦</span>
+              </button>
+            </div>
+            <p className="envelope-open-prompt"><span aria-hidden="true">✦</span> Tap the seal to unveil your invitation <span aria-hidden="true">✦</span></p>
+          </div>
+        </div>
+      ) : (
+        <>
+          {/* Curtain opening remains unchanged for cards that select it or predate this option. */}
+          <VelvetCurtains isOpening={isCurtainsOpening} theme={invitation?.theme} />
+          <CardStationery invitation={invitation} isAnticipating={isAnticipating} isDissolving={isDissolving} onCardTap={triggerSequence} />
+        </>
+      )}
     </div>
+  );
   );
 }
 
