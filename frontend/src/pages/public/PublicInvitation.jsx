@@ -555,26 +555,40 @@ function PublicInvitation() {
                 )}
                 <img className="bohra-couple-floral-frame" src="/rose-gold-floral-couple-frame.svg" alt="" aria-hidden="true" draggable="false" />
                 <div className="bohra-couple-names">
-                  <h1>{primaryNames[0]}</h1>
-                  <span className="bohra-weds">Weds</span>
-                  <h1>{primaryNames[1]}</h1>
+                  {invitation.couple?.nameOrder === "brideFirst" ? (
+                    <>
+                      <h1>{bride}</h1>
+                      {hasValue(details.firstCoupleBrideFamilyLine || details.brideFamilyLine) && (
+                        <p className="bohra-bride-family bohra-couple-family-inline">
+                          {details.firstCoupleBrideFamilyLine || details.brideFamilyLine}
+                        </p>
+                      )}
+                      <span className="bohra-weds">Weds</span>
+                      <h1>{groom}</h1>
+                      {hasValue(details.firstCoupleGroomFamilyLine) && (
+                        <p className="bohra-groom-family bohra-couple-family-inline">
+                          {details.firstCoupleGroomFamilyLine}
+                        </p>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <h1>{groom}</h1>
+                      {hasValue(details.firstCoupleGroomFamilyLine) && (
+                        <p className="bohra-groom-family bohra-couple-family-inline">
+                          {details.firstCoupleGroomFamilyLine}
+                        </p>
+                      )}
+                      <span className="bohra-weds">Weds</span>
+                      <h1>{bride}</h1>
+                      {hasValue(details.firstCoupleBrideFamilyLine || details.brideFamilyLine) && (
+                        <p className="bohra-bride-family bohra-couple-family-inline">
+                          {details.firstCoupleBrideFamilyLine || details.brideFamilyLine}
+                        </p>
+                      )}
+                    </>
+                  )}
                 </div>
-                {(hasValue(details.firstCoupleBrideFamilyLine || details.brideFamilyLine) || hasValue(details.firstCoupleGroomFamilyLine)) && (
-                  <div className="bohra-couple-family-lines">
-                    {hasValue(details.firstCoupleBrideFamilyLine || details.brideFamilyLine) && (
-                      <p className="bohra-bride-family">
-                        <span className="bohra-family-line-label">Bride's family</span>
-                        {details.firstCoupleBrideFamilyLine || details.brideFamilyLine}
-                      </p>
-                    )}
-                    {hasValue(details.firstCoupleGroomFamilyLine) && (
-                      <p className="bohra-groom-family">
-                        <span className="bohra-family-line-label">Groom's family</span>
-                        {details.firstCoupleGroomFamilyLine}
-                      </p>
-                    )}
-                  </div>
-                )}
               </section>
 
               {invitation.cardType === "double" && (
@@ -607,26 +621,40 @@ function PublicInvitation() {
                     )}
                     <img className="bohra-couple-floral-frame" src="/rose-gold-floral-couple-frame.svg" alt="" aria-hidden="true" draggable="false" />
                     <div className="bohra-couple-names">
-                      <h1>{secondNames[0]}</h1>
-                      <span className="bohra-weds">Weds</span>
-                      <h1>{secondNames[1]}</h1>
+                      {invitation.secondCouple?.nameOrder === "brideFirst" ? (
+                        <>
+                          <h1>{secondBride}</h1>
+                          {hasValue(details.secondCoupleBrideFamilyLine) && (
+                            <p className="bohra-bride-family bohra-couple-family-inline">
+                              {details.secondCoupleBrideFamilyLine}
+                            </p>
+                          )}
+                          <span className="bohra-weds">Weds</span>
+                          <h1>{secondGroom}</h1>
+                          {hasValue(details.secondCoupleGroomFamilyLine) && (
+                            <p className="bohra-groom-family bohra-couple-family-inline">
+                              {details.secondCoupleGroomFamilyLine}
+                            </p>
+                          )}
+                        </>
+                      ) : (
+                        <>
+                          <h1>{secondGroom}</h1>
+                          {hasValue(details.secondCoupleGroomFamilyLine) && (
+                            <p className="bohra-groom-family bohra-couple-family-inline">
+                              {details.secondCoupleGroomFamilyLine}
+                            </p>
+                          )}
+                          <span className="bohra-weds">Weds</span>
+                          <h1>{secondBride}</h1>
+                          {hasValue(details.secondCoupleBrideFamilyLine) && (
+                            <p className="bohra-bride-family bohra-couple-family-inline">
+                              {details.secondCoupleBrideFamilyLine}
+                            </p>
+                          )}
+                        </>
+                      )}
                     </div>
-                    {(hasValue(details.secondCoupleBrideFamilyLine) || hasValue(details.secondCoupleGroomFamilyLine)) && (
-                      <div className="bohra-couple-family-lines">
-                        {hasValue(details.secondCoupleBrideFamilyLine) && (
-                          <p className="bohra-bride-family">
-                            <span className="bohra-family-line-label">Bride's family</span>
-                            {details.secondCoupleBrideFamilyLine}
-                          </p>
-                        )}
-                        {hasValue(details.secondCoupleGroomFamilyLine) && (
-                          <p className="bohra-groom-family">
-                            <span className="bohra-family-line-label">Groom's family</span>
-                            {details.secondCoupleGroomFamilyLine}
-                          </p>
-                        )}
-                      </div>
-                    )}
                   </section>
                 )}
 
