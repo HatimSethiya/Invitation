@@ -270,6 +270,9 @@ function PublicInvitation() {
     let particles = [];
 
     const random = (min, max) => min + Math.random() * (max - min);
+    // This canvas is purely decorative; a slightly reduced backing resolution
+    // keeps its full-card redraws inexpensive while retaining a crisp appearance.
+    const canvasScale = 0.72;
 
     const createParticle = (x, y, isScrollBurst = false) => {
       const life = random(1.1, 2.3);
@@ -290,16 +293,17 @@ function PublicInvitation() {
     const resizeCanvas = () => {
       width = card.clientWidth;
       height = card.clientHeight;
-      // A 1:1 backing store keeps the tall card canvas inexpensive on mobile.
-      canvas.width = Math.max(1, Math.round(width));
-      canvas.height = Math.max(1, Math.round(height));
+      // Render below CSS pixel resolution to lower the cost of clearing and
+      // painting a very tall invitation card on every animation frame.
+      canvas.width = Math.max(1, Math.round(width * canvasScale));
+      canvas.height = Math.max(1, Math.round(height * canvasScale));
       canvas.style.width = "100%";
       canvas.style.height = "100%";
-      context.setTransform(1, 0, 0, 1, 0, 0);
+      context.setTransform(canvasScale, 0, 0, canvasScale, 0, 0);
 
       const particleCount = Math.min(
-        115,
-        Math.max(80, Math.round((width * height) / 15000))
+        72,
+        Math.max(42, Math.round((width * height) / 26000))
       );
       particles = Array.from({ length: particleCount }, () =>
         createParticle(random(0, width), random(0, height))
@@ -386,7 +390,7 @@ function PublicInvitation() {
 
     const animate = (timestamp) => {
       frameId = window.requestAnimationFrame(animate);
-      if (timestamp - lastFrameTime < 30) return;
+      if (timestamp - lastFrameTime < 40) return;
 
       const deltaSeconds = Math.min(
         0.05,
@@ -402,15 +406,15 @@ function PublicInvitation() {
       const scrollDelta = Math.abs(currentScrollY - lastScrollY);
       const now = performance.now();
 
-      if (scrollDelta > 2 && now - lastBurstTime > 65) {
+      if (scrollDelta > 2 && now - lastBurstTime > 110) {
         const cardTop = card.getBoundingClientRect().top + window.scrollY;
         const visibleTop = Math.max(
           0,
           Math.min(height, currentScrollY - cardTop + 14)
         );
         const burstCount = Math.min(
-          16,
-          Math.max(4, Math.round(scrollDelta / 2))
+          8,
+          Math.max(3, Math.round(scrollDelta / 4))
         );
 
         for (let index = 0; index < burstCount; index += 1) {
