@@ -4271,3 +4271,30 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
     transform: none;
   }
 }
+
+
+/* Public invitation scroll performance: preserve the premium glass finish with
+   lighter compositing, and avoid promoting every event card to its own GPU layer. */
+.bohra-public-page .bohra-extra-event {
+  backdrop-filter: blur(9px) saturate(1.12);
+  -webkit-backdrop-filter: blur(9px) saturate(1.12);
+  will-change: auto;
+}
+
+.bohra-public-page .glass-panel {
+  backdrop-filter: blur(8px) saturate(1.06);
+  -webkit-backdrop-filter: blur(8px) saturate(1.06);
+}
+
+.bohra-public-page .bohra-extra-event,
+.bohra-public-page .glass-panel {
+  backface-visibility: hidden;
+}
+
+@media (max-width: 600px) {
+  .bohra-public-page .bohra-extra-event,
+  .bohra-public-page .glass-panel {
+    backdrop-filter: blur(6px) saturate(1.04);
+    -webkit-backdrop-filter: blur(6px) saturate(1.04);
+  }
+}
