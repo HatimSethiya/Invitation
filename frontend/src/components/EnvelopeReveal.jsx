@@ -67,9 +67,9 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
 
     // Envelope reveal is shorter; the existing curtain timing is preserved.
     const handoffDelay = isEnvelopeOpening ? 1250 : 1900;
-    const dissolveDelay = isEnvelopeOpening ? 1650 : 2100;
-    const stageExitDelay = isEnvelopeOpening ? 2850 : 4200;
-    const completionDelay = isEnvelopeOpening ? 3800 : 5500;
+    const dissolveDelay = isEnvelopeOpening ? 2850 : 2100;
+    const stageExitDelay = isEnvelopeOpening ? 3850 : 4200;
+    const completionDelay = isEnvelopeOpening ? 4850 : 5500;
 
     addTimer(() => {
       setIsHandoffActive(true);
