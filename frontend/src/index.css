@@ -4017,3 +4017,80 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
     column-gap: 10px;
   }
 }
+
+
+/* White Rose Gold Royale: compact event cards with a balanced premium footprint. */
+.bohra-public-page.theme-whiteRoseGold .bohra-events-stagger {
+  gap: 14px;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-events-stagger > .bohra-extra-event {
+  width: min(100%, 540px);
+  justify-self: center;
+  padding: 18px 20px;
+  border-radius: 21px;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-additional-events > .bohra-section-kicker {
+  margin-bottom: 12px;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-extra-event h3 {
+  font-size: clamp(1.28rem, 3.8vw, 1.72rem);
+  line-height: 1.12;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-extra-event-rule {
+  max-width: 220px;
+  margin: 9px auto 13px;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-extra-event-details {
+  max-width: 440px;
+  gap: 8px;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-extra-event-details .bohra-detail-row {
+  grid-template-columns: 24px minmax(0, 1fr);
+  align-items: center;
+  gap: 9px;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-extra-event-details .bohra-detail-icon {
+  width: 24px;
+  height: 24px;
+  font-size: .92rem;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-extra-event-details .bohra-detail-row strong,
+.bohra-public-page.theme-whiteRoseGold .bohra-extra-event-details .bohra-detail-row div span {
+  font-size: .92rem;
+  line-height: 1.4;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-extra-event .bohra-description-detail-row {
+  max-width: 440px;
+  margin-top: 9px;
+  padding-left: 33px;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-extra-event .bohra-extra-event-description-inline {
+  padding: 6px 11px;
+  border-radius: 8px;
+  font-size: .88rem;
+  line-height: 1.45;
+}
+.bohra-public-page.theme-whiteRoseGold .bohra-extra-event-map-link {
+  margin-top: 11px;
+  padding: 8px 13px;
+  font-size: .78rem;
+}
+@media (max-width: 600px) {
+  .bohra-public-page.theme-whiteRoseGold .bohra-events-stagger {
+    gap: 11px;
+  }
+  .bohra-public-page.theme-whiteRoseGold .bohra-events-stagger > .bohra-extra-event {
+    padding: 15px 14px;
+    border-radius: 18px;
+  }
+  .bohra-public-page.theme-whiteRoseGold .bohra-extra-event-rule {
+    margin: 8px auto 11px;
+  }
+  .bohra-public-page.theme-whiteRoseGold .bohra-extra-event-details {
+    gap: 7px;
+  }
+  .bohra-public-page.theme-whiteRoseGold .bohra-extra-event .bohra-description-detail-row {
+    margin-top: 8px;
+    padding-left: 30px;
+  }
+}
