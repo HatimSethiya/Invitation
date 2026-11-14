@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" fill="none">
+  <defs>
+    <linearGradient id="petal" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#fff" stop-opacity=".98"/>
+      <stop offset=".52" stop-color="#f1e5ff" stop-opacity=".9"/>
+      <stop offset="1" stop-color="#b99add" stop-opacity=".8"/>
+    </linearGradient>
+    <linearGradient id="leaf" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#a98bc9"/>
+      <stop offset="1" stop-color="#5d3b86"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#fff" stop-opacity=".34"/>
+      <stop offset=".48" stop-color="#e9dcfa" stop-opacity=".08"/>
+      <stop offset="1" stop-color="#fff" stop-opacity=".3"/>
+    </linearGradient>
+    <g id="flower">
+      <g fill="url(#petal)" stroke="#a98bc9" stroke-opacity=".7" stroke-width="1.3">
+        <ellipse cy="-13" rx="7.5" ry="14"/>
+        <ellipse cy="-13" rx="7.5" ry="14" transform="rotate(45)"/>
+        <ellipse cy="-13" rx="7.5" ry="14" transform="rotate(90)"/>
+        <ellipse cy="-13" rx="7.5" ry="14" transform="rotate(135)"/>
+        <ellipse cy="-13" rx="7.5" ry="14" transform="rotate(180)"/>
+        <ellipse cy="-13" rx="7.5" ry="14" transform="rotate(225)"/>
+        <ellipse cy="-13" rx="7.5" ry="14" transform="rotate(270)"/>
+        <ellipse cy="-13" rx="7.5" ry="14" transform="rotate(315)"/>
+      </g>
+      <circle r="6" fill="#fff9e9" stroke="#b394d2" stroke-width="1.5"/>
+      <circle r="2.2" fill="#c6a45b"/>
+    </g>
+    <g id="sprig" stroke="url(#leaf)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M0 0 Q20 -26 45 -50 Q61 -67 75 -93"/>
+      <path d="M18 -22 Q-4 -28 -8 -45 Q10 -46 18 -22Z" fill="#bba3da" fill-opacity=".85"/>
+      <path d="M35 -40 Q57 -38 65 -55 Q44 -59 35 -40Z" fill="#8f70b7" fill-opacity=".88"/>
+      <path d="M49 -61 Q27 -68 28 -84 Q47 -80 49 -61Z" fill="#cbb9e4" fill-opacity=".9"/>
+      <path d="M60 -78 Q80 -77 88 -92 Q68 -96 60 -78Z" fill="#9a7cbe" fill-opacity=".9"/>
+      <path d="M9 -12 Q-9 -13 -17 -28 Q0 -32 9 -12Z" fill="#d9c9ed"/>
+    </g>
+  </defs>
+  <rect x="1.5" y="1.5" width="897" height="357" rx="32" fill="url(#glass)" stroke="#fff" stroke-opacity=".95" stroke-width="3"/>
+  <rect x="8" y="8" width="884" height="344" rx="27" stroke="#bda2df" stroke-opacity=".65" stroke-width="1.5"/>
+  <path d="M24 62 Q24 20 68 20 H188 M712 20 H832 Q876 20 876 62 M24 298 Q24 340 68 340 H188 M712 340 H832 Q876 340 876 298" stroke="#fff" stroke-opacity=".85" stroke-width="2"/>
+  <g opacity=".96">
+    <path d="M28 333 C68 285 74 235 100 190 C120 156 147 139 169 117" stroke="#8b68b2" stroke-width="2.5" stroke-linecap="round"/>
+    <use href="#sprig" transform="translate(70 333) rotate(-15) scale(1.1)"/>
+    <use href="#sprig" transform="translate(110 333) rotate(12) scale(.88)"/>
+    <use href="#sprig" transform="translate(42 315) rotate(-38) scale(.66)"/>
+    <use href="#flower" transform="translate(84 280) scale(1.03)"/>
+    <use href="#flower" transform="translate(133 235) scale(.72)"/>
+    <use href="#flower" transform="translate(48 321) scale(.55)"/>
+    <use href="#flower" transform="translate(162 310) scale(.52)"/>
+    <path d="M872 333 C832 285 826 235 800 190 C780 156 753 139 731 117" stroke="#8b68b2" stroke-width="2.5" stroke-linecap="round"/>
+    <use href="#sprig" transform="translate(830 333) scale(-1.1 1.1) rotate(-15)"/>
+    <use href="#sprig" transform="translate(790 333) scale(-.88 .88) rotate(12)"/>
+    <use href="#sprig" transform="translate(858 315) scale(-.66 .66) rotate(-38)"/>
+    <use href="#flower" transform="translate(816 280) scale(1.03)"/>
+    <use href="#flower" transform="translate(767 235) scale(.72)"/>
+    <use href="#flower" transform="translate(852 321) scale(.55)"/>
+    <use href="#flower" transform="translate(738 310) scale(.52)"/>
+  </g>
+  <g stroke="#b49ad4" stroke-width="1.3" stroke-opacity=".85">
+    <path d="M260 32 H384 M516 32 H640" />
+    <path d="M260 328 H384 M516 328 H640" />
+    <path d="M394 32 l6 -5 6 5 -6 5Z M494 32 l6 -5 6 5 -6 5Z M394 328 l6 -5 6 5 -6 5Z M494 328 l6 -5 6 5 -6 5Z" fill="#fff"/>
+  </g>
+  <g fill="#b49ad4" fill-opacity=".85">
+    <path d="M450 14 l7 8 -7 8 -7 -8Z"/>
+    <path d="M450 330 l7 8 -7 8 -7 -8Z"/>
+  </g>
+</svg>

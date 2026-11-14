@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const Invitation = require("../models/Invitation");
 
 const protect = (req, res, next) => {
   try {
@@ -24,6 +25,37 @@ const protect = (req, res, next) => {
   }
 };
 
+const requireInvitationUnlock = async (req, res, next) => {
+  try {
+    const invitation = await Invitation.findOne({ _id: req.params.id, createdBy: req.user.id }).select("+lockPasswordHash");
+    if (!invitation) {
+      return res.status(404).json({ success: false, message: "Invitation not found." });
+    }
+    // Backward compatibility: invitations created before password locking remain manageable.
+    if (!invitation.lockPasswordHash) return next();
+
+    const token = req.headers["x-invitation-unlock"];
+    if (!token) {
+      return res.status(423).json({ success: false, message: "Unlock this invitation with its password first." });
+    }
+
+    let decoded;
+    try {
+      decoded = jwt.verify(token, process.env.JWT_SECRET);
+    } catch {
+      return res.status(423).json({ success: false, message: "Invitation is locked or the unlock session has expired." });
+    }
+
+    if (decoded.type !== "invitation_unlock" || decoded.invitationId !== req.params.id || decoded.id !== req.user.id) {
+      return res.status(423).json({ success: false, message: "Invitation is locked. Enter its password to continue." });
+    }
+    return next();
+  } catch (error) {
+    console.error("Invitation unlock authorization error:", error);
+    return res.status(500).json({ success: false, message: "Unable to verify invitation access." });
+  }
+};
+
 const requireAdmin = (req, res, next) => {
   if (req.user?.role !== "admin") {
     return res.status(403).json({
@@ -35,4 +67,4 @@ const requireAdmin = (req, res, next) => {
   next();
 };
 
-module.exports = { protect, requireAdmin };
+module.exports = { protect, requireAdmin, requireInvitationUnlock };

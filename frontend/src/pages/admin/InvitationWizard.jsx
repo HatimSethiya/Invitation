@@ -22,6 +22,9 @@ function InvitationWizard() {
   const [error, setError] = useState("");
   const [loadingInvitation, setLoadingInvitation] = useState(Boolean(editId));
   const [invitationStatus, setInvitationStatus] = useState("draft");
+  const [lockPassword, setLockPassword] = useState("");
+  const [lockPasswordConfirmation, setLockPasswordConfirmation] = useState("");
+  const [invitationHasPassword, setInvitationHasPassword] = useState(false);
   const [audioUploading, setAudioUploading] = useState(false);
   const [musicQuery, setMusicQuery] = useState("");
   const [musicTracks, setMusicTracks] = useState([]);
@@ -34,9 +37,10 @@ function InvitationWizard() {
   const previewAudioRef = useRef(null);
   const musicRequestRef = useRef(0);
   const [form, setForm] = useState({
-    title: "", slug: "", weddingDate: "", theme: "bohraNikah", cardType: "single", coverImageUrl: "",
-    couple: { brideName: "", groomName: "", bridePhoto: "", groomPhoto: "", couplePhoto: "", brideBio: "", groomBio: "" },
-    secondCouple: { brideName: "", groomName: "", bridePhoto: "", groomPhoto: "", couplePhoto: "", brideBio: "", groomBio: "" },
+    title: "", slug: "", weddingDate: "", theme: "bohraNikah", cardType: "single", openingAnimation: "curtains", coverImageUrl: "",
+    couple: { brideName: "", groomName: "", nameOrder: "groomFirst", bridePhoto: "", groomPhoto: "", couplePhoto: "", brideBio: "", groomBio: "" },
+    secondCouple: { brideName: "", groomName: "", nameOrder: "groomFirst", bridePhoto: "", groomPhoto: "", couplePhoto: "", brideBio: "", groomBio: "" },
+    firstNikah: { heading: "First Nikah Ceremony", officiant: "", hijriDate: "", time: "", venue: "" },
     bohraDetails: {
       openingBlessing: "With The Grace of Allah & Panjatan Pak (AS)",
       razaDuaLine: "With Raza & Dua Mubarak of",
@@ -46,14 +50,11 @@ function InvitationWizard() {
       hostFamilyTwo: "",
       invitationWording: "Cordially Invite & Request The Honor Of Your Presence To Grace The Wedding Ceremony Of Their Grand Son",
       brideFamilyLine: "",
+      firstCoupleBrideFamilyLine: "",
+      secondCoupleBrideFamilyLine: "",
       nikahOfficiantIntro: "Nikah Solemnised On The Hand Mubarak Of His Holiness",
       nikahOfficiant: "",
       programmeHeading: "Programme Inshallah",
-      programmeTitle: "Daris & Dinner",
-      hijriDate: "",
-      programmeTime: "",
-      programmeVenue: "",
-      invitees: "",
       complimentsFrom: "",
       specialRequest: "",
       heavenlyBlessings: "",
@@ -70,7 +71,7 @@ function InvitationWizard() {
     music: { audioUrl: "", title: "", artist: "", provider: "", trackId: "", shareUrl: "", licenseUrl: "", attribution: "", autoplay: false, loop: true }
   });
 
-  const isBohraTemplate = form.theme === "bohraNikah" || form.theme === "purpleWhite";
+  const isBohraTemplate = true;
 
   useEffect(() => {
     if (!editId) return undefined;
@@ -84,6 +85,7 @@ function InvitationWizard() {
         if (!active) return;
         const invitation = data.invitation;
         setInvitationStatus(invitation.status || "draft");
+        setInvitationHasPassword(Boolean(invitation.isPasswordLocked));
         setForm((current) => ({
           ...current,
           title: invitation.title || "",
@@ -91,10 +93,19 @@ function InvitationWizard() {
           weddingDate: toDateInput(invitation.weddingDate),
           theme: invitation.theme || "bohraNikah",
           cardType: invitation.cardType || "single",
+          openingAnimation: invitation.openingAnimation || "curtains",
           coverImageUrl: invitation.coverImageUrl || "",
           couple: { ...current.couple, ...(invitation.couple || {}) },
           secondCouple: { ...current.secondCouple, ...(invitation.secondCouple || {}) },
-          bohraDetails: { ...current.bohraDetails, ...(invitation.bohraDetails || {}) },
+          firstNikah: { ...current.firstNikah, ...(invitation.firstNikah || {}) },
+          bohraDetails: {
+            ...current.bohraDetails,
+            ...(invitation.bohraDetails || {}),
+            firstCoupleBrideFamilyLine: invitation.bohraDetails?.firstCoupleBrideFamilyLine
+              ?? invitation.bohraDetails?.brideFamilyLine
+              ?? "",
+            secondCoupleBrideFamilyLine: invitation.bohraDetails?.secondCoupleBrideFamilyLine || "",
+          },
           events: Array.isArray(invitation.events) && invitation.events.length
             ? invitation.events.map((event) => ({ ...event, date: toDateInput(event.date) }))
             : [{ ...eventTemplate }],
@@ -277,6 +288,18 @@ function InvitationWizard() {
   const add = (group, template) => setForm((current) => ({ ...current, [group]: [...current[group], { ...template }] }));
   const remove = (group, index) => setForm((current) => ({ ...current, [group]: current[group].filter((_, i) => i !== index) }));
 
+  const back = () => {
+    if (saving) return;
+    setError("");
+
+    if (step === 0) {
+      navigate("/admin/dashboard");
+      return;
+    }
+
+    setStep((current) => Math.max(0, current - 1));
+  };
+
   const next = () => {
     setError("");
     if (step === 0 && (!form.title.trim() || !form.weddingDate)) return setError("Invitation title and wedding date are required.");
@@ -285,11 +308,26 @@ function InvitationWizard() {
   };
 
   const save = async () => {
-    setSaving(true); setError("");
+    setError("");
+    if (!isEditing && lockPassword.length < 6) {
+      setError("Set a card password with at least 6 characters.");
+      return;
+    }
+    if (isEditing && lockPassword && lockPassword.length < 6) {
+      setError("The card password must have at least 6 characters.");
+      return;
+    }
+    if ((!isEditing || lockPassword) && lockPassword !== lockPasswordConfirmation) {
+      setError("The card password and confirmation do not match.");
+      return;
+    }
+
+    setSaving(true);
     try {
-      const payload = { ...form, status: isEditing ? invitationStatus : "draft", events: form.events.filter((x) => x.title || x.venue || x.date), family: form.family.filter((x) => x.name), story: form.story.filter((x) => x.title || x.content), gallery: form.gallery.filter((x) => x.imageUrl) };
+      const payload = { ...form, ...(!isEditing || lockPassword ? { lockPassword } : {}), status: isEditing ? invitationStatus : "draft", events: form.events.filter((x) => x.title || x.venue || x.date), family: form.family.filter((x) => x.name), story: form.story.filter((x) => x.title || x.content), gallery: form.gallery.filter((x) => x.imageUrl) };
       if (isEditing) {
         await api.put(`/invitations/${editId}`, payload);
+        if (lockPassword) setInvitationUnlockToken(editId, null);
       } else {
         await api.post("/invitations", payload);
       }
@@ -305,20 +343,29 @@ function InvitationWizard() {
 
   return (
     <main className={`wizard-page ${isBohraTemplate ? "bohra-wizard-page" : ""}`}>
-      <header className="wizard-header"><div><span className="eyebrow">{isEditing ? "Edit Invitation" : "Create Invitation"}</span><h1>{isEditing ? "Refine your wedding invitation" : isBohraTemplate ? "Create a Bohra Nikah invitation" : "Build your wedding story"}</h1><p>{isBohraTemplate ? "Add the family wording, Nikah programme and sender details from your card reference." : "Everything you add here will power the guest-facing invitation."}</p></div>{isEditing ? <button className="secondary-button" type="button" onClick={save} disabled={saving || audioUploading}>{saving ? "Saving..." : "Save & Exit"}</button> : <Link className="secondary-button" to="/admin/dashboard">Save & Exit</Link>}</header>
-      <nav className="stepper">{steps.map((label, index) => <button key={label} className={index === step ? "step active" : index < step ? "step done" : "step"} onClick={() => index <= step && setStep(index)}><span>{index + 1}</span>{label === "Bohra Details" && !isBohraTemplate ? "Optional Details" : label}</button>)}</nav>
+      <header className="wizard-header"><div><span className="eyebrow">{isEditing ? "Edit Invitation" : "Create Invitation"}</span><h1>{isEditing ? "Refine your wedding invitation" : "Create a wedding invitation"}</h1><p>{"All themes share the same Bohra Nikah fields and invitation layout; only the visual theme changes."}</p></div>{isEditing ? <button className="secondary-button" type="button" onClick={save} disabled={saving || audioUploading}>{saving ? "Saving..." : "Save & Exit"}</button> : <Link className="secondary-button" to="/admin/dashboard">Save & Exit</Link>}</header>
+      <nav className="stepper">{steps.map((label, index) => <button type="button" key={label} className={index === step ? "step active" : index < step ? "step done" : "step"} onClick={() => { if (index <= step && !saving) { setError(""); setStep(index); } }}><span>{index + 1}</span>{label}</button>)}</nav>
 
       <section className="wizard-card">
-        {step === 0 && <div className="form-section"><h2>Start your invitation</h2><p className="section-note">Choose the wedding type, opening card image and invitation design.</p>{!isEditing && <div className="form-grid"><label className="full">Wedding card type<select value={form.cardType} onChange={(e) => root("cardType", e.target.value)}><option value="single">Single Wedding Card — one couple</option><option value="double">Double Wedding Card — two couples</option></select></label></div>}<div className="form-grid"><label>Invitation title<input value={form.title} onChange={(e) => root("title", e.target.value)} placeholder="Ibrahim & Dr. Fatema" /></label><label>Share URL slug<input value={form.slug} onChange={(e) => root("slug", e.target.value)} placeholder="ibrahim-fatema" /></label><label>Wedding date<input type="date" value={form.weddingDate} onChange={(e) => root("weddingDate", e.target.value)} /></label><label>Invitation design<select value={form.theme} onChange={(e) => root("theme", e.target.value)}><option value="bohraNikah">Bohra Nikah — Emerald, Ivory & Gold</option><option value="purpleWhite">Purple–White Wedding</option><option value="royalRose">Royal Rose</option><option value="emeraldGarden">Emerald Garden</option><option value="ivoryHeritage">Ivory Heritage</option></select></label><div className="full"><ImageUpload label="Tap to Open card image (optional)" value={form.coverImageUrl} onChange={(value) => root("coverImageUrl", value)} /></div></div><div className="bohra-template-note"><span className="bohra-template-note-mark">۞</span><div><strong>{form.theme === "purpleWhite" ? "Purple–White glass card selected" : isBohraTemplate ? "Bohra Nikah card selected" : "Classic wedding template selected"}</strong><p>{isBohraTemplate ? "Uses the Nikah invitation layout with the selected colour theme. Couple photos and gallery are not used." : "Existing couple, story and gallery fields remain available for this design."}</p></div></div></div>}
+        {step === 0 && <div className="form-section"><h2>Start your invitation</h2><p className="section-note">Choose the wedding type, opening card image and invitation design.</p>{!isEditing && <div className="form-grid"><label className="full">Wedding card type<select value={form.cardType} onChange={(e) => root("cardType", e.target.value)}><option value="single">Single Wedding Card — one couple</option><option value="double">Double Wedding Card — two couples</option></select></label></div>}<div className="form-grid"><label>Invitation title<input value={form.title} onChange={(e) => root("title", e.target.value)} placeholder="Ibrahim & Dr. Fatema" /></label><label>Share URL slug<input value={form.slug} onChange={(e) => root("slug", e.target.value)} placeholder="ibrahim-fatema" /></label><label>Wedding date<input type="date" value={form.weddingDate} onChange={(e) => root("weddingDate", e.target.value)} /></label><label>Invitation design<select value={form.theme} onChange={(e) => root("theme", e.target.value)}><option value="bohraNikah">Ivory Gold · Nikah</option><option value="purpleWhite">White Purple · Glass</option><option value="midnightNavy">Midnight Navy</option><option value="sageBotanical">Sage Botanical</option><option value="champagnePearl">Champagne Pearl</option><option value="rubyVelvet">Ruby Velvet</option><option value="oceanTeal">Ocean Teal</option><option value="celestialBlack">Celestial Onyx</option><option value="blushTerracotta">Blush Terracotta</option><option value="desertSand">Desert Sand</option><option value="sapphireSilver">Sapphire Silver</option><option value="burgundyLuxe">Burgundy Luxe</option><option value="jadeMarble">Jade Marble</option><option value="sunsetCopper">Sunset Copper</option><option value="whiteRoseGold">White Rose Gold · Royale</option></select></label><label>Opening animation<select value={form.openingAnimation} onChange={(e) => root("openingAnimation", e.target.value)}><option value="curtains">Luxury Theatre Curtains</option><option value="envelope">Sealed 3D Envelope</option></select><span className="field-help">Choose how guests first open this invitation.</span></label><div className="full"><ImageUpload label="Tap to Open card image (optional)" value={form.coverImageUrl} onChange={(value) => root("coverImageUrl", value)} /></div></div><div className="bohra-template-note"><span className="bohra-template-note-mark">۞</span><div><strong>"Bohra Nikah fields & layout selected"</strong><p>"Every design uses the same Bohra Nikah field set, event details, and card layout. Theme changes only colors and styling."</p></div></div><div className="full invitation-theme-preview" aria-live="polite">
+  <div className="invitation-theme-preview-heading"><strong>Live theme preview</strong><span>Preview updates before you create or save the invitation.</span></div>
+  <div className={`theme-preview-card theme-preview-${form.theme}`}>
+    <span className="theme-preview-ornament" aria-hidden="true">✦</span>
+    <span className="theme-preview-kicker">Wedding Invitation</span>
+    <strong>{form.couple.groomName || "Groom"} <em>Weds</em> {form.couple.brideName || "Bride"}</strong>
+    {form.cardType === "double" && <small>{form.secondCouple.groomName || "Second Groom"} <em>Weds</em> {form.secondCouple.brideName || "Second Bride"}</small>}
+    <span className="theme-preview-footer">{form.weddingDate ? new Date(form.weddingDate + "T12:00:00").toLocaleDateString(undefined, { dateStyle: "long" }) : "Your wedding date"}</span>
+  </div>
+</div></div>}
 
-        {step === 1 && <div className="form-section"><h2>Couple details</h2><p className="section-note">Enter names exactly as they should appear on the invitation.</p><div className="form-grid"><label>Bride name<input value={form.couple.brideName} onChange={(e) => nested("couple", "brideName", e.target.value)} placeholder="Dr. Fatema" /></label><label>Groom name<input value={form.couple.groomName} onChange={(e) => nested("couple", "groomName", e.target.value)} placeholder="Ibrahim" /></label>{form.cardType === "double" && <div className="full"><h3>Second couple</h3><div className="form-grid"><label>Second bride name<input value={form.secondCouple.brideName} onChange={(e) => nested("secondCouple", "brideName", e.target.value)} placeholder="Rabab" /></label><label>Second groom name<input value={form.secondCouple.groomName} onChange={(e) => nested("secondCouple", "groomName", e.target.value)} placeholder="Mustafa" /></label></div></div>}{!isBohraTemplate && <><div className="full upload-grid"><ImageUpload label="Couple photo" value={form.couple.couplePhoto} onChange={(value) => nested("couple", "couplePhoto", value)} /><ImageUpload label="Bride photo" value={form.couple.bridePhoto} onChange={(value) => nested("couple", "bridePhoto", value)} /><ImageUpload label="Groom photo" value={form.couple.groomPhoto} onChange={(value) => nested("couple", "groomPhoto", value)} /></div><label>Bride bio<textarea value={form.couple.brideBio} onChange={(e) => nested("couple", "brideBio", e.target.value)} /></label><label>Groom bio<textarea value={form.couple.groomBio} onChange={(e) => nested("couple", "groomBio", e.target.value)} /></label></>}</div></div>}
+        {step === 1 && <div className="form-section"><h2>Couple details</h2><p className="section-note">Enter names exactly as they should appear on the invitation.</p><div className="form-grid"><label>Bride name<input value={form.couple.brideName} onChange={(e) => nested("couple", "brideName", e.target.value)} placeholder="Dr. Fatema" /></label><label>Groom name<input value={form.couple.groomName} onChange={(e) => nested("couple", "groomName", e.target.value)} placeholder="Ibrahim" /></label>{isBohraTemplate && <label>Name order — top to bottom<select value={form.couple.nameOrder || "groomFirst"} onChange={(e) => nested("couple", "nameOrder", e.target.value)}><option value="brideFirst">Bride first, then groom</option><option value="groomFirst">Groom first, then bride</option></select></label>}{form.cardType === "double" && <div className="full"><h3>Second couple</h3><div className="form-grid"><label>Second bride name<input value={form.secondCouple.brideName} onChange={(e) => nested("secondCouple", "brideName", e.target.value)} placeholder="Rabab" /></label><label>Second groom name<input value={form.secondCouple.groomName} onChange={(e) => nested("secondCouple", "groomName", e.target.value)} placeholder="Mustafa" /></label>{isBohraTemplate && <label className="full">Second couple name order — top to bottom<select value={form.secondCouple.nameOrder || "groomFirst"} onChange={(e) => nested("secondCouple", "nameOrder", e.target.value)}><option value="brideFirst">Bride first, then groom</option><option value="groomFirst">Groom first, then bride</option></select></label>}</div></div>}{!isBohraTemplate && <><div className="full upload-grid"><ImageUpload label="Couple photo" value={form.couple.couplePhoto} onChange={(value) => nested("couple", "couplePhoto", value)} /><ImageUpload label="Bride photo" value={form.couple.bridePhoto} onChange={(value) => nested("couple", "bridePhoto", value)} /><ImageUpload label="Groom photo" value={form.couple.groomPhoto} onChange={(value) => nested("couple", "groomPhoto", value)} /></div><label>Bride bio<textarea value={form.couple.brideBio} onChange={(e) => nested("couple", "brideBio", e.target.value)} /></label><label>Groom bio<textarea value={form.couple.groomBio} onChange={(e) => nested("couple", "groomBio", e.target.value)} /></label></>}</div></div>}
 
         {step === 2 && (isBohraTemplate ? (
-          <div className="form-section bohra-admin-section"><h2>Bohra Nikah details</h2><p className="section-note">These fields follow your supplied Ibrahim Sethiya wedding-card reference. Personal names and contacts are left blank for the invitation owner to fill in.</p><div className="bohra-admin-group"><h3>Opening & family introduction</h3><div className="form-grid"><label>Opening blessing<textarea rows="2" value={form.bohraDetails.openingBlessing} onChange={(e) => nested("bohraDetails", "openingBlessing", e.target.value)} /></label><label>Raza & Dua line<input value={form.bohraDetails.razaDuaLine} onChange={(e) => nested("bohraDetails", "razaDuaLine", e.target.value)} /></label><label className="full">Aqa Maula / spiritual leader line<textarea rows="2" value={form.bohraDetails.spiritualLeader} onChange={(e) => nested("bohraDetails", "spiritualLeader", e.target.value)} /></label><label className="full">First host family line<textarea rows="2" value={form.bohraDetails.hostFamilyOne} onChange={(e) => nested("bohraDetails", "hostFamilyOne", e.target.value)} placeholder="Parents / grandparents hosting the invitation" /></label><label>Bridge wording<input value={form.bohraDetails.hostBridge} onChange={(e) => nested("bohraDetails", "hostBridge", e.target.value)} /></label><label className="full">Second host family line<textarea rows="2" value={form.bohraDetails.hostFamilyTwo} onChange={(e) => nested("bohraDetails", "hostFamilyTwo", e.target.value)} placeholder="Thereafter — second family line" /></label><label className="full">Invitation wording<textarea rows="3" value={form.bohraDetails.invitationWording} onChange={(e) => nested("bohraDetails", "invitationWording", e.target.value)} /></label><label className="full">Bride's family line<textarea rows="2" value={form.bohraDetails.brideFamilyLine} onChange={(e) => nested("bohraDetails", "brideFamilyLine", e.target.value)} placeholder="D/o ... (optional)" /></label></div></div><div className="bohra-admin-group"><h3>Nikah & programme</h3><div className="form-grid"><label className="full">Nikah solemnization heading<textarea rows="2" value={form.bohraDetails.nikahOfficiantIntro} onChange={(e) => nested("bohraDetails", "nikahOfficiantIntro", e.target.value)} /></label><label className="full">Officiant / Aqa Maula name<textarea rows="2" value={form.bohraDetails.nikahOfficiant} onChange={(e) => nested("bohraDetails", "nikahOfficiant", e.target.value)} placeholder="Leave blank if not needed" /></label><label>Programme heading<input value={form.bohraDetails.programmeHeading} onChange={(e) => nested("bohraDetails", "programmeHeading", e.target.value)} /></label><label>Programme title<input value={form.bohraDetails.programmeTitle} onChange={(e) => nested("bohraDetails", "programmeTitle", e.target.value)} placeholder="Daris & Dinner" /></label><label>Hijri date<input value={form.bohraDetails.hijriDate} onChange={(e) => nested("bohraDetails", "hijriDate", e.target.value)} placeholder="24mi Shehre Rajabul Asab 1447" /></label><label>Programme time<input value={form.bohraDetails.programmeTime} onChange={(e) => nested("bohraDetails", "programmeTime", e.target.value)} placeholder="7:30 p.m." /></label><label className="full">Programme venue<input value={form.bohraDetails.programmeVenue} onChange={(e) => nested("bohraDetails", "programmeVenue", e.target.value)} placeholder="Evan-E-Fakhri" /></label><label>Invitees / guest note<input value={form.bohraDetails.invitees} onChange={(e) => nested("bohraDetails", "invitees", e.target.value)} placeholder="Optional" /></label></div></div><div className="bohra-admin-group"><h3>Family notes & sender details</h3><div className="form-grid"><label className="full">With the best compliments from<textarea rows="2" value={form.bohraDetails.complimentsFrom} onChange={(e) => nested("bohraDetails", "complimentsFrom", e.target.value)} placeholder="Family names and relatives" /></label><label>Special request<textarea rows="2" value={form.bohraDetails.specialRequest} onChange={(e) => nested("bohraDetails", "specialRequest", e.target.value)} placeholder="Names / request" /></label><label>Heavenly blessings<textarea rows="2" value={form.bohraDetails.heavenlyBlessings} onChange={(e) => nested("bohraDetails", "heavenlyBlessings", e.target.value)} placeholder="Names / blessings" /></label><label>Sender name<input value={form.bohraDetails.senderName} onChange={(e) => nested("bohraDetails", "senderName", e.target.value)} /></label><label>Sender firm<input value={form.bohraDetails.senderFirm} onChange={(e) => nested("bohraDetails", "senderFirm", e.target.value)} /></label><label className="full">Sender address<textarea rows="2" value={form.bohraDetails.senderAddress} onChange={(e) => nested("bohraDetails", "senderAddress", e.target.value)} /></label><label className="full">Contact numbers<input value={form.bohraDetails.senderContacts} onChange={(e) => nested("bohraDetails", "senderContacts", e.target.value)} placeholder="Optional phone numbers" /></label></div></div></div>
+          <div className="form-section bohra-admin-section"><h2>Bohra Nikah details</h2><p className="section-note">These fields follow your supplied Ibrahim Sethiya wedding-card reference. Personal names and contacts are left blank for the invitation owner to fill in.</p><div className="bohra-admin-group"><h3>Opening & family introduction</h3><div className="form-grid"><label>Opening blessing<textarea rows="2" value={form.bohraDetails.openingBlessing} onChange={(e) => nested("bohraDetails", "openingBlessing", e.target.value)} /></label><label>Raza & Dua line<input value={form.bohraDetails.razaDuaLine} onChange={(e) => nested("bohraDetails", "razaDuaLine", e.target.value)} /></label><label className="full">Aqa Maula / spiritual leader line<textarea rows="2" value={form.bohraDetails.spiritualLeader} onChange={(e) => nested("bohraDetails", "spiritualLeader", e.target.value)} /></label><label className="full">First host family line<textarea rows="2" value={form.bohraDetails.hostFamilyOne} onChange={(e) => nested("bohraDetails", "hostFamilyOne", e.target.value)} placeholder="Parents / grandparents hosting the invitation" /></label><label>Bridge wording<input value={form.bohraDetails.hostBridge} onChange={(e) => nested("bohraDetails", "hostBridge", e.target.value)} /></label><label className="full">Second host family line<textarea rows="2" value={form.bohraDetails.hostFamilyTwo} onChange={(e) => nested("bohraDetails", "hostFamilyTwo", e.target.value)} placeholder="Thereafter — second family line" /></label><label className="full">Invitation wording<textarea rows="3" value={form.bohraDetails.invitationWording} onChange={(e) => nested("bohraDetails", "invitationWording", e.target.value)} /></label><label className="full">First couple — Bride's family line<textarea rows="2" value={form.bohraDetails.firstCoupleBrideFamilyLine} onChange={(e) => nested("bohraDetails", "firstCoupleBrideFamilyLine", e.target.value)} placeholder="D/o ... (optional)" /></label>{form.cardType === "double" && <label className="full">Second couple — Bride's family line<textarea rows="2" value={form.bohraDetails.secondCoupleBrideFamilyLine} onChange={(e) => nested("bohraDetails", "secondCoupleBrideFamilyLine", e.target.value)} placeholder="D/o ... (optional)" /></label>}</div></div>{form.cardType === "double" && <div className="bohra-admin-group"><h3>First Nikah card — Double Wedding only</h3><div className="form-grid"><label className="full">First Nikah heading<input value={form.firstNikah.heading} onChange={(e) => nested("firstNikah", "heading", e.target.value)} placeholder="First Nikah Ceremony" /></label><label className="full">First Nikah officiant / Aqa Maula name<input value={form.firstNikah.officiant} onChange={(e) => nested("firstNikah", "officiant", e.target.value)} placeholder="Optional" /></label><label>First Nikah Hijri date<input value={form.firstNikah.hijriDate} onChange={(e) => nested("firstNikah", "hijriDate", e.target.value)} placeholder="Hijri date" /></label><label>First Nikah time<input value={form.firstNikah.time} onChange={(e) => nested("firstNikah", "time", e.target.value)} placeholder="8:00 PM" /></label><label className="full">First Nikah venue<input value={form.firstNikah.venue} onChange={(e) => nested("firstNikah", "venue", e.target.value)} placeholder="Venue for the first Nikah" /></label></div></div>}<div className="bohra-admin-group"><h3>Second Nikah & programme</h3><div className="form-grid"><label className="full">Nikah solemnization heading<textarea rows="2" value={form.bohraDetails.nikahOfficiantIntro} onChange={(e) => nested("bohraDetails", "nikahOfficiantIntro", e.target.value)} /></label><label className="full">Officiant / Aqa Maula name<textarea rows="2" value={form.bohraDetails.nikahOfficiant} onChange={(e) => nested("bohraDetails", "nikahOfficiant", e.target.value)} placeholder="Leave blank if not needed" /></label><label className="full">Programme heading — shown above the event cards<input value={form.bohraDetails.programmeHeading} onChange={(e) => nested("bohraDetails", "programmeHeading", e.target.value)} /></label></div></div><div className="bohra-admin-group"><h3>Family notes & sender details</h3><div className="form-grid"><label className="full">With the best compliments from<textarea rows="2" value={form.bohraDetails.complimentsFrom} onChange={(e) => nested("bohraDetails", "complimentsFrom", e.target.value)} placeholder="Family names and relatives" /></label><label>Special request<textarea rows="2" value={form.bohraDetails.specialRequest} onChange={(e) => nested("bohraDetails", "specialRequest", e.target.value)} placeholder="Names / request" /></label><label>Heavenly blessings<textarea rows="2" value={form.bohraDetails.heavenlyBlessings} onChange={(e) => nested("bohraDetails", "heavenlyBlessings", e.target.value)} placeholder="Names / blessings" /></label><label>Sender name<input value={form.bohraDetails.senderName} onChange={(e) => nested("bohraDetails", "senderName", e.target.value)} /></label><label>Sender firm<input value={form.bohraDetails.senderFirm} onChange={(e) => nested("bohraDetails", "senderFirm", e.target.value)} /></label><label className="full">Sender address<textarea rows="2" value={form.bohraDetails.senderAddress} onChange={(e) => nested("bohraDetails", "senderAddress", e.target.value)} /></label><label className="full">Contact numbers<input value={form.bohraDetails.senderContacts} onChange={(e) => nested("bohraDetails", "senderContacts", e.target.value)} placeholder="Optional phone numbers" /></label></div></div></div>
         ) : (
           <div className="form-section bohra-form-note">
-            <h2>No Bohra wording needed</h2>
-            <p className="section-note">The selected classic theme uses the existing couple, event, family and venue fields. Continue to the next step; these Bohra-specific fields won't be used.</p>
+            <h2>Bohra Nikah details</h2>
+            <p className="section-note">These same Bohra Nikah fields are used by every invitation theme.</p>
           </div>
         ))}
 
@@ -327,12 +374,12 @@ function InvitationWizard() {
         {step === 4 && (isBohraTemplate ? (
           <div className="form-section bohra-form-note">
             <h2>Family wording is already covered</h2>
-            <p className="section-note">This Bohra invitation uses the host families, bride's family line, special request and heavenly blessings from the previous step. It intentionally leaves out personal story and photo sections.</p>
+            <p className="section-note">The host family, bride family, special request and sender fields from the Bohra Details step are used consistently across all themes.</p>
             <div className="bohra-template-note">
               <span className="bohra-template-note-mark">✦</span>
               <div>
                 <strong>Photo-free layout</strong>
-                <p>Continue to venue details. Your public invitation will not display couple photos, story images or a photo gallery.</p>
+                <p>Continue to venue details. All themes use the same photo-free Bohra invitation layout and field logic.</p>
               </div>
             </div>
           </div>
@@ -499,10 +546,36 @@ function InvitationWizard() {
           }} />
         </div>}
 
-{step === 7 && <div className="form-section bohra-review-section"><h2>Review your invitation</h2><p className="section-note">Check the key details before creating the draft.</p><div className="bohra-review-grid"><div><span>Card type</span><strong>{form.cardType === "double" ? "Double Wedding" : "Single Wedding"}</strong></div><div><span>Design</span><strong>{form.theme === "bohraNikah" ? "Bohra Nikah · Emerald / Ivory / Gold" : form.theme === "purpleWhite" ? "Purple–White Wedding" : form.theme === "royalRose" ? "Royal Rose" : form.theme === "emeraldGarden" ? "Emerald Garden" : "Ivory Heritage"}</strong></div><div><span>Couples</span><strong>{[[form.couple.groomName, form.couple.brideName].filter(Boolean).join(" Weds "), ...(form.cardType === "double" ? [[form.secondCouple.groomName, form.secondCouple.brideName].filter(Boolean).join(" Weds ")] : [])].filter(Boolean).join(" · ") || "Names not entered yet"}</strong></div><div><span>Programme</span><strong>{form.bohraDetails.programmeTitle || "Not specified"}</strong></div><div><span>Date</span><strong>{form.weddingDate ? new Date(form.weddingDate + "T12:00:00").toLocaleDateString(undefined, { dateStyle: "long" }) : "Not specified"}</strong></div></div><div className="publish-note"><strong>Ready to create?</strong><span>{isEditing ? "Your changes will be saved without changing the current publication status." : "This saves as a draft first. Publish the guest link from the dashboard."} Bohra Nikah layout does not display couple photos or a gallery.</span></div></div>}
+{step === 7 && <div className="form-section bohra-review-section"><h2>Review your invitation</h2><p className="section-note">Check the key details before creating the draft.</p><div className="bohra-review-grid"><div><span>Card type</span><strong>{form.cardType === "double" ? "Double Wedding" : "Single Wedding"}</strong></div><div><span>Design</span><strong>{({"bohraNikah": "Ivory Gold · Nikah", "purpleWhite": "White Purple · Glass", "midnightNavy": "Midnight Navy", "sageBotanical": "Sage Botanical", "champagnePearl": "Champagne Pearl", "rubyVelvet": "Ruby Velvet", "oceanTeal": "Ocean Teal", "celestialBlack": "Celestial Onyx", "blushTerracotta": "Blush Terracotta", "desertSand": "Desert Sand", "sapphireSilver": "Sapphire Silver", "burgundyLuxe": "Burgundy Luxe", "jadeMarble": "Jade Marble", "sunsetCopper": "Sunset Copper", "whiteRoseGold": "White Rose Gold · Royale"}[form.theme] || form.theme)}</strong></div><div><span>Couples</span><strong>{[[form.couple.groomName, form.couple.brideName].filter(Boolean).join(" Weds "), ...(form.cardType === "double" ? [[form.secondCouple.groomName, form.secondCouple.brideName].filter(Boolean).join(" Weds ")] : [])].filter(Boolean).join(" · ") || "Names not entered yet"}</strong></div><div><span>Programme</span><strong>{form.bohraDetails.programmeTitle || "Not specified"}</strong></div><div><span>Date</span><strong>{form.weddingDate ? new Date(form.weddingDate + "T12:00:00").toLocaleDateString(undefined, { dateStyle: "long" }) : "Not specified"}</strong></div></div><div className="publish-note"><strong>Ready to create?</strong><span>{isEditing ? "Your changes will be saved without changing the current publication status." : "This saves as a draft first. Publish the guest link from the dashboard."} Bohra Nikah layout does not display couple photos or a gallery.</span></div></div>}
+
+        {isEditing && step === 0 && <section className="invitation-password-setup">
+          <h3><span aria-hidden="true">🔒</span> {invitationHasPassword ? "Change card password" : "Lock this existing card"}</h3>
+          <p>{invitationHasPassword ? "This invitation already has a password. Enter a new password below to replace it; leave both fields blank to keep the current password." : "This existing invitation is currently unlocked. Set a password here to protect it; the card will show as locked on your dashboard after saving."}</p>
+          <div className="form-grid">
+            <label>{invitationHasPassword ? "New card password (minimum 6 characters)" : "Card password (minimum 6 characters)"}
+              <input type="password" autoComplete="new-password" minLength={6} value={lockPassword} onChange={(event) => setLockPassword(event.target.value)} />
+            </label>
+            <label>Confirm card password
+              <input type="password" autoComplete="new-password" minLength={6} value={lockPasswordConfirmation} onChange={(event) => setLockPasswordConfirmation(event.target.value)} />
+            </label>
+          </div>
+        </section>}
+
+        {!isEditing && step === steps.length - 1 && <section className="invitation-password-setup">
+          <h3><span aria-hidden="true">🔒</span> Set card password</h3>
+          <p>This card will be locked on your dashboard after creation. Refresh or login again and enter this password to manage it.</p>
+          <div className="form-grid">
+            <label>Card password (minimum 6 characters)
+              <input type="password" autoComplete="new-password" minLength={6} required value={lockPassword} onChange={(event) => setLockPassword(event.target.value)} />
+            </label>
+            <label>Confirm card password
+              <input type="password" autoComplete="new-password" minLength={6} required value={lockPasswordConfirmation} onChange={(event) => setLockPasswordConfirmation(event.target.value)} />
+            </label>
+          </div>
+        </section>}
 
         {error && <div className="auth-error wizard-error">{error}</div>}
-        <footer className="wizard-footer"><button className="secondary-button" onClick={() => setStep((current) => Math.max(0, current - 1))} disabled={step === 0 || saving}>Back</button>{step < steps.length - 1 ? <button className="primary-button" onClick={next}>Continue</button> : <button className="primary-button" onClick={save} disabled={saving}>{saving ? (isEditing ? "Saving..." : "Creating...") : (isEditing ? "Save Changes" : "Create Draft")}</button>}</footer>
+        <footer className="wizard-footer"><button type="button" className="secondary-button" onClick={back} disabled={saving}>Back</button>{step < steps.length - 1 ? <button type="button" className="primary-button" onClick={next}>Continue</button> : <button type="button" className="primary-button" onClick={save} disabled={saving}>{saving ? (isEditing ? "Saving..." : "Creating...") : (isEditing ? "Save Changes" : "Create Draft")}</button>}</footer>
       </section>
     </main>
   );

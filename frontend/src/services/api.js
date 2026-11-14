@@ -1,10 +1,49 @@
 import axios from "axios";
 
-const apiBaseURL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+// Prefer the configured API URL. In deployed Vercel builds, use the same-origin
+// /api rewrite so the browser never falls back to the developer's localhost.
+const configuredApiUrl = import.meta.env.VITE_API_URL?.trim();
+const apiBaseURL = configuredApiUrl || (import.meta.env.PROD ? "/api" : "http://localhost:5000/api");
 
 const api = axios.create({
   baseURL: apiBaseURL,
   headers: { "Content-Type": "application/json" },
+});
+
+// Invitation unlocks are intentionally memory-only: a browser refresh or logout relocks cards.
+const invitationUnlockTokens = new Map();
+export function setInvitationUnlockToken(invitationId, token) {
+  if (token) invitationUnlockTokens.set(invitationId, token);
+  else invitationUnlockTokens.delete(invitationId);
+}
+export function clearInvitationUnlockTokens() {
+  invitationUnlockTokens.clear();
+}
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const requestUrl = String(error.config?.url || "");
+    const match = requestUrl.match(/invitations\/([a-f\d]{24})(?:\/|$)/i);
+    if (error.response?.status === 423 && match) {
+      setInvitationUnlockToken(match[1], null);
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(new CustomEvent("invitation:locked", { detail: { id: match[1] } }));
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
+api.interceptors.request.use((config) => {
+  const requestUrl = String(config.url || "");
+  const match = requestUrl.match(/invitations\/([a-f\d]{24})(?:\/|$)/i);
+  const unlockToken = match ? invitationUnlockTokens.get(match[1]) : null;
+  if (unlockToken) config.headers["X-Invitation-Unlock"] = unlockToken;
+  if (/(?:^|\/)invitations\/?$/.test(requestUrl)) {
+    config.headers["X-Invitation-Unlocks"] = JSON.stringify(Object.fromEntries(invitationUnlockTokens));
+  }
+  return config;
 });
 
 const token = localStorage.getItem("wedding_admin_token");
@@ -30,6 +69,11 @@ export function resolveMediaUrl(value) {
     // Stored upload paths are relative to the API, not the frontend site.
     if (mediaUrl.startsWith("/")) {
       return new URL(mediaUrl, apiOrigin).toString();
+    }
+
+    // Upgrade remote HTTP media to HTTPS to avoid mixed-content blocks on secure pages.
+    if (parsedUrl.protocol === "http:" && parsedUrl.hostname !== "localhost" && parsedUrl.hostname !== "127.0.0.1" && parsedUrl.hostname !== "::1" && parsedUrl.hostname !== "[::1]") {
+      parsedUrl.protocol = "https:";
     }
 
     return parsedUrl.toString();

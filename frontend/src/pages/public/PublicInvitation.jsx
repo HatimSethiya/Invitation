@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
-import api from "../../services/api";
+import api, { resolveMediaUrl } from "../../services/api";
 import EnvelopeReveal from "../../components/EnvelopeReveal";
 import InvitationMusicPlayer from "../../components/InvitationMusicPlayer";
 import RoyalRoseEffects from "../../components/cinematic/RoyalRoseEffects";
@@ -58,6 +58,7 @@ function PublicInvitation() {
   const [isHandoffStarted, setIsHandoffStarted] = useState(false);
   const [isMusicStartRequested, setIsMusicStartRequested] = useState(false);
   const musicAudioRef = useRef(null);
+  const roseGoldEffectsCanvasRef = useRef(null);
   const musicStartRequestedRef = useRef(false);
   const isInvitationInteractive = isHandoffStarted || isUnboxed;
 
@@ -83,10 +84,49 @@ function PublicInvitation() {
   useEffect(() => {
     let active = true;
 
+    const preloadImage = (source) =>
+      new Promise((resolve) => {
+        if (!source) {
+          resolve(false);
+          return;
+        }
+        const image = new Image();
+        image.onload = () => resolve(true);
+        image.onerror = () => resolve(false);
+        image.src = source;
+        if (image.complete) resolve(image.naturalWidth > 0);
+      });
+
     api
       .get(`/invitations/public/${slug}`)
-      .then((response) => {
-        if (active) setInvitation(response.data.invitation);
+      .then(async (response) => {
+        const loadedInvitation = response.data.invitation;
+        // Warm the cover and invitation media before mounting the envelope.
+        // The guest can tap only after the artwork and the main invitation's
+        // image assets have finished loading (failed assets resolve gracefully).
+        const imageSources = [
+          loadedInvitation?.coverImageUrl && resolveMediaUrl(loadedInvitation.coverImageUrl),
+          loadedInvitation?.couple?.couplePhoto,
+          ...(loadedInvitation?.story || []).map((item) => item?.image),
+          ...(loadedInvitation?.gallery || []).map((item) =>
+            item?.imageUrl && resolveMediaUrl(item.imageUrl)
+          ),
+        ];
+
+        if (loadedInvitation?.theme === "whiteRoseGold") {
+          imageSources.push(
+            "https://w7.pngwing.com/pngs/580/297/png-transparent-wedding-floral-corner-beautiful-floral-arrangement-with-leaves.png"
+          );
+        }
+
+        await Promise.all([
+          ...imageSources.filter(Boolean).map(preloadImage),
+          typeof document !== "undefined" && document.fonts?.ready
+            ? document.fonts.ready.catch(() => undefined)
+            : Promise.resolve(),
+        ]);
+
+        if (active) setInvitation(loadedInvitation);
       })
       .catch((err) => {
         if (active)
@@ -98,8 +138,214 @@ function PublicInvitation() {
     };
   }, [slug]);
 
+  // White Rose Gold-only canvas effects: falling gold sprinkles and a recurring card sheen.
+  useEffect(() => {
+    const canvas = roseGoldEffectsCanvasRef.current;
+    const card = canvas?.closest(".bohra-invitation-card");
+
+    if (
+      !canvas ||
+      !card ||
+      invitation?.theme !== "whiteRoseGold" ||
+      !isInvitationInteractive
+    ) {
+      return undefined;
+    }
+
+    const context = canvas.getContext("2d");
+    if (!context) return undefined;
+
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    let frameId = 0;
+    let width = 0;
+    let height = 0;
+    let elapsed = 0;
+    let lastFrameTime = 0;
+    let lastScrollY = window.scrollY;
+    let lastBurstTime = 0;
+    let particles = [];
+
+    const random = (min, max) => min + Math.random() * (max - min);
+
+    const createParticle = (x, y, isScrollBurst = false) => {
+      const life = random(1.1, 2.3);
+      return {
+        x,
+        y,
+        radius: random(0.85, isScrollBurst ? 2.8 : 2.1),
+        speed: random(0.42, isScrollBurst ? 2.0 : 1.35),
+        drift: random(-0.28, 0.28),
+        phase: random(0, Math.PI * 2),
+        opacity: random(0.48, 0.92),
+        life,
+        initialLife: life,
+        isScrollBurst,
+      };
+    };
+
+    const resizeCanvas = () => {
+      width = card.clientWidth;
+      height = card.clientHeight;
+      // A 1:1 backing store keeps the tall card canvas inexpensive on mobile.
+      canvas.width = Math.max(1, Math.round(width));
+      canvas.height = Math.max(1, Math.round(height));
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
+      context.setTransform(1, 0, 0, 1, 0, 0);
+
+      const particleCount = Math.min(
+        115,
+        Math.max(80, Math.round((width * height) / 15000))
+      );
+      particles = Array.from({ length: particleCount }, () =>
+        createParticle(random(0, width), random(0, height))
+      );
+
+      if (reducedMotion) renderFrame(0, 0);
+    };
+
+    const renderFrame = (deltaSeconds, timestampSeconds) => {
+      context.clearRect(0, 0, width, height);
+
+      particles = particles.filter((particle) => {
+        if (!reducedMotion) {
+          particle.y += particle.speed * deltaSeconds * 60;
+          particle.x +=
+            particle.drift * deltaSeconds * 60 +
+            Math.sin(timestampSeconds * 1.3 + particle.phase) * 0.12;
+
+          if (particle.isScrollBurst) {
+            particle.life -= deltaSeconds;
+            if (particle.life <= 0) return false;
+          }
+
+          if (particle.y > height + 4) {
+            particle.y = -4;
+            particle.x = random(0, width);
+          }
+          if (particle.x < -4) particle.x = width + 4;
+          if (particle.x > width + 4) particle.x = -4;
+        }
+
+        const lifeOpacity = particle.isScrollBurst
+          ? Math.max(0, particle.life / particle.initialLife)
+          : 1;
+        const twinkle = reducedMotion
+          ? 0.82
+          : 0.72 + Math.sin(timestampSeconds * 2.2 + particle.phase) * 0.22;
+        const alpha = particle.opacity * lifeOpacity * twinkle;
+        const goldTone =
+          particle.phase % 3 > 2
+            ? `rgba(226,163,139,${alpha})`
+            : `rgba(218,157,67,${alpha})`;
+
+        context.fillStyle = goldTone;
+        context.beginPath();
+        context.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+        context.fill();
+
+        if (particle.radius > 1.45 && alpha > 0.22) {
+          context.strokeStyle = `rgba(255,246,221,${alpha * 0.72})`;
+          context.lineWidth = 0.55;
+          context.beginPath();
+          context.moveTo(particle.x - particle.radius * 1.8, particle.y);
+          context.lineTo(particle.x + particle.radius * 1.8, particle.y);
+          context.moveTo(particle.x, particle.y - particle.radius * 1.8);
+          context.lineTo(particle.x, particle.y + particle.radius * 1.8);
+          context.stroke();
+        }
+
+        return true;
+      });
+
+      // A soft metallic light band sweeps across the card every 3.5 seconds.
+      if (!reducedMotion) {
+        const cycleProgress = (timestampSeconds % 3.5) / 3.5;
+        const bandWidth = Math.max(115, width * 0.34);
+        const bandX = cycleProgress * (width + bandWidth) - bandWidth;
+
+        context.save();
+        context.translate(bandX, 0);
+        context.transform(1, 0, -0.12, 1, 0, 0);
+        context.globalCompositeOperation = "screen";
+        const sheen = context.createLinearGradient(0, 0, bandWidth, 0);
+        sheen.addColorStop(0, "rgba(255,248,229,0)");
+        sheen.addColorStop(0.34, "rgba(255,248,229,0.025)");
+        sheen.addColorStop(0.5, "rgba(255,244,213,0.14)");
+        sheen.addColorStop(0.63, "rgba(218,169,111,0.075)");
+        sheen.addColorStop(1, "rgba(255,248,229,0)");
+        context.fillStyle = sheen;
+        context.fillRect(0, 0, bandWidth, height);
+        context.restore();
+      }
+    };
+
+    const animate = (timestamp) => {
+      frameId = window.requestAnimationFrame(animate);
+      if (timestamp - lastFrameTime < 30) return;
+
+      const deltaSeconds = Math.min(
+        0.05,
+        (timestamp - lastFrameTime) / 1000 || 0.016
+      );
+      lastFrameTime = timestamp;
+      elapsed += deltaSeconds;
+      renderFrame(deltaSeconds, elapsed);
+    };
+
+    const onScroll = () => {
+      const currentScrollY = window.scrollY;
+      const scrollDelta = Math.abs(currentScrollY - lastScrollY);
+      const now = performance.now();
+
+      if (scrollDelta > 2 && now - lastBurstTime > 65) {
+        const cardTop = card.getBoundingClientRect().top + window.scrollY;
+        const visibleTop = Math.max(
+          0,
+          Math.min(height, currentScrollY - cardTop + 14)
+        );
+        const burstCount = Math.min(
+          16,
+          Math.max(4, Math.round(scrollDelta / 2))
+        );
+
+        for (let index = 0; index < burstCount; index += 1) {
+          particles.push(
+            createParticle(random(0, width), visibleTop + random(0, 24), true)
+          );
+        }
+        lastBurstTime = now;
+      }
+
+      lastScrollY = currentScrollY;
+    };
+
+    resizeCanvas();
+
+    const resizeObserver =
+      typeof ResizeObserver !== "undefined"
+        ? new ResizeObserver(resizeCanvas)
+        : null;
+    resizeObserver?.observe(card);
+    window.addEventListener("resize", resizeCanvas, { passive: true });
+
+    if (!reducedMotion) {
+      window.addEventListener("scroll", onScroll, { passive: true });
+      frameId = window.requestAnimationFrame(animate);
+    }
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      resizeObserver?.disconnect();
+      window.removeEventListener("resize", resizeCanvas);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [invitation?.theme, isInvitationInteractive]);
+
   const themeClass = useMemo(
-    () => `theme-${invitation?.theme || "royalRose"}`,
+    () => `theme-${invitation?.theme || "purpleWhite"}`,
     [invitation?.theme]
   );
 
@@ -133,13 +379,26 @@ function PublicInvitation() {
     );
   }
 
-  if (invitation.theme === "bohraNikah" || invitation.theme === "purpleWhite") {
+  if (invitation) {
     const details = invitation.bohraDetails || {};
+    const firstNikah = invitation.firstNikah || {};
+    const primaryNames = invitation.couple?.nameOrder === "brideFirst" ? [bride, groom] : [groom, bride];
+    const secondBride = invitation.secondCouple?.brideName || "Bride";
+    const secondGroom = invitation.secondCouple?.groomName || "Groom";
+    const secondNames = invitation.secondCouple?.nameOrder === "brideFirst" ? [secondBride, secondGroom] : [secondGroom, secondBride];
     const hasValue = (value) => typeof value === "string" && value.trim().length > 0;
+
+    const protectedDesignSlugs = new Set(["mufaddalweddinginvitation", "mariya"]);
+    const normalizedSlug = (invitation.slug || "").toLowerCase();
+    const normalizedTitle = (invitation.title || "").toLowerCase();
+    const isLegacyProtectedDesign = protectedDesignSlugs.has(normalizedSlug)
+      || normalizedSlug.includes("mariya")
+      || normalizedTitle.includes("mariya");
+    const useEnhancedNewDesign = !isLegacyProtectedDesign;
 
     return (
       <main
-        className={`public-page bohra-public-page ${invitation.theme === "purpleWhite" ? "theme-purpleWhite" : "theme-bohraNikah"} ${isInvitationInteractive ? "invitation-revealed" : "invitation-locked"}`}
+        className={`public-page bohra-public-page ${themeClass} ${useEnhancedNewDesign ? "new-design-enhanced" : ""} ${isInvitationInteractive ? "invitation-revealed" : "invitation-locked"}`}
       >
         <AnimatePresence>
           {!isUnboxed && (
@@ -168,6 +427,85 @@ function PublicInvitation() {
           }}
         >
           <article className="bohra-invitation-card">
+            {invitation.theme === "whiteRoseGold" && (
+              <>
+                <svg
+                  className="bohra-floral-sticker bohra-floral-sticker-top"
+                  viewBox="0 0 3708 3876"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <defs>
+                    <filter id="roseGoldFloralRedTop" colorInterpolationFilters="sRGB">
+                      <feColorMatrix
+                        type="matrix"
+                        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  2 -1 -1 0 0"
+                      />
+                    </filter>
+                    <filter id="roseGoldFloralGreenTop" colorInterpolationFilters="sRGB">
+                      <feColorMatrix
+                        type="matrix"
+                        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  -1 2 -1 0 0"
+                      />
+                    </filter>
+                  </defs>
+                  <image
+                    href="https://w7.pngwing.com/pngs/580/297/png-transparent-wedding-floral-corner-beautiful-floral-arrangement-with-leaves.png"
+                    width="100%"
+                    height="100%"
+                    preserveAspectRatio="xMidYMid meet"
+                    filter="url(#roseGoldFloralRedTop)"
+                  />
+                  <image
+                    href="https://w7.pngwing.com/pngs/580/297/png-transparent-wedding-floral-corner-beautiful-floral-arrangement-with-leaves.png"
+                    width="100%"
+                    height="100%"
+                    preserveAspectRatio="xMidYMid meet"
+                    filter="url(#roseGoldFloralGreenTop)"
+                  />
+                </svg>
+                <svg
+                  className="bohra-floral-sticker bohra-floral-sticker-bottom"
+                  viewBox="0 0 3708 3876"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <defs>
+                    <filter id="roseGoldFloralRedBottom" colorInterpolationFilters="sRGB">
+                      <feColorMatrix
+                        type="matrix"
+                        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  2 -1 -1 0 0"
+                      />
+                    </filter>
+                    <filter id="roseGoldFloralGreenBottom" colorInterpolationFilters="sRGB">
+                      <feColorMatrix
+                        type="matrix"
+                        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  -1 2 -1 0 0"
+                      />
+                    </filter>
+                  </defs>
+                  <image
+                    href="https://w7.pngwing.com/pngs/580/297/png-transparent-wedding-floral-corner-beautiful-floral-arrangement-with-leaves.png"
+                    width="100%"
+                    height="100%"
+                    preserveAspectRatio="xMidYMid meet"
+                    filter="url(#roseGoldFloralRedBottom)"
+                  />
+                  <image
+                    href="https://w7.pngwing.com/pngs/580/297/png-transparent-wedding-floral-corner-beautiful-floral-arrangement-with-leaves.png"
+                    width="100%"
+                    height="100%"
+                    preserveAspectRatio="xMidYMid meet"
+                    filter="url(#roseGoldFloralGreenBottom)"
+                  />
+                </svg>
+                <canvas
+                  className="bohra-rose-gold-effects"
+                  ref={roseGoldEffectsCanvasRef}
+                  aria-hidden="true"
+                />
+              </>
+            )}
             <div className="bohra-card-ornament bohra-card-ornament-top" aria-hidden="true">۞</div>
             <div className="bohra-card-inner-frame">
               <header className="bohra-card-header">
@@ -183,6 +521,15 @@ function PublicInvitation() {
                   <p className="bohra-leader-line">{details.spiritualLeader}</p>
                 )}
               </header>
+
+              {hasValue(details.spiritualLeader) &&
+                (hasValue(details.hostFamilyOne) || hasValue(details.hostFamilyTwo)) && (
+                  <div className="bohra-host-divider" aria-hidden="true">
+                    <span>✧</span>
+                    <i>❖</i>
+                    <span>✧</span>
+                  </div>
+                )}
 
               {(hasValue(details.hostFamilyOne) || hasValue(details.hostFamilyTwo)) && (
                 <section className="bohra-host-families">
@@ -200,14 +547,21 @@ function PublicInvitation() {
 
               <section className="bohra-couple-panel glass-panel">
                 <div className="bohra-couple-names">
-                  <h1>{groom}</h1>
+                  <h1>{primaryNames[0]}</h1>
                   <span className="bohra-weds">Weds</span>
-                  <h1>{bride}</h1>
+                  <h1>{primaryNames[1]}</h1>
                 </div>
-                {hasValue(details.brideFamilyLine) && (
-                  <p className="bohra-bride-family">{details.brideFamilyLine}</p>
+                {hasValue(details.firstCoupleBrideFamilyLine || details.brideFamilyLine) && (
+                  <p className="bohra-bride-family">{details.firstCoupleBrideFamilyLine || details.brideFamilyLine}</p>
                 )}
               </section>
+
+              {invitation.cardType === "double" && (
+                <section className="bohra-officiant-panel glass-panel">
+                  <p>Nikah Solemnised On The Hand Mubarak Of</p>
+                  {hasValue(firstNikah.officiant) && <strong>{firstNikah.officiant}</strong>}
+                </section>
+              )}
 
               {invitation.cardType === "double" &&
                 (hasValue(invitation.secondCouple?.groomName) ||
@@ -222,10 +576,13 @@ function PublicInvitation() {
                   hasValue(invitation.secondCouple?.brideName)) && (
                   <section className="bohra-couple-panel bohra-second-couple-panel glass-panel">
                     <div className="bohra-couple-names">
-                      <h1>{invitation.secondCouple?.groomName || "Groom"}</h1>
+                      <h1>{secondNames[0]}</h1>
                       <span className="bohra-weds">Weds</span>
-                      <h1>{invitation.secondCouple?.brideName || "Bride"}</h1>
+                      <h1>{secondNames[1]}</h1>
                     </div>
+                    {hasValue(details.secondCoupleBrideFamilyLine) && (
+                      <p className="bohra-bride-family">{details.secondCoupleBrideFamilyLine}</p>
+                    )}
                   </section>
                 )}
 
@@ -265,9 +622,7 @@ function PublicInvitation() {
                           ease: [0.22, 1, 0.36, 1],
                         }}
                       >
-                        <div className="bohra-extra-event-topline">
-                          <span className="bohra-extra-event-number">{String(index + 1).padStart(2, "0")}</span>
-                        </div>
+
                         <h3>{event.title || event.type || "Celebration"}</h3>
                         <div className="bohra-programme-rule bohra-extra-event-rule" aria-hidden="true"><span>✦</span></div>
                         <div className="bohra-programme-details bohra-extra-event-details">
@@ -564,7 +919,7 @@ function PublicInvitation() {
                   variants={cardItemVariants}
                 >
                   <img
-                    src={image.imageUrl}
+                    src={resolveMediaUrl(image.imageUrl)}
                     alt={image.caption || "Wedding memory"}
                     loading="lazy"
                     decoding="async"

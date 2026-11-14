@@ -5,7 +5,7 @@
 function VelvetCurtains({ isOpening, theme }) {
   return (
     <div
-      className={`theatrical-curtains-stage ${theme === "purpleWhite" ? "curtains-purple-white" : ""} ${isOpening ? "curtains-parting" : ""}`}
+      className={`theatrical-curtains-stage ${theme === "purpleWhite" ? "curtains-purple-white" : ""} ${theme ? `curtains-theme-${theme}` : ""} ${isOpening ? "curtains-parting" : ""}`}
       aria-hidden="true"
     >
       {/* ------------------------------------------------------------------

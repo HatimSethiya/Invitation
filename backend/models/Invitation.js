@@ -4,6 +4,7 @@ const coupleSchema = new mongoose.Schema(
   {
     brideName: { type: String, trim: true, default: "" },
     groomName: { type: String, trim: true, default: "" },
+    nameOrder: { type: String, enum: ["brideFirst", "groomFirst"], default: "groomFirst" },
     bridePhoto: { type: String, default: "" },
     groomPhoto: { type: String, default: "" },
     couplePhoto: { type: String, default: "" },
@@ -86,6 +87,17 @@ const musicSchema = new mongoose.Schema(
   { _id: false }
 );
 
+const firstNikahSchema = new mongoose.Schema(
+  {
+    heading: { type: String, trim: true, default: "First Nikah Ceremony" },
+    officiant: { type: String, trim: true, default: "" },
+    hijriDate: { type: String, trim: true, default: "" },
+    time: { type: String, trim: true, default: "" },
+    venue: { type: String, trim: true, default: "" },
+  },
+  { _id: false }
+);
+
 const bohraDetailsSchema = new mongoose.Schema(
   {
     openingBlessing: { type: String, trim: true, default: "With The Grace of Allah & Panjatan Pak (AS)" },
@@ -96,6 +108,8 @@ const bohraDetailsSchema = new mongoose.Schema(
     hostFamilyTwo: { type: String, trim: true, default: "" },
     invitationWording: { type: String, trim: true, default: "Cordially Invite & Request The Honor Of Your Presence To Grace The Wedding Ceremony Of Their Grand Son" },
     brideFamilyLine: { type: String, trim: true, default: "" },
+    firstCoupleBrideFamilyLine: { type: String, trim: true, default: "" },
+    secondCoupleBrideFamilyLine: { type: String, trim: true, default: "" },
     nikahOfficiantIntro: { type: String, trim: true, default: "Nikah Solemnised On The Hand Mubarak Of His Holiness" },
     nikahOfficiant: { type: String, trim: true, default: "" },
     programmeHeading: { type: String, trim: true, default: "Programme Inshallah" },
@@ -136,19 +150,24 @@ const invitationSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["draft", "published", "archived"],
+      enum: ["draft", "published", "paused", "archived"],
       default: "draft",
       index: true,
     },
     theme: {
       type: String,
-      default: "royalRose",
+      default: "purpleWhite",
       trim: true,
     },
     cardType: {
       type: String,
       enum: ["single", "double"],
       default: "single",
+    },
+    openingAnimation: {
+      type: String,
+      enum: ["curtains", "envelope"],
+      default: "curtains",
     },
     coverImageUrl: {
       type: String,
@@ -157,6 +176,10 @@ const invitationSchema = new mongoose.Schema(
     },
     secondCouple: {
       type: coupleSchema,
+      default: () => ({}),
+    },
+    firstNikah: {
+      type: firstNikahSchema,
       default: () => ({}),
     },
     couple: {
@@ -191,6 +214,10 @@ const invitationSchema = new mongoose.Schema(
       type: musicSchema,
       default: () => ({}),
     },
+    lockPasswordHash: {
+      type: String,
+      select: false,
+    },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -200,6 +227,13 @@ const invitationSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    toJSON: {
+      transform(doc, ret) {
+        delete ret.lockPasswordHash;
+        ret.isPasswordLocked = Boolean(doc.lockPasswordHash);
+        return ret;
+      },
+    },
   }
 );
 
