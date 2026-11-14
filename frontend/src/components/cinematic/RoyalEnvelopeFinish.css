@@ -109,3 +109,48 @@
 .cinematic-envelope-opening .envelope-seal-monogram {
   text-shadow: 0 1px 0 rgba(255,246,222,.8), 0 -1px 1px rgba(90,48,24,.3);
 }
+
+/* Royal sapphire re-skin: visual layers only. Envelope dimensions, extraction choreography,
+   z-index, keyframes and transition timings remain untouched. */
+.cinematic-envelope-opening .luxury-envelope-back{
+ background:
+ radial-gradient(ellipse at 50% 12%,rgba(255,244,210,.24),transparent 43%),
+ url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='144' height='180' viewBox='0 0 144 180'%3E%3Cg fill='none' stroke='%23d9b66d' stroke-opacity='.32' stroke-width='1.1'%3E%3Cpath d='M72 5C55 24 39 28 25 45 43 48 55 61 58 77 65 68 70 58 72 45 74 58 79 68 86 77 89 61 101 48 119 45 105 28 89 24 72 5Z M72 38C55 55 48 72 52 91 62 84 68 74 72 62 76 74 82 84 92 91 96 72 89 55 72 38Z M72 92C55 108 39 112 25 129 43 132 55 145 58 161 65 152 70 142 72 129 74 142 79 152 86 161 89 145 101 132 119 129 105 112 89 108 72 92Z M12 90C29 78 38 66 41 53M132 90C115 78 106 66 103 53M12 90C29 102 38 114 41 127M132 90C115 102 106 114 103 127Z'/%3E%3C/g%3E%3C/svg%3E"),
+ repeating-linear-gradient(118deg,rgba(255,255,255,.035) 0 1px,rgba(4,16,35,.075) 1px 3px),
+ linear-gradient(135deg,#24466d 0%,#193657 32%,#102744 67%,#274a70 100%)!important;
+ box-shadow:inset 0 0 0 2px #f0d69a,inset 0 0 0 4px #a9823d,inset 0 0 0 7px rgba(255,239,195,.8),inset 0 0 0 10px rgba(191,150,73,.62),inset 0 18px 32px rgba(255,255,255,.12),inset 0 -22px 30px rgba(3,13,28,.22),0 4px 0 #0a1d32,0 18px 40px rgba(8,10,24,.42)!important;
+}
+.cinematic-envelope-opening .luxury-envelope-back::before{
+ inset:13px!important;border:1px solid rgba(239,211,148,.94)!important;border-radius:10px 10px 17px 17px!important;
+ box-shadow:inset 0 0 0 1px rgba(255,244,213,.32),0 0 0 1px rgba(255,231,173,.38)!important;
+ background:linear-gradient(45deg,transparent 48.9%,rgba(232,195,119,.3) 49.5%,transparent 50.1%),linear-gradient(-45deg,transparent 48.9%,rgba(232,195,119,.3) 49.5%,transparent 50.1%)!important;
+}
+.cinematic-envelope-opening .luxury-envelope-back::after{
+ content:"❧  ✧  ❦  ✧  ❧"!important;bottom:8.5%!important;color:#f0d59a!important;font-size:clamp(18px,2.7vw,27px)!important;letter-spacing:.16em!important;opacity:.95!important;text-shadow:0 1px 1px rgba(4,16,34,.75),0 0 9px rgba(236,194,112,.3)!important;
+}
+.cinematic-envelope-opening .luxury-envelope-flap{
+ background:
+ url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23e0bd77' stroke-opacity='.45' stroke-width='1'%3E%3Cpath d='M60 7C48 23 35 26 22 39 38 42 49 53 53 66 58 59 60 49 60 40 60 49 62 59 67 66 71 53 82 42 98 39 85 26 72 23 60 7Z M60 50C45 63 44 78 60 94 76 78 75 63 60 50Z'/%3E%3C/g%3E%3C/svg%3E"),
+ repeating-linear-gradient(118deg,rgba(255,255,255,.055) 0 1px,rgba(3,16,35,.045) 1px 3px),
+ linear-gradient(150deg,#41658a 0%,#294b70 42%,#173454 78%,#102641 100%)!important;
+ filter:drop-shadow(0 8px 8px rgba(4,15,29,.38)) drop-shadow(0 0 1px #efd59a)!important;
+}
+.cinematic-envelope-opening .luxury-envelope-flap::after{content:"✧  ❦  ✧";position:absolute;left:0;right:0;top:57%;color:rgba(245,218,160,.96);font-family:Georgia,"Times New Roman",serif;font-size:clamp(19px,2.5vw,26px);letter-spacing:.2em;text-align:center;text-shadow:0 1px 2px rgba(3,14,30,.8),0 0 8px rgba(231,190,111,.32);pointer-events:none}
+.cinematic-envelope-opening .luxury-envelope-flap::before{background:linear-gradient(145deg,rgba(255,242,204,.9),rgba(177,130,53,.72))!important;opacity:.96!important;filter:drop-shadow(0 0 2px rgba(255,238,190,.75))}
+.cinematic-envelope-opening .luxury-envelope-pocket{
+ background:linear-gradient(145deg,transparent 49.35%,rgba(5,19,39,.48) 50%,rgba(244,218,163,.82) 50.45%,transparent 51%),linear-gradient(35deg,#183657 0 49.8%,transparent 50%),linear-gradient(-35deg,#315779 0 49.8%,transparent 50%),linear-gradient(180deg,#294b70,#183554)!important;
+ filter:drop-shadow(0 -1px 0 rgba(255,242,204,.92)) drop-shadow(0 1px 0 rgba(4,17,34,.45))!important;
+}
+.cinematic-envelope-opening .luxury-envelope-pocket::before{
+ inset:8px!important;border:1px solid rgba(237,207,143,.82)!important;box-shadow:inset 0 0 0 1px rgba(255,242,204,.26),0 0 0 1px rgba(255,249,229,.22)!important;
+ background:linear-gradient(145deg,rgba(255,244,214,.12),transparent 38%,rgba(4,15,32,.12)),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='110' height='100' viewBox='0 0 110 100'%3E%3Cg fill='none' stroke='%23e4c27e' stroke-opacity='.42' stroke-width='1'%3E%3Cpath d='M55 7C42 21 27 25 16 40 31 42 43 53 47 66 52 58 55 48 55 39 55 48 58 58 63 66 67 53 79 42 94 40 83 25 68 21 55 7Z M55 52C41 65 43 79 55 91 67 79 69 65 55 52Z'/%3E%3C/g%3E%3C/svg%3E") center 72%/110px 100px no-repeat!important;
+}
+.cinematic-envelope-opening .luxury-envelope-pocket::after{content:"❧     ✧     ❧";position:absolute;left:0;right:0;bottom:5.5%;color:rgba(243,215,159,.88);font-family:Georgia,"Times New Roman",serif;font-size:clamp(17px,2.3vw,23px);letter-spacing:.18em;text-align:center;text-shadow:0 1px 2px rgba(3,14,30,.6);pointer-events:none}
+.cinematic-envelope-opening .luxury-envelope-seal{
+ border:2px solid #f5dfaa!important;
+ background:radial-gradient(circle at 28% 20%,rgba(255,245,213,.94),transparent 30%),radial-gradient(circle at 70% 78%,rgba(4,17,35,.52),transparent 52%),linear-gradient(145deg,#42698e,#1b3b5d 58%,#102744)!important;
+ box-shadow:0 6px 0 #0a2038,0 15px 25px rgba(3,12,26,.46),inset 0 0 0 3px rgba(255,246,218,.62),inset 0 0 0 6px rgba(203,161,78,.72),inset 0 2px 7px rgba(255,249,228,.48)!important;
+}
+.cinematic-envelope-opening .envelope-seal-monogram{color:#fff0c9!important;text-shadow:0 1px 0 rgba(255,246,222,.82),0 -1px 1px rgba(7,20,37,.65)}
+.cinematic-envelope-opening .envelope-seal-ornament{color:#e9c77e!important;text-shadow:0 1px 1px rgba(5,17,32,.7)}
+.cinematic-envelope-opening .envelope-open-prompt{border-color:rgba(244,220,169,.78)!important;background:linear-gradient(145deg,#42658a,#1a3857 58%,#102641)!important;color:#fff0cc!important;box-shadow:inset 0 0 0 1px rgba(255,245,218,.24),0 7px 18px rgba(4,13,28,.38)!important;text-shadow:0 1px 2px rgba(3,14,30,.7)!important}
