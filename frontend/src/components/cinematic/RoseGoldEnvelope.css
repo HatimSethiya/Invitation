@@ -295,3 +295,93 @@
   box-shadow: inset 0 0 0 1px rgba(255,248,229,.32), 0 7px 18px rgba(62,20,28,.3) !important;
   text-shadow: 0 1px 2px rgba(91,38,39,.48) !important;
 }
+
+/* TRUE ROSE-GOLD METALLIC PALETTE — colors/material finish only.
+   Do not alter envelope geometry, seal placement, animation, timing, or stacking. */
+.cinematic-envelope-opening .luxury-envelope-back {
+  background:
+    radial-gradient(ellipse at 50% 8%, rgba(255,250,242,.72), transparent 40%),
+    radial-gradient(ellipse at 18% 48%, rgba(255,220,205,.3), transparent 42%),
+    repeating-linear-gradient(118deg, rgba(255,255,255,.12) 0 1px, rgba(125,62,48,.035) 1px 3px),
+    linear-gradient(128deg, #f8dfd3 0%, #efc4b3 18%, #dca18b 38%, #c9856e 54%, #e6ad98 72%, #f2d0bf 88%, #c98770 100%) !important;
+  box-shadow:
+    inset 0 0 0 2px #fff0df,
+    inset 0 0 0 4px #d6a06d,
+    inset 0 0 0 6px rgba(255,239,220,.94),
+    inset 0 0 0 9px rgba(177,104,75,.42),
+    inset 0 18px 30px rgba(255,255,255,.34),
+    inset 0 -24px 34px rgba(128,65,48,.18),
+    0 4px 0 #a96e58,
+    0 18px 40px rgba(8,10,24,.4) !important;
+}
+.cinematic-envelope-opening .luxury-envelope-back::before {
+  border-color: rgba(255,232,211,.98) !important;
+  box-shadow: inset 0 0 0 1px rgba(201,139,94,.48), 0 0 0 1px rgba(255,246,229,.58) !important;
+  background:
+    linear-gradient(45deg, transparent 48.9%, rgba(205,143,99,.2) 49.5%, transparent 50.1%),
+    linear-gradient(-45deg, transparent 48.9%, rgba(205,143,99,.2) 49.5%, transparent 50.1%) !important;
+}
+.cinematic-envelope-opening .luxury-envelope-back::after {
+  color: #fff0d9 !important;
+  text-shadow: 0 1px 1px rgba(105,51,38,.52), 0 0 10px rgba(255,222,188,.48) !important;
+}
+.cinematic-envelope-opening .luxury-envelope-flap {
+  background:
+    repeating-linear-gradient(118deg, rgba(255,255,255,.1) 0 1px, rgba(125,62,48,.025) 1px 3px),
+    linear-gradient(145deg, #fff0e4 0%, #f6d8c8 24%, #e9bba6 48%, #d99a81 72%, #efc8b5 100%) !important;
+  filter: drop-shadow(0 8px 8px rgba(94,48,35,.24)) drop-shadow(0 0 1px #fff0d8) !important;
+}
+.cinematic-envelope-opening .luxury-envelope-flap::after {
+  color: rgba(181,111,77,.96) !important;
+  text-shadow: 0 1px 0 rgba(255,250,234,.98), 0 0 8px rgba(255,214,174,.48) !important;
+}
+.cinematic-envelope-opening .luxury-envelope-flap::before {
+  background: linear-gradient(145deg, rgba(255,250,235,.96), rgba(199,135,91,.64)) !important;
+  filter: drop-shadow(0 0 2px rgba(255,244,220,.9)) !important;
+}
+.cinematic-envelope-opening .luxury-envelope-pocket {
+  background:
+    linear-gradient(145deg, transparent 49.35%, rgba(133,69,49,.32) 50%, rgba(255,237,213,.84) 50.45%, transparent 51%),
+    linear-gradient(35deg, #d49a83 0 49.8%, transparent 50%),
+    linear-gradient(-35deg, #edc1ad 0 49.8%, transparent 50%),
+    linear-gradient(180deg, #edc3b0, #c98a72) !important;
+  filter: drop-shadow(0 -1px 0 rgba(255,250,234,.98)) drop-shadow(0 1px 0 rgba(128,66,48,.38)) !important;
+}
+.cinematic-envelope-opening .luxury-envelope-pocket::before {
+  border-color: rgba(255,235,213,.94) !important;
+  box-shadow: inset 0 0 0 1px rgba(196,131,87,.46), 0 0 0 1px rgba(255,249,233,.32) !important;
+  background: linear-gradient(145deg, rgba(255,250,235,.28), transparent 38%, rgba(130,62,44,.09)) !important;
+}
+.cinematic-envelope-opening .luxury-envelope-pocket::after {
+  color: rgba(255,239,215,.98) !important;
+  text-shadow: 0 1px 1px rgba(112,57,42,.48) !important;
+}
+.cinematic-envelope-opening .luxury-envelope-seal {
+  border-color: #fff0dc !important;
+  background:
+    radial-gradient(circle at 24% 16%, rgba(255,250,236,.98), transparent 28%),
+    radial-gradient(circle at 75% 82%, rgba(130,62,45,.32), transparent 52%),
+    repeating-linear-gradient(115deg, rgba(255,255,255,.09) 0 1px, rgba(113,57,41,.035) 1px 3px),
+    linear-gradient(145deg, #f8d9bd 0%, #e8b18e 24%, #d39170 44%, #bd795c 64%, #e0a184 82%, #f3c8a8 100%) !important;
+  box-shadow:
+    0 6px 0 #9a6049,
+    0 15px 25px rgba(54,20,24,.36),
+    inset 0 0 0 3px rgba(255,249,230,.82),
+    inset 0 0 0 6px rgba(222,166,112,.84),
+    inset 0 2px 7px rgba(255,249,228,.72) !important;
+}
+.cinematic-envelope-opening .envelope-seal-monogram {
+  color: #fff8e9 !important;
+  text-shadow: 0 1px 0 rgba(255,248,225,.86), 0 -1px 1px rgba(105,51,34,.56) !important;
+}
+.cinematic-envelope-opening .envelope-seal-ornament {
+  color: #fff0d2 !important;
+  text-shadow: 0 1px 1px rgba(105,51,34,.58) !important;
+}
+.cinematic-envelope-opening .envelope-open-prompt {
+  border-color: rgba(255,236,216,.92) !important;
+  background: linear-gradient(145deg, #dca58d, #bd806a 58%, #a56a58) !important;
+  color: #fff7e6 !important;
+  box-shadow: inset 0 0 0 1px rgba(255,250,232,.38), 0 7px 18px rgba(62,20,28,.32) !important;
+  text-shadow: 0 1px 2px rgba(105,51,38,.54) !important;
+}
