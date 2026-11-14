@@ -47,61 +47,68 @@
       </g>
       <circle r="3.2" fill="#d5a34e"/>
     </g>
-    <g id="cluster">
-      <path d="M0 0 C32 -12 54 -25 82 -44 M15 -5 C34 -31 41 -45 52 -64 M28 -12 C58 -9 75 -12 99 -22 M55 -28 C69 -44 78 -58 85 -74" stroke="#899b76" stroke-width="2" stroke-linecap="round"/>
-      <use href="#leaf" transform="translate(12 -5) rotate(-18) scale(.8)"/>
-      <use href="#leaf" transform="translate(32 -20) rotate(35) scale(.75)"/>
-      <use href="#leaf" transform="translate(48 -29) rotate(-18) scale(.8)"/>
-      <use href="#leaf" transform="translate(66 -35) rotate(30) scale(.72)"/>
-      <use href="#leaf" transform="translate(78 -52) rotate(-30) scale(.78)"/>
-      <use href="#leaf" transform="translate(42 -15) rotate(155) scale(.7)"/>
-      <use href="#rose" transform="translate(40 -42) scale(1.08)"/>
-      <use href="#rose" transform="translate(78 -12) scale(.68)"/>
-      <use href="#blossom" transform="translate(16 -30) scale(.62)"/>
-      <use href="#blossom" transform="translate(88 -56) scale(.55)"/>
+    <g id="corner-bouquet">
+      <path d="M10 120 C35 85 68 52 116 18 M22 100 C66 104 95 85 130 55 M38 76 C20 42 20 22 38 0 M65 58 C90 25 105 12 130 4" stroke="#899b76" stroke-width="3" stroke-linecap="round"/>
+      <use href="#leaf" transform="translate(18 103) rotate(-18) scale(1.05)"/>
+      <use href="#leaf" transform="translate(40 83) rotate(35) scale(1.1)"/>
+      <use href="#leaf" transform="translate(58 64) rotate(-18) scale(1.05)"/>
+      <use href="#leaf" transform="translate(82 43) rotate(30) scale(1.1)"/>
+      <use href="#leaf" transform="translate(105 25) rotate(-30) scale(1.05)"/>
+      <use href="#leaf" transform="translate(45 90) rotate(155) scale(.95)"/>
+      <use href="#leaf" transform="translate(75 62) rotate(155) scale(.9)"/>
+      <use href="#leaf" transform="translate(25 55) rotate(210) scale(.95)"/>
+      <use href="#rose" transform="translate(48 42) scale(2.05)"/>
+      <use href="#rose" transform="translate(104 80) scale(1.35)"/>
+      <use href="#blossom" transform="translate(15 18) scale(1.35)"/>
+      <use href="#blossom" transform="translate(120 20) scale(1.1)"/>
+      <use href="#blossom" transform="translate(18 120) scale(1.05)"/>
+    </g>
+    <g id="edge-vine">
+      <path d="M0 0 C55 -18 105 18 160 0 S265 -18 320 0 S425 18 480 0 S585 -18 640 0" stroke="#899b76" stroke-width="2.5" stroke-linecap="round"/>
+      <use href="#leaf" transform="translate(35 -3) rotate(-28) scale(.72)"/>
+      <use href="#leaf" transform="translate(82 5) rotate(150) scale(.72)"/>
+      <use href="#leaf" transform="translate(145 -2) rotate(-28) scale(.72)"/>
+      <use href="#leaf" transform="translate(205 5) rotate(150) scale(.72)"/>
+      <use href="#leaf" transform="translate(270 -2) rotate(-28) scale(.72)"/>
+      <use href="#leaf" transform="translate(330 5) rotate(150) scale(.72)"/>
+      <use href="#leaf" transform="translate(395 -2) rotate(-28) scale(.72)"/>
+      <use href="#leaf" transform="translate(455 5) rotate(150) scale(.72)"/>
+      <use href="#leaf" transform="translate(520 -2) rotate(-28) scale(.72)"/>
+      <use href="#leaf" transform="translate(580 5) rotate(150) scale(.72)"/>
     </g>
   </defs>
-  <!-- Full-perimeter couture floral frame; the center remains transparent for names. -->
+
+  <!-- Fine double gold perimeter with open central field for all invitation text. -->
   <rect x="14" y="14" width="872" height="822" rx="38" stroke="url(#goldLine)" stroke-width="3" stroke-opacity=".92"/>
   <rect x="28" y="28" width="844" height="794" rx="31" stroke="#fffdf8" stroke-width="1.7" stroke-opacity=".92"/>
   <rect x="48" y="48" width="804" height="754" rx="25" stroke="url(#goldLine)" stroke-width="1.35" stroke-opacity=".72"/>
   <rect x="60" y="60" width="780" height="730" rx="21" stroke="#e4c5a8" stroke-width=".85" stroke-opacity=".72"/>
-  <use href="#cluster" transform="translate(95 125) "/>
-  <use href="#cluster" transform="translate(245 125) "/>
-  <use href="#cluster" transform="translate(395 125) "/>
-  <use href="#cluster" transform="translate(545 125) "/>
-  <use href="#cluster" transform="translate(695 125) "/>
-  <use href="#cluster" transform="translate(845 125) "/>
-  <use href="#cluster" transform="translate(845 725) rotate(180)"/>
-  <use href="#cluster" transform="translate(695 725) rotate(180)"/>
-  <use href="#cluster" transform="translate(545 725) rotate(180)"/>
-  <use href="#cluster" transform="translate(395 725) rotate(180)"/>
-  <use href="#cluster" transform="translate(245 725) rotate(180)"/>
-  <use href="#cluster" transform="translate(95 725) rotate(180)"/>
-  <use href="#cluster" transform="translate(125 205) rotate(90)"/>
-  <use href="#cluster" transform="translate(125 335) rotate(90)"/>
-  <use href="#cluster" transform="translate(125 465) rotate(90)"/>
-  <use href="#cluster" transform="translate(125 595) rotate(90)"/>
-  <use href="#cluster" transform="translate(775 205) rotate(-90)"/>
-  <use href="#cluster" transform="translate(775 335) rotate(-90)"/>
-  <use href="#cluster" transform="translate(775 465) rotate(-90)"/>
-  <use href="#cluster" transform="translate(775 595) rotate(-90)"/>
-  <use href="#blossom" transform="translate(170 55) scale(.82)"/>
-  <use href="#blossom" transform="translate(170 795) scale(.82)"/>
-  <use href="#blossom" transform="translate(320 55) scale(.82)"/>
-  <use href="#blossom" transform="translate(320 795) scale(.82)"/>
-  <use href="#blossom" transform="translate(450 55) scale(.82)"/>
-  <use href="#blossom" transform="translate(450 795) scale(.82)"/>
-  <use href="#blossom" transform="translate(580 55) scale(.82)"/>
-  <use href="#blossom" transform="translate(580 795) scale(.82)"/>
-  <use href="#blossom" transform="translate(730 55) scale(.82)"/>
-  <use href="#blossom" transform="translate(730 795) scale(.82)"/>
-  <use href="#blossom" transform="translate(55 265) scale(.78)"/>
-  <use href="#blossom" transform="translate(845 265) scale(.78)"/>
-  <use href="#blossom" transform="translate(55 400) scale(.78)"/>
-  <use href="#blossom" transform="translate(845 400) scale(.78)"/>
-  <use href="#blossom" transform="translate(55 535) scale(.78)"/>
-  <use href="#blossom" transform="translate(845 535) scale(.78)"/>
-  <use href="#blossom" transform="translate(55 670) scale(.78)"/>
-  <use href="#blossom" transform="translate(845 670) scale(.78)"/>
+
+  <!-- Four rich corner bouquets; restrained connected vines only along the outer edges. -->
+  <use href="#corner-bouquet" transform="translate(32 32) scale(1.28)"/>
+  <use href="#corner-bouquet" transform="translate(868 32) scale(-1.28 1.28)"/>
+  <use href="#corner-bouquet" transform="translate(32 818) scale(1.28 -1.28)"/>
+  <use href="#corner-bouquet" transform="translate(868 818) scale(-1.28 -1.28)"/>
+
+  <use href="#edge-vine" transform="translate(130 86) scale(1.0 .78)"/>
+  <use href="#edge-vine" transform="translate(770 778) rotate(180) scale(1.0 .78)"/>
+  <path d="M88 180 C75 265 75 330 88 415 S75 565 88 670" stroke="#899b76" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M812 180 C825 265 825 330 812 415 S825 565 812 670" stroke="#899b76" stroke-width="2.4" stroke-linecap="round"/>
+  <use href="#leaf" transform="translate(87 235) rotate(35) scale(.85)"/>
+  <use href="#leaf" transform="translate(89 310) rotate(155) scale(.85)"/>
+  <use href="#leaf" transform="translate(87 390) rotate(35) scale(.85)"/>
+  <use href="#leaf" transform="translate(89 470) rotate(155) scale(.85)"/>
+  <use href="#leaf" transform="translate(87 550) rotate(35) scale(.85)"/>
+  <use href="#leaf" transform="translate(89 630) rotate(155) scale(.85)"/>
+  <use href="#leaf" transform="translate(813 235) rotate(145) scale(.85)"/>
+  <use href="#leaf" transform="translate(811 310) rotate(25) scale(.85)"/>
+  <use href="#leaf" transform="translate(813 390) rotate(145) scale(.85)"/>
+  <use href="#leaf" transform="translate(811 470) rotate(25) scale(.85)"/>
+  <use href="#leaf" transform="translate(813 550) rotate(145) scale(.85)"/>
+  <use href="#leaf" transform="translate(811 630) rotate(25) scale(.85)"/>
+
+  <use href="#blossom" transform="translate(450 70) scale(.9)"/>
+  <use href="#blossom" transform="translate(450 780) scale(.9)"/>
+  <use href="#blossom" transform="translate(78 425) scale(.85)"/>
+  <use href="#blossom" transform="translate(822 425) scale(.85)"/>
 </svg>
