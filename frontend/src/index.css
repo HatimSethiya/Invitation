@@ -3618,3 +3618,69 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
 .invitation-unlock-form .invitation-lock-couple-names {
   margin-bottom: 2px;
 }
+
+
+/* Invitation text polish: calligraphic Bismillah and neatly separated compliments. */
+.bohra-public-page .bohra-bismillah-calligraphy {
+  font-family: "Amiri", "Noto Naskh Arabic", "Traditional Arabic", serif;
+  font-size: clamp(1.75rem, 5vw, 2.35rem);
+  font-weight: 700;
+  line-height: 1.55;
+  text-align: center;
+  text-wrap: nowrap;
+  color: var(--bohra-ink);
+  margin: 0 auto 18px;
+}
+
+.bohra-public-page .bohra-opening-line,
+.bohra-public-page .bohra-raza-line,
+.bohra-public-page .bohra-leader-line,
+.bohra-public-page .bohra-host-families p,
+.bohra-public-page .bohra-invitation-wording {
+  max-width: min(100%, 600px);
+  margin-inline: auto;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.bohra-public-page .bohra-compliments {
+  width: 100%;
+  max-width: 640px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.bohra-public-page .bohra-compliments-family {
+  max-width: 100%;
+  margin: 10px auto 0;
+  color: var(--bohra-gold, #c9974d) !important;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1rem, 3.2vw, 1.2rem);
+  font-weight: 800;
+  line-height: 1.5;
+  letter-spacing: .055em;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.bohra-public-page .bohra-compliments-note {
+  max-width: 590px;
+  margin: 5px auto 0;
+  color: var(--bohra-muted, #927366) !important;
+  font-size: clamp(.92rem, 2.8vw, 1rem);
+  font-weight: 400;
+  line-height: 1.65;
+  text-align: center;
+  text-wrap: balance;
+}
+
+@media (max-width: 600px) {
+  .bohra-public-page .bohra-bismillah-calligraphy {
+    font-size: clamp(1.55rem, 6.2vw, 1.95rem);
+    margin-bottom: 14px;
+  }
+
+  .bohra-public-page .bohra-compliments-family {
+    letter-spacing: .035em;
+  }
+}
