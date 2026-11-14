@@ -92,7 +92,7 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
         setIsHandoffActive(true);
         if (onHandoffStart) onHandoffStart();
       }, 3050);
-      addTimer(() => { if (onOpened) onOpened(); }, 4000);
+      addTimer(() => { if (onOpened) onOpened(); }, 4250);
       return;
     }
 
