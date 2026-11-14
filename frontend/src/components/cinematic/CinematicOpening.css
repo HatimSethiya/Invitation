@@ -2346,3 +2346,97 @@
     height: 86% !important;
   }
 }
+
+
+/* --------------------------------------------------------------------------
+   Extract the uploaded invitation from inside the envelope into a true
+   foreground layer. The idle insert stays pocket-clipped visually; the
+   full-size cover animates upward and then settles at the viewport center.
+   -------------------------------------------------------------------------- */
+.cinematic-envelope-opening .luxury-envelope-wrap {
+  width: min(78vw, 38vh, 340px) !important;
+}
+.cinematic-envelope-opening .luxury-envelope {
+  aspect-ratio: .62 / 1 !important;
+  max-height: 60vh !important;
+}
+
+/* Independent foreground cover: mounted from the start for transition readiness. */
+.cinematic-envelope-opening .envelope-extracted-cover-card {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  z-index: 1002 !important;
+  width: min(90vw, 460px) !important;
+  height: min(78vh, 740px) !important;
+  max-width: 94vw !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  border-radius: clamp(8px, 1.8vw, 18px) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  transform: translate(-50%, calc(-50% + 22vh)) scale(.36) !important;
+  transform-origin: center center !important;
+  filter: drop-shadow(0 12px 24px rgba(10,3,8,.28)) !important;
+  transition:
+    transform 1.42s cubic-bezier(.2,.78,.18,1),
+    opacity .24s ease,
+    filter .7s ease !important;
+  will-change: transform, opacity !important;
+}
+
+/* During extraction, hide the small cover still nested in the envelope.
+   The independent card now visibly rises from the envelope's lower pocket. */
+.cinematic-envelope-opening.envelope-card-emerging .luxury-envelope-insert.has-uploaded-cover-art,
+.cinematic-envelope-opening.envelope-card-presented .luxury-envelope-insert.has-uploaded-cover-art {
+  opacity: 0 !important;
+  transition: opacity .12s linear !important;
+}
+
+.cinematic-envelope-opening.envelope-card-emerging .envelope-extracted-cover-card {
+  opacity: 1 !important;
+  transform: translate(-50%, calc(-50% + 7vh)) scale(.72) !important;
+  filter: drop-shadow(0 22px 42px rgba(10,3,8,.38)) !important;
+}
+
+.cinematic-envelope-opening.envelope-card-presented .envelope-extracted-cover-card {
+  opacity: 1 !important;
+  transform: translate(-50%, -50%) scale(1) !important;
+  filter: drop-shadow(0 32px 72px rgba(10,3,8,.48)) !important;
+  transition:
+    transform .72s cubic-bezier(.16,1,.3,1),
+    opacity .24s ease,
+    filter .7s ease !important;
+}
+
+/* Fade envelope and extracted cover as one cinematic layer at handoff. */
+.cinematic-envelope-opening .envelope-insert-dissolving .luxury-envelope-wrap {
+  opacity: 1 !important;
+  transform: translateY(-.5vh) !important;
+  transition: none !important;
+}
+.cinematic-envelope-opening .envelope-insert-dissolving .luxury-envelope-insert.has-uploaded-cover-art {
+  opacity: 0 !important;
+  transition: none !important;
+}
+
+@media (max-width: 600px) {
+  .cinematic-envelope-opening .luxury-envelope-wrap {
+    width: min(78vw, 38vh, 330px) !important;
+  }
+  .cinematic-envelope-opening .luxury-envelope {
+    aspect-ratio: .62 / 1 !important;
+    max-height: 60vh !important;
+  }
+  .cinematic-envelope-opening .envelope-extracted-cover-card {
+    width: min(92vw, 460px) !important;
+    height: min(78vh, 740px) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-envelope-opening .envelope-extracted-cover-card {
+    transition-duration: .01ms !important;
+  }
+}
