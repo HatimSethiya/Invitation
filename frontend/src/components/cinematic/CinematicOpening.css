@@ -2529,7 +2529,7 @@
 }
 .cinematic-envelope-opening.envelope-card-emerging .envelope-extracted-cover-card {
   opacity: 1 !important;
-  animation: invitation-card-physical-extract 1.32s cubic-bezier(.32,.72,.2,1) both !important;
+  animation: invitation-card-physical-extract 2.1s cubic-bezier(.32,.72,.2,1) both !important;
 }
 @keyframes invitation-card-physical-extract {
   0% {
