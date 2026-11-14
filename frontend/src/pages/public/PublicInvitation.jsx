@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
-import api from "../../services/api";
+import api, { resolveMediaUrl } from "../../services/api";
 import EnvelopeReveal from "../../components/EnvelopeReveal";
 import InvitationMusicPlayer from "../../components/InvitationMusicPlayer";
 
@@ -874,7 +874,7 @@ function PublicInvitation() {
                   variants={cardItemVariants}
                 >
                   <img
-                    src={image.imageUrl}
+                    src={resolveMediaUrl(image.imageUrl)}
                     alt={image.caption || "Wedding memory"}
                     loading="lazy"
                     decoding="async"
