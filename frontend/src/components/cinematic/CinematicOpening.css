@@ -1926,3 +1926,9 @@
     bottom: -6%;
   }
 }
+
+.cinematic-envelope-opening .envelope-insert-dissolving .luxury-envelope-insert.has-uploaded-cover-art {
+  opacity: 0;
+  transform: translate(-50%, -62%) scale(1.025);
+  transition-delay: 0s, 0s, 0s;
+}
