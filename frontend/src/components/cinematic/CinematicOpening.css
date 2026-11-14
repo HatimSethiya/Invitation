@@ -2167,8 +2167,8 @@
   opacity: 1 !important;
   transform: translate(-50%, -36%) scale(.78) !important;
   transition:
-    transform 1.08s cubic-bezier(.22, .72, .18, 1) !important,
-    opacity .28s ease !important,
+    transform 1.08s cubic-bezier(.22, .72, .18, 1),
+    opacity .28s ease,
     box-shadow .72s ease !important;
 }
 
