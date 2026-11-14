@@ -2007,7 +2007,7 @@
 .cinematic-envelope-opening .luxury-envelope-insert.has-uploaded-cover-art {
   transform: translate(-50%, 55%) scale(.96) !important;
   transition:
-    transform 1.55s cubic-bezier(.16, .82, .2, 1) .92s,
+    transform 1.8s cubic-bezier(.16, .82, .2, 1) .92s,
     opacity .3s ease .92s,
     box-shadow .8s ease !important;
 }
