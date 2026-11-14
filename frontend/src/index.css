@@ -3942,22 +3942,19 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
 }
 
 
-/* White Rose Gold layout correction: keep the Jaman description on the same
-   icon/text grid as the date and time rows, with a shared left text edge. */
+/* White Rose Gold Jaman description: remove the decorative point and align
+   the description text with the date/time labels, with comfortable spacing. */
 .bohra-public-page.theme-whiteRoseGold .bohra-description-detail-row {
-  margin-top: 14px;
-}
-.bohra-public-page.theme-whiteRoseGold .bohra-description-detail-row {
-  grid-template-columns: 30px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   align-items: center;
-  column-gap: 12px;
+  column-gap: 0;
   width: 100%;
   max-width: 510px;
-  margin-inline: auto;
+  margin: 14px auto 0;
+  padding-left: 42px;
 }
 .bohra-public-page.theme-whiteRoseGold .bohra-description-detail-row > .bohra-detail-icon {
-  align-self: center;
-  margin: 0;
+  display: none;
 }
 .bohra-public-page.theme-whiteRoseGold .bohra-description-detail-row > div {
   min-width: 0;
@@ -3968,8 +3965,8 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
   width: 100%;
   margin: 0;
   text-align: left;
-  line-height: 1.5;
-  overflow-wrap: normal;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
   word-break: normal;
 }
 
