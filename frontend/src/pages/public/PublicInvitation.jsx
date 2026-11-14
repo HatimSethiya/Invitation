@@ -546,13 +546,27 @@ function PublicInvitation() {
               )}
 
               <section className="bohra-couple-panel glass-panel">
+                <img className="bohra-couple-floral-frame" src="/rose-gold-floral-couple-frame.svg" alt="" aria-hidden="true" draggable="false" />
                 <div className="bohra-couple-names">
                   <h1>{primaryNames[0]}</h1>
                   <span className="bohra-weds">Weds</span>
                   <h1>{primaryNames[1]}</h1>
                 </div>
-                {hasValue(details.firstCoupleBrideFamilyLine || details.brideFamilyLine) && (
-                  <p className="bohra-bride-family">{details.firstCoupleBrideFamilyLine || details.brideFamilyLine}</p>
+                {(hasValue(details.firstCoupleBrideFamilyLine || details.brideFamilyLine) || hasValue(details.firstCoupleGroomFamilyLine)) && (
+                  <div className="bohra-couple-family-lines">
+                    {hasValue(details.firstCoupleBrideFamilyLine || details.brideFamilyLine) && (
+                      <p className="bohra-bride-family">
+                        <span className="bohra-family-line-label">Bride's family</span>
+                        {details.firstCoupleBrideFamilyLine || details.brideFamilyLine}
+                      </p>
+                    )}
+                    {hasValue(details.firstCoupleGroomFamilyLine) && (
+                      <p className="bohra-groom-family">
+                        <span className="bohra-family-line-label">Groom's family</span>
+                        {details.firstCoupleGroomFamilyLine}
+                      </p>
+                    )}
+                  </div>
                 )}
               </section>
 
@@ -575,13 +589,27 @@ function PublicInvitation() {
                 (hasValue(invitation.secondCouple?.groomName) ||
                   hasValue(invitation.secondCouple?.brideName)) && (
                   <section className="bohra-couple-panel bohra-second-couple-panel glass-panel">
+                    <img className="bohra-couple-floral-frame" src="/rose-gold-floral-couple-frame.svg" alt="" aria-hidden="true" draggable="false" />
                     <div className="bohra-couple-names">
                       <h1>{secondNames[0]}</h1>
                       <span className="bohra-weds">Weds</span>
                       <h1>{secondNames[1]}</h1>
                     </div>
-                    {hasValue(details.secondCoupleBrideFamilyLine) && (
-                      <p className="bohra-bride-family">{details.secondCoupleBrideFamilyLine}</p>
+                    {(hasValue(details.secondCoupleBrideFamilyLine) || hasValue(details.secondCoupleGroomFamilyLine)) && (
+                      <div className="bohra-couple-family-lines">
+                        {hasValue(details.secondCoupleBrideFamilyLine) && (
+                          <p className="bohra-bride-family">
+                            <span className="bohra-family-line-label">Bride's family</span>
+                            {details.secondCoupleBrideFamilyLine}
+                          </p>
+                        )}
+                        {hasValue(details.secondCoupleGroomFamilyLine) && (
+                          <p className="bohra-groom-family">
+                            <span className="bohra-family-line-label">Groom's family</span>
+                            {details.secondCoupleGroomFamilyLine}
+                          </p>
+                        )}
+                      </div>
                     )}
                   </section>
                 )}
@@ -651,7 +679,12 @@ function PublicInvitation() {
                             </div>
                           )}
                         </div>
-                        {hasValue(event.description) && <p className="bohra-extra-event-description">{event.description}</p>}
+                        {hasValue(event.description) && (
+                          <div className="bohra-detail-row bohra-description-detail-row">
+                            <span className="bohra-detail-icon" aria-hidden="true">✧</span>
+                            <div><p className="bohra-extra-event-description-inline">{event.description}</p></div>
+                          </div>
+                        )}
                         {hasValue(event.mapUrl) && <a className="bohra-extra-event-map-link" href={event.mapUrl} target="_blank" rel="noreferrer">Open Maps <span aria-hidden="true">↗</span></a>}
                       </motion.article>
                     ))}
