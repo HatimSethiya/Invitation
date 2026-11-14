@@ -4,6 +4,7 @@ import CardStationery from "./cinematic/CardStationery";
 import { resolveMediaUrl } from "../services/api";
 import "./cinematic/CinematicOpening.css";
 import "./cinematic/RoyalEnvelopeFinish.css";
+import "./cinematic/RoseGoldEnvelope.css";
 
 /**
  * EnvelopeReveal coordinates a clean invitation opening:
@@ -175,7 +176,7 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
               <div className="luxury-envelope-pocket" />
               <div className="luxury-envelope-flap" />
               <button className="luxury-envelope-seal" type="button" onClick={triggerSequence} disabled={hasTriggeredRef.current || !isCoverReady} aria-label="Tap the wax seal to open the wedding invitation">
-                <span className="envelope-seal-monogram">{monogram}</span><span className="envelope-seal-ornament" aria-hidden="true">❦</span>
+                <span className="envelope-seal-monogram">T&Z</span><span className="envelope-seal-ornament" aria-hidden="true">❦</span>
               </button>
             </div>
             <button className="envelope-open-prompt" type="button" onClick={triggerSequence} disabled={hasTriggeredRef.current || !isCoverReady} aria-label="Tap to open the wedding invitation"><span aria-hidden="true">✦</span> {isCoverReady ? "Tap to open invitation" : "Preparing invitation…"} <span aria-hidden="true">✦</span></button>
