@@ -84,15 +84,15 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
       // Three intentional phases: rise from the pocket, present fully in front,
       // then fade the card AND envelope together while the preloaded invitation
       // underneath starts its reveal.
-      addTimer(() => setIsCardEmerging(true), 700);
-      addTimer(() => setIsCardPresented(true), 2250);
+      addTimer(() => setIsCardEmerging(true), 450);
+      addTimer(() => setIsCardPresented(true), 1750);
       addTimer(() => {
         setIsDissolving(true);
         setIsDissolvingOut(true);
         setIsHandoffActive(true);
         if (onHandoffStart) onHandoffStart();
-      }, 3900);
-      addTimer(() => { if (onOpened) onOpened(); }, 4900);
+      }, 3050);
+      addTimer(() => { if (onOpened) onOpened(); }, 4000);
       return;
     }
 
