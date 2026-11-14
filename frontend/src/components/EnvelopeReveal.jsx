@@ -94,12 +94,23 @@ function EnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
           <div className="luxury-envelope-wrap">
             <div className="luxury-envelope" aria-label={"Wedding invitation envelope for " + primaryNames[0] + " and " + primaryNames[1]}>
               <div className="luxury-envelope-back" />
-              <div className="luxury-envelope-insert">
-                <span className="envelope-insert-ornament" aria-hidden="true">✦</span>
-                <span className="envelope-insert-monogram">{monogram}</span>
-                <span className="envelope-insert-couple"><span>{primaryNames[0]}</span><em>Weds</em><span>{primaryNames[1]}</span></span>
-                {invitation?.cardType === "double" && invitation?.secondCouple && <span className="envelope-insert-second-couple">{[invitation.secondCouple.groomName, invitation.secondCouple.brideName].filter(Boolean).join(" · ")}</span>}
-                <span className="envelope-insert-date">{invitation?.weddingDate ? new Date(invitation.weddingDate).toLocaleDateString(undefined, { month: "long", year: "numeric" }) : "Wedding Invitation"}</span>
+              <div className={"luxury-envelope-insert" + (invitation?.coverImageUrl ? " has-uploaded-cover-art" : "")}>
+                {invitation?.coverImageUrl ? (
+                  <img
+                    className="envelope-insert-cover-art"
+                    src={invitation.coverImageUrl}
+                    alt={"Uploaded invitation cover for " + primaryNames[0] + " and " + primaryNames[1]}
+                    draggable="false"
+                  />
+                ) : (
+                  <>
+                    <span className="envelope-insert-ornament" aria-hidden="true">✦</span>
+                    <span className="envelope-insert-monogram">{monogram}</span>
+                    <span className="envelope-insert-couple"><span>{primaryNames[0]}</span><em>Weds</em><span>{primaryNames[1]}</span></span>
+                    {invitation?.cardType === "double" && invitation?.secondCouple && <span className="envelope-insert-second-couple">{[invitation.secondCouple.groomName, invitation.secondCouple.brideName].filter(Boolean).join(" · ")}</span>}
+                    <span className="envelope-insert-date">{invitation?.weddingDate ? new Date(invitation.weddingDate).toLocaleDateString(undefined, { month: "long", year: "numeric" }) : "Wedding Invitation"}</span>
+                  </>
+                )}
               </div>
               <div className="luxury-envelope-pocket" />
               <div className="luxury-envelope-flap" />

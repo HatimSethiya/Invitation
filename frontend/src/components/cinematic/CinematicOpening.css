@@ -1475,3 +1475,114 @@
 .envelope-theme-blushTerracotta,.envelope-theme-sunsetCopper { --envelope-stage-bg:linear-gradient(145deg,#2a1511,#65382b 55%,#2c1712);--envelope-stage-glow:rgba(238,190,168,.2);--envelope-back:#e2bba9;--envelope-pocket:#cb967f;--envelope-flap:#a56b54;--envelope-flap-light:#fff0e8;--envelope-edge:#c68a70;--envelope-metal:#e0b49c;--envelope-metal-dark:#70402e;--envelope-ink:#603927;--envelope-insert-bg:linear-gradient(145deg,#fffaf7,#f3dfd5);--envelope-seal-bg:#a56b54;--envelope-seal-shadow:#784531;--envelope-prompt:#f8e6dc; }
 .envelope-theme-whiteRoseGold { --envelope-stage-bg:linear-gradient(145deg,#6f4436,#b98568 48%,#6b4032);--envelope-stage-glow:rgba(255,232,211,.26);--envelope-back:#e7c5b1;--envelope-pocket:#d8a98e;--envelope-flap:#c58b6c;--envelope-flap-light:#fffaf5;--envelope-edge:#c58a69;--envelope-metal:#d6a07c;--envelope-metal-dark:#8d553d;--envelope-ink:#704331;--envelope-insert-bg:linear-gradient(145deg,#fffaf6,#f1d9ca);--envelope-seal-bg:#b87857;--envelope-seal-shadow:#8e543d;--envelope-prompt:#f8e8d8; }
 .envelope-theme-whiteRoseGold .luxury-envelope-back { box-shadow:inset 0 0 0 5px rgba(255,250,244,.72),inset 0 0 0 6px #c58a69,inset 0 12px 24px rgba(255,255,255,.42),0 5px 0 #bd8263; }
+
+
+/* Premium envelope scale-up and full uploaded invitation artwork reveal. */
+.luxury-envelope-wrap {
+  width: min(94vw, 500px);
+  gap: clamp(18px, 3vh, 28px);
+  transform: translateY(-1vh);
+}
+
+.luxury-envelope {
+  aspect-ratio: 1.22 / 1;
+  filter: drop-shadow(0 30px 38px var(--envelope-shadow, rgba(15, 8, 10, .48)));
+}
+
+.luxury-envelope-back {
+  border-radius: 16px 16px 24px 24px;
+  box-shadow:
+    inset 0 0 0 4px var(--envelope-edge-soft, rgba(255, 250, 244, .72)),
+    inset 0 0 0 6px var(--envelope-edge, #c58a69),
+    inset 0 14px 28px rgba(255, 255, 255, .34),
+    0 4px 0 var(--envelope-edge, #c58a69),
+    0 12px 26px rgba(38, 17, 12, .16);
+}
+
+.luxury-envelope-insert.has-uploaded-cover-art {
+  left: 50%;
+  right: auto;
+  top: auto;
+  bottom: -5%;
+  width: min(76vw, 350px);
+  max-width: 78%;
+  height: min(68vh, 590px);
+  padding: 0;
+  gap: 0;
+  overflow: hidden;
+  border-radius: 13px;
+  background: #fff;
+  box-shadow:
+    0 18px 38px rgba(35, 14, 10, .3),
+    0 0 0 1px var(--envelope-edge, #c58a69),
+    inset 0 0 0 3px rgba(255, 255, 255, .8);
+  transform: translate(-50%, 68%) scale(.92);
+  transition:
+    transform 1.35s cubic-bezier(.18, .82, .22, 1),
+    opacity .7s ease,
+    box-shadow .8s ease;
+}
+
+.envelope-insert-cover-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  background: transparent;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.envelope-is-opening .luxury-envelope-insert.has-uploaded-cover-art {
+  z-index: 6;
+  transform: translate(-50%, -48%) scale(1);
+  box-shadow:
+    0 28px 56px rgba(35, 14, 10, .34),
+    0 0 0 1px var(--envelope-edge, #c58a69),
+    0 0 26px var(--envelope-stage-glow, rgba(255, 232, 211, .22));
+}
+
+.envelope-insert-dissolving .luxury-envelope-insert.has-uploaded-cover-art {
+  opacity: 0;
+  transform: translate(-50%, -62%) scale(1.025);
+}
+
+.luxury-envelope-pocket {
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, .24);
+}
+
+.luxury-envelope-flap {
+  filter: drop-shadow(0 8px 9px rgba(54, 27, 18, .18));
+}
+
+.luxury-envelope-seal {
+  width: clamp(76px, 20vw, 104px);
+  box-shadow:
+    0 6px 0 var(--envelope-seal-shadow, #8e543d),
+    0 16px 28px rgba(48, 20, 12, .34),
+    inset 0 0 0 4px rgba(255, 244, 226, .28),
+    inset 0 1px 7px rgba(255, 255, 255, .35);
+}
+
+@media (max-width: 600px) {
+  .luxury-envelope-wrap {
+    width: min(94vw, 460px);
+    gap: 18px;
+    transform: translateY(-.5vh);
+  }
+
+  .luxury-envelope {
+    aspect-ratio: 1.18 / 1;
+  }
+
+  .luxury-envelope-insert.has-uploaded-cover-art {
+    width: min(76vw, 330px);
+    height: min(66vh, 570px);
+    bottom: -4%;
+  }
+
+  .envelope-is-opening .luxury-envelope-insert.has-uploaded-cover-art {
+    transform: translate(-50%, -46%) scale(1);
+  }
+}
