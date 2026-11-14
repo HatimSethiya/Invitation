@@ -3908,3 +3908,35 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
   color: #8c6654;
   text-shadow: none;
 }
+
+/* White Rose Gold: align event descriptions with the event detail column,
+   and keep the Raza/Dua line flowing beside the spiritual leader as before. */
+.bohra-public-page.theme-whiteRoseGold .bohra-description-detail-row {
+  width: 100%;
+  max-width: 510px;
+  margin: 0 auto;
+  align-items: center;
+  text-align: left;
+}
+
+.bohra-public-page.theme-whiteRoseGold .bohra-description-detail-row > div {
+  min-width: 0;
+}
+
+.bohra-public-page.theme-whiteRoseGold .bohra-extra-event-description-inline {
+  line-height: 1.5;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.bohra-public-page.theme-whiteRoseGold .bohra-card-header .bohra-raza-line,
+.bohra-public-page.theme-whiteRoseGold .bohra-card-header .bohra-leader-line {
+  display: inline;
+  max-width: none;
+  margin: 0 3px;
+  line-height: 1.7;
+}
+
+.bohra-public-page.theme-whiteRoseGold .bohra-card-header .bohra-leader-line {
+  font-weight: 500;
+}
