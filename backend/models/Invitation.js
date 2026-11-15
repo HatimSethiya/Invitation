@@ -150,6 +150,10 @@ const invitationSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
+    countdownEnabled: {
+      type: Boolean,
+      default: false,
+    },
     status: {
       type: String,
       enum: ["draft", "published", "paused", "archived"],
