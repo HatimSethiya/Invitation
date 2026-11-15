@@ -178,7 +178,7 @@ function RoyalWeddingCountdown({ targetDate, theme }) {
 function PremiumFallingPetals() {
   const petals = useMemo(
     () =>
-      Array.from({ length: 16 }, (_, index) => {
+      Array.from({ length: 6 }, (_, index) => {
         const size = 10 + Math.random() * 10;
         return {
           id: index,
