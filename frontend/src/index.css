@@ -5173,3 +5173,78 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
     animation: none !important;
   }
 }
+
+
+/* One-time text reveal after the curtain/envelope handoff.
+   Keep the programme event copy on its own card-only motion path. */
+.bohra-public-page.invitation-revealed .bohra-card-header > *,
+.bohra-public-page.invitation-revealed .bohra-host-families > *,
+.bohra-public-page.invitation-revealed .bohra-invitation-wording,
+.bohra-public-page.invitation-revealed .bohra-couple-names > *,
+.bohra-public-page.invitation-revealed .bohra-royal-countdown-panel > * {
+  animation: invitation-copy-reveal 0.9s cubic-bezier(.22, 1, .36, 1) both;
+}
+.bohra-public-page.invitation-revealed .bohra-card-header > *:nth-child(1) { animation-delay: .12s; }
+.bohra-public-page.invitation-revealed .bohra-card-header > *:nth-child(2) { animation-delay: .26s; }
+.bohra-public-page.invitation-revealed .bohra-card-header > *:nth-child(3) { animation-delay: .4s; }
+.bohra-public-page.invitation-revealed .bohra-card-header > *:nth-child(4) { animation-delay: .54s; }
+.bohra-public-page.invitation-revealed .bohra-host-families > *:nth-child(1) { animation-delay: .56s; }
+.bohra-public-page.invitation-revealed .bohra-host-families > *:nth-child(2) { animation-delay: .68s; }
+.bohra-public-page.invitation-revealed .bohra-host-families > *:nth-child(3) { animation-delay: .8s; }
+.bohra-public-page.invitation-revealed .bohra-invitation-wording { animation-delay: .84s; }
+.bohra-public-page.invitation-revealed .bohra-couple-names > *:nth-child(1) { animation-delay: 1s; }
+.bohra-public-page.invitation-revealed .bohra-couple-names > *:nth-child(2) { animation-delay: 1.12s; }
+.bohra-public-page.invitation-revealed .bohra-couple-names > *:nth-child(3) { animation-delay: 1.24s; }
+.bohra-public-page.invitation-revealed .bohra-couple-names > *:nth-child(4) { animation-delay: 1.36s; }
+.bohra-public-page.invitation-revealed .bohra-royal-countdown-panel > *:nth-child(1) { animation-delay: 1.5s; }
+.bohra-public-page.invitation-revealed .bohra-royal-countdown-panel > *:nth-child(2) { animation-delay: 1.64s; }
+.bohra-public-page.invitation-revealed .bohra-royal-countdown-panel > *:nth-child(3) { animation-delay: 1.78s; }
+.bohra-public-page.invitation-revealed .bohra-royal-countdown-panel > *:nth-child(4) { animation-delay: 1.92s; }
+.bohra-public-page.invitation-revealed .bohra-royal-countdown-panel > *:nth-child(5) { animation-delay: 2.06s; }
+
+/* Remove the enclosing couple/countdown panels only; preserve individual timer boxes. */
+.bohra-public-page .bohra-couple-panel-unboxed,
+.bohra-public-page .bohra-countdown-panel-unboxed {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.bohra-public-page .bohra-couple-panel-unboxed::before,
+.bohra-public-page .bohra-couple-panel-unboxed::after,
+.bohra-public-page .bohra-countdown-panel-unboxed::before,
+.bohra-public-page .bohra-countdown-panel-unboxed::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Keep the countdown visible after its first reveal; scrolling never hides it again. */
+.bohra-public-page .bohra-royal-countdown-panel {
+  opacity: 1 !important;
+  transform: none !important;
+  pointer-events: auto !important;
+}
+
+/* Premium golden shimmer for the couple names, without adding a name card. */
+.bohra-public-page .premium-couple-name {
+  background: linear-gradient(100deg, #6b4036 0%, #b8864f 30%, #e8cc96 46%, #b8864f 58%, #6b4036 100%) 0 0 / 300px 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  animation: premium-reference-name-shine 5s linear infinite !important;
+}
+@keyframes invitation-copy-reveal {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bohra-public-page.invitation-revealed .bohra-card-header > *,
+  .bohra-public-page.invitation-revealed .bohra-host-families > *,
+  .bohra-public-page.invitation-revealed .bohra-invitation-wording,
+  .bohra-public-page.invitation-revealed .bohra-couple-names > *,
+  .bohra-public-page.invitation-revealed .bohra-royal-countdown-panel > * {
+    animation: none !important;
+  }
+}
