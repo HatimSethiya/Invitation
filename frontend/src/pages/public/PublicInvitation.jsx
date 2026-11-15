@@ -555,85 +555,6 @@ function PublicInvitation() {
           }}
         >
           <article className="bohra-invitation-card">
-            {invitation.theme === "whiteRoseGold" && (
-              <>
-                <svg
-                  className="bohra-floral-sticker bohra-floral-sticker-top"
-                  viewBox="0 0 3708 3876"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <defs>
-                    <filter id="roseGoldFloralRedTop" colorInterpolationFilters="sRGB">
-                      <feColorMatrix
-                        type="matrix"
-                        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  2 -1 -1 0 0"
-                      />
-                    </filter>
-                    <filter id="roseGoldFloralGreenTop" colorInterpolationFilters="sRGB">
-                      <feColorMatrix
-                        type="matrix"
-                        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  -1 2 -1 0 0"
-                      />
-                    </filter>
-                  </defs>
-                  <image
-                    href="https://w7.pngwing.com/pngs/580/297/png-transparent-wedding-floral-corner-beautiful-floral-arrangement-with-leaves.png"
-                    width="100%"
-                    height="100%"
-                    preserveAspectRatio="xMidYMid meet"
-                    filter="url(#roseGoldFloralRedTop)"
-                  />
-                  <image
-                    href="https://w7.pngwing.com/pngs/580/297/png-transparent-wedding-floral-corner-beautiful-floral-arrangement-with-leaves.png"
-                    width="100%"
-                    height="100%"
-                    preserveAspectRatio="xMidYMid meet"
-                    filter="url(#roseGoldFloralGreenTop)"
-                  />
-                </svg>
-                <svg
-                  className="bohra-floral-sticker bohra-floral-sticker-bottom"
-                  viewBox="0 0 3708 3876"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <defs>
-                    <filter id="roseGoldFloralRedBottom" colorInterpolationFilters="sRGB">
-                      <feColorMatrix
-                        type="matrix"
-                        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  2 -1 -1 0 0"
-                      />
-                    </filter>
-                    <filter id="roseGoldFloralGreenBottom" colorInterpolationFilters="sRGB">
-                      <feColorMatrix
-                        type="matrix"
-                        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  -1 2 -1 0 0"
-                      />
-                    </filter>
-                  </defs>
-                  <image
-                    href="https://w7.pngwing.com/pngs/580/297/png-transparent-wedding-floral-corner-beautiful-floral-arrangement-with-leaves.png"
-                    width="100%"
-                    height="100%"
-                    preserveAspectRatio="xMidYMid meet"
-                    filter="url(#roseGoldFloralRedBottom)"
-                  />
-                  <image
-                    href="https://w7.pngwing.com/pngs/580/297/png-transparent-wedding-floral-corner-beautiful-floral-arrangement-with-leaves.png"
-                    width="100%"
-                    height="100%"
-                    preserveAspectRatio="xMidYMid meet"
-                    filter="url(#roseGoldFloralGreenBottom)"
-                  />
-                </svg>
-                <canvas
-                  className="bohra-rose-gold-effects"
-                  ref={roseGoldEffectsCanvasRef}
-                  aria-hidden="true"
-                />
-              </>
-            )}
             <div className="bohra-card-ornament bohra-card-ornament-top" aria-hidden="true">۞</div>
             <div className="bohra-card-inner-frame">
               <header className="bohra-card-header">
@@ -674,16 +595,7 @@ function PublicInvitation() {
               )}
 
               <section className="bohra-couple-panel glass-panel">
-                {invitation.theme === "whiteRoseGold" && (
-                  <img
-                    className="bohra-realistic-floral-frame"
-                    src="/white-rose-gold-realistic-floral-frame.png"
-                    alt=""
-                    aria-hidden="true"
-                    draggable="false"
-                  />
-                )}
-                <img className="bohra-couple-floral-frame" src="/rose-gold-floral-couple-frame.svg" alt="" aria-hidden="true" draggable="false" />
+                <span className="bohra-couple-premium-ornament" aria-hidden="true">✦　✧　✦</span>
                 <div className="bohra-couple-names">
                   {invitation.couple?.nameOrder === "brideFirst" ? (
                     <>
@@ -744,16 +656,7 @@ function PublicInvitation() {
                 (hasValue(invitation.secondCouple?.groomName) ||
                   hasValue(invitation.secondCouple?.brideName)) && (
                   <section className="bohra-couple-panel bohra-second-couple-panel glass-panel">
-                    {invitation.theme === "whiteRoseGold" && (
-                      <img
-                        className="bohra-realistic-floral-frame"
-                        src="/white-rose-gold-realistic-floral-frame.png"
-                        alt=""
-                        aria-hidden="true"
-                        draggable="false"
-                      />
-                    )}
-                    <img className="bohra-couple-floral-frame" src="/rose-gold-floral-couple-frame.svg" alt="" aria-hidden="true" draggable="false" />
+                    <span className="bohra-couple-premium-ornament" aria-hidden="true">✦　✧　✦</span>
                     <div className="bohra-couple-names">
                       {invitation.secondCouple?.nameOrder === "brideFirst" ? (
                         <>
