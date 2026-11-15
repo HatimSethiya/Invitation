@@ -387,8 +387,7 @@ function PublicInvitation() {
 
     const renderFrame = (deltaSeconds, timestampSeconds) => {
       // Restrict canvas painting to the portion currently visible in the viewport.
-      // Particle positions and timing still advance continuously, so the effects
-      // retain their original appearance as the guest scrolls through the card.
+      // Particle positions and timing still advance continuously, preserving effects.
       const cardRect = card.getBoundingClientRect();
       const visibleTop = Math.max(0, Math.min(height, -cardRect.top));
       const visibleBottom = Math.max(
@@ -421,8 +420,7 @@ function PublicInvitation() {
           if (particle.x > width + 4) particle.x = -4;
         }
 
-        // Off-screen particles continue their animation state but are not
-        // rasterized until they enter the visible viewport.
+        // Keep off-screen particles updating, but rasterize only visible ones.
         if (
           visibleHeight <= 0 ||
           particle.y + particle.radius < visibleTop ||
@@ -462,30 +460,30 @@ function PublicInvitation() {
         return true;
       });
 
-      // A soft metallic light band sweeps across the card every 3.5 seconds.
-      if (!reducedMotion) {
+      // Keep the metallic sheen cycle unchanged; clip painting to visible bounds.
+      if (!reducedMotion && visibleHeight > 0) {
         const cycleProgress = (timestampSeconds % 3.5) / 3.5;
         const bandWidth = Math.max(115, width * 0.34);
         const bandX = cycleProgress * (width + bandWidth) - bandWidth;
 
-        if (visibleHeight > 0) {
-          context.save();
-          context.beginPath();
-          context.rect(0, visibleTop, width, visibleHeight);
-          context.clip();
-          context.translate(bandX, 0);
-          context.transform(1, 0, -0.12, 1, 0, 0);
-          context.globalCompositeOperation = "screen";
+        context.save();
+        context.beginPath();
+        context.rect(0, visibleTop, width, visibleHeight);
+        context.clip();
+        context.translate(bandX, 0);
+        context.transform(1, 0, -0.12, 1, 0, 0);
+        context.globalCompositeOperation = "screen";
+
         const sheen = context.createLinearGradient(0, 0, bandWidth, 0);
         sheen.addColorStop(0, "rgba(255,248,229,0)");
         sheen.addColorStop(0.34, "rgba(255,248,229,0.025)");
         sheen.addColorStop(0.5, "rgba(255,244,213,0.14)");
         sheen.addColorStop(0.63, "rgba(218,169,111,0.075)");
         sheen.addColorStop(1, "rgba(255,248,229,0)");
-          context.fillStyle = sheen;
-          context.fillRect(0, 0, bandWidth, height);
-          context.restore();
-        }
+
+        context.fillStyle = sheen;
+        context.fillRect(0, 0, bandWidth, height);
+        context.restore();
       }
     };
 
