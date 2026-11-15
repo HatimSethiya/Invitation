@@ -594,8 +594,9 @@ function PublicInvitation() {
                 <p className="bohra-invitation-wording">{details.invitationWording}</p>
               )}
 
-              <section className="bohra-couple-panel glass-panel">
-                <span className="bohra-couple-premium-ornament" aria-hidden="true">✦　✧　✦</span>
+              <section className={`bohra-couple-panel countdown-theme-${invitation.theme || "bohraNikah"} glass-panel`}>
+                                                    <div className="countdown-petal-layer bohra-couple-petal-layer" aria-hidden="true"><span className="countdown-rose-petal" /><span className="countdown-rose-petal" /><span className="countdown-rose-petal" /><span className="countdown-rose-petal" /></div>
+<span className="bohra-couple-premium-ornament" aria-hidden="true">✦　✧　✦</span>
                 <div className="bohra-couple-names">
                   {invitation.couple?.nameOrder === "brideFirst" ? (
                     <>
@@ -655,8 +656,9 @@ function PublicInvitation() {
               {invitation.cardType === "double" &&
                 (hasValue(invitation.secondCouple?.groomName) ||
                   hasValue(invitation.secondCouple?.brideName)) && (
-                  <section className="bohra-couple-panel bohra-second-couple-panel glass-panel">
-                    <span className="bohra-couple-premium-ornament" aria-hidden="true">✦　✧　✦</span>
+                  <section className={`bohra-couple-panel bohra-second-couple-panel countdown-theme-${invitation.theme || "bohraNikah"} glass-panel`}>
+                    <div className="countdown-petal-layer bohra-couple-petal-layer" aria-hidden="true"><span className="countdown-rose-petal" /><span className="countdown-rose-petal" /><span className="countdown-rose-petal" /><span className="countdown-rose-petal" /></div>
+<span className="bohra-couple-premium-ornament" aria-hidden="true">✦　✧　✦</span>
                     <div className="bohra-couple-names">
                       {invitation.secondCouple?.nameOrder === "brideFirst" ? (
                         <>

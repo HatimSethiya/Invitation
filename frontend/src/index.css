@@ -4639,3 +4639,79 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
     text-shadow: none;
   }
 }
+
+/* Reuse the countdown's glossy animated treatment on the couple-name cards. */
+.bohra-public-page .bohra-couple-panel {
+  --countdown-accent: var(--bohra-gold, #bd805f);
+  --countdown-ink: var(--bohra-ink, #684238);
+  --countdown-muted: var(--bohra-muted, #956b55);
+  --countdown-surface: var(--theme-glass-surface, linear-gradient(145deg, rgba(255,253,251,.96), rgba(246,226,216,.88)));
+  --countdown-border: var(--theme-glass-border, rgba(193,132,99,.64));
+  border-color: var(--countdown-border);
+  background: var(--countdown-surface);
+  box-shadow:
+    0 16px 40px var(--theme-shadow, rgba(36,74,58,.12)),
+    0 0 24px color-mix(in srgb, var(--countdown-accent) 18%, transparent),
+    inset 0 1px 0 rgba(255,255,255,.94);
+}
+
+.bohra-public-page .bohra-couple-panel::after {
+  content: "✧   ✦   ✧";
+  position: absolute;
+  z-index: 1;
+  top: 13px;
+  right: 18px;
+  color: var(--countdown-accent);
+  font-size: .68rem;
+  letter-spacing: .28em;
+  opacity: .44;
+  pointer-events: none;
+  animation: countdown-sparkle-twinkle 4.8s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.bohra-public-page .bohra-couple-petal-layer {
+  color: color-mix(in srgb, var(--countdown-accent) 76%, #e9a9a4);
+}
+
+.bohra-public-page .bohra-couple-petal-layer .countdown-rose-petal {
+  position: absolute;
+  top: -20%;
+  opacity: .24;
+  font-size: 19px;
+  animation: countdown-petal-float 12s linear infinite;
+}
+
+.bohra-public-page .bohra-couple-petal-layer .countdown-rose-petal:nth-child(1) {
+  left: 12%;
+  animation-delay: -3s;
+}
+
+.bohra-public-page .bohra-couple-petal-layer .countdown-rose-petal:nth-child(2) {
+  left: 34%;
+  animation-delay: -8s;
+  font-size: 14px;
+}
+
+.bohra-public-page .bohra-couple-petal-layer .countdown-rose-petal:nth-child(3) {
+  left: 70%;
+  animation-delay: -5s;
+  font-size: 16px;
+}
+
+.bohra-public-page .bohra-couple-petal-layer .countdown-rose-petal:nth-child(4) {
+  left: 88%;
+  animation-delay: -10s;
+}
+
+.bohra-public-page .bohra-couple-panel > .bohra-couple-premium-ornament,
+.bohra-public-page .bohra-couple-panel > .bohra-couple-names {
+  z-index: 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bohra-public-page .bohra-couple-panel::after,
+  .bohra-public-page .bohra-couple-petal-layer .countdown-rose-petal {
+    animation: none;
+  }
+}
