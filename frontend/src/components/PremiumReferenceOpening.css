@@ -874,3 +874,54 @@
     inset 0 -4px 6px rgba(72, 38, 8, .24),
     0 0 12px rgba(255, 220, 142, .18);
 }
+
+
+/* High-luminance champagne velvet correction: explicit !important paint values
+   ensure the bright reference palette wins over earlier layered overrides. */
+.premium-opening-stage .premium-opening-curtain {
+  background:
+    var(--premium-grain),
+    linear-gradient(180deg,
+      rgba(255, 239, 210, .12) 0%,
+      rgba(255, 247, 228, .04) 45%,
+      rgba(116, 69, 35, .10) 100%),
+    repeating-linear-gradient(90deg,
+      #9a6a3f 0%,
+      #c18e5c 3.2%,
+      #e3bd8b 5.8%,
+      #f8e2bb 7.2%,
+      #fff4dc 8.1%,
+      #f4dfbb 9.2%,
+      #d3a575 12.8%,
+      #a4774d 17%) !important;
+  filter: brightness(1.16) saturate(1.12) !important;
+  box-shadow:
+    inset 0 0 64px rgba(95, 52, 22, .18),
+    inset 0 0 28px rgba(255, 239, 207, .42),
+    0 0 24px rgba(95, 52, 22, .24) !important;
+}
+
+.premium-opening-stage .premium-opening-curtain::before {
+  border-top-color: #e5bd79 !important;
+  background: repeating-linear-gradient(
+    90deg,
+    #ffe7b7 0 3px,
+    #a8733d 3px 4px,
+    transparent 4px 8px
+  ) !important;
+}
+
+.premium-opening-stage .premium-opening-curtain-left {
+  border-right-color: #e5bd79 !important;
+}
+
+.premium-opening-stage .premium-opening-curtain-right {
+  border-left-color: #e5bd79 !important;
+}
+
+.premium-opening-stage .premium-opening-top-panel {
+  background: var(--premium-grain),
+    linear-gradient(180deg, #fffdf6 0%, #fff0d8 70%, #e9c99b 100%) !important;
+  border-bottom-color: #e5bd79 !important;
+  box-shadow: 0 7px 14px rgba(95, 52, 22, .22) !important;
+}
