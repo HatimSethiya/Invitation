@@ -293,6 +293,27 @@ function InvitationWizard() {
   const add = (group, template) => setForm((current) => ({ ...current, [group]: [...current[group], { ...template }] }));
   const remove = (group, index) => setForm((current) => ({ ...current, [group]: current[group].filter((_, i) => i !== index) }));
 
+  const reorderEvents = (fromIndex, toIndex) => {
+    if (fromIndex === toIndex) return;
+
+    setForm((current) => {
+      if (
+        fromIndex < 0
+        || toIndex < 0
+        || fromIndex >= current.events.length
+        || toIndex >= current.events.length
+      ) {
+        return current;
+      }
+
+      const events = [...current.events];
+      const [movedEvent] = events.splice(fromIndex, 1);
+      events.splice(toIndex, 0, movedEvent);
+
+      return { ...current, events };
+    });
+  };
+
   const back = () => {
     if (saving) return;
     setError("");
@@ -374,7 +395,57 @@ function InvitationWizard() {
           </div>
         ))}
 
-        {step === 3 && <div className="form-section"><div className="section-title-row"><div><h2>Wedding events</h2><p className="section-note">Add ceremonies, receptions and other moments.</p></div><button className="small-button" onClick={() => add("events", eventTemplate)}>+ Add event</button></div>{form.events.map((event, index) => <div className="repeat-card" key={index}><div className="section-title-row"><strong>Event {index + 1}</strong>{form.events.length > 1 && <button className="text-danger" onClick={() => remove("events", index)}>Remove</button>}</div><div className="form-grid"><label>Type<input value={event.type} onChange={(e) => item("events", index, "type", e.target.value)} /></label><label>Title<input value={event.title} onChange={(e) => item("events", index, "title", e.target.value)} placeholder="Wedding" /></label><label>Date<input type="date" value={event.date} onChange={(e) => item("events", index, "date", e.target.value)} /></label><label>Time<input value={event.time} onChange={(e) => item("events", index, "time", e.target.value)} placeholder="7:00 PM" /></label><label>Venue<input value={event.venue} onChange={(e) => item("events", index, "venue", e.target.value)} /></label><label>Map URL<input value={event.mapUrl} onChange={(e) => item("events", index, "mapUrl", e.target.value)} /></label><label className="full">Address<input value={event.address} onChange={(e) => item("events", index, "address", e.target.value)} /></label><label className="full">Description<textarea value={event.description} onChange={(e) => item("events", index, "description", e.target.value)} /></label></div></div>)}</div>}
+        {step === 3 && <div className="form-section"><div className="section-title-row"><div><h2>Wedding events</h2><p className="section-note">Add ceremonies, receptions and other moments.</p></div><button className="small-button" onClick={() => add("events", eventTemplate)}>+ Add event</button></div>{form.events.map((event, index) => (
+              <div
+                className="repeat-card event-repeat-card"
+                key={index}
+                onDragOver={(e) => {
+                  e.preventDefault();
+                  e.dataTransfer.dropEffect = "move";
+                }}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  const draggedIndex = e.dataTransfer.getData("text/plain");
+                  if (draggedIndex === "") return;
+                  const sourceIndex = Number(draggedIndex);
+                  if (Number.isInteger(sourceIndex)) reorderEvents(sourceIndex, index);
+                }}
+              >
+                <div className="section-title-row event-card-heading">
+                  <div className="event-card-title">
+                    <button
+                      type="button"
+                      className="event-drag-handle"
+                      draggable="true"
+                      aria-label={`Drag to reorder event ${index + 1}`}
+                      title="Drag to reorder"
+                      onDragStart={(e) => {
+                        e.dataTransfer.setData("text/plain", String(index));
+                        e.dataTransfer.effectAllowed = "move";
+                      }}
+                    >
+                      ⠿
+                    </button>
+                    <strong>Event {index + 1}</strong>
+                  </div>
+                  {form.events.length > 1 && (
+                    <button className="text-danger" onClick={() => remove("events", index)}>
+                      Remove
+                    </button>
+                  )}
+                </div>
+                <div className="form-grid event-form-grid">
+                  <label>Type<input value={event.type} onChange={(e) => item("events", index, "type", e.target.value)} /></label>
+                  <label>Title<input value={event.title} onChange={(e) => item("events", index, "title", e.target.value)} placeholder="Wedding" /></label>
+                  <label>Date<input type="date" value={event.date} onChange={(e) => item("events", index, "date", e.target.value)} /></label>
+                  <label>Time<input value={event.time} onChange={(e) => item("events", index, "time", e.target.value)} placeholder="7:00 PM" /></label>
+                  <label>Venue<input value={event.venue} onChange={(e) => item("events", index, "venue", e.target.value)} /></label>
+                  <label>Map URL<input value={event.mapUrl} onChange={(e) => item("events", index, "mapUrl", e.target.value)} /></label>
+                  <label className="full">Address<input value={event.address} onChange={(e) => item("events", index, "address", e.target.value)} /></label>
+                  <label className="full">Description<textarea value={event.description} onChange={(e) => item("events", index, "description", e.target.value)} /></label>
+                </div>
+              </div>
+            ))}</div>}
 
         {step === 4 && (isBohraTemplate ? (
           <div className="form-section bohra-form-note">
