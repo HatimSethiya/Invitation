@@ -420,14 +420,7 @@ function PremiumReferenceReveal({ invitation, onOpenMusic, onHandoffStart, onOpe
         </div>
       </div>
 
-      <button
-        className={"premium-opening-skip" + (isStarted && !isCurtainsOpening ? " premium-opening-skip-visible" : "")}
-        type="button"
-        onClick={skip}
-        disabled={!isStarted || isCurtainsOpening}
-      >
-        Skip
-      </button>
+
     </div>
   );
 }
