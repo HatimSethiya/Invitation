@@ -175,6 +175,44 @@ function RoyalWeddingCountdown({ targetDate, theme }) {
   );
 }
 
+function PremiumFallingPetals() {
+  const petals = useMemo(
+    () =>
+      Array.from({ length: 16 }, (_, index) => {
+        const size = 10 + Math.random() * 10;
+        return {
+          id: index,
+          left: Math.random() * 100,
+          width: size,
+          height: size * 1.2,
+          duration: 7 + Math.random() * 6,
+          delay: Math.random() * 6,
+          drift: (Math.random() - 0.5) * 160,
+        };
+      }),
+    []
+  );
+
+  return (
+    <div className="premium-falling-petals" aria-hidden="true">
+      {petals.map((petal) => (
+        <i
+          className="premium-falling-petal"
+          key={petal.id}
+          style={{
+            left: petal.left + "%",
+            width: petal.width + "px",
+            height: petal.height + "px",
+            "--premium-petal-duration": petal.duration + "s",
+            "--premium-petal-delay": petal.delay + "s",
+            "--premium-petal-drift": petal.drift + "px",
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 function PublicInvitation() {
   const { slug } = useParams();
   const [invitation, setInvitation] = useState(null);
@@ -539,6 +577,7 @@ function PublicInvitation() {
           )}
         </AnimatePresence>
         <InvitationMusicPlayer music={invitation.music} visible={isInvitationInteractive || isMusicStartRequested} audioRef={musicAudioRef} startRequestedRef={musicStartRequestedRef} showControls={false} />
+        {isHandoffStarted && <PremiumFallingPetals />}
 
         <motion.div
           className="invitation-body bohra-invitation-body"
@@ -600,14 +639,14 @@ function PublicInvitation() {
                 <div className="bohra-couple-names">
                   {invitation.couple?.nameOrder === "brideFirst" ? (
                     <>
-                      <h1>{bride}</h1>
+                      <h1 className="premium-couple-name">{bride}</h1>
                       {hasValue(details.firstCoupleBrideFamilyLine || details.brideFamilyLine) && (
                         <p className="bohra-bride-family bohra-couple-family-inline">
                           {details.firstCoupleBrideFamilyLine || details.brideFamilyLine}
                         </p>
                       )}
                       <span className="bohra-weds">Weds</span>
-                      <h1>{groom}</h1>
+                      <h1 className="premium-couple-name">{groom}</h1>
                       {hasValue(details.firstCoupleGroomFamilyLine) && (
                         <p className="bohra-groom-family bohra-couple-family-inline">
                           {details.firstCoupleGroomFamilyLine}
@@ -616,14 +655,14 @@ function PublicInvitation() {
                     </>
                   ) : (
                     <>
-                      <h1>{groom}</h1>
+                      <h1 className="premium-couple-name">{groom}</h1>
                       {hasValue(details.firstCoupleGroomFamilyLine) && (
                         <p className="bohra-groom-family bohra-couple-family-inline">
                           {details.firstCoupleGroomFamilyLine}
                         </p>
                       )}
                       <span className="bohra-weds">Weds</span>
-                      <h1>{bride}</h1>
+                      <h1 className="premium-couple-name">{bride}</h1>
                       {hasValue(details.firstCoupleBrideFamilyLine || details.brideFamilyLine) && (
                         <p className="bohra-bride-family bohra-couple-family-inline">
                           {details.firstCoupleBrideFamilyLine || details.brideFamilyLine}
