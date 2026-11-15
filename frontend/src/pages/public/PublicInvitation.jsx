@@ -93,23 +93,35 @@ function getWeddingCountdownTarget(invitation) {
   return target;
 }
 
-function RoyalWeddingCountdown({ targetDate }) {
+function RoyalWeddingCountdown({ targetDate, theme }) {
   const targetTime = targetDate?.getTime() || 0;
   const [remaining, setRemaining] = useState(() =>
     Math.max(0, targetTime - Date.now())
   );
+  const [isVisible, setIsVisible] = useState(false);
+  const panelRef = useRef(null);
 
   useEffect(() => {
     if (!targetTime) return undefined;
-
-    const updateRemaining = () => {
-      setRemaining(Math.max(0, targetTime - Date.now()));
-    };
-
+    const updateRemaining = () => setRemaining(Math.max(0, targetTime - Date.now()));
     updateRemaining();
     const intervalId = window.setInterval(updateRemaining, 1000);
     return () => window.clearInterval(intervalId);
   }, [targetTime]);
+
+  useEffect(() => {
+    const panel = panelRef.current;
+    if (!panel || typeof IntersectionObserver === "undefined") {
+      setIsVisible(true);
+      return undefined;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.12, rootMargin: "0px 0px -35px 0px" }
+    );
+    observer.observe(panel);
+    return () => observer.disconnect();
+  }, []);
 
   const totalSeconds = Math.floor(remaining / 1000);
   const days = Math.floor(totalSeconds / 86400);
@@ -120,7 +132,14 @@ function RoyalWeddingCountdown({ targetDate }) {
   if (!targetTime) return null;
 
   return (
-    <section className="bohra-royal-countdown-panel" aria-label="Wedding countdown">
+    <section
+      ref={panelRef}
+      className={`bohra-royal-countdown-panel countdown-theme-${theme || "bohraNikah"} ${isVisible ? "countdown-is-visible" : "countdown-is-hidden"}`}
+      aria-label="Wedding countdown"
+    >
+      <div className="countdown-petal-layer" aria-hidden="true">
+        <span>✿</span><span>❀</span><span>✿</span><span>❀</span>
+      </div>
       <span className="bohra-countdown-overline">
         {remaining > 0 ? "COUNTING DOWN TO OUR SPECIAL DAY" : "ALHAMDULILLAH · THE DAY IS HERE"}
       </span>
@@ -136,7 +155,9 @@ function RoyalWeddingCountdown({ targetDate }) {
             { value: seconds, label: "SECONDS" },
           ].map((unit) => (
             <div className="bohra-countdown-unit" key={unit.label}>
-              <span className="bohra-countdown-value">{String(unit.value).padStart(2, "0")}</span>
+              <span className="bohra-countdown-value" key={unit.value}>
+                {String(unit.value).padStart(2, "0")}
+              </span>
               <span className="bohra-countdown-label">{unit.label}</span>
             </div>
           ))}
@@ -700,8 +721,8 @@ function PublicInvitation() {
                 </div>
               </section>
 
-              {invitation.theme === "whiteRoseGold" && countdownTarget && (
-                <RoyalWeddingCountdown targetDate={countdownTarget} />
+              {invitation.countdownEnabled === true && countdownTarget && (
+                <RoyalWeddingCountdown targetDate={countdownTarget} theme={invitation.theme} />
               )}
 
               {invitation.cardType === "double" && (
@@ -800,7 +821,7 @@ function PublicInvitation() {
                         key={event._id || event.title || `event-${index}`}
                         initial={{ opacity: 0, y: 32, scale: 0.985 }}
                         whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                        viewport={{ once: true, amount: 0.22, margin: "0px 0px -70px 0px" }}
+                        viewport={{ amount: 0.22, margin: "0px 0px -70px 0px" }}
                         transition={{
                           duration: 0.78,
                           delay: Math.min(index * 0.08, 0.24),
