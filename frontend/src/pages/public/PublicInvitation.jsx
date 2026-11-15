@@ -134,7 +134,7 @@ function RoyalWeddingCountdown({ targetDate, theme }) {
   return (
     <section
       ref={panelRef}
-      className={`bohra-royal-countdown-panel countdown-theme-${theme || "bohraNikah"} ${isVisible ? "countdown-is-visible" : "countdown-is-hidden"}`}
+      className={`bohra-royal-countdown-panel countdown-theme-${theme || "bohraNikah"} bohra-countdown-panel-unboxed ${isVisible ? "countdown-is-visible" : "countdown-is-hidden"}`}
       aria-label="Wedding countdown"
     >
       <div className="countdown-petal-layer" aria-hidden="true">
@@ -633,9 +633,7 @@ function PublicInvitation() {
                 <p className="bohra-invitation-wording">{details.invitationWording}</p>
               )}
 
-              <section className={`bohra-couple-panel countdown-theme-${invitation.theme || "bohraNikah"} glass-panel`}>
-                                                    <div className="countdown-petal-layer bohra-couple-petal-layer" aria-hidden="true"><span className="countdown-rose-petal" /><span className="countdown-rose-petal" /><span className="countdown-rose-petal" /><span className="countdown-rose-petal" /></div>
-<span className="bohra-couple-premium-ornament" aria-hidden="true">✦　✧　✦</span>
+              <section className={`bohra-couple-panel countdown-theme-${invitation.theme || "bohraNikah"} bohra-couple-panel-unboxed`}>
                 <div className="bohra-couple-names">
                   {invitation.couple?.nameOrder === "brideFirst" ? (
                     <>
