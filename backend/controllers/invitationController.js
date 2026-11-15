@@ -98,7 +98,7 @@ const getAdminInvitation = async (req, res) => {
 
 const createInvitation = async (req, res) => {
   try {
-    const { title, slug, weddingDate, status, theme, cardType, openingAnimation, coverImageUrl, couple, secondCouple, firstNikah, bohraDetails, events, family, story, gallery, venue, music, lockPassword } = req.body;
+    const { title, slug, weddingDate, status, theme, cardType, openingAnimation, coverImageUrl, countdownEnabled, couple, secondCouple, firstNikah, bohraDetails, events, family, story, gallery, venue, music, lockPassword } = req.body;
     if (!title?.trim() || !weddingDate) {
       return res.status(400).json({ success: false, message: "Title and wedding date are required." });
     }
@@ -113,6 +113,7 @@ const createInvitation = async (req, res) => {
       lockPasswordHash,
       slug: await uniqueSlug(slug || title),
       weddingDate,
+      countdownEnabled: countdownEnabled === true,
       status,
       theme,
       cardType,
@@ -146,6 +147,7 @@ const updateInvitation = async (req, res) => {
     const { title, slug, weddingDate, status, theme, couple, bohraDetails, events, family, story, gallery, venue, music } = req.body;
     if (title !== undefined) invitation.title = title.trim();
     if (weddingDate !== undefined) invitation.weddingDate = weddingDate;
+    if (req.body.countdownEnabled !== undefined) invitation.countdownEnabled = req.body.countdownEnabled === true;
     if (slug !== undefined && slug.trim() !== invitation.slug) invitation.slug = await uniqueSlug(slug, invitation._id);
     if (status !== undefined) invitation.status = status;
     if (theme !== undefined) invitation.theme = theme;
