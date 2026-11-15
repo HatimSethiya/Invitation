@@ -4787,3 +4787,142 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
     transform: none;
   }
 }
+
+/* Compact, countdown-matched couple card: final White Rose Gold override. */
+.bohra-public-page.theme-whiteRoseGold .bohra-couple-panel.countdown-theme-whiteRoseGold {
+  min-height: 0 !important;
+  height: auto !important;
+  width: min(100%, 560px) !important;
+  margin: 22px auto 28px !important;
+  padding: 28px 22px 24px !important;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  overflow: hidden;
+  isolation: isolate;
+  position: relative;
+  border: 1px solid rgba(202, 151, 88, .58) !important;
+  border-radius: 22px !important;
+  background: linear-gradient(145deg, rgba(255, 253, 251, .94), rgba(246, 226, 216, .88)) !important;
+  box-shadow:
+    0 12px 30px rgba(132, 83, 57, .10),
+    0 0 18px rgba(193, 138, 66, .12),
+    inset 0 1px 0 rgba(255, 255, 255, .94) !important;
+  backdrop-filter: blur(8px) saturate(1.05) !important;
+  -webkit-backdrop-filter: blur(8px) saturate(1.05) !important;
+}
+
+.bohra-public-page.theme-whiteRoseGold .bohra-couple-panel.countdown-theme-whiteRoseGold::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(112deg, transparent 20%, rgba(255,255,255,.42) 48%, rgba(255,246,225,.10) 54%, transparent 78%);
+  transform: translateX(-110%);
+  animation: bohra-countdown-sheen 7.5s ease-in-out infinite;
+}
+
+.bohra-public-page.theme-whiteRoseGold .bohra-couple-panel.countdown-theme-whiteRoseGold::after {
+  content: "✧   ✦   ✧" !important;
+  display: block !important;
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  z-index: 2;
+  color: #c18a42;
+  font-size: .64rem;
+  letter-spacing: .24em;
+  opacity: .42;
+  pointer-events: none;
+  animation: countdown-sparkle-twinkle 4.8s ease-in-out infinite;
+}
+
+.bohra-public-page.theme-whiteRoseGold .bohra-couple-panel.countdown-theme-whiteRoseGold > .bohra-couple-petal-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bohra-public-page.theme-whiteRoseGold .bohra-couple-panel.countdown-theme-whiteRoseGold > .bohra-couple-premium-ornament {
+  display: none !important;
+}
+
+.bohra-public-page.theme-whiteRoseGold .bohra-couple-panel.countdown-theme-whiteRoseGold .bohra-couple-names {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  margin: 0 !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px !important;
+}
+
+.bohra-public-page.theme-whiteRoseGold .bohra-couple-panel.countdown-theme-whiteRoseGold .bohra-couple-names h1 {
+  margin: 0 !important;
+  color: #765044 !important;
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-size: clamp(2.05rem, 5.2vw, 2.85rem) !important;
+  font-style: italic;
+  font-weight: 700 !important;
+  line-height: 1.02 !important;
+  letter-spacing: -.025em !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,.76), 0 3px 12px rgba(193,138,66,.12) !important;
+}
+
+.bohra-public-page.theme-whiteRoseGold .bohra-couple-panel.countdown-theme-whiteRoseGold .bohra-weds {
+  position: relative;
+  z-index: 2;
+  margin: 4px 0 !important;
+  color: #c18a42 !important;
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-size: .98rem;
+  font-style: italic;
+  letter-spacing: .2em;
+}
+
+.bohra-public-page.theme-whiteRoseGold .bohra-couple-panel.countdown-theme-whiteRoseGold > .bohra-couple-names > .bohra-couple-family-inline,
+.bohra-public-page.theme-whiteRoseGold .bohra-couple-panel.countdown-theme-whiteRoseGold .bohra-couple-family-lines {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.bohra-public-page.theme-whiteRoseGold .bohra-couple-panel.countdown-theme-whiteRoseGold .bohra-couple-family-inline {
+  margin: 2px 0 5px !important;
+  font-size: clamp(.72rem, 2vw, .86rem) !important;
+  line-height: 1.35 !important;
+}
+
+.bohra-public-page.theme-whiteRoseGold .bohra-couple-panel.countdown-theme-whiteRoseGold .bohra-couple-family-lines {
+  max-width: min(100%, 480px);
+  margin: 8px auto 0 !important;
+  gap: 5px !important;
+}
+
+@media (max-width: 480px) {
+  .bohra-public-page.theme-whiteRoseGold .bohra-couple-panel.countdown-theme-whiteRoseGold {
+    margin: 18px auto 22px !important;
+    padding: 24px 14px 20px !important;
+    border-radius: 18px !important;
+  }
+
+  .bohra-public-page.theme-whiteRoseGold .bohra-couple-panel.countdown-theme-whiteRoseGold .bohra-couple-names h1 {
+    font-size: clamp(1.9rem, 8vw, 2.35rem) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bohra-public-page.theme-whiteRoseGold .bohra-couple-panel.countdown-theme-whiteRoseGold::before,
+  .bohra-public-page.theme-whiteRoseGold .bohra-couple-panel.countdown-theme-whiteRoseGold::after,
+  .bohra-public-page.theme-whiteRoseGold .bohra-couple-panel.countdown-theme-whiteRoseGold .countdown-rose-petal {
+    animation: none !important;
+    transform: none;
+  }
+}
