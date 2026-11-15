@@ -984,3 +984,9 @@
     radial-gradient(circle at 30% 24%, #ffe9b5 0%, #e0b35f 34%, #b47b32 64%, #704316 100%) !important;
   filter: none !important;
 }
+
+/* Keep the extracted invitation insert clean and sharp: no SVG grain/noise layer. */
+.premium-opening-stage .premium-opening-insert {
+  background: linear-gradient(180deg, #fffdf9 0%, #f8eee3 52%, #f2e1d0 100%) !important;
+  filter: none !important;
+}
