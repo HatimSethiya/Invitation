@@ -925,3 +925,62 @@
   border-bottom-color: #e5bd79 !important;
   box-shadow: 0 7px 14px rgba(95, 52, 22, .22) !important;
 }
+
+
+/* Final reference correction: remove the global grain/over-bright wash from
+   curtains and top valance. Keep the soft focus localized to envelope paper;
+   the wax seal remains crisp. */
+.premium-opening-stage .premium-opening-curtain {
+  background:
+    linear-gradient(180deg,
+      rgba(58, 31, 18, .38) 0%,
+      rgba(91, 54, 34, .10) 24%,
+      rgba(91, 54, 34, .05) 56%,
+      rgba(58, 31, 18, .32) 100%),
+    repeating-linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 244, 222, .28) 3%,
+      transparent 6%,
+      transparent 11%),
+    repeating-linear-gradient(90deg,
+      rgba(54, 30, 18, .18) 0%,
+      transparent 4%,
+      transparent 15%,
+      rgba(54, 30, 18, .12) 23%),
+    repeating-linear-gradient(90deg,
+      #80583e 0%,
+      #a77b56 3.5%,
+      #c49a70 6%,
+      #e2c39b 7.5%,
+      #f3dfbf 8.5%,
+      #dfbd93 9.5%,
+      #bd9168 13%,
+      #80583e 17%) !important;
+  filter: none !important;
+  box-shadow:
+    inset 0 0 90px rgba(58, 31, 18, .36),
+    0 0 40px rgba(58, 31, 18, .36) !important;
+}
+
+.premium-opening-stage .premium-opening-top-panel {
+  background: linear-gradient(180deg, #fffaf1 0%, #f1dcc6 70%, #e0c3a2 100%) !important;
+  filter: none !important;
+}
+
+.premium-opening-stage .premium-opening-envelope-back {
+  filter: blur(.35px);
+}
+
+.premium-opening-stage .premium-opening-flap {
+  filter: blur(.35px) drop-shadow(0 2px 1px rgba(99, 59, 34, .18));
+}
+
+.premium-opening-stage .premium-opening-envelope-front i::after {
+  background: none !important;
+}
+
+.premium-opening-stage .premium-opening-seal b {
+  background:
+    radial-gradient(circle at 30% 24%, #ffe9b5 0%, #e0b35f 34%, #b47b32 64%, #704316 100%) !important;
+  filter: none !important;
+}
