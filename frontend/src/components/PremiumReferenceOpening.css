@@ -439,6 +439,28 @@
   will-change: transform;
 }
 
+/* Keep animated layers on compositor surfaces to avoid repeated paint/raster
+   during envelope fade and curtain movement. Visual timing and effects unchanged. */
+.premium-opening-stage.premium-opening-started .premium-opening-intro,
+.premium-opening-stage.premium-opening-started .premium-opening-envelope-wrap,
+.premium-opening-stage.premium-opening-started .premium-opening-flap-wrap,
+.premium-opening-stage.premium-opening-started .premium-opening-insert,
+.premium-opening-stage.premium-opening-started .premium-opening-curtain,
+.premium-opening-stage.premium-opening-started .premium-opening-top-panel {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.premium-opening-stage.premium-opening-started .premium-opening-intro {
+  will-change: opacity, transform;
+}
+
+.premium-opening-stage.premium-opening-fx .premium-opening-curtain,
+.premium-opening-stage.premium-opening-fx .premium-opening-top-panel {
+  will-change: transform;
+}
+
 @keyframes premium-opening-open-left {
   0% { transform: translateX(0) scaleX(1); }
   36% { transform: translateX(0) scaleX(.32) skewX(-4deg); }
