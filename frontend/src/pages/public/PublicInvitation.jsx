@@ -761,19 +761,15 @@ function PublicInvitation() {
                       <motion.article
                         className="bohra-extra-event glass-panel"
                         key={event._id || event.title || `event-${index}`}
-                        initial={{ opacity: 0, y: 32, scale: 0.985 }}
-                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                        variants={staggerContainerVariants}
+                        initial="hidden"
+                        whileInView="visible"
                         viewport={{ amount: 0.22, margin: "0px 0px -70px 0px" }}
-                        transition={{
-                          duration: 0.78,
-                          delay: Math.min(index * 0.08, 0.24),
-                          ease: [0.22, 1, 0.36, 1],
-                        }}
                       >
 
-                        <h3>{event.title || event.type || "Celebration"}</h3>
+                        <motion.h3 variants={cardItemVariants}>{event.title || event.type || "Celebration"}</motion.h3>
                         <div className="bohra-programme-rule bohra-extra-event-rule" aria-hidden="true"><span>✦</span></div>
-                        <div className="bohra-programme-details bohra-extra-event-details">
+                        <motion.div className="bohra-programme-details bohra-extra-event-details" variants={cardItemVariants}>
                           {event.date && (
                             <div className="bohra-detail-row">
                               <span className="bohra-detail-icon" aria-hidden="true">▦</span>
@@ -798,14 +794,14 @@ function PublicInvitation() {
                               <div><span>{event.address}</span></div>
                             </div>
                           )}
-                        </div>
+                        </motion.div>
                         {hasValue(event.description) && (
-                          <div className="bohra-detail-row bohra-description-detail-row">
+                          <motion.div className="bohra-detail-row bohra-description-detail-row" variants={cardItemVariants}>
                             <span className="bohra-detail-icon" aria-hidden="true">✧</span>
-                            <div><p className="bohra-extra-event-description-inline">{event.description}</p></div>
+                            <div><motion.p className="bohra-extra-event-description-inline" variants={cardItemVariants}>{event.description}</motion.p></div>
                           </div>
                         )}
-                        {hasValue(event.mapUrl) && <a className="bohra-extra-event-map-link" href={event.mapUrl} target="_blank" rel="noreferrer">Open Maps <span aria-hidden="true">↗</span></a>}
+                        {hasValue(event.mapUrl) && <motion.a className="bohra-extra-event-map-link" variants={cardItemVariants} href={event.mapUrl} target="_blank" rel="noreferrer">Open Maps <span aria-hidden="true">↗</span></motion.a>}
                       </motion.article>
                     ))}
                   </div>
