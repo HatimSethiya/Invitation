@@ -98,8 +98,6 @@ function RoyalWeddingCountdown({ targetDate, theme }) {
   const [remaining, setRemaining] = useState(() =>
     Math.max(0, targetTime - Date.now())
   );
-  const [isVisible, setIsVisible] = useState(false);
-  const panelRef = useRef(null);
 
   useEffect(() => {
     if (!targetTime) return undefined;
@@ -108,20 +106,6 @@ function RoyalWeddingCountdown({ targetDate, theme }) {
     const intervalId = window.setInterval(updateRemaining, 1000);
     return () => window.clearInterval(intervalId);
   }, [targetTime]);
-
-  useEffect(() => {
-    const panel = panelRef.current;
-    if (!panel || typeof IntersectionObserver === "undefined") {
-      setIsVisible(true);
-      return undefined;
-    }
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsVisible(entry.isIntersecting),
-      { threshold: 0.12, rootMargin: "0px 0px -35px 0px" }
-    );
-    observer.observe(panel);
-    return () => observer.disconnect();
-  }, []);
 
   const totalSeconds = Math.floor(remaining / 1000);
   const days = Math.floor(totalSeconds / 86400);
@@ -133,8 +117,7 @@ function RoyalWeddingCountdown({ targetDate, theme }) {
 
   return (
     <section
-      ref={panelRef}
-      className={`bohra-royal-countdown-panel countdown-theme-${theme || "bohraNikah"} bohra-countdown-panel-unboxed ${isVisible ? "countdown-is-visible" : "countdown-is-hidden"}`}
+      className={`bohra-royal-countdown-panel countdown-theme-${theme || "bohraNikah"} bohra-countdown-panel-unboxed`}
       aria-label="Wedding countdown"
     >
       <div className="countdown-petal-layer" aria-hidden="true">
@@ -743,15 +726,9 @@ function PublicInvitation() {
                 hasValue(event.title) || hasValue(event.venue) || hasValue(event.time) || event.date || hasValue(event.description)
               ) && (
                 <section className="bohra-additional-events">
-                  <motion.span
-                    className="bohra-section-kicker bohra-programme-heading"
-                    initial={{ opacity: 0, y: 14 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.6 }}
-                    transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                  >
+                  <span className="bohra-section-kicker bohra-programme-heading">
                     {details.programmeHeading === "Programe Inshallah" || details.programmeHeading === "Programme Insha Allah" ? "Programme Inshallah" : details.programmeHeading || "Programme Inshallah"}
-                  </motion.span>
+                  </span>
                   <div className="bohra-events-stagger">
                     {invitation.events.filter((event) =>
                       hasValue(event.title) || hasValue(event.venue) || hasValue(event.time) || event.date || hasValue(event.description)
@@ -765,9 +742,9 @@ function PublicInvitation() {
                         viewport={{ amount: 0.22, margin: "0px 0px -70px 0px" }}
                       >
 
-                        <motion.h3 variants={cardItemVariants}>{event.title || event.type || "Celebration"}</motion.h3>
+                        <h3>{event.title || event.type || "Celebration"}</h3>
                         <div className="bohra-programme-rule bohra-extra-event-rule" aria-hidden="true"><span>✦</span></div>
-                        <motion.div className="bohra-programme-details bohra-extra-event-details" variants={cardItemVariants}>
+                        <div className="bohra-programme-details bohra-extra-event-details">
                           {event.date && (
                             <div className="bohra-detail-row">
                               <span className="bohra-detail-icon" aria-hidden="true">▦</span>
@@ -792,14 +769,14 @@ function PublicInvitation() {
                               <div><span>{event.address}</span></div>
                             </div>
                           )}
-                        </motion.div>
+                        </div>
                         {hasValue(event.description) && (
-                          <motion.div className="bohra-detail-row bohra-description-detail-row" variants={cardItemVariants}>
+                          <div className="bohra-detail-row bohra-description-detail-row">
                             <span className="bohra-detail-icon" aria-hidden="true">✧</span>
-                            <div><motion.p className="bohra-extra-event-description-inline" variants={cardItemVariants}>{event.description}</motion.p></div>
-                          </motion.div>
+                            <div><p className="bohra-extra-event-description-inline">{event.description}</p></div>
+                          </div>
                         )}
-                        {hasValue(event.mapUrl) && <motion.a className="bohra-extra-event-map-link" variants={cardItemVariants} href={event.mapUrl} target="_blank" rel="noreferrer">Open Maps <span aria-hidden="true">↗</span></motion.a>}
+                        {hasValue(event.mapUrl) && <a className="bohra-extra-event-map-link" href={event.mapUrl} target="_blank" rel="noreferrer">Open Maps <span aria-hidden="true">↗</span></a>}
                       </motion.article>
                     ))}
                   </div>
