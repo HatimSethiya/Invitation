@@ -5152,3 +5152,24 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
     animation: none !important;
   }
 }
+
+/* Sequential copy reveal after the invitation handoff. */
+.bohra-public-page.new-design-enhanced.invitation-revealed .bohra-card-inner-frame > * {
+  animation: premium-invitation-copy-reveal 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.bohra-public-page.new-design-enhanced.invitation-revealed .bohra-card-inner-frame > *:nth-child(1) { animation-delay: 0.12s; }
+.bohra-public-page.new-design-enhanced.invitation-revealed .bohra-card-inner-frame > *:nth-child(2) { animation-delay: 0.26s; }
+.bohra-public-page.new-design-enhanced.invitation-revealed .bohra-card-inner-frame > *:nth-child(3) { animation-delay: 0.40s; }
+.bohra-public-page.new-design-enhanced.invitation-revealed .bohra-card-inner-frame > *:nth-child(4) { animation-delay: 0.54s; }
+.bohra-public-page.new-design-enhanced.invitation-revealed .bohra-card-inner-frame > *:nth-child(5) { animation-delay: 0.68s; }
+.bohra-public-page.new-design-enhanced.invitation-revealed .bohra-card-inner-frame > *:nth-child(6) { animation-delay: 0.82s; }
+.bohra-public-page.new-design-enhanced.invitation-revealed .bohra-card-inner-frame > *:nth-child(n + 7) { animation-delay: 0.96s; }
+@keyframes premium-invitation-copy-reveal {
+  from { opacity: 0; transform: translateY(13px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bohra-public-page.new-design-enhanced.invitation-revealed .bohra-card-inner-frame > * {
+    animation: none !important;
+  }
+}
