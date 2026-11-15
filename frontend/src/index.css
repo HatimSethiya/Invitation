@@ -5322,6 +5322,7 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
 .bohra-public-page.new-design-enhanced .bohra-countdown-unit {
   opacity: 0;
   transform: translate3d(0, 18px, 0);
+  animation: none !important;
   transition: opacity 1.15s cubic-bezier(.22, 1, .36, 1),
               transform 1.15s cubic-bezier(.22, 1, .36, 1);
 }
