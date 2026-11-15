@@ -5084,3 +5084,71 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
     animation: none !important;
   }
 }
+
+/* Premium reference typography + unboxed couple/countdown presentation.
+   Scoped to the enhanced invitation layout to preserve legacy invitation designs. */
+.bohra-public-page.new-design-enhanced .bohra-couple-panel-unboxed {
+  position: relative;
+  margin: clamp(18px, 3.2vh, 30px) auto;
+  padding: 12px 8px 10px;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  overflow: visible;
+}
+.bohra-public-page.new-design-enhanced .bohra-couple-panel-unboxed::before,
+.bohra-public-page.new-design-enhanced .bohra-couple-panel-unboxed::after {
+  content: none !important;
+  display: none !important;
+}
+.bohra-public-page.new-design-enhanced .bohra-couple-panel-unboxed .bohra-couple-names {
+  margin-top: 0;
+  gap: 5px;
+}
+.bohra-public-page.new-design-enhanced .bohra-couple-panel-unboxed .bohra-couple-names h1.premium-couple-name {
+  font-family: "Great Vibes", cursive !important;
+  font-size: clamp(3rem, 10.8vw, 5.1rem) !important;
+  font-weight: 500 !important;
+  line-height: 1.12 !important;
+  letter-spacing: 0 !important;
+  color: transparent !important;
+  background: linear-gradient(100deg, #6b4036 0%, #b8864f 30%, #e8cc96 46%, #b8864f 58%, #6b4036 100%) 0 0 / 300px 100%;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  text-shadow: none !important;
+  animation: premium-reference-name-shine 5s linear infinite !important;
+}
+@keyframes premium-reference-name-shine {
+  to { background-position: -300px 0; }
+}
+.bohra-public-page.new-design-enhanced .bohra-countdown-panel-unboxed {
+  position: relative;
+  margin: clamp(22px, 3.5vh, 34px) auto;
+  padding: 16px 8px 14px;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  overflow: visible;
+}
+.bohra-public-page.new-design-enhanced .bohra-countdown-panel-unboxed::before,
+.bohra-public-page.new-design-enhanced .bohra-countdown-panel-unboxed::after {
+  content: none !important;
+  display: none !important;
+}
+/* Preserve individual countdown unit boxes, their typography and the live timer. */
+.bohra-public-page.new-design-enhanced .bohra-countdown-panel-unboxed .bohra-countdown-units,
+.bohra-public-page.new-design-enhanced .bohra-countdown-panel-unboxed .bohra-countdown-unit {
+  position: relative;
+}
+@media (prefers-reduced-motion: reduce) {
+  .bohra-public-page.new-design-enhanced .bohra-couple-panel-unboxed .bohra-couple-names h1.premium-couple-name {
+    animation: none !important;
+  }
+}
