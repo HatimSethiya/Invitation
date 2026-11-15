@@ -282,6 +282,37 @@ function PublicInvitation() {
     };
   }, [slug]);
 
+  // Reveal the invitation's copy independently as each text group enters the viewport.
+  // Once revealed, elements stay visible while the guest continues scrolling.
+  useEffect(() => {
+    if (!isInvitationInteractive) return undefined;
+
+    const root = document.querySelector(".bohra-public-page.new-design-enhanced");
+    if (!root) return undefined;
+
+    const revealTargets = root.querySelectorAll(
+      ".bohra-card-header > *, .bohra-host-families > *, .bohra-invitation-wording, " +
+      ".bohra-couple-names > *, .bohra-royal-countdown-panel > :not(.countdown-petal-layer), " +
+      ".bohra-countdown-unit"
+    );
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      revealTargets.forEach((element) => element.classList.add("scroll-copy-revealed"));
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("scroll-copy-revealed");
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.16, rootMargin: "0px 0px -8% 0px" });
+
+    revealTargets.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, [isInvitationInteractive, invitation]);
+
   // White Rose Gold-only canvas effects: falling gold sprinkles and a recurring card sheen.
   useEffect(() => {
     const canvas = roseGoldEffectsCanvasRef.current;
@@ -738,7 +769,7 @@ function PublicInvitation() {
                         key={event._id || event.title || `event-${index}`}
                         initial={{ opacity: 0, y: 32, scale: 0.985 }}
                         whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                        viewport={{ amount: 0.22, margin: "0px 0px -70px 0px" }}
+                        viewport={{ once: true, amount: 0.22, margin: "0px 0px -70px 0px" }}
                         transition={{ duration: 0.78, ease: [0.22, 1, 0.36, 1] }}
                       >
 
