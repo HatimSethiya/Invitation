@@ -4298,3 +4298,99 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
     -webkit-backdrop-filter: blur(6px) saturate(1.04);
   }
 }
+
+/* Theme-aware premium countdown with CSS-only decorative motion. */
+.bohra-public-page .bohra-royal-countdown-panel {
+  --countdown-accent: var(--bohra-gold, #b18a42);
+  --countdown-ink: var(--bohra-ink, #294135);
+  --countdown-muted: var(--bohra-muted, #6d7769);
+  --countdown-surface: var(--theme-glass-surface, rgba(255,255,255,.84));
+  --countdown-border: var(--theme-glass-border, rgba(177,138,66,.42));
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: min(100%, 560px);
+  margin: 30px auto 36px;
+  padding: clamp(22px, 4vw, 30px) clamp(14px, 3.5vw, 24px) 20px;
+  border: 1px solid var(--countdown-border);
+  border-radius: 25px;
+  color: var(--countdown-ink);
+  background: var(--countdown-surface);
+  box-shadow: 0 16px 40px var(--theme-shadow, rgba(36,74,58,.12)),
+    0 0 24px color-mix(in srgb, var(--countdown-accent) 18%, transparent),
+    inset 0 1px 0 rgba(255,255,255,.94);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .68s cubic-bezier(.22,1,.36,1), transform .68s cubic-bezier(.22,1,.36,1);
+}
+.bohra-public-page .bohra-royal-countdown-panel.countdown-is-visible { opacity: 1; transform: translateY(0); }
+.bohra-public-page .bohra-royal-countdown-panel.countdown-is-hidden { opacity: 0; transform: translateY(20px); pointer-events: none; }
+.bohra-public-page .bohra-royal-countdown-panel::after {
+  content: "✧   ✦   ✧"; position: absolute; top: 13px; right: 18px; color: var(--countdown-accent);
+  font-size: .68rem; letter-spacing: .28em; opacity: .44; pointer-events: none;
+}
+.bohra-public-page .bohra-countdown-overline {
+  display: block; position: relative; z-index: 1; margin-bottom: 8px;
+  color: var(--countdown-accent); font-size: .66rem; font-weight: 800; letter-spacing: .16em; line-height: 1.5;
+}
+.bohra-public-page .bohra-countdown-title {
+  position: relative; z-index: 1; margin: 0 0 18px; color: var(--countdown-ink);
+  font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(1.35rem, 4vw, 1.8rem); font-weight: 600; line-height: 1.18;
+}
+.bohra-public-page .bohra-countdown-units {
+  position: relative; z-index: 1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(6px, 1.5vw, 11px); width: min(100%, 450px); margin: 0 auto;
+}
+.bohra-public-page .bohra-countdown-unit {
+  display: flex; min-width: 0; flex-direction: column; align-items: center; justify-content: center; gap: 7px;
+  padding: 13px 4px 11px; border: 1px solid color-mix(in srgb, var(--countdown-accent) 44%, transparent);
+  border-radius: 14px; background: color-mix(in srgb, var(--countdown-surface) 88%, white);
+  box-shadow: 0 5px 16px color-mix(in srgb, var(--countdown-accent) 12%, transparent), inset 0 1px 0 rgba(255,255,255,.9);
+}
+.bohra-public-page .bohra-countdown-value {
+  display: inline-block; color: var(--countdown-ink); font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.45rem, 5.2vw, 2.1rem); font-variant-numeric: tabular-nums; font-weight: 750;
+  line-height: 1; text-shadow: 0 0 16px color-mix(in srgb, var(--countdown-accent) 35%, transparent);
+  animation: countdown-number-flip .48s cubic-bezier(.2,.75,.25,1) both;
+}
+.bohra-public-page .bohra-countdown-label { color: var(--countdown-accent); font-size: .56rem; font-weight: 800; letter-spacing: .12em; line-height: 1.2; }
+.bohra-public-page .bohra-countdown-ornament { display: flex; align-items: center; justify-content: center; gap: 11px; margin: 17px auto 9px; color: var(--countdown-accent); font-size: .76rem; }
+.bohra-public-page .bohra-countdown-ornament i { font-size: .9rem; font-style: normal; }
+.bohra-public-page .bohra-countdown-ornament span { width: 45px; height: 1px; background: linear-gradient(90deg, transparent, var(--countdown-accent)); }
+.bohra-public-page .bohra-countdown-ornament span:last-child { transform: rotate(180deg); }
+.bohra-public-page .bohra-countdown-footer, .bohra-public-page .bohra-countdown-live-message {
+  position: relative; z-index: 1; margin: 0; color: var(--countdown-muted); font-family: Georgia, serif; font-size: .9rem; font-style: italic; line-height: 1.55;
+}
+.bohra-public-page .countdown-petal-layer { position: absolute; z-index: 0; inset: 0; overflow: hidden; pointer-events: none; color: color-mix(in srgb, var(--countdown-accent) 76%, #e9a9a4); }
+.bohra-public-page .countdown-petal-layer span { position: absolute; top: -20%; opacity: .24; font-size: 19px; animation: countdown-petal-float 12s linear infinite; }
+.bohra-public-page .countdown-petal-layer span:nth-child(1) { left: 12%; animation-delay: -3s; }
+.bohra-public-page .countdown-petal-layer span:nth-child(2) { left: 34%; animation-delay: -8s; font-size: 14px; }
+.bohra-public-page .countdown-petal-layer span:nth-child(3) { left: 70%; animation-delay: -5s; font-size: 16px; }
+.bohra-public-page .countdown-petal-layer span:nth-child(4) { left: 88%; animation-delay: -10s; }
+.bohra-public-page .countdown-theme-whiteRoseGold { --countdown-accent: #bd805f; --countdown-ink: #684238; --countdown-muted: #956b55; --countdown-surface: linear-gradient(145deg, rgba(255,253,251,.96), rgba(246,226,216,.88)); --countdown-border: rgba(193,132,99,.64); }
+.bohra-public-page .countdown-theme-bohraNikah { --countdown-accent: #b18a42; --countdown-ink: #294135; --countdown-muted: #6d7769; }
+.bohra-public-page .countdown-theme-purpleWhite { --countdown-accent: #9872bd; --countdown-ink: #49365f; --countdown-muted: #78678a; }
+.bohra-public-page .countdown-theme-midnightNavy { --countdown-accent: #a9bfdc; --countdown-ink: #f4f2ef; --countdown-muted: #c1cad8; --countdown-surface: rgba(22,35,57,.9); --countdown-border: rgba(169,191,220,.55); }
+.bohra-public-page .countdown-theme-sageBotanical { --countdown-accent: #66856e; --countdown-ink: #314b39; --countdown-muted: #687f6e; }
+.bohra-public-page .countdown-theme-champagnePearl { --countdown-accent: #b18a53; --countdown-ink: #66513b; --countdown-muted: #8c765d; }
+.bohra-public-page .countdown-theme-rubyVelvet { --countdown-accent: #c78b92; --countdown-ink: #f8e9e8; --countdown-muted: #e0c0c0; --countdown-surface: rgba(69,25,39,.92); --countdown-border: rgba(199,139,146,.6); }
+.bohra-public-page .countdown-theme-oceanTeal { --countdown-accent: #63a9a5; --countdown-ink: #214744; --countdown-muted: #60827f; }
+.bohra-public-page .countdown-theme-celestialBlack { --countdown-accent: #cfb979; --countdown-ink: #f8f1de; --countdown-muted: #d6cba8; --countdown-surface: rgba(27,25,31,.94); --countdown-border: rgba(207,185,121,.62); }
+.bohra-public-page .countdown-theme-blushTerracotta { --countdown-accent: #bf806d; --countdown-ink: #653f37; --countdown-muted: #956e62; }
+.bohra-public-page .countdown-theme-desertSand { --countdown-accent: #b18c58; --countdown-ink: #5f4c35; --countdown-muted: #8c795e; }
+.bohra-public-page .countdown-theme-sapphireSilver { --countdown-accent: #9fb8d7; --countdown-ink: #263b57; --countdown-muted: #6e8199; }
+.bohra-public-page .countdown-theme-burgundyLuxe { --countdown-accent: #cf9a9e; --countdown-ink: #f8e9e8; --countdown-muted: #e0c4c3; --countdown-surface: rgba(67,26,39,.94); --countdown-border: rgba(207,154,158,.58); }
+.bohra-public-page .countdown-theme-jadeMarble { --countdown-accent: #8eb69c; --countdown-ink: #25483a; --countdown-muted: #6d897d; }
+.bohra-public-page .countdown-theme-sunsetCopper { --countdown-accent: #c38a62; --countdown-ink: #603e31; --countdown-muted: #956e59; }
+@keyframes countdown-number-flip { from { opacity: .45; transform: perspective(160px) rotateX(-70deg) translateY(5px); } to { opacity: 1; transform: perspective(160px) rotateX(0) translateY(0); } }
+@keyframes countdown-petal-float { 0% { transform: translate3d(0,-8px,0) rotate(0deg); } 50% { transform: translate3d(18px,58px,0) rotate(115deg); } 100% { transform: translate3d(-8px,118px,0) rotate(225deg); } }
+@media (max-width: 480px) {
+  .bohra-public-page .bohra-royal-countdown-panel { padding: 19px 10px 16px; border-radius: 20px; }
+  .bohra-public-page .bohra-countdown-unit { padding: 10px 2px 8px; border-radius: 11px; }
+  .bohra-public-page .bohra-countdown-label { font-size: .5rem; letter-spacing: .07em; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bohra-public-page .bohra-royal-countdown-panel { transition: none; transform: none; opacity: 1; }
+  .bohra-public-page .bohra-countdown-value, .bohra-public-page .countdown-petal-layer span { animation: none; }
+}
