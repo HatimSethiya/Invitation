@@ -888,7 +888,7 @@ function PublicInvitation() {
                     className="bohra-extra-event bohra-main-venue-panel glass-panel"
                     initial={{ opacity: 0, y: 32, scale: 0.985 }}
                     whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                    viewport={{ once: true, amount: 0.22, margin: "0px 0px -70px 0px" }}
+                    viewport={{ amount: 0.22, margin: "0px 0px -70px 0px" }}
                     transition={{ duration: 0.78, ease: [0.22, 1, 0.36, 1] }}
                   >
                     <h3>{invitation.venue?.name || "Wedding Venue"}</h3>
