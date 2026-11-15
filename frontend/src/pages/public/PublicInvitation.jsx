@@ -138,7 +138,7 @@ function RoyalWeddingCountdown({ targetDate, theme }) {
       aria-label="Wedding countdown"
     >
       <div className="countdown-petal-layer" aria-hidden="true">
-        <span>✿</span><span>❀</span><span>✿</span><span>❀</span>
+        <span className="countdown-rose-petal" /><span className="countdown-rose-petal" /><span className="countdown-rose-petal" /><span className="countdown-rose-petal" />
       </div>
       <span className="bohra-countdown-overline">
         {remaining > 0 ? "COUNTING DOWN TO OUR SPECIAL DAY" : "ALHAMDULILLAH · THE DAY IS HERE"}
@@ -1113,7 +1113,7 @@ function PublicInvitation() {
                   key={event._id || event.title || `event-${index}`}
                   initial={{ opacity: 0, y: 32, scale: 0.985 }}
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: true, amount: 0.2, margin: "0px 0px -60px 0px" }}
+                  viewport={{ once: false, amount: 0.2, margin: "0px 0px -60px 0px" }}
                   transition={{
                     duration: 0.72,
                     delay: Math.min(index * 0.08, 0.24),
