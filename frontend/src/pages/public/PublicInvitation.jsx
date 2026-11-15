@@ -736,10 +736,10 @@ function PublicInvitation() {
                       <motion.article
                         className="bohra-extra-event glass-panel"
                         key={event._id || event.title || `event-${index}`}
-                        variants={staggerContainerVariants}
-                        initial="hidden"
-                        whileInView="visible"
+                        initial={{ opacity: 0, y: 32, scale: 0.985 }}
+                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
                         viewport={{ amount: 0.22, margin: "0px 0px -70px 0px" }}
+                        transition={{ duration: 0.78, ease: [0.22, 1, 0.36, 1] }}
                       >
 
                         <h3>{event.title || event.type || "Celebration"}</h3>
