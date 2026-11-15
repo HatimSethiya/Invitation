@@ -797,7 +797,7 @@ function PublicInvitation() {
                           <motion.div className="bohra-detail-row bohra-description-detail-row" variants={cardItemVariants}>
                             <span className="bohra-detail-icon" aria-hidden="true">✧</span>
                             <div><motion.p className="bohra-extra-event-description-inline" variants={cardItemVariants}>{event.description}</motion.p></div>
-                          </div>
+                          </motion.div>
                         )}
                         {hasValue(event.mapUrl) && <motion.a className="bohra-extra-event-map-link" variants={cardItemVariants} href={event.mapUrl} target="_blank" rel="noreferrer">Open Maps <span aria-hidden="true">↗</span></motion.a>}
                       </motion.article>
