@@ -731,3 +731,61 @@
     inset 0 2px 3px rgba(255, 241, 194, .7),
     inset 0 -4px 6px rgba(72, 38, 8, .32);
 }
+
+
+/* Visual correction: restore the reference's deep champagne-bronze velvet and
+   crisp satin highlights. This is a paint-only override; opening choreography
+   and the invitation handoff remain unchanged. */
+.premium-opening-curtain {
+  background:
+    linear-gradient(180deg,
+      rgba(48, 24, 13, .62) 0%,
+      rgba(73, 42, 25, .20) 18%,
+      rgba(73, 42, 25, .08) 52%,
+      rgba(73, 42, 25, .20) 82%,
+      rgba(48, 24, 13, .58) 100%),
+    var(--premium-grain),
+    repeating-linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 244, 220, .34) 2.4%,
+      rgba(255, 236, 204, .10) 4.2%,
+      transparent 6.4%,
+      transparent 10.5%),
+    repeating-linear-gradient(90deg,
+      rgba(45, 23, 13, .30) 0%,
+      transparent 4.5%,
+      transparent 14%,
+      rgba(45, 23, 13, .22) 21%),
+    repeating-linear-gradient(90deg,
+      #65432f 0%,
+      #8b6244 3.2%,
+      #b18760 5.8%,
+      #d3b18a 7.2%,
+      #f0d9b6 8.1%,
+      #e2c39b 9.2%,
+      #b58a60 12.8%,
+      #785137 17%);
+  box-shadow:
+    inset 0 0 120px rgba(45, 23, 13, .54),
+    inset 0 0 30px rgba(255, 224, 183, .22),
+    0 0 48px rgba(45, 23, 13, .58);
+}
+.premium-opening-curtain::before {
+  border-top-color: #d7ad70;
+  background: repeating-linear-gradient(90deg,
+    #f2d7a4 0 3px,
+    #956234 3px 4px,
+    transparent 4px 8px);
+}
+.premium-opening-curtain-left { border-right-color: #d7ad70; }
+.premium-opening-curtain-right { border-left-color: #d7ad70; }
+.premium-opening-top-panel {
+  background: var(--premium-grain),
+    linear-gradient(180deg, #fff8ed 0%, #ecd2ad 68%, #c99a68 100%);
+  border-bottom-color: #d7ad70;
+  box-shadow: 0 9px 22px rgba(45, 23, 13, .52);
+}
+.premium-opening-top-panel::after {
+  background: radial-gradient(circle at 50% 0, #d8b184 0 11px, transparent 12px) 0 0 / 26px 14px repeat-x;
+  filter: drop-shadow(0 3px 3px rgba(45, 23, 13, .48));
+}
