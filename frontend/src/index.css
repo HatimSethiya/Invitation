@@ -5311,3 +5311,53 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
     display: none !important;
   }
 }
+
+
+/* Copy elements reveal gradually on scroll and remain visible after first entry. */
+.bohra-public-page.new-design-enhanced .bohra-card-header > *,
+.bohra-public-page.new-design-enhanced .bohra-host-families > *,
+.bohra-public-page.new-design-enhanced .bohra-invitation-wording,
+.bohra-public-page.new-design-enhanced .bohra-couple-names > *,
+.bohra-public-page.new-design-enhanced .bohra-royal-countdown-panel > :not(.countdown-petal-layer),
+.bohra-public-page.new-design-enhanced .bohra-countdown-unit {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  transition: opacity 1.15s cubic-bezier(.22, 1, .36, 1),
+              transform 1.15s cubic-bezier(.22, 1, .36, 1);
+}
+.bohra-public-page.new-design-enhanced .scroll-copy-revealed {
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) !important;
+}
+/* Keep the couple names' metallic gold gradient animation running underneath
+   their independent scroll reveal. */
+.bohra-public-page.new-design-enhanced .bohra-couple-names > .premium-couple-name {
+  animation: premium-reference-name-shine 2s linear infinite !important;
+}
+.bohra-public-page.new-design-enhanced .bohra-card-header > :nth-child(2) { transition-delay: .18s; }
+.bohra-public-page.new-design-enhanced .bohra-card-header > :nth-child(3) { transition-delay: .36s; }
+.bohra-public-page.new-design-enhanced .bohra-card-header > :nth-child(4) { transition-delay: .54s; }
+.bohra-public-page.new-design-enhanced .bohra-card-header > :nth-child(5) { transition-delay: .72s; }
+.bohra-public-page.new-design-enhanced .bohra-host-families > :nth-child(2) { transition-delay: .2s; }
+.bohra-public-page.new-design-enhanced .bohra-host-families > :nth-child(3) { transition-delay: .4s; }
+.bohra-public-page.new-design-enhanced .bohra-couple-names > :nth-child(2) { transition-delay: .24s; }
+.bohra-public-page.new-design-enhanced .bohra-couple-names > :nth-child(3) { transition-delay: .48s; }
+.bohra-public-page.new-design-enhanced .bohra-couple-names > :nth-child(4) { transition-delay: .72s; }
+.bohra-public-page.new-design-enhanced .bohra-couple-names > :nth-child(5) { transition-delay: .96s; }
+.bohra-public-page.new-design-enhanced .bohra-royal-countdown-panel > :nth-child(2) { transition-delay: .2s; }
+.bohra-public-page.new-design-enhanced .bohra-royal-countdown-panel > :nth-child(3) { transition-delay: .4s; }
+.bohra-public-page.new-design-enhanced .bohra-royal-countdown-panel > :nth-child(4) { transition-delay: .6s; }
+.bohra-public-page.new-design-enhanced .bohra-royal-countdown-panel > :nth-child(5) { transition-delay: .8s; }
+.bohra-public-page.new-design-enhanced .bohra-royal-countdown-panel > :nth-child(6) { transition-delay: 1s; }
+@media (prefers-reduced-motion: reduce) {
+  .bohra-public-page.new-design-enhanced .bohra-card-header > *,
+  .bohra-public-page.new-design-enhanced .bohra-host-families > *,
+  .bohra-public-page.new-design-enhanced .bohra-invitation-wording,
+  .bohra-public-page.new-design-enhanced .bohra-couple-names > *,
+  .bohra-public-page.new-design-enhanced .bohra-royal-countdown-panel > :not(.countdown-petal-layer),
+  .bohra-public-page.new-design-enhanced .bohra-countdown-unit {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
