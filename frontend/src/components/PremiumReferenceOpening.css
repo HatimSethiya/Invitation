@@ -424,6 +424,21 @@
   animation: premium-opening-open-right 3.8s ease-in-out .12s forwards;
 }
 
+/* Prepare only the active opening layers for compositor-backed motion.
+   This keeps the existing animation timing and visual effects unchanged. */
+.premium-opening-stage.premium-opening-started .premium-opening-intro,
+.premium-opening-stage.premium-opening-started .premium-opening-envelope-wrap,
+.premium-opening-stage.premium-opening-started .premium-opening-flap-wrap,
+.premium-opening-stage.premium-opening-started .premium-opening-insert {
+  will-change: transform, opacity;
+}
+
+.premium-opening-stage.premium-opening-started .premium-opening-curtain-left,
+.premium-opening-stage.premium-opening-started .premium-opening-curtain-right,
+.premium-opening-stage.premium-opening-started .premium-opening-top-panel {
+  will-change: transform;
+}
+
 @keyframes premium-opening-open-left {
   0% { transform: translateX(0) scaleX(1); }
   36% { transform: translateX(0) scaleX(.32) skewX(-4deg); }
