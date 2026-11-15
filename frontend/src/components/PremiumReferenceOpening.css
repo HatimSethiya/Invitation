@@ -424,42 +424,7 @@
   animation: premium-opening-open-right 3.8s ease-in-out .12s forwards;
 }
 
-/* Prepare only the active opening layers for compositor-backed motion.
-   This keeps the existing animation timing and visual effects unchanged. */
-.premium-opening-stage.premium-opening-started .premium-opening-intro,
-.premium-opening-stage.premium-opening-started .premium-opening-envelope-wrap,
-.premium-opening-stage.premium-opening-started .premium-opening-flap-wrap,
-.premium-opening-stage.premium-opening-started .premium-opening-insert {
-  will-change: transform, opacity;
-}
 
-.premium-opening-stage.premium-opening-started .premium-opening-curtain-left,
-.premium-opening-stage.premium-opening-started .premium-opening-curtain-right,
-.premium-opening-stage.premium-opening-started .premium-opening-top-panel {
-  will-change: transform;
-}
-
-/* Keep animated layers on compositor surfaces to avoid repeated paint/raster
-   during envelope fade and curtain movement. Visual timing and effects unchanged. */
-.premium-opening-stage.premium-opening-started .premium-opening-intro,
-.premium-opening-stage.premium-opening-started .premium-opening-envelope-wrap,
-.premium-opening-stage.premium-opening-started .premium-opening-flap-wrap,
-.premium-opening-stage.premium-opening-started .premium-opening-insert,
-.premium-opening-stage.premium-opening-started .premium-opening-curtain,
-.premium-opening-stage.premium-opening-started .premium-opening-top-panel {
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-.premium-opening-stage.premium-opening-started .premium-opening-intro {
-  will-change: opacity, transform;
-}
-
-.premium-opening-stage.premium-opening-fx .premium-opening-curtain,
-.premium-opening-stage.premium-opening-fx .premium-opening-top-panel {
-  will-change: transform;
-}
 
 @keyframes premium-opening-open-left {
   0% { transform: translateX(0) scaleX(1); }
@@ -1026,4 +991,17 @@
 .premium-opening-stage .premium-opening-insert {
   background: linear-gradient(180deg, #fffdf9 0%, #f8eee3 52%, #f2e1d0 100%) !important;
   filter: none !important;
+}
+
+
+/* Smooth the existing envelope fade and curtain motion without overriding
+   their transforms; this preserves the card extraction and opening sequence. */
+.premium-opening-stage.premium-opening-intro-hidden .premium-opening-intro {
+  will-change: opacity;
+}
+
+.premium-opening-stage.premium-opening-fx .premium-opening-curtain-left,
+.premium-opening-stage.premium-opening-fx .premium-opening-curtain-right,
+.premium-opening-stage.premium-opening-fx .premium-opening-top-panel {
+  will-change: transform;
 }
