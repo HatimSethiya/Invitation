@@ -386,7 +386,20 @@ function PublicInvitation() {
     };
 
     const renderFrame = (deltaSeconds, timestampSeconds) => {
-      context.clearRect(0, 0, width, height);
+      // Restrict canvas painting to the portion currently visible in the viewport.
+      // Particle positions and timing still advance continuously, so the effects
+      // retain their original appearance as the guest scrolls through the card.
+      const cardRect = card.getBoundingClientRect();
+      const visibleTop = Math.max(0, Math.min(height, -cardRect.top));
+      const visibleBottom = Math.max(
+        visibleTop,
+        Math.min(height, window.innerHeight - cardRect.top)
+      );
+      const visibleHeight = visibleBottom - visibleTop;
+
+      if (visibleHeight > 0) {
+        context.clearRect(0, visibleTop, width, visibleHeight);
+      }
 
       particles = particles.filter((particle) => {
         if (!reducedMotion) {
@@ -406,6 +419,16 @@ function PublicInvitation() {
           }
           if (particle.x < -4) particle.x = width + 4;
           if (particle.x > width + 4) particle.x = -4;
+        }
+
+        // Off-screen particles continue their animation state but are not
+        // rasterized until they enter the visible viewport.
+        if (
+          visibleHeight <= 0 ||
+          particle.y + particle.radius < visibleTop ||
+          particle.y - particle.radius > visibleBottom
+        ) {
+          return true;
         }
 
         const lifeOpacity = particle.isScrollBurst
@@ -445,19 +468,24 @@ function PublicInvitation() {
         const bandWidth = Math.max(115, width * 0.34);
         const bandX = cycleProgress * (width + bandWidth) - bandWidth;
 
-        context.save();
-        context.translate(bandX, 0);
-        context.transform(1, 0, -0.12, 1, 0, 0);
-        context.globalCompositeOperation = "screen";
+        if (visibleHeight > 0) {
+          context.save();
+          context.beginPath();
+          context.rect(0, visibleTop, width, visibleHeight);
+          context.clip();
+          context.translate(bandX, 0);
+          context.transform(1, 0, -0.12, 1, 0, 0);
+          context.globalCompositeOperation = "screen";
         const sheen = context.createLinearGradient(0, 0, bandWidth, 0);
         sheen.addColorStop(0, "rgba(255,248,229,0)");
         sheen.addColorStop(0.34, "rgba(255,248,229,0.025)");
         sheen.addColorStop(0.5, "rgba(255,244,213,0.14)");
         sheen.addColorStop(0.63, "rgba(218,169,111,0.075)");
         sheen.addColorStop(1, "rgba(255,248,229,0)");
-        context.fillStyle = sheen;
-        context.fillRect(0, 0, bandWidth, height);
-        context.restore();
+          context.fillStyle = sheen;
+          context.fillRect(0, 0, bandWidth, height);
+          context.restore();
+        }
       }
     };
 
