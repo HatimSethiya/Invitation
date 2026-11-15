@@ -693,20 +693,18 @@ function PublicInvitation() {
               {invitation.cardType === "double" &&
                 (hasValue(invitation.secondCouple?.groomName) ||
                   hasValue(invitation.secondCouple?.brideName)) && (
-                  <section className={`bohra-couple-panel bohra-second-couple-panel countdown-theme-${invitation.theme || "bohraNikah"} glass-panel`}>
-                    <div className="countdown-petal-layer bohra-couple-petal-layer" aria-hidden="true"><span className="countdown-rose-petal" /><span className="countdown-rose-petal" /><span className="countdown-rose-petal" /><span className="countdown-rose-petal" /></div>
-<span className="bohra-couple-premium-ornament" aria-hidden="true">✦　✧　✦</span>
+                  <section className={`bohra-couple-panel bohra-second-couple-panel countdown-theme-${invitation.theme || "bohraNikah"} bohra-couple-panel-unboxed`}>
                     <div className="bohra-couple-names">
                       {invitation.secondCouple?.nameOrder === "brideFirst" ? (
                         <>
-                          <h1>{secondBride}</h1>
+                          <h1 className="premium-couple-name">{secondBride}</h1>
                           {hasValue(details.secondCoupleBrideFamilyLine) && (
                             <p className="bohra-bride-family bohra-couple-family-inline">
                               {details.secondCoupleBrideFamilyLine}
                             </p>
                           )}
                           <span className="bohra-weds">Weds</span>
-                          <h1>{secondGroom}</h1>
+                          <h1 className="premium-couple-name">{secondGroom}</h1>
                           {hasValue(details.secondCoupleGroomFamilyLine) && (
                             <p className="bohra-groom-family bohra-couple-family-inline">
                               {details.secondCoupleGroomFamilyLine}
@@ -715,14 +713,14 @@ function PublicInvitation() {
                         </>
                       ) : (
                         <>
-                          <h1>{secondGroom}</h1>
+                          <h1 className="premium-couple-name">{secondGroom}</h1>
                           {hasValue(details.secondCoupleGroomFamilyLine) && (
                             <p className="bohra-groom-family bohra-couple-family-inline">
                               {details.secondCoupleGroomFamilyLine}
                             </p>
                           )}
                           <span className="bohra-weds">Weds</span>
-                          <h1>{secondBride}</h1>
+                          <h1 className="premium-couple-name">{secondBride}</h1>
                           {hasValue(details.secondCoupleBrideFamilyLine) && (
                             <p className="bohra-bride-family bohra-couple-family-inline">
                               {details.secondCoupleBrideFamilyLine}
