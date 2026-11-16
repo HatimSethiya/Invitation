@@ -1009,3 +1009,44 @@
 .premium-opening-stage .premium-opening-top-panel {
   transition: transform .8s ease-in .4s;
 }
+
+
+/* ==========================================================================
+   Smoothness pass - performance only, no visual change.
+   - Heavy layers are promoted up front, so they are rasterised once while the
+     guest is still looking at the sealed envelope (not mid-animation).
+   - The envelope sheen moves with transform (GPU) instead of background-position
+     (which repainted the filtered envelope every frame).
+   ========================================================================== */
+.premium-opening-intro {
+  will-change: opacity, transform;
+}
+
+.premium-opening-curtain,
+.premium-opening-top-panel {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.premium-opening-envelope-front i::before {
+  inset: auto;
+  left: 0;
+  top: 0;
+  width: 300%;
+  height: 100%;
+  background: linear-gradient(
+    115deg,
+    transparent 32%,
+    rgba(255, 255, 255, .18) 42%,
+    rgba(255, 250, 232, .78) 50%,
+    rgba(255, 255, 255, .2) 57%,
+    transparent 68%
+  ) !important;
+  will-change: transform;
+  animation-name: premium-opening-envelope-sheen-gpu !important;
+}
+
+@keyframes premium-opening-envelope-sheen-gpu {
+  0% { transform: translate3d(0, 0, 0); }
+  60%, 100% { transform: translate3d(-66.6667%, 0, 0); }
+}

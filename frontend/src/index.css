@@ -5362,3 +5362,31 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
     transition: none !important;
   }
 }
+
+
+/* ==========================================================================
+   Smoothness pass for the opening (performance only).
+   While the opening overlay is on screen the page underneath is fully covered by
+   the curtains, so skip the expensive backdrop blurs there (they re-blur every
+   frame while the page fades/scales in) and pre-promote the layers that animate
+   at hand-off so they are rasterised before the curtains open.
+   ========================================================================== */
+.public-page.public-page.public-page.public-page.invitation-opening-active [class],
+.public-page.public-page.public-page.public-page.invitation-opening-active [class]::before,
+.public-page.public-page.public-page.public-page.invitation-opening-active [class]::after {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.public-page.invitation-opening-active .invitation-body {
+  will-change: transform, opacity;
+}
+
+.public-page.invitation-opening-active .bohra-card-inner-frame > *,
+.public-page.invitation-opening-active .bohra-card-header > *,
+.public-page.invitation-opening-active .bohra-host-families > *,
+.public-page.invitation-opening-active .bohra-invitation-wording,
+.public-page.invitation-opening-active .bohra-couple-names > *,
+.public-page.invitation-opening-active .bohra-royal-countdown-panel > * {
+  will-change: opacity, transform;
+}

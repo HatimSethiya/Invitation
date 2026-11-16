@@ -604,7 +604,7 @@ function PublicInvitation() {
 
     return (
       <main
-        className={`public-page bohra-public-page ${themeClass} ${useEnhancedNewDesign ? "new-design-enhanced" : ""} ${isInvitationInteractive ? "invitation-revealed" : "invitation-locked"}`}
+        className={`public-page bohra-public-page ${themeClass} ${useEnhancedNewDesign ? "new-design-enhanced" : ""} ${isInvitationInteractive ? "invitation-revealed" : "invitation-locked"} ${!isUnboxed ? "invitation-opening-active" : ""}`}
       >
         <AnimatePresence>
           {!isUnboxed && (
@@ -621,9 +621,9 @@ function PublicInvitation() {
 
         <motion.div
           className="invitation-body bohra-invitation-body"
-          initial={{ opacity: 0, y: 28, scale: 0.975 }}
+          initial={{ opacity: 0.001, y: 28, scale: 0.975 }}
           animate={{
-            opacity: isHandoffStarted || isUnboxed ? 1 : 0,
+            opacity: isHandoffStarted || isUnboxed ? 1 : 0.001,
             y: isHandoffStarted || isUnboxed ? 0 : 28,
             scale: isHandoffStarted || isUnboxed ? 1 : 0.975,
           }}
@@ -954,7 +954,7 @@ function PublicInvitation() {
     <main
       className={`public-page ${themeClass} ${
         isInvitationInteractive ? "invitation-revealed" : "invitation-locked"
-      }`}
+      } ${!isUnboxed ? "invitation-opening-active" : ""}`}
     >
       {/* 3D Envelope Unboxing Overlay with GSAP & Vanilla-Tilt */}
       <AnimatePresence>
@@ -974,9 +974,9 @@ function PublicInvitation() {
         className={`invitation-body ${
           invitation.theme === "royalRose" ? "royal-rose-card" : ""
         }`}
-        initial={{ opacity: 0, y: 24, scale: 0.985 }}
+        initial={{ opacity: 0.001, y: 24, scale: 0.985 }}
         animate={{
-          opacity: isHandoffStarted || isUnboxed ? 1 : 0,
+          opacity: isHandoffStarted || isUnboxed ? 1 : 0.001,
           y: isHandoffStarted || isUnboxed ? 0 : 24,
           scale: isHandoffStarted || isUnboxed ? 1 : 0.985,
         }}

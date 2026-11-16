@@ -294,7 +294,9 @@ function PremiumReferenceReveal({ invitation, onOpenMusic, onHandoffStart, onOpe
   const beginCurtainReveal = useCallback(() => {
     setIsIntroHidden(true);
     setIsCurtainsOpening(true);
-    handoff();
+    // Smoothness: curtains are compositor-driven, so start them first and run the
+    // heavy React/page hand-off a beat later instead of in the same frame.
+    schedule(handoff, 300);
     schedule(finish, 2850);
   }, [finish, handoff, schedule]);
 
