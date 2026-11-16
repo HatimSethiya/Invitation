@@ -50,6 +50,20 @@ const cardItemVariants = {
   },
 };
 
+function splitEventTitleAndCoupleNames(title) {
+  const value = typeof title === "string" ? title.trim() : "";
+  const match = value.match(/^(.*?)\s*\[([^\]]+)\]\s*$/);
+
+  if (!match || !match[1].trim() || !match[2].trim()) {
+    return { title: value, coupleNames: "" };
+  }
+
+  return {
+    title: match[1].trim(),
+    coupleNames: match[2].trim(),
+  };
+}
+
 function getWeddingCountdownTarget(invitation) {
   const rawWeddingDate = invitation?.weddingDate;
   const dateKey = typeof rawWeddingDate === "string"
@@ -799,7 +813,17 @@ function PublicInvitation() {
                         transition={{ duration: 0.78, ease: [0.22, 1, 0.36, 1] }}
                       >
 
-                        <h3>{event.title || event.type || "Celebration"}</h3>
+                        {(() => {
+                          const eventHeading = splitEventTitleAndCoupleNames(event.title || event.type || "Celebration");
+                          return (
+                            <>
+                              <h3>{eventHeading.title}</h3>
+                              {eventHeading.coupleNames && (
+                                <p className="bohra-extra-event-couple-names">{eventHeading.coupleNames}</p>
+                              )}
+                            </>
+                          );
+                        })()}
                         <div className="bohra-programme-rule bohra-extra-event-rule" aria-hidden="true"><span>✦</span></div>
                         <div className="bohra-programme-details bohra-extra-event-details">
                           {event.date && (

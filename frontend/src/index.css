@@ -5594,3 +5594,17 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
     font-size: clamp(1.65rem, 8vw, 2.55rem) !important;
   }
 }
+
+
+/* Keep couple names as a quiet sub-line beneath the event heading. */
+.bohra-public-page .bohra-extra-event-couple-names {
+  margin: 6px auto 0;
+  color: var(--bohra-muted, currentColor);
+  font-family: inherit;
+  font-size: clamp(.78rem, 2.2vw, .92rem);
+  font-weight: 600;
+  letter-spacing: .045em;
+  line-height: 1.35;
+  text-align: center;
+  text-transform: none;
+}
