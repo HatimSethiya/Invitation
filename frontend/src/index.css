@@ -5530,3 +5530,67 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
     font-size: clamp(2rem, 8.2vw, 2.75rem) !important;
   }
 }
+
+
+/* Final correction: couple name card should be compact like the event cards,
+   while the name typography remains theme-owned (except the protected Rose Gold). */
+.bohra-public-page:not(.theme-whiteRoseGold) section.bohra-couple-panel.bohra-couple-panel-unboxed {
+  min-height: 0 !important;
+  height: auto !important;
+  box-sizing: border-box !important;
+  padding: clamp(18px, 4vw, 24px) clamp(14px, 4vw, 24px) !important;
+  margin: 16px auto 20px !important;
+  justify-content: center !important;
+  background: var(--theme-glass-surface, rgba(255, 255, 255, 0.76)) !important;
+  border-color: var(--theme-glass-border, rgba(132, 105, 156, 0.32)) !important;
+  box-shadow: 0 8px 24px var(--theme-shadow, rgba(43, 34, 56, 0.08)),
+    inset 0 1px 0 rgba(255,255,255,.78) !important;
+}
+
+.bohra-public-page:not(.theme-whiteRoseGold) section.bohra-couple-panel.bohra-couple-panel-unboxed::before {
+  inset: 4px !important;
+  border-color: var(--theme-glass-border, rgba(132, 105, 156, 0.2)) !important;
+  border-radius: inherit !important;
+}
+
+/* Cancel the previously added Rose-Gold calligraphy override and restore
+   the invitation theme's existing font/color rules for all other themes. */
+.bohra-public-page.new-design-enhanced:not(.theme-whiteRoseGold) .bohra-couple-panel-unboxed .premium-couple-name,
+.bohra-public-page:not(.theme-whiteRoseGold) section.bohra-couple-panel.bohra-couple-panel-unboxed h1.premium-couple-name {
+  font-family: "Cormorant Garamond", "Bodoni MT", Georgia, serif !important;
+  font-size: clamp(1.7rem, 8.2vw, 3.35rem) !important;
+  font-style: italic !important;
+  font-weight: 500 !important;
+  line-height: 1.08 !important;
+  letter-spacing: -.035em !important;
+  color: var(--bohra-forest, var(--bohra-ink, #294135)) !important;
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  -webkit-text-fill-color: currentColor !important;
+  text-shadow: none !important;
+  filter: none !important;
+  animation: none !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+}
+
+.bohra-public-page.theme-purpleWhite:not(.theme-whiteRoseGold) section.bohra-couple-panel.bohra-couple-panel-unboxed h1.premium-couple-name {
+  color: #65408c !important;
+}
+
+.bohra-public-page.theme-emeraldGarden:not(.theme-whiteRoseGold) section.bohra-couple-panel.bohra-couple-panel-unboxed h1.premium-couple-name {
+  color: var(--bohra-forest, #294135) !important;
+}
+
+@media (max-width: 420px) {
+  .bohra-public-page:not(.theme-whiteRoseGold) section.bohra-couple-panel.bohra-couple-panel-unboxed {
+    min-height: 0 !important;
+    padding: 16px 12px !important;
+    border-radius: 18px !important;
+  }
+
+  .bohra-public-page:not(.theme-whiteRoseGold) section.bohra-couple-panel.bohra-couple-panel-unboxed h1.premium-couple-name {
+    font-size: clamp(1.65rem, 8vw, 2.55rem) !important;
+  }
+}

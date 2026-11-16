@@ -711,10 +711,6 @@ function PublicInvitation() {
                 </div>
               </section>
 
-              {invitation.countdownEnabled === true && countdownTarget && (
-                <RoyalWeddingCountdown targetDate={countdownTarget} theme={invitation.theme} />
-              )}
-
               {invitation.cardType === "double" && (
                 <section className="bohra-officiant-panel glass-panel">
                   <p>Nikah Solemnised On The Hand Mubarak Of</p>
@@ -777,6 +773,10 @@ function PublicInvitation() {
                   {hasValue(details.nikahOfficiantIntro) && <p>{details.nikahOfficiantIntro}</p>}
                   {hasValue(details.nikahOfficiant) && <strong>{details.nikahOfficiant}</strong>}
                 </section>
+              )}
+
+              {invitation.countdownEnabled === true && countdownTarget && (
+                <RoyalWeddingCountdown targetDate={countdownTarget} theme={invitation.theme} />
               )}
 
               {Array.isArray(invitation.events) && invitation.events.some((event) =>
