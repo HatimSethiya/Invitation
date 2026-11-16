@@ -5456,3 +5456,77 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
     font-size: clamp(2rem, 8.2vw, 2.8rem) !important;
   }
 }
+
+
+/* Couple-name card restoration applies to legacy and enhanced invitation layouts.
+   White Rose Gold remains deliberately untouched. */
+.bohra-public-page:not(.theme-whiteRoseGold) section.bohra-couple-panel.bohra-couple-panel-unboxed {
+  position: relative !important;
+  box-sizing: border-box !important;
+  width: min(100%, 560px) !important;
+  margin: clamp(20px, 3vh, 30px) auto !important;
+  padding: clamp(16px, 4vw, 24px) clamp(12px, 3.5vw, 22px) !important;
+  border: 1px solid rgba(132, 105, 156, 0.38) !important;
+  border-radius: 22px !important;
+  background: linear-gradient(145deg, rgba(255,255,255,.82), rgba(255,255,255,.42)) !important;
+  box-shadow: 0 12px 28px rgba(43, 34, 56, 0.12), inset 0 1px 0 rgba(255,255,255,.9) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  overflow: visible !important;
+}
+
+.bohra-public-page:not(.theme-whiteRoseGold) section.bohra-couple-panel.bohra-couple-panel-unboxed::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  inset: 5px !important;
+  border: 1px solid rgba(132, 105, 156, 0.22) !important;
+  border-radius: 16px !important;
+  background: transparent !important;
+  pointer-events: none !important;
+  animation: none !important;
+}
+
+.bohra-public-page:not(.theme-whiteRoseGold) section.bohra-couple-panel.bohra-couple-panel-unboxed::after {
+  content: none !important;
+  display: none !important;
+}
+
+.bohra-public-page.theme-emeraldGarden:not(.theme-whiteRoseGold) section.bohra-couple-panel.bohra-couple-panel-unboxed {
+  border-color: rgba(76, 112, 83, 0.42) !important;
+  background: linear-gradient(145deg, rgba(239, 247, 231, 0.88), rgba(207, 225, 195, 0.72)) !important;
+  box-shadow: 0 12px 28px rgba(39, 73, 45, 0.12), inset 0 1px 0 rgba(255,255,255,.72) !important;
+}
+
+.bohra-public-page.theme-emeraldGarden:not(.theme-whiteRoseGold) section.bohra-couple-panel.bohra-couple-panel-unboxed::before {
+  border-color: rgba(76, 112, 83, 0.24) !important;
+}
+
+.bohra-public-page:not(.theme-whiteRoseGold) section.bohra-couple-panel.bohra-couple-panel-unboxed .bohra-couple-names {
+  position: relative !important;
+  z-index: 1 !important;
+  gap: 5px !important;
+}
+
+.bohra-public-page:not(.theme-whiteRoseGold) section.bohra-couple-panel.bohra-couple-panel-unboxed h1.premium-couple-name {
+  max-width: 100% !important;
+  font-family: "Great Vibes", "Cormorant Garamond", cursive !important;
+  font-size: clamp(2.2rem, 8vw, 3.25rem) !important;
+  font-weight: 500 !important;
+  line-height: 1.18 !important;
+  letter-spacing: 0 !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  text-align: center !important;
+}
+
+@media (max-width: 420px) {
+  .bohra-public-page:not(.theme-whiteRoseGold) section.bohra-couple-panel.bohra-couple-panel-unboxed {
+    padding: 14px 10px !important;
+    border-radius: 18px !important;
+  }
+
+  .bohra-public-page:not(.theme-whiteRoseGold) section.bohra-couple-panel.bohra-couple-panel-unboxed h1.premium-couple-name {
+    font-size: clamp(2rem, 8.2vw, 2.75rem) !important;
+  }
+}
