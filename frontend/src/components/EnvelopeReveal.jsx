@@ -295,7 +295,7 @@ function PremiumReferenceReveal({ invitation, onOpenMusic, onHandoffStart, onOpe
     setIsIntroHidden(true);
     setIsCurtainsOpening(true);
     handoff();
-    schedule(finish, 4150);
+    schedule(finish, 2850);
   }, [finish, handoff, schedule]);
 
   const start = useCallback(() => {
@@ -318,8 +318,8 @@ function PremiumReferenceReveal({ invitation, onOpenMusic, onHandoffStart, onOpe
 
     schedule(() => setIsFlapOpen(true), 600);
     schedule(() => setIsCardExtracted(true), 1600);
-    schedule(() => setIsIntroHidden(true), 3000);
-    schedule(beginCurtainReveal, 3300);
+    schedule(() => setIsIntroHidden(true), 3400);
+    schedule(beginCurtainReveal, 3700);
   }, [beginCurtainReveal, burstSeal, finish, handoff, onOpenMusic, schedule]);
 
   const skip = useCallback(() => {
