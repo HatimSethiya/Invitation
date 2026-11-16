@@ -5390,3 +5390,69 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
 .public-page.invitation-opening-active .bohra-royal-countdown-panel > * {
   will-change: opacity, transform;
 }
+
+
+/* Restore a theme-matched couple-name card on enhanced invitations.
+   The White Rose Gold theme is intentionally excluded from this adjustment. */
+.bohra-public-page.new-design-enhanced:not(.theme-whiteRoseGold) .bohra-couple-panel-unboxed {
+  width: min(100%, 560px);
+  margin: clamp(18px, 3.2vh, 30px) auto;
+  padding: clamp(16px, 4vw, 24px) clamp(12px, 3.5vw, 22px);
+  border: 1px solid var(--bohra-gold-soft, rgba(177, 138, 66, 0.34)) !important;
+  border-radius: 22px !important;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.48)),
+    var(--bohra-paper, #f5eddb) !important;
+  box-shadow:
+    0 12px 30px rgba(40, 35, 50, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  overflow: visible !important;
+}
+
+.bohra-public-page.new-design-enhanced:not(.theme-whiteRoseGold) .bohra-couple-panel-unboxed::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  inset: 5px !important;
+  border: 1px solid var(--bohra-gold-soft, rgba(177, 138, 66, 0.24)) !important;
+  border-radius: 16px !important;
+  background: transparent !important;
+  pointer-events: none !important;
+  animation: none !important;
+}
+
+.bohra-public-page.new-design-enhanced:not(.theme-whiteRoseGold) .bohra-couple-panel-unboxed::after {
+  content: none !important;
+  display: none !important;
+}
+
+.bohra-public-page.new-design-enhanced:not(.theme-whiteRoseGold) .bohra-couple-panel-unboxed .bohra-couple-names {
+  gap: 4px;
+  position: relative;
+  z-index: 1;
+}
+
+.bohra-public-page.new-design-enhanced:not(.theme-whiteRoseGold) .bohra-couple-panel-unboxed .premium-couple-name {
+  max-width: 100%;
+  font-family: "Great Vibes", "Cormorant Garamond", cursive !important;
+  font-size: clamp(2.25rem, 8vw, 3.65rem) !important;
+  font-weight: 500 !important;
+  line-height: 1.16 !important;
+  letter-spacing: 0 !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+
+@media (max-width: 420px) {
+  .bohra-public-page.new-design-enhanced:not(.theme-whiteRoseGold) .bohra-couple-panel-unboxed {
+    padding: 14px 10px;
+    border-radius: 18px !important;
+  }
+
+  .bohra-public-page.new-design-enhanced:not(.theme-whiteRoseGold) .bohra-couple-panel-unboxed .premium-couple-name {
+    font-size: clamp(2rem, 8.2vw, 2.8rem) !important;
+  }
+}
