@@ -617,7 +617,7 @@ function PublicInvitation() {
           )}
         </AnimatePresence>
         <InvitationMusicPlayer music={invitation.music} visible={isInvitationInteractive || isMusicStartRequested} audioRef={musicAudioRef} startRequestedRef={musicStartRequestedRef} showControls={false} />
-        {isHandoffStarted && <PremiumFallingPetals />}
+        {isHandoffStarted && invitation.theme === "whiteRoseGold" && <PremiumFallingPetals />}
 
         <motion.div
           className="invitation-body bohra-invitation-body"
