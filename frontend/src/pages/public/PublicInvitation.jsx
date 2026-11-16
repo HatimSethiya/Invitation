@@ -678,9 +678,9 @@ function PublicInvitation() {
                   {invitation.couple?.nameOrder === "brideFirst" ? (
                     <>
                       <h1 className="premium-couple-name">{bride}</h1>
-                      {hasValue(details.firstCoupleBrideFamilyLine || details.brideFamilyLine) && (
+                      {hasValue(details.firstCoupleBrideFamilyLine) && (
                         <p className="bohra-bride-family bohra-couple-family-inline">
-                          {details.firstCoupleBrideFamilyLine || details.brideFamilyLine}
+                          {details.firstCoupleBrideFamilyLine}
                         </p>
                       )}
                       <span className="bohra-weds">Weds</span>
@@ -701,9 +701,9 @@ function PublicInvitation() {
                       )}
                       <span className="bohra-weds">Weds</span>
                       <h1 className="premium-couple-name">{bride}</h1>
-                      {hasValue(details.firstCoupleBrideFamilyLine || details.brideFamilyLine) && (
+                      {hasValue(details.firstCoupleBrideFamilyLine) && (
                         <p className="bohra-bride-family bohra-couple-family-inline">
-                          {details.firstCoupleBrideFamilyLine || details.brideFamilyLine}
+                          {details.firstCoupleBrideFamilyLine}
                         </p>
                       )}
                     </>
