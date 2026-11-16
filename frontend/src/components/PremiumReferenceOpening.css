@@ -110,7 +110,7 @@
 
 .premium-opening-stage.premium-opening-card-extracted .premium-opening-insert {
   z-index: 5;
-  transform: translateY(-64%);
+  transform: translateY(-100%);
 }
 
 .premium-opening-cover-art {
@@ -418,11 +418,11 @@
 }
 
 .premium-opening-stage.premium-opening-fx .premium-opening-curtain-left {
-  animation: premium-opening-open-left 3.8s ease-in-out forwards;
+  animation: premium-opening-open-left 2.6s ease-in-out forwards;
 }
 
 .premium-opening-stage.premium-opening-fx .premium-opening-curtain-right {
-  animation: premium-opening-open-right 3.8s ease-in-out .12s forwards;
+  animation: premium-opening-open-right 2.6s ease-in-out .08s forwards;
 }
 
 @keyframes premium-opening-open-left {
@@ -1003,4 +1003,9 @@
 .premium-opening-stage.premium-opening-fx .premium-opening-curtain-right,
 .premium-opening-stage.premium-opening-fx .premium-opening-top-panel {
   will-change: transform;
+}
+
+/* Keep the top valance in sync with the shorter, smoother curtain reveal. */
+.premium-opening-stage .premium-opening-top-panel {
+  transition: transform .8s ease-in .4s;
 }
