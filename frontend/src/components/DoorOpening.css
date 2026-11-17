@@ -12,6 +12,8 @@
   isolation: isolate;
 }
 .door-opening-stage *, .door-opening-stage *::before, .door-opening-stage *::after { box-sizing: border-box; }
+.door-opening-stage { opacity: 1; transition: opacity .9s cubic-bezier(.22,1,.36,1); }
+.door-opening-stage.door-opening-handoff { opacity: 0; pointer-events: none; }
 .door-opening-stage button { font: inherit; }
 .door-opening-hall {
   position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;

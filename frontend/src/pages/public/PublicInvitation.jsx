@@ -642,7 +642,7 @@ function PublicInvitation() {
             scale: isHandoffStarted || isUnboxed ? 1 : 0.975,
           }}
           transition={{
-            opacity: { duration: 1.6, ease: [0.22, 1, 0.36, 1] },
+            opacity: { duration: invitation.openingAnimation === "door" ? 0.9 : 1.6, ease: [0.22, 1, 0.36, 1] },
             y: { duration: 1.75, ease: [0.22, 1, 0.36, 1] },
             scale: { duration: 1.85, ease: [0.22, 1, 0.36, 1] },
           }}

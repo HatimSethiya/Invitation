@@ -21,6 +21,7 @@ const THEME_PALETTES = {
 
 function DoorOpening({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isHandoff, setIsHandoff] = useState(false);
   const [isFast, setIsFast] = useState(false);
   const [showSkip, setShowSkip] = useState(false);
   const startedRef = useRef(false);
@@ -96,12 +97,16 @@ function DoorOpening({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setIsFast(true);
+      setIsHandoff(true);
       onHandoffStart?.();
       schedule(finish, 250);
       return;
     }
 
-    schedule(onHandoffStart, 2700);
+    schedule(() => {
+      setIsHandoff(true);
+      onHandoffStart?.();
+    }, 2700);
     schedule(finish, 3900);
   }, [burstDust, finish, onHandoffStart, onOpenMusic, schedule]);
 
@@ -110,13 +115,14 @@ function DoorOpening({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
     clearTimers();
     setIsFast(true);
     setIsOpen(true);
+    setIsHandoff(true);
     onHandoffStart?.();
     schedule(finish, 250);
   }, [clearTimers, finish, onHandoffStart, schedule]);
 
   return (
     <div
-      className={`door-opening-stage${isOpen ? " door-opening-is-open" : ""}${isFast ? " door-opening-fast" : ""}`}
+      className={`door-opening-stage${isOpen ? " door-opening-is-open" : ""}${isFast ? " door-opening-fast" : ""}${isHandoff ? " door-opening-handoff" : ""}`}
       style={stageStyle}
       aria-label={`Royal door opening for ${primaryNames[0]} and ${primaryNames[1]}`}
     >
