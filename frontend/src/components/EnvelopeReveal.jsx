@@ -6,6 +6,7 @@ import "./cinematic/CinematicOpening.css";
 import "./cinematic/RoyalEnvelopeFinish.css";
 import "./cinematic/RoseGoldEnvelope.css";
 import "./PremiumReferenceOpening.css";
+import DoorOpening from "./DoorOpening";
 
 /**
  * EnvelopeReveal coordinates a clean invitation opening:
@@ -428,6 +429,10 @@ function PremiumReferenceReveal({ invitation, onOpenMusic, onHandoffStart, onOpe
 }
 
 function EnvelopeReveal(props) {
+  if (props.invitation?.openingAnimation === "door") {
+    return <DoorOpening {...props} />;
+  }
+
   if (props.invitation?.openingAnimation === "envelope") {
     return <PremiumReferenceReveal {...props} />;
   }

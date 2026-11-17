@@ -1,0 +1,211 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&display=swap");
+
+.door-opening-stage {
+  --door-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .2 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  overflow: hidden;
+  color: var(--door-ink);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  background: var(--door-hall);
+  isolation: isolate;
+}
+.door-opening-stage *, .door-opening-stage *::before, .door-opening-stage *::after { box-sizing: border-box; }
+.door-opening-stage button { font: inherit; }
+.door-opening-hall {
+  position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: radial-gradient(circle at 50% 22%, color-mix(in srgb, var(--door-hall), white 75%), var(--door-hall) 75%);
+  transform: scale(1.06); transition: transform 3.2s cubic-bezier(.2,.7,.2,1);
+}
+.door-opening-is-open .door-opening-hall { transform: none; }
+.door-opening-rays {
+  position: absolute; inset: 0;
+  background: repeating-conic-gradient(from -50deg at 50% -6%, color-mix(in srgb, var(--door-gold-light), transparent 40%) 0 5deg, transparent 5deg 14deg);
+  opacity: 0; transition: opacity 2.6s .5s;
+}
+.door-opening-is-open .door-opening-rays { opacity: .5; }
+.door-opening-hall::before, .door-opening-hall::after {
+  content: ""; position: absolute; pointer-events: none; border: 1px solid color-mix(in srgb, var(--door-gold), transparent 25%);
+}
+.door-opening-hall::before {
+  inset: calc(14px + env(safe-area-inset-top,0px)) 14px calc(14px + env(safe-area-inset-bottom,0px));
+  border-radius: 22px; background: color-mix(in srgb, var(--door-hall), white 55%);
+  box-shadow: 0 10px 40px rgba(var(--door-shadow),.14);
+}
+.door-opening-hall::after {
+  inset: calc(22px + env(safe-area-inset-top,0px)) 22px calc(22px + env(safe-area-inset-bottom,0px));
+  border-radius: 15px; border-color: color-mix(in srgb, var(--door-gold), transparent 60%);
+}
+.door-opening-gates {
+  position: fixed; inset: 0; z-index: 5;
+  transition: transform 3.4s cubic-bezier(.5,0,.3,1) .4s, opacity 1s 2.8s;
+}
+.door-opening-is-open .door-opening-gates { transform: scale(1.14); opacity: 0; }
+.door-opening-gates::after {
+  content: ""; position: absolute; inset: 0; z-index: 4; pointer-events: none;
+  background: var(--door-grain), radial-gradient(ellipse at 50% 45%, transparent 56%, rgba(var(--door-shadow),.34));
+}
+.door-opening-doors, .door-opening-arch { position: absolute; left: 7%; right: 7%; top: 9%; bottom: 44px; }
+.door-opening-doors { perspective: 1600px; }
+.door-opening-is-open .door-opening-doors { animation: door-opening-rumble 1.4s .5s ease-out; }
+@keyframes door-opening-rumble {
+  0%,100%{transform:translate3d(0,0,0)}12%{transform:translate3d(-1.5px,1px,0)}
+  24%{transform:translate3d(1.5px,-1px,0)}36%{transform:translate3d(-1px,.5px,0)}
+  50%{transform:translate3d(1px,-.5px,0)}70%{transform:translate3d(-.5px,0,0)}
+}
+.door-opening-doors::before {
+  content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:linear-gradient(180deg,rgba(var(--door-shadow),.5),transparent 24%),linear-gradient(90deg,rgba(var(--door-shadow),.32),transparent 9%,transparent 91%,rgba(var(--door-shadow),.32));
+}
+.door-opening-doors::after {
+  content:""; position:absolute; left:0; right:0; bottom:0; height:46px; z-index:1; pointer-events:none;
+  background:linear-gradient(transparent,rgba(var(--door-shadow),.5));
+}
+.door-opening-arch {
+  z-index:2; pointer-events:none; border-radius:50% 50% 0 0/24% 24% 0 0;
+  box-shadow:0 0 0 5px var(--door-gold),0 0 0 9px var(--door-gold-light),0 0 0 11px var(--door-deep),0 0 0 20px var(--door-hall),0 0 0 22px color-mix(in srgb,var(--door-gold),transparent 15%),0 0 0 200vmax var(--door-hall);
+}
+.door-opening-key {
+  position:absolute; left:50%; top:calc(9% - 24px); z-index:3; width:36px; height:36px; margin-left:-18px; transform:rotate(45deg);
+  border:2px solid var(--door-deep); background:radial-gradient(circle at 35% 30%,var(--door-gold-light),var(--door-mid) 55%,var(--door-deep));
+  box-shadow:0 3px 6px rgba(0,0,0,.45),inset 0 0 0 4px color-mix(in srgb,var(--door-gold-light),transparent 50%);
+}
+.door-opening-floor {
+  position:absolute; left:0; right:0; bottom:0; z-index:3; height:44px; border-top:3px solid var(--door-gold);
+  background:linear-gradient(rgba(255,255,255,.4),transparent 60%),repeating-conic-gradient(var(--door-hall) 0 25%,var(--door-gold-light) 0 50%) 0 0/44px 44px;
+}
+.door-opening-floor::after {
+  content:""; position:absolute; inset:0;
+  background:radial-gradient(ellipse at 50% 0,color-mix(in srgb,var(--door-gold-light),transparent 5%),transparent 65%);
+  opacity:0; transition:opacity 2s 1s;
+}
+.door-opening-is-open .door-opening-floor::after { opacity:1; }
+.door-opening-door {
+  position:absolute; top:0; bottom:0; width:50%; will-change:transform; backface-visibility:hidden;
+  background:var(--door-grain),linear-gradient(105deg,transparent 38%,color-mix(in srgb,var(--door-gold-light),transparent 62%) 47%,transparent 56%),repeating-linear-gradient(90deg,rgba(60,30,0,.05) 0 1px,transparent 1px 4px),linear-gradient(90deg,rgba(var(--door-shadow),.25),transparent 14%,transparent 86%,rgba(var(--door-shadow),.12)),linear-gradient(180deg,var(--door-gold-light),var(--door-mid) 55%,var(--door-deep));
+  transition:transform 3s cubic-bezier(.55,0,.25,1) .5s;
+}
+.door-opening-left { left:0; transform-origin:left; border-right:3px solid var(--door-deep); }
+.door-opening-right { right:0; transform-origin:right; border-left:3px solid var(--door-deep); transition-delay:.62s; }
+.door-opening-is-open .door-opening-left { transform:rotateY(88deg); }
+.door-opening-is-open .door-opening-right { transform:rotateY(-88deg); }
+.door-opening-door::before {
+  content:""; position:absolute; top:8%; bottom:6%; width:8px; right:3%;
+  background:radial-gradient(circle,var(--door-gold-light) 0 1.5px,var(--door-mid) 2.6px,transparent 3.6px) 0 0/8px 24px repeat-y;
+}
+.door-opening-right::before { right:auto; left:3%; }
+.door-opening-door::after {
+  content:""; position:absolute; inset:0; background:linear-gradient(90deg,rgba(var(--door-shadow),.45),transparent 55%);
+  opacity:0; transition:opacity 3s .5s;
+}
+.door-opening-right::after { background:linear-gradient(270deg,rgba(var(--door-shadow),.45),transparent 55%); }
+.door-opening-is-open .door-opening-door::after { opacity:1; }
+.door-opening-panel {
+  position:absolute; left:13%; right:13%; display:flex; align-items:center; justify-content:center;
+  border:6px solid; border-color:var(--door-gold-light) var(--door-mid) var(--door-deep) var(--door-gold);
+  border-radius:6px; background:linear-gradient(145deg,color-mix(in srgb,var(--door-hall),white 20%),color-mix(in srgb,var(--door-gold-light),var(--door-hall) 45%));
+  box-shadow:inset 3px 3px 8px rgba(80,50,10,.45),inset -2px -2px 5px rgba(255,255,255,.6),0 4px 8px rgba(var(--door-shadow),.55);
+}
+.door-opening-panel::before {
+  content:""; position:absolute; inset:5px; border:1px solid color-mix(in srgb,var(--door-mid),transparent 45%); border-radius:inherit;
+  background:repeating-linear-gradient(45deg,color-mix(in srgb,var(--door-mid),transparent 82%) 0 1px,transparent 1px 16px),repeating-linear-gradient(-45deg,color-mix(in srgb,var(--door-mid),transparent 82%) 0 1px,transparent 1px 16px);
+}
+.door-opening-panel b {
+  position:relative; width:20px; height:20px; transform:rotate(45deg); border:2px solid var(--door-deep);
+  background:radial-gradient(circle at 35% 30%,var(--door-gold-light),var(--door-mid) 60%,var(--door-deep)); box-shadow:0 2px 3px rgba(0,0,0,.45);
+}
+.door-opening-panel-three b { width:14px; height:14px; }
+.door-opening-panel-one { top:13%; height:14%; border-radius:80px 80px 6px 6px; }
+.door-opening-panel-one::before { background:repeating-conic-gradient(from -90deg at 50% 100%,color-mix(in srgb,var(--door-mid),transparent 50%) 0 7deg,color-mix(in srgb,var(--door-hall),white 45%) 7deg 14deg); }
+.door-opening-panel-two { top:30%; height:33%; }
+.door-opening-panel-two::after { content:""; position:absolute; width:64px; height:64px; border:2px solid color-mix(in srgb,var(--door-deep),transparent 20%); transform:rotate(45deg); box-shadow:inset 0 0 0 4px color-mix(in srgb,var(--door-gold-light),transparent 40%); }
+.door-opening-panel-three { top:66%; height:27%; }
+.door-opening-handle {
+  position:absolute; left:8px; width:16px; height:42px; border-radius:2px;
+  background:radial-gradient(circle at 50% 22%,var(--door-deep) 0 1.8px,transparent 2.4px),radial-gradient(circle at 50% 78%,var(--door-deep) 0 1.8px,transparent 2.4px),linear-gradient(90deg,var(--door-deep),var(--door-gold-light) 35%,var(--door-mid) 60%,var(--door-deep));
+  box-shadow:0 2px 4px rgba(0,0,0,.5);
+}
+.door-opening-right .door-opening-handle { left:auto; right:8px; }
+.door-opening-handle-one { top:22%; }.door-opening-handle-two { top:50%; }.door-opening-handle-three { top:80%; }
+.door-opening-plate {
+  position:absolute; top:calc(74% - 14px); right:4px; width:66px; height:66px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,var(--door-gold-light),var(--door-mid) 52%,var(--door-deep));
+  box-shadow:0 4px 7px rgba(0,0,0,.5),inset 0 0 0 3px color-mix(in srgb,var(--door-gold-light),transparent 50%),inset 0 0 0 5px color-mix(in srgb,var(--door-deep),transparent 45%);
+}
+.door-opening-ring {
+  position:absolute; top:74%; right:18px; width:38px; height:38px; border-radius:50%;
+  background:conic-gradient(from 20deg,var(--door-gold-light),var(--door-mid),var(--door-gold-light),var(--door-deep),var(--door-gold-light),var(--door-mid),var(--door-gold-light));
+  -webkit-mask:radial-gradient(circle,transparent 54%,#000 57%); mask:radial-gradient(circle,transparent 54%,#000 57%);
+}
+.door-opening-right .door-opening-plate { right:auto; left:4px; }
+.door-opening-right .door-opening-ring { right:auto; left:18px; }
+.door-opening-glow {
+  position:absolute; inset:0; background:radial-gradient(ellipse at 50% 55%,color-mix(in srgb,var(--door-gold-light),white 40%),color-mix(in srgb,var(--door-gold),transparent 62%) 40%,transparent 70%);
+  opacity:0; transform:scaleX(.12);
+}
+.door-opening-is-open .door-opening-glow { animation:door-opening-glow 3.6s ease-out .4s forwards; }
+@keyframes door-opening-glow { 30%{opacity:1;transform:scaleX(.5)} 100%{opacity:.16;transform:scaleX(1)} }
+.door-opening-hang {
+  position:absolute; left:50%; top:calc(9% - 6px); z-index:3; --door-chain-length:118px; width:0; height:0; transform-origin:0 0;
+  animation:door-opening-swing-in 3.4s ease-out,door-opening-sway 4.4s ease-in-out 3.4s infinite;
+}
+@keyframes door-opening-swing-in { 0%{transform:rotate(10deg)}18%{transform:rotate(-7.5deg)}36%{transform:rotate(5deg)}54%{transform:rotate(-3deg)}72%{transform:rotate(1.8deg)}100%{transform:rotate(-1.4deg)} }
+@keyframes door-opening-sway { 0%,100%{transform:rotate(-1.4deg)}50%{transform:rotate(1.4deg)} }
+.door-opening-is-open .door-opening-hang { animation:door-opening-kick 2.4s ease-out forwards; }
+@keyframes door-opening-kick { 0%{transform:rotate(-1deg)}15%{transform:rotate(6deg)}35%{transform:rotate(-5deg)}55%{transform:rotate(3.5deg)}75%{transform:rotate(-2deg)}100%{transform:rotate(0)} }
+.door-opening-hook { position:absolute; left:-8px; top:-8px; width:16px; height:16px; border-radius:50%; border:3px solid var(--door-mid); background:var(--door-deep); box-shadow:0 1px 3px rgba(0,0,0,.6); }
+.door-opening-chain {
+  position:absolute; left:-4px; top:0; width:8px; height:140px; transform-origin:50% 0;
+  background:radial-gradient(ellipse 3.2px 5.5px at 50% 50%,transparent 55%,var(--door-gold-light) 60%,var(--door-deep) 90%,transparent 100%) 0 0/8px 12px repeat-y,radial-gradient(ellipse 1.6px 5.5px at 50% 50%,var(--door-gold-light) 0,var(--door-deep) 90%,transparent 100%) 0 6px/8px 12px repeat-y;
+  filter:drop-shadow(1px 2px 1px rgba(0,0,0,.35));
+}
+.door-opening-nameplate {
+  position:absolute; left:0; top:var(--door-chain-length); transform:translateX(-50%); white-space:nowrap; text-align:center;
+  padding:9px 26px 11px; border:6px solid; border-color:var(--door-gold-light) var(--door-mid) var(--door-deep) var(--door-gold); border-radius:10px;
+  background:radial-gradient(circle at 10px 10px,var(--door-gold-light) 0 1.4px,var(--door-deep) 2.8px,transparent 3.6px),radial-gradient(circle at calc(100% - 10px) 10px,var(--door-gold-light) 0 1.4px,var(--door-deep) 2.8px,transparent 3.6px),radial-gradient(circle at 10px calc(100% - 10px),var(--door-gold-light) 0 1.4px,var(--door-deep) 2.8px,transparent 3.6px),radial-gradient(circle at calc(100% - 10px) calc(100% - 10px),var(--door-gold-light) 0 1.4px,var(--door-deep) 2.8px,transparent 3.6px),linear-gradient(color-mix(in srgb,var(--door-hall),white 70%),color-mix(in srgb,var(--door-gold-light),var(--door-hall) 45%));
+  box-shadow:inset 3px 3px 8px rgba(80,50,10,.35),0 14px 16px rgba(0,0,0,.45),0 3px 4px rgba(0,0,0,.35);
+}
+.door-opening-nameplate b {
+  display:block; font:400 clamp(34px,10vw,46px)/1.1 "Great Vibes",cursive; color:var(--door-brown);
+  text-shadow:0 1px 0 #fff,0 -1px 0 rgba(0,0,0,.12);
+}
+.door-opening-nameplate span { font:600 clamp(11px,3.1vw,13px) "Cinzel",serif; letter-spacing:.22em; color:var(--door-ink); }
+.door-opening-eye { position:absolute; top:-10px; width:14px; height:14px; border-radius:50%; border:3px solid var(--door-mid); background:var(--door-deep); box-shadow:0 1px 2px rgba(0,0,0,.5); }
+.door-opening-eye-left { left:12px; }.door-opening-eye-right { right:12px; }
+.door-opening-crest {
+  position:fixed; left:50%; top:50%; width:96px; height:96px; margin:-48px 0 0 -48px; z-index:7; border:0; border-radius:50%; cursor:pointer; padding:9px;
+  background:radial-gradient(circle at 34% 28%,var(--door-gold-light),var(--door-mid) 45%,var(--door-deep)) content-box,conic-gradient(from 0deg,var(--door-gold-light),var(--door-mid),var(--door-gold-light),var(--door-deep),var(--door-gold-light),var(--door-mid),var(--door-gold-light)) border-box;
+  box-shadow:0 6px 14px rgba(0,0,0,.4),inset 0 0 0 5px color-mix(in srgb,var(--door-deep),transparent 50%),inset 0 0 0 7px color-mix(in srgb,var(--door-gold-light),transparent 40%);
+  font:600 20px "Cinzel",serif; color:var(--door-brown); text-shadow:0 1px 0 rgba(255,236,180,.7);
+  transition:transform .8s cubic-bezier(.5,0,.8,.6),opacity .6s;
+}
+.door-opening-crest::after { content:""; position:absolute; inset:-6px; border-radius:50%; border:2px solid color-mix(in srgb,var(--door-gold),transparent 20%); animation:door-opening-halo 2s ease-out infinite; }
+@keyframes door-opening-halo { 0%{transform:scale(.9);opacity:.9}100%{transform:scale(1.55);opacity:0} }
+.door-opening-crest:focus-visible { outline:2px solid var(--door-brown); outline-offset:6px; }
+.door-opening-is-open .door-opening-crest { transform:scale(1.3) rotate(120deg); opacity:0; pointer-events:none; }
+.door-opening-is-open .door-opening-crest::after,.door-opening-is-open .door-opening-hint { animation:none; }
+.door-opening-hint {
+  position:fixed; left:0; right:0; top:calc(50% + 76px); z-index:7; text-align:center;
+  font:600 13px "Cinzel",serif; letter-spacing:.14em; color:var(--door-brown); text-shadow:0 1px 0 rgba(255,255,255,.7);
+  animation:door-opening-blink 2s ease-in-out infinite; transition:opacity .3s;
+}
+@keyframes door-opening-blink { 50%{opacity:.45} }
+.door-opening-is-open .door-opening-hint { opacity:0; }
+.door-opening-dust { position:fixed; z-index:8; border-radius:50%; background:var(--door-gold); pointer-events:none; }
+.door-opening-skip {
+  position:fixed; right:18px; bottom:calc(18px + env(safe-area-inset-bottom,0px)); z-index:9; padding:7px 16px;
+  border:1px solid var(--door-gold); border-radius:20px; background:rgba(255,250,245,.85); color:var(--door-brown);
+  font-size:14px; cursor:pointer; opacity:0; pointer-events:none; transition:opacity .4s;
+}
+.door-opening-skip-visible { opacity:1; pointer-events:auto; }
+.door-opening-fast .door-opening-gates,.door-opening-fast .door-opening-door,.door-opening-fast .door-opening-door::after,.door-opening-fast .door-opening-hall,.door-opening-fast .door-opening-rays,.door-opening-fast .door-opening-crest {
+  transition-duration:.01s!important; transition-delay:0s!important;
+}
+@media (max-width:480px) {
+  .door-opening-nameplate { max-width:84vw; white-space:normal; padding:8px 18px 10px; }
+  .door-opening-nameplate b { font-size:clamp(30px,9vw,42px); }
+}
+@media (prefers-reduced-motion:reduce) {
+  .door-opening-crest::after,.door-opening-hint,.door-opening-hang { animation:none!important; }
+}
