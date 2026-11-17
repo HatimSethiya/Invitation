@@ -68,7 +68,7 @@ function DoorOpening({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
       const particle = document.createElement("i");
       particle.className = "door-opening-dust";
       const size = 2 + Math.random() * 4;
-      particle.style.cssText = `left:${x}px;top:${y}px;width:${size}px;height:${size}px`;
+      particle.style.cssText = `left:${x}px;top:${y}px;width:${size}px;height:${size}px;background:${palette[0]}`;
       document.body.appendChild(particle);
       const angle = Math.random() * 6.283;
       const distance = 50 + Math.random() * 150;
@@ -80,7 +80,7 @@ function DoorOpening({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
         { duration: 900 + Math.random() * 900, easing: "cubic-bezier(.1,.7,.3,1)" }
       ).onfinish = () => particle.remove();
     }
-  }, []);
+  }, [palette]);
 
   const finish = useCallback(() => {
     onOpened?.();
