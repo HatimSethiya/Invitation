@@ -8,19 +8,20 @@
   overflow: hidden;
   color: var(--door-ink);
   font-family: "Cormorant Garamond", Georgia, serif;
-  background: var(--door-hall);
+  background: transparent;
   isolation: isolate;
 }
 .door-opening-stage *, .door-opening-stage *::before, .door-opening-stage *::after { box-sizing: border-box; }
-.door-opening-stage { opacity: 1; transition: opacity .9s cubic-bezier(.22,1,.36,1); }
-.door-opening-stage.door-opening-handoff { opacity: 0; pointer-events: none; }
+.door-opening-stage.door-opening-handoff { pointer-events: none; }
 .door-opening-stage button { font: inherit; }
 .door-opening-hall {
   position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
   background: radial-gradient(circle at 50% 22%, color-mix(in srgb, var(--door-hall), white 75%), var(--door-hall) 75%);
-  transform: scale(1.06); transition: transform 3.2s cubic-bezier(.2,.7,.2,1);
+  opacity: 1;
+  transform: scale(1.06);
+  transition: opacity 3.4s cubic-bezier(.5,0,.3,1) .4s, transform 3.2s cubic-bezier(.2,.7,.2,1);
 }
-.door-opening-is-open .door-opening-hall { transform: none; }
+.door-opening-is-open .door-opening-hall { opacity: 0; transform: none; }
 .door-opening-rays {
   position: absolute; inset: 0;
   background: repeating-conic-gradient(from -50deg at 50% -6%, color-mix(in srgb, var(--door-gold-light), transparent 40%) 0 5deg, transparent 5deg 14deg);

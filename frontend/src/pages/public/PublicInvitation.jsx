@@ -635,12 +635,16 @@ function PublicInvitation() {
 
         <motion.div
           className="invitation-body bohra-invitation-body"
-          initial={{ opacity: 0.001, y: 28, scale: 0.975 }}
-          animate={{
-            opacity: isHandoffStarted || isUnboxed ? 1 : 0.001,
-            y: isHandoffStarted || isUnboxed ? 0 : 28,
-            scale: isHandoffStarted || isUnboxed ? 1 : 0.975,
-          }}
+          initial={invitation.openingAnimation === "door"
+            ? { opacity: 1, y: 0, scale: 1 }
+            : { opacity: 0.001, y: 28, scale: 0.975 }}
+          animate={invitation.openingAnimation === "door"
+            ? { opacity: 1, y: 0, scale: 1 }
+            : {
+                opacity: isHandoffStarted || isUnboxed ? 1 : 0.001,
+                y: isHandoffStarted || isUnboxed ? 0 : 28,
+                scale: isHandoffStarted || isUnboxed ? 1 : 0.975,
+              }}
           transition={{
             opacity: { duration: invitation.openingAnimation === "door" ? 0.9 : 1.6, ease: [0.22, 1, 0.36, 1] },
             y: { duration: 1.75, ease: [0.22, 1, 0.36, 1] },
