@@ -23,7 +23,6 @@ function DoorOpening({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isHandoff, setIsHandoff] = useState(false);
   const [isFast, setIsFast] = useState(false);
-  const [showSkip, setShowSkip] = useState(false);
   const startedRef = useRef(false);
   const timersRef = useRef([]);
   const palette = THEME_PALETTES[invitation?.theme] || THEME_PALETTES.bohraNikah;
@@ -92,7 +91,6 @@ function DoorOpening({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
     startedRef.current = true;
     onOpenMusic?.();
     setIsOpen(true);
-    setShowSkip(true);
     burstDust();
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -109,16 +107,6 @@ function DoorOpening({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
     }, 2700);
     schedule(finish, 3900);
   }, [burstDust, finish, onHandoffStart, onOpenMusic, schedule]);
-
-  const skip = useCallback(() => {
-    if (!startedRef.current) return;
-    clearTimers();
-    setIsFast(true);
-    setIsOpen(true);
-    setIsHandoff(true);
-    onHandoffStart?.();
-    schedule(finish, 250);
-  }, [clearTimers, finish, onHandoffStart, schedule]);
 
   return (
     <div
@@ -174,7 +162,6 @@ function DoorOpening({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
         {monogram}
       </button>
       <p className="door-opening-hint">{isOpen ? "" : "Tap the crest to enter"}</p>
-      <button className={`door-opening-skip${showSkip ? " door-opening-skip-visible" : ""}`} type="button" onClick={skip}>Skip</button>
     </div>
   );
 }
