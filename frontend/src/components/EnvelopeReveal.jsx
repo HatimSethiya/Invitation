@@ -113,6 +113,10 @@ function LegacyEnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpene
     addTimer(() => { if (onOpened) onOpened(); }, 5500);
   }, [addTimer, isEnvelopeOpening, invitation?.coverImageUrl, isCoverReady, onHandoffStart, onOpenMusic, onOpened]);
 
+  useEffect(() => {
+    if (invitation?.openingMode === "automatic" && isCoverReady) triggerSequence();
+  }, [invitation?.openingMode, isCoverReady, triggerSequence]);
+
   const beginEnvelopeFade = useCallback(() => {
     if (hasCardFadeStartedRef.current) return;
     hasCardFadeStartedRef.current = true;
@@ -324,6 +328,10 @@ function PremiumReferenceReveal({ invitation, onOpenMusic, onHandoffStart, onOpe
     schedule(() => setIsIntroHidden(true), 3400);
     schedule(beginCurtainReveal, 3700);
   }, [beginCurtainReveal, burstSeal, finish, handoff, onOpenMusic, schedule]);
+
+  useEffect(() => {
+    if (invitation?.openingMode === "automatic") start();
+  }, [invitation?.openingMode, start]);
 
   const skip = useCallback(() => {
     if (!startedRef.current || openedRef.current) return;
