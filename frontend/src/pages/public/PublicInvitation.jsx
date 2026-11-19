@@ -223,7 +223,8 @@ function PublicInvitation() {
   const isInvitationInteractive = isHandoffStarted || isUnboxed;
 
   const startMusicFromOpenTap = useCallback(() => {
-    setIsMusicStartRequested(true);
+    // Avoid re-rendering the entire invitation while automatic opening animates.
+    if (invitation?.openingMode !== "automatic") setIsMusicStartRequested(true);
     const audio = musicAudioRef.current;
     if (!audio || !invitation?.music?.audioUrl) return;
 
@@ -235,11 +236,15 @@ function PublicInvitation() {
 
     // The audio element will retry on canplay if the source needed time to buffer.
     if (playback && typeof playback.catch === "function") {
-      playback.catch(() => {
-        // Keep the request pending so InvitationMusicPlayer can retry once ready.
+      playback.catch((playbackError) => {
+        // Mobile browsers may reject audible autoplay without a tap.
+        // The automatic-mode music control remains available for a direct tap.
+        if (playbackError?.name === "NotAllowedError") {
+          musicStartRequestedRef.current = false;
+        }
       });
     }
-  }, [invitation?.music?.audioUrl]);
+  }, [invitation?.music?.audioUrl, invitation?.openingMode]);
 
   useEffect(() => {
     let active = true;
@@ -336,7 +341,8 @@ function PublicInvitation() {
       !canvas ||
       !card ||
       invitation?.theme !== "whiteRoseGold" ||
-      !isInvitationInteractive
+      !isInvitationInteractive ||
+      (invitation?.openingMode === "automatic" && !isUnboxed)
     ) {
       return undefined;
     }
@@ -561,7 +567,7 @@ function PublicInvitation() {
       window.removeEventListener("resize", resizeCanvas);
       window.removeEventListener("scroll", onScroll);
     };
-  }, [invitation?.theme, isInvitationInteractive]);
+  }, [invitation?.theme, invitation?.openingMode, isInvitationInteractive, isUnboxed]);
 
   const themeClass = useMemo(
     () => `theme-${invitation?.theme || "purpleWhite"}`,
@@ -618,7 +624,7 @@ function PublicInvitation() {
 
     return (
       <main
-        className={`public-page bohra-public-page ${themeClass} ${useEnhancedNewDesign ? "new-design-enhanced" : ""} ${isInvitationInteractive ? "invitation-revealed" : "invitation-locked"} ${!isUnboxed ? "invitation-opening-active" : ""}`}
+        className={`public-page bohra-public-page ${themeClass} ${useEnhancedNewDesign ? "new-design-enhanced" : ""} ${invitation.openingMode === "automatic" ? "opening-mode-automatic" : ""} ${isInvitationInteractive ? "invitation-revealed" : "invitation-locked"} ${!isUnboxed ? "invitation-opening-active" : ""}`}
       >
         <AnimatePresence>
           {!isUnboxed && (
@@ -630,8 +636,8 @@ function PublicInvitation() {
             />
           )}
         </AnimatePresence>
-        <InvitationMusicPlayer music={invitation.music} visible={isInvitationInteractive || isMusicStartRequested} audioRef={musicAudioRef} startRequestedRef={musicStartRequestedRef} showControls={false} />
-        {isHandoffStarted && invitation.theme === "whiteRoseGold" && <PremiumFallingPetals />}
+        <InvitationMusicPlayer music={invitation.music} visible={isInvitationInteractive || isMusicStartRequested} audioRef={musicAudioRef} startRequestedRef={musicStartRequestedRef} showControls={false} automaticOpening={invitation.openingMode === "automatic"} />
+        {(invitation.openingMode === "automatic" ? isUnboxed : isHandoffStarted) && invitation.theme === "whiteRoseGold" && <PremiumFallingPetals />}
 
         <motion.div
           className="invitation-body bohra-invitation-body"
@@ -995,7 +1001,7 @@ function PublicInvitation() {
           />
         )}
       </AnimatePresence>
-      <InvitationMusicPlayer music={invitation.music} visible={isInvitationInteractive} audioRef={musicAudioRef} startRequestedRef={musicStartRequestedRef} />
+      <InvitationMusicPlayer music={invitation.music} visible={isInvitationInteractive} audioRef={musicAudioRef} startRequestedRef={musicStartRequestedRef} automaticOpening={invitation.openingMode === "automatic"} />
 
       {/* Main Guest-Facing Invitation Body Animated via Motion */}
       <motion.div
