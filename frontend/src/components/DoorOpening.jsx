@@ -108,6 +108,10 @@ function DoorOpening({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
     schedule(finish, 3900);
   }, [burstDust, finish, onHandoffStart, onOpenMusic, schedule]);
 
+  useEffect(() => {
+    if (invitation?.openingMode === "automatic") start();
+  }, [invitation?.openingMode, start]);
+
   return (
     <div
       className={`door-opening-stage${isOpen ? " door-opening-is-open" : ""}${isFast ? " door-opening-fast" : ""}${isHandoff ? " door-opening-handoff" : ""}`}
