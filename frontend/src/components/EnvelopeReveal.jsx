@@ -114,7 +114,17 @@ function LegacyEnvelopeReveal({ invitation, onOpenMusic, onHandoffStart, onOpene
   }, [addTimer, isEnvelopeOpening, invitation?.coverImageUrl, isCoverReady, onHandoffStart, onOpenMusic, onOpened]);
 
   useEffect(() => {
-    if (invitation?.openingMode === "automatic" && isCoverReady) triggerSequence();
+    if (invitation?.openingMode !== "automatic" || !isCoverReady) return undefined;
+
+    // Let the invitation and its cover paint before starting the cinematic sequence.
+    let nextFrame = 0;
+    const firstFrame = window.requestAnimationFrame(() => {
+      nextFrame = window.requestAnimationFrame(triggerSequence);
+    });
+    return () => {
+      window.cancelAnimationFrame(firstFrame);
+      window.cancelAnimationFrame(nextFrame);
+    };
   }, [invitation?.openingMode, isCoverReady, triggerSequence]);
 
   const beginEnvelopeFade = useCallback(() => {
@@ -271,7 +281,8 @@ function PremiumReferenceReveal({ invitation, onOpenMusic, onHandoffStart, onOpe
       { duration: 800, easing: "ease-out" }
     ).onfinish = () => flash.remove();
 
-    for (let index = 0; index < 90; index += 1) {
+    const particleCount = invitation?.openingMode === "automatic" ? 18 : 90;
+    for (let index = 0; index < particleCount; index += 1) {
       const dust = document.createElement("i");
       dust.className = "premium-opening-dust";
       const size = 2 + Math.random() * 4;
@@ -294,7 +305,7 @@ function PremiumReferenceReveal({ invitation, onOpenMusic, onHandoffStart, onOpe
         { duration: 900 + Math.random() * 900, easing: "cubic-bezier(.1,.7,.3,1)" }
       ).onfinish = () => dust.remove();
     }
-  }, []);
+  }, [invitation?.openingMode]);
 
   const beginCurtainReveal = useCallback(() => {
     setIsIntroHidden(true);
@@ -330,7 +341,16 @@ function PremiumReferenceReveal({ invitation, onOpenMusic, onHandoffStart, onOpe
   }, [beginCurtainReveal, burstSeal, finish, handoff, onOpenMusic, schedule]);
 
   useEffect(() => {
-    if (invitation?.openingMode === "automatic") start();
+    if (invitation?.openingMode !== "automatic") return undefined;
+
+    let nextFrame = 0;
+    const firstFrame = window.requestAnimationFrame(() => {
+      nextFrame = window.requestAnimationFrame(start);
+    });
+    return () => {
+      window.cancelAnimationFrame(firstFrame);
+      window.cancelAnimationFrame(nextFrame);
+    };
   }, [invitation?.openingMode, start]);
 
   const skip = useCallback(() => {
