@@ -7,6 +7,7 @@ function InvitationMusicPlayer({
   audioRef: sharedAudioRef,
   startRequestedRef: sharedStartRequestedRef,
   showControls = true,
+  automaticOpening = false,
 }) {
   const localAudioRef = useRef(null);
   const audioRef = sharedAudioRef || localAudioRef;
@@ -36,7 +37,10 @@ function InvitationMusicPlayer({
         startRequestedRef.current = false;
         setIsPlaying(true);
       })
-      .catch(() => setIsPlaying(false));
+      .catch((error) => {
+        if (error?.name === "NotAllowedError") startRequestedRef.current = false;
+        setIsPlaying(false);
+      });
   }, [visible, music?.autoplay, music?.audioUrl]);
 
   const togglePlayback = async () => {
@@ -72,7 +76,10 @@ function InvitationMusicPlayer({
         startRequestedRef.current = false;
         setIsPlaying(true);
       })
-      .catch(() => setIsPlaying(false));
+      .catch((error) => {
+        if (error?.name === "NotAllowedError") startRequestedRef.current = false;
+        setIsPlaying(false);
+      });
   };
 
   return (
@@ -94,22 +101,25 @@ function InvitationMusicPlayer({
           setPlayError("This audio source is unavailable or unsupported.");
         }}
       />
-      {showControls && (
+      {(showControls || automaticOpening) && (
         <aside
-          className={`invitation-music-player ${visible ? "music-player-visible" : "music-player-hidden"}`}
+          className={`invitation-music-player ${visible || automaticOpening ? "music-player-visible" : "music-player-hidden"}${automaticOpening && !isPlaying ? " music-player-prompt-visible" : ""}`}
           aria-label="Wedding invitation music"
-          aria-hidden={!visible}
-          inert={!visible}
+          aria-hidden={!visible && !automaticOpening}
+          inert={!visible && !automaticOpening}
         >
           <button
-            className="music-player-toggle music-player-icon-toggle"
+            className={`music-player-toggle music-player-icon-toggle${automaticOpening && !isPlaying ? " music-player-needs-tap" : ""}`}
             type="button"
             onClick={togglePlayback}
-            aria-label={isPlaying ? "Pause wedding music" : "Resume wedding music"}
+            aria-label={isPlaying ? "Pause wedding music" : automaticOpening ? "Tap to enable wedding music" : "Resume wedding music"}
             title={playError || (isPlaying ? "Pause music" : "Resume music")}
             aria-pressed={isPlaying}
           >
             <span className="music-player-glyph" aria-hidden="true">{isPlaying ? "Ⅱ" : "♫"}</span>
+            {automaticOpening && !isPlaying && (
+              <span className="music-player-tap-label">Tap for sound</span>
+            )}
           </button>
         </aside>
       )}
