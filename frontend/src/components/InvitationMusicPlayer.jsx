@@ -29,7 +29,8 @@ function InvitationMusicPlayer({
 
   useEffect(() => {
     const audio = audioRef.current;
-    if (!audio || !visible || !music?.autoplay || !music?.audioUrl) return;
+    // Automatic mode starts music with its opening, not again during handoff.
+    if (automaticOpening || !audio || !visible || !music?.autoplay || !music?.audioUrl) return;
 
     startRequestedRef.current = true;
     audio.play()
@@ -41,7 +42,7 @@ function InvitationMusicPlayer({
         if (error?.name === "NotAllowedError") startRequestedRef.current = false;
         setIsPlaying(false);
       });
-  }, [visible, music?.autoplay, music?.audioUrl]);
+  }, [visible, automaticOpening, music?.autoplay, music?.audioUrl]);
 
   const togglePlayback = async () => {
     const audio = audioRef.current;
