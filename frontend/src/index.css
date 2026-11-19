@@ -891,6 +891,16 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
 }
 .music-player-visible { opacity: 1; visibility: visible; transform: translateY(0); }
 .music-player-hidden { opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-5px); }
+.invitation-music-player.music-player-prompt-visible { width: auto; }
+.music-player-toggle.music-player-icon-toggle.music-player-needs-tap {
+  width: auto;
+  gap: 7px;
+  padding: 0 12px;
+}
+.music-player-tap-label {
+  font-size: .72rem;
+  line-height: 1;
+}
 .music-player-toggle {
   display: inline-flex;
   align-items: center;
@@ -5389,6 +5399,17 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
 .public-page.invitation-opening-active .bohra-couple-names > *,
 .public-page.invitation-opening-active .bohra-royal-countdown-panel > * {
   will-change: opacity, transform;
+}
+
+/* Automatic openings run while the initial page settles. Avoid promoting
+   every text block into its own GPU layer on memory-limited phones. */
+.public-page.opening-mode-automatic.invitation-opening-active .bohra-card-inner-frame > *,
+.public-page.opening-mode-automatic.invitation-opening-active .bohra-card-header > *,
+.public-page.opening-mode-automatic.invitation-opening-active .bohra-host-families > *,
+.public-page.opening-mode-automatic.invitation-opening-active .bohra-invitation-wording,
+.public-page.opening-mode-automatic.invitation-opening-active .bohra-couple-names > *,
+.public-page.opening-mode-automatic.invitation-opening-active .bohra-royal-countdown-panel > * {
+  will-change: auto;
 }
 
 
