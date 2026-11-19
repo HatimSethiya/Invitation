@@ -64,7 +64,8 @@ function DoorOpening({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
     const x = rect.left + rect.width / 2;
     const y = rect.top + rect.height / 2;
 
-    for (let index = 0; index < 50; index += 1) {
+    const particleCount = invitation?.openingMode === "automatic" ? 12 : 50;
+    for (let index = 0; index < particleCount; index += 1) {
       const particle = document.createElement("i");
       particle.className = "door-opening-dust";
       const size = 2 + Math.random() * 4;
@@ -80,7 +81,7 @@ function DoorOpening({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
         { duration: 900 + Math.random() * 900, easing: "cubic-bezier(.1,.7,.3,1)" }
       ).onfinish = () => particle.remove();
     }
-  }, [palette]);
+  }, [invitation?.openingMode, palette]);
 
   const finish = useCallback(() => {
     onOpened?.();
@@ -109,7 +110,16 @@ function DoorOpening({ invitation, onOpenMusic, onHandoffStart, onOpened }) {
   }, [burstDust, finish, onHandoffStart, onOpenMusic, schedule]);
 
   useEffect(() => {
-    if (invitation?.openingMode === "automatic") start();
+    if (invitation?.openingMode !== "automatic") return undefined;
+
+    let nextFrame = 0;
+    const firstFrame = window.requestAnimationFrame(() => {
+      nextFrame = window.requestAnimationFrame(start);
+    });
+    return () => {
+      window.cancelAnimationFrame(firstFrame);
+      window.cancelAnimationFrame(nextFrame);
+    };
   }, [invitation?.openingMode, start]);
 
   return (
