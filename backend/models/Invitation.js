@@ -170,6 +170,11 @@ const invitationSchema = new mongoose.Schema(
       enum: ["single", "double"],
       default: "single",
     },
+    openingMode: {
+      type: String,
+      enum: ["manual", "automatic"],
+      default: "manual",
+    },
     openingAnimation: {
       type: String,
       enum: ["curtains", "envelope", "door"],
