@@ -271,11 +271,15 @@ function PublicInvitation() {
         // image assets have finished loading (failed assets resolve gracefully).
         const imageSources = [
           loadedInvitation?.coverImageUrl && resolveMediaUrl(loadedInvitation.coverImageUrl),
-          loadedInvitation?.couple?.couplePhoto,
-          ...(loadedInvitation?.story || []).map((item) => item?.image),
-          ...(loadedInvitation?.gallery || []).map((item) =>
-            item?.imageUrl && resolveMediaUrl(item.imageUrl)
-          ),
+          // Automatic opening only waits for its cover, not every off-screen gallery
+          // image. Manual invitations retain their existing full-media preload.
+          ...(loadedInvitation?.openingMode === "automatic" ? [] : [
+            loadedInvitation?.couple?.couplePhoto,
+            ...(loadedInvitation?.story || []).map((item) => item?.image),
+            ...(loadedInvitation?.gallery || []).map((item) =>
+              item?.imageUrl && resolveMediaUrl(item.imageUrl)
+            ),
+          ]),
         ];
 
         if (loadedInvitation?.theme === "whiteRoseGold") {
