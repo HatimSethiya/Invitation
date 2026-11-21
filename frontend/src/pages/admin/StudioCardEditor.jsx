@@ -14,6 +14,18 @@ import {
 import "./WeddingStudioHome.css";
 import "./StudioCardEditor.css";
 
+// Studio-only suggestions. All event names remain editable.
+const EVENT_SUGGESTIONS = Object.freeze({
+  bohra: ["Nikah", "Majlis", "Walima"],
+  muslim: ["Nikah", "Walima", "Reception"],
+  hindu: ["Mehendi", "Sangeet", "Wedding Ceremony", "Reception"],
+  jain: ["Mehendi", "Wedding Ceremony", "Reception"],
+  sikh: ["Anand Karaj", "Reception"],
+  christian: ["Wedding Ceremony", "Reception"],
+  regional: ["Mehendi", "Wedding Ceremony", "Reception"],
+  modern: ["Ceremony", "Dinner", "Reception"],
+});
+
 const emptyEvent = () => ({
   title: "",
   date: "",
@@ -69,6 +81,7 @@ function StudioCardEditor() {
     : initialTemplate;
 
   const [details, setDetails] = useState(() => initialDetails(initialTemplate));
+  const eventSuggestions = EVENT_SUGGESTIONS[template?.categoryId] || [];
   const [loading, setLoading] = useState(Boolean(draftId));
   const [locked, setLocked] = useState(Boolean(draftId));
   const [unlockPassword, setUnlockPassword] = useState("");
@@ -149,13 +162,14 @@ function StudioCardEditor() {
     setNotice("");
   };
 
-  const addEvent = () => {
-    setDetails((current) => ({
-      ...current,
-      events: current.events.length >= 8
-        ? current.events
-        : [...current.events, emptyEvent()],
-    }));
+  const addEvent = (title = "") => {
+    setDetails((current) => {
+      if (current.events.length >= 8) return current;
+      return {
+        ...current,
+        events: [...current.events, { ...emptyEvent(), title }],
+      };
+    });
     setNotice("");
   };
 
@@ -442,7 +456,7 @@ function StudioCardEditor() {
                   <span className="studio-editor-step">02</span>
                   <div>
                     <h2 id="studio-editor-venue-title">Events & Venue</h2>
-                    <p>Choose your venue and add up to eight celebrations.</p>
+                    <p>Choose your venue and add up to eight celebrations. Suggested events are optional and fully editable.</p>
                   </div>
                 </div>
                 <div className="studio-editor-fields">
@@ -470,10 +484,25 @@ function StudioCardEditor() {
 
                 <div className="studio-editor-event-header">
                   <h3>Wedding events</h3>
-                  <button type="button" onClick={addEvent} disabled={details.events.length >= 8}>
+                  <button type="button" onClick={() => addEvent()} disabled={details.events.length >= 8}>
                     + Add Event
                   </button>
                 </div>
+                {eventSuggestions.length > 0 && (
+                  <div className="studio-editor-event-suggestions" aria-label="Suggested events for this design">
+                    <span>Quick add:</span>
+                    {eventSuggestions.map((suggestion) => (
+                      <button
+                        key={suggestion}
+                        type="button"
+                        onClick={() => addEvent(suggestion)}
+                        disabled={details.events.length >= 8}
+                      >
+                        + {suggestion}
+                      </button>
+                    ))}
+                  </div>
+                )}
                 <div className="studio-editor-events">
                   {details.events.map((event, index) => (
                     <div className="studio-editor-event" key={index}>
