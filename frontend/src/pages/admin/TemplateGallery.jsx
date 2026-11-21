@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { STUDIO_CATEGORIES, STUDIO_TEMPLATES } from "../../studio/templateCatalog";
+import { STUDIO_CATEGORIES, STUDIO_TEMPLATES, filterStudioTemplates } from "../../studio/templateCatalog";
 import StudioInvitationPreview from "../../studio/StudioInvitationPreview";
 import {
   GALLERY_COLORS,
@@ -47,21 +47,8 @@ function TemplateGallery() {
   const hasFilters = category !== "all" || Boolean(search) || style !== "all" || color !== "all";
 
   const results = useMemo(() => {
-    const query = search.trim().toLocaleLowerCase();
-    const newLayouts = STUDIO_TEMPLATES.filter((template) => {
-      if (category !== "all" && template.categoryId !== category) return false;
-      if (style !== "all" && template.style !== style) return false;
-      if (color !== "all" && template.color !== color) return false;
-
-      return !query || [
-        template.name,
-        template.description,
-        template.categoryId,
-        template.style,
-        template.color,
-      ].some((value) => value.toLocaleLowerCase().includes(query));
-    }).map((template) => ({ ...template, kind: "studio" }));
-
+    const newLayouts = filterStudioTemplates({ category, search, style, color })
+      .map((template) => ({ ...template, kind: "studio" }));
     const existingThemes = filterGalleryDesigns({ category, search, style, color })
       .map((design) => ({ ...design, kind: "existing" }));
 
