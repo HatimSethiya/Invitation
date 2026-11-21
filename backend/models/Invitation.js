@@ -19,6 +19,7 @@ const eventSchema = new mongoose.Schema(
     type: { type: String, trim: true, default: "" },
     title: { type: String, trim: true, default: "" },
     date: { type: Date },
+    showFatemiDate: { type: Boolean, default: false },
     time: { type: String, trim: true, default: "" },
     venue: { type: String, trim: true, default: "" },
     address: { type: String, trim: true, default: "" },
