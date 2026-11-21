@@ -33,21 +33,21 @@ function validateStudioDesign(input) {
 
   const result = {};
   for (const [key, options] of Object.entries(DESIGN_OPTIONS)) {
-    const value = design[key] ?? "original";
+    const value = design[key] === undefined ? "original" : design[key];
     if (typeof value !== "string" || !options.includes(value)) {
       throw new DraftValidationError(`Invalid ${key} selection.`);
     }
     result[key] = value;
   }
 
-  const sections = design.sections ?? {};
+  const sections = design.sections === undefined ? {} : design.sections;
   if (!sections || typeof sections !== "object" || Array.isArray(sections)) {
     throw new DraftValidationError("Card section settings must be an object.");
   }
 
   result.sections = {};
   for (const key of DESIGN_SECTIONS) {
-    const visible = sections[key] ?? true;
+    const visible = sections[key] === undefined ? true : sections[key];
     if (typeof visible !== "boolean") {
       throw new DraftValidationError(`Invalid visibility setting for ${key}.`);
     }
