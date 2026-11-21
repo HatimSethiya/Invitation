@@ -1,0 +1,601 @@
+/* New Studio invitations only. No selectors target existing public cards. */
+.studio-invite-preview {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  width: 100%;
+  min-width: 0;
+  min-height: 328px;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 13px;
+  font-family: Georgia, "Times New Roman", serif;
+  text-align: center;
+  box-shadow: 0 17px 36px rgba(12, 8, 25, .2);
+}
+
+.studio-invite-preview *,
+.studio-invite-preview *::before,
+.studio-invite-preview *::after {
+  box-sizing: border-box;
+}
+
+.studio-invite-preview > div {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding: 20px 13px;
+}
+
+.studio-invite-preview .studio-invite-overline {
+  font-size: .61rem;
+  font-weight: 700;
+  letter-spacing: .17em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+.studio-invite-preview .studio-invite-names {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .24em;
+  max-width: 100%;
+  margin: 12px 0;
+  font-size: clamp(1.45rem, 2.3vw, 2.25rem);
+  font-weight: 500;
+  letter-spacing: -.035em;
+  line-height: 1.16;
+  overflow-wrap: anywhere;
+}
+
+.studio-invite-preview .studio-invite-names-stacked {
+  flex-direction: column;
+  gap: .04em;
+}
+
+.studio-invite-preview .studio-invite-ampersand {
+  font-size: .55em;
+  font-style: italic;
+  opacity: .72;
+}
+
+.studio-invite-preview p {
+  max-width: 95%;
+  margin: 9px auto;
+  font: 400 .73rem/1.55 ui-sans-serif, system-ui, sans-serif;
+}
+
+.studio-invite-preview .studio-invite-footline {
+  font-size: .7rem;
+  line-height: 1.5;
+  letter-spacing: .04em;
+}
+
+/* Bohra Fatemi: layered paper frame, Arabic and formal programme. */
+.studio-invite-fatemi {
+  color: #524432;
+  background:
+    radial-gradient(circle at 20% 2%, rgba(192, 148, 85, .17), transparent 33%),
+    linear-gradient(145deg, #fffbee, #eadbbc 78%, #fdf5df);
+}
+
+.studio-invite-fatemi .studio-invite-fatemi-frame {
+  margin: 12px;
+  padding: 25px 13px 18px;
+  border: 1px solid #b99c66;
+  outline: 1px solid rgba(164, 127, 69, .6);
+  outline-offset: 5px;
+  background: rgba(255, 254, 247, .37);
+}
+
+.studio-invite-fatemi .studio-invite-fatemi-frame::before,
+.studio-invite-fatemi .studio-invite-fatemi-frame::after {
+  content: "✦";
+  position: absolute;
+  color: #ab8751;
+  font-size: 1.1rem;
+}
+
+.studio-invite-fatemi .studio-invite-fatemi-frame::before { top: 7px; left: 9px; }
+.studio-invite-fatemi .studio-invite-fatemi-frame::after { bottom: 7px; right: 9px; }
+
+.studio-invite-fatemi-calligraphy {
+  margin-bottom: 15px;
+  color: #6b5a36;
+  font-family: "Noto Naskh Arabic", Amiri, "Traditional Arabic", serif;
+  font-size: clamp(.95rem, 1.6vw, 1.2rem);
+  line-height: 1.8;
+}
+
+.studio-invite-filigree { margin-bottom: 10px; color: #a9874f; letter-spacing: .3em; }
+.studio-invite-fatemi .studio-invite-names { color: #7a5e39; font-style: italic; }
+.studio-invite-fatemi .studio-invite-fatemi-programme {
+  display: flex;
+  gap: 11px;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  margin: 14px 0;
+  padding: 11px 6px;
+  border-top: 1px solid rgba(148, 115, 65, .44);
+  border-bottom: 1px solid rgba(148, 115, 65, .44);
+  color: #6d5739;
+  font-size: .73rem;
+}
+.studio-invite-fatemi .studio-invite-fatemi-programme span { color: #b6945f; }
+.studio-invite-fatemi .studio-invite-footline { color: #816e4a; font-style: italic; }
+
+/* Muslim: emerald arch, gold crescent and layered green depth. */
+.studio-invite-emerald {
+  color: #fff3d9;
+  background:
+    radial-gradient(circle at 50% 3%, rgba(235, 196, 108, .19), transparent 30%),
+    linear-gradient(140deg, #163b35, #0b2627 75%, #173b34);
+}
+.studio-invite-emerald .studio-invite-emerald-arch {
+  justify-content: space-evenly;
+  margin: 12px;
+  border: 1px solid rgba(244, 204, 123, .75);
+  border-radius: 140px 140px 10px 10px;
+  outline: 1px solid rgba(241, 206, 132, .23);
+  outline-offset: 5px;
+  padding: 24px 15px 18px;
+}
+.studio-invite-emerald .studio-invite-emerald-orbit {
+  color: #f4d49a;
+  font: 400 4.2rem/1 Georgia, serif;
+  text-shadow: 0 0 26px rgba(255, 220, 137, .23);
+}
+.studio-invite-emerald .studio-invite-emerald-blessing {
+  color: #e6ca8f;
+  font: 400 1rem "Traditional Arabic", serif;
+}
+.studio-invite-emerald .studio-invite-overline { color: #e8d5a2; }
+.studio-invite-emerald .studio-invite-names { color: #fff4d3; }
+.studio-invite-emerald .studio-invite-star-rule { color: #d7b771; font-size: .95rem; letter-spacing: .2em; }
+.studio-invite-emerald p { color: #f1e4ca; }
+
+/* Hindu Mandap: festive vermilion, marigold canopy and pillars. */
+.studio-invite-mandap {
+  color: #7b3228;
+  background:
+    repeating-linear-gradient(45deg, rgba(183, 78, 43, .04) 0 2px, transparent 2px 11px),
+    linear-gradient(140deg, #fff0d6, #f3c48d 75%, #fff0dc);
+}
+.studio-invite-mandap .studio-invite-mandap-sheet {
+  justify-content: space-between;
+  margin: 10px;
+  border: 3px double #a85636;
+  padding: 14px 10px;
+}
+.studio-invite-mandap .studio-invite-mandap-welcome {
+  color: #a33d2b;
+  font: 700 1.15rem/1.4 Georgia, serif;
+}
+.studio-invite-mandap .studio-invite-mandap-scene {
+  position: relative;
+  width: 87%;
+  height: 85px;
+  margin: 7px auto 0;
+}
+.studio-invite-mandap .studio-invite-mandap-bunting {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  right: 0;
+  color: #ac4b25;
+  font-size: 1.25rem;
+  letter-spacing: .06em;
+}
+.studio-invite-mandap .studio-invite-mandap-roof {
+  position: absolute;
+  top: 23px;
+  width: 100%;
+  height: 13px;
+  border-radius: 70% 70% 30% 30%;
+  background: #bd6739;
+  box-shadow: 0 5px 0 #f0b45e;
+}
+.studio-invite-mandap .studio-invite-mandap-pillars {
+  position: absolute;
+  top: 35px;
+  left: 8%;
+  right: 8%;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  height: 49px;
+  color: #b3532e;
+  font-size: 1.8rem;
+}
+.studio-invite-mandap .studio-invite-mandap-pillars i {
+  width: 10px;
+  background: linear-gradient(90deg, #bd753f, #dfab61, #a75537);
+  border-radius: 2px;
+}
+.studio-invite-mandap .studio-invite-names { color: #a24735; font-style: italic; }
+.studio-invite-mandap p, .studio-invite-mandap .studio-invite-footline { color: #86492f; }
+
+/* Hindu Lotus Pichwai: petal composition, pastel medallion and light floral paper. */
+.studio-invite-lotus {
+  color: #6d4664;
+  background:
+    radial-gradient(ellipse at 3% 18%, #e7aab8 0, transparent 34%),
+    radial-gradient(ellipse at 102% 82%, #f2d4b9 0, transparent 38%),
+    linear-gradient(120deg, #fff8f5, #f3dfe5);
+}
+.studio-invite-lotus .studio-invite-lotus-sheet {
+  margin: 13px;
+  border: 1px solid rgba(148, 95, 116, .45);
+  border-radius: 70px 70px 20px 20px;
+  padding: 20px 10px;
+}
+.studio-invite-lotus .studio-invite-lotus-blooms {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #b8778c;
+  font-size: 1.3rem;
+}
+.studio-invite-lotus .studio-invite-lotus-blooms span:nth-child(2) { font-size: 2rem; color: #d59ca0; }
+.studio-invite-lotus .studio-invite-overline { margin-top: 5px; }
+.studio-invite-lotus .studio-invite-lotus-medallion {
+  display: grid;
+  place-items: center;
+  width: 65px;
+  height: 65px;
+  margin: 12px 0;
+  border: 1px solid #cc92a6;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .57);
+  color: #c07c98;
+  font-size: 2.5rem;
+}
+.studio-invite-lotus h3 {
+  margin: 0;
+  color: #8e607a;
+  font: italic 500 1rem Georgia, serif;
+}
+.studio-invite-lotus .studio-invite-names { color: #995b79; font-style: italic; }
+.studio-invite-lotus .studio-invite-lotus-underline { color: #bb8090; font-size: 1.3rem; }
+.studio-invite-lotus p { color: #86697c; }
+
+/* Jain Pearl: restrained architecture, soft gold and centered diamond-lotus seal. */
+.studio-invite-jain {
+  color: #53453d;
+  background: linear-gradient(140deg, #fffdf6, #e9e1d1);
+}
+.studio-invite-jain .studio-invite-jain-sheet {
+  margin: 12px;
+  border: 1px solid rgba(159, 132, 95, .48);
+  padding: 26px 20px;
+  background: rgba(255, 255, 255, .32);
+}
+.studio-invite-jain .studio-invite-jain-topline {
+  display: flex;
+  justify-content: space-between;
+  align-self: stretch;
+  color: #b1a077;
+}
+.studio-invite-jain .studio-invite-jain-medallion {
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  margin: 16px 0;
+  border: 1px solid #b59d6e;
+  transform: rotate(45deg);
+  color: #94825d;
+  font-size: 2.2rem;
+}
+.studio-invite-jain .studio-invite-jain-medallion::first-letter { color: #af9366; }
+.studio-invite-jain .studio-invite-overline { color: #a0824e; }
+.studio-invite-jain h3 { margin: 12px 0 2px; font: italic 1.05rem Georgia, serif; }
+.studio-invite-jain .studio-invite-names { color: #574435; }
+.studio-invite-jain .studio-invite-jain-bottomline { margin-top: 19px; color: #ae9b74; }
+
+/* Sikh Anand Karaj: navy header and cream lower invitation panel. */
+.studio-invite-anand {
+  color: #fff1d3;
+  background: linear-gradient(145deg, #163350, #224466 52%, #c49a63);
+}
+.studio-invite-anand .studio-invite-anand-sheet { justify-content: stretch; padding: 10px; }
+.studio-invite-anand .studio-invite-anand-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 115px;
+  width: 100%;
+  color: #ffebc2;
+}
+.studio-invite-anand .studio-invite-anand-symbol {
+  font-family: "Noto Sans Gurmukhi", serif;
+  color: #f1c982;
+  font-size: 3.2rem;
+  line-height: 1.3;
+}
+.studio-invite-anand .studio-invite-anand-lines { margin: 3px 0 12px; color: #edcc8e; letter-spacing: .3em; }
+.studio-invite-anand .studio-invite-anand-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 18px 10px;
+  border: 1px solid #f4d6a3;
+  color: #394d59;
+  background: linear-gradient(145deg, #fff9ea, #e7dcc6);
+}
+.studio-invite-anand .studio-invite-anand-content p { color: #5c6770; }
+.studio-invite-anand .studio-invite-names { color: #39556b; }
+.studio-invite-anand .studio-invite-anand-footer { padding: 12px 0 5px; color: #e7ba7c; letter-spacing: .24em; }
+
+/* Christian chapel: rose-laced arched window and airy serif typesetting. */
+.studio-invite-chapel {
+  color: #775f68;
+  background:
+    radial-gradient(ellipse at 7% 23%, rgba(211, 154, 167, .4), transparent 36%),
+    radial-gradient(ellipse at 97% 85%, rgba(160, 194, 171, .37), transparent 33%),
+    linear-gradient(125deg, #fffdf7, #f6e8e9);
+}
+.studio-invite-chapel .studio-invite-chapel-sheet { margin: 11px; padding: 6px; }
+.studio-invite-chapel .studio-invite-chapel-flowers { margin-bottom: 10px; color: #b88b93; font-size: 1.3rem; }
+.studio-invite-chapel .studio-invite-chapel-window {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  margin: 3px;
+  border: 1px solid rgba(166, 122, 125, .68);
+  border-radius: 130px 130px 7px 7px;
+  outline: 1px solid rgba(163, 138, 139, .34);
+  outline-offset: 6px;
+  padding: 18px 11px;
+  background: rgba(255, 255, 255, .37);
+}
+.studio-invite-chapel .studio-invite-chapel-cross { color: #a47c8d; font-size: 2rem; }
+.studio-invite-chapel .studio-invite-overline { margin-top: 15px; color: #a07988; }
+.studio-invite-chapel .studio-invite-names { font-style: italic; color: #846071; }
+.studio-invite-chapel p { color: #8a7280; }
+.studio-invite-chapel .studio-invite-footline { color: #806270; }
+
+/* Gujarati Bandhani: dotted textile frame, diamonds and exuberant colors. */
+.studio-invite-bandhani {
+  color: #922c3f;
+  background:
+    radial-gradient(circle, rgba(250, 236, 198, .7) 1.3px, transparent 1.8px) 0 0 / 12px 12px,
+    linear-gradient(145deg, #aa3545, #db6647);
+}
+.studio-invite-bandhani .studio-invite-bandhani-sheet {
+  justify-content: space-around;
+  margin: 13px;
+  border: 5px double #f5c678;
+  padding: 22px 11px;
+  background: linear-gradient(150deg, #fff0d4, #f9ddc4);
+  box-shadow: inset 0 0 0 4px #b84449, 0 0 0 1px #f5d39c;
+}
+.studio-invite-bandhani .studio-invite-bandhani-dots { color: #b44547; letter-spacing: .3em; }
+.studio-invite-bandhani .studio-invite-bandhani-emblem {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border: 3px double #bb5554;
+  transform: rotate(45deg);
+  color: #b4434f;
+  font-size: 2.2rem;
+}
+.studio-invite-bandhani .studio-invite-overline { color: #9b3c4a; }
+.studio-invite-bandhani .studio-invite-names { color: #a93c46; }
+.studio-invite-bandhani .studio-invite-bandhani-rule { color: #bc5949; letter-spacing: .17em; }
+.studio-invite-bandhani p { color: #835148; }
+
+/* Southern Kolam: temple tiers, off-white kanjivaram paper and line motifs. */
+.studio-invite-kolam {
+  color: #36563f;
+  background:
+    repeating-linear-gradient(90deg, rgba(191, 151, 87, .1) 0 1px, transparent 1px 9px),
+    linear-gradient(130deg, #fdf9ec, #e7e3c9);
+}
+.studio-invite-kolam .studio-invite-kolam-sheet { margin: 12px; border: 1px solid #ae955f; padding: 16px 10px; }
+.studio-invite-kolam .studio-invite-kolam-temple {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 3px;
+  width: 95px;
+  height: 80px;
+  margin-bottom: 12px;
+}
+.studio-invite-kolam .studio-invite-kolam-temple span { color: #a9844a; }
+.studio-invite-kolam .studio-invite-kolam-temple i {
+  display: block;
+  height: 8px;
+  border: 1px solid #b08b54;
+  background: #d8be8f;
+}
+.studio-invite-kolam .studio-invite-kolam-temple i:nth-of-type(1) { width: 30px; }
+.studio-invite-kolam .studio-invite-kolam-temple i:nth-of-type(2) { width: 46px; }
+.studio-invite-kolam .studio-invite-kolam-temple i:nth-of-type(3) { width: 69px; }
+.studio-invite-kolam .studio-invite-kolam-temple i:nth-of-type(4) { width: 91px; }
+.studio-invite-kolam .studio-invite-kolam-motif { margin-top: 7px; color: #819369; font-size: 1.8rem; }
+.studio-invite-kolam .studio-invite-names { color: #426044; }
+.studio-invite-kolam .studio-invite-kolam-ceremony {
+  padding: 8px 15px;
+  border-top: 1px solid #b4a170;
+  border-bottom: 1px solid #b4a170;
+  color: #856c3e;
+  font-size: .8rem;
+}
+.studio-invite-kolam .studio-invite-kolam-footer { margin-top: 11px; color: #849c70; letter-spacing: .28em; }
+
+/* Rajasthani Jharokha: distinctive sandstone palace arch with a wide base. */
+.studio-invite-jharokha {
+  color: #854a39;
+  background: linear-gradient(145deg, #d9a46e, #f5c88b 48%, #bd825d);
+}
+.studio-invite-jharokha .studio-invite-jharokha-sheet { padding: 13px; }
+.studio-invite-jharokha .studio-invite-jharokha-arch {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  border: 6px double #9b6246;
+  border-radius: 49% 49% 10px 10px / 30% 30% 8px 8px;
+  padding: 18px 9px;
+  background: linear-gradient(150deg, #fff1d4, #f1d6ad);
+  box-shadow: inset 0 0 0 5px rgba(170, 104, 66, .19);
+}
+.studio-invite-jharokha .studio-invite-jharokha-crown { color: #b27e53; font-size: 2.7rem; }
+.studio-invite-jharokha .studio-invite-overline { color: #9b5c42; }
+.studio-invite-jharokha .studio-invite-names { color: #934e40; font-style: italic; }
+.studio-invite-jharokha .studio-invite-jharokha-base {
+  width: 96%;
+  padding-top: 9px;
+  border-top: 5px double rgba(128, 69, 47, .7);
+  color: #854733;
+  font-size: .8rem;
+  letter-spacing: .22em;
+}
+
+/* Modern editorial: dramatic asymmetric column and stark typographic lines. */
+.studio-invite-editorial {
+  color: #201e22;
+  background: #f5f3ee;
+}
+.studio-invite-editorial .studio-invite-editorial-sheet {
+  align-items: stretch;
+  justify-content: space-between;
+  padding: 24px 22px;
+  text-align: left;
+}
+.studio-invite-editorial .studio-invite-editorial-top {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #211d22;
+  color: #2d2a2b;
+  font: 700 .62rem ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: .11em;
+}
+.studio-invite-editorial .studio-invite-editorial-label {
+  margin: auto 0 20px;
+  font: 750 .72rem ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: .14em;
+}
+.studio-invite-editorial .studio-invite-names {
+  align-items: flex-start;
+  gap: .09em;
+  margin: 0 0 auto;
+  font: 800 clamp(2.5rem, 4.8vw, 4rem)/.98 ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: -.09em;
+  text-transform: uppercase;
+}
+.studio-invite-editorial .studio-invite-ampersand {
+  padding: 2px 0;
+  color: #b4574c;
+  font: italic 500 .7em Georgia, serif;
+}
+.studio-invite-editorial .studio-invite-editorial-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #302a2d;
+  font: 600 .64rem/1.45 ui-sans-serif, system-ui, sans-serif;
+}
+.studio-invite-editorial .studio-invite-editorial-bottom span { max-width: 55%; }
+
+/* Modern celestial: outer nebula with suspended frosted glass card. */
+.studio-invite-glass {
+  color: #fff7ff;
+  background:
+    radial-gradient(circle at 83% 8%, rgba(253, 193, 223, .55), transparent 31%),
+    radial-gradient(circle at 12% 86%, rgba(130, 132, 225, .66), transparent 36%),
+    linear-gradient(135deg, #30294d, #5d4274 65%, #29264f);
+}
+.studio-invite-glass::before,
+.studio-invite-glass::after {
+  content: "✧";
+  position: absolute;
+  z-index: 0;
+  color: rgba(255, 239, 255, .38);
+  font-size: 3rem;
+}
+.studio-invite-glass::before { top: 13px; left: 17px; }
+.studio-invite-glass::after { bottom: 9px; right: 20px; }
+.studio-invite-glass .studio-invite-glass-panel {
+  z-index: 1;
+  margin: 18px;
+  border: 1px solid rgba(255, 255, 255, .46);
+  border-radius: 28px;
+  background: linear-gradient(140deg, rgba(255, 255, 255, .18), rgba(255, 255, 255, .06));
+  box-shadow: 0 16px 36px rgba(20, 9, 37, .2), inset 0 1px 0 rgba(255, 255, 255, .3);
+  backdrop-filter: blur(13px);
+  -webkit-backdrop-filter: blur(13px);
+}
+.studio-invite-glass .studio-invite-glass-stars { color: #ffdfed; letter-spacing: .2em; }
+.studio-invite-glass .studio-invite-glass-orbit {
+  display: grid;
+  place-items: center;
+  width: 69px;
+  height: 69px;
+  margin: 15px 0;
+  border: 1px solid rgba(255, 255, 255, .62);
+  border-radius: 50%;
+  color: #f7d9fa;
+  font-size: 2.7rem;
+}
+.studio-invite-glass .studio-invite-overline { color: #fae0f3; }
+.studio-invite-glass .studio-invite-names { font-style: italic; color: #fff7ff; }
+.studio-invite-glass .studio-invite-glass-divider { color: #e9bcf2; font-size: 1.3rem; }
+.studio-invite-glass p { color: #f5dff5; }
+
+.studio-invite-expanded {
+  min-height: 460px;
+  max-width: 450px;
+  margin: 0 auto;
+}
+.studio-invite-expanded .studio-invite-names { font-size: clamp(2rem, 4vw, 3rem); }
+.studio-invite-expanded .studio-invite-overline { font-size: .7rem; }
+
+@media (max-width: 480px) {
+  .studio-invite-preview:not(.studio-invite-expanded) {
+    min-height: 335px;
+  }
+
+  .studio-invite-preview .studio-invite-names {
+    font-size: clamp(1.6rem, 7vw, 2.1rem);
+  }
+
+  .studio-invite-editorial .studio-invite-names {
+    font-size: clamp(2.35rem, 9vw, 3.4rem);
+  }
+
+  .studio-invite-expanded {
+    width: min(100%, 390px);
+    min-height: 380px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .studio-invite-preview {
+    scroll-behavior: auto;
+  }
+}
