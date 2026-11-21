@@ -219,6 +219,24 @@
   margin-bottom: 16px;
 }
 
+.studio-editor-page .studio-editor-event-order {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 7px;
+}
+
+.studio-editor-page .studio-editor-event-order button {
+  min-width: 34px;
+  padding: 7px 10px;
+}
+
+.studio-editor-page .studio-editor-event-order button:disabled {
+  opacity: .42;
+  cursor: not-allowed;
+}
+
 .studio-editor-page .studio-editor-event-title strong {
   color: #f9e8ef;
   font-size: .84rem;
