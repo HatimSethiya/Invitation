@@ -22,7 +22,7 @@
   box-sizing: border-box;
 }
 
-.studio-invite-preview > div {
+.studio-invite-preview > div:not(.studio-invite-detail-ribbon) {
   position: relative;
   display: flex;
   flex: 1;
@@ -598,4 +598,39 @@
   .studio-invite-preview {
     scroll-behavior: auto;
   }
+}
+
+/* Phase 4 editor-only information, isolated from sample/gallery cards. */
+.studio-invite-preview.studio-invite-has-details > div:not(.studio-invite-detail-ribbon) {
+  padding-bottom: 96px;
+}
+
+.studio-invite-preview .studio-invite-detail-ribbon {
+  position: absolute;
+  z-index: 5;
+  inset: auto 10px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  padding: 12px 13px;
+  border: 1px solid rgba(171, 137, 132, .32);
+  border-radius: 9px;
+  color: #47374a;
+  background: rgba(255, 250, 245, .94);
+  box-shadow: 0 6px 19px rgba(26, 17, 35, .14);
+  font: 650 .72rem/1.35 ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: .02em;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.studio-invite-preview .studio-invite-detail-ribbon span:first-child {
+  font-family: Georgia, serif;
+  font-size: .84rem;
+}
+
+.studio-invite-preview.studio-invite-expanded.studio-invite-has-details > div:not(.studio-invite-detail-ribbon) {
+  padding-bottom: 104px;
 }
