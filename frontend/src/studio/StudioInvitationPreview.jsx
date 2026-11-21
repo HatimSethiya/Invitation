@@ -29,7 +29,7 @@ function StudioInvitationPreview({ template, enlarged = false, details = null })
     ],
     heading: details.heading?.trim() || template.sample.heading,
     ceremony: primaryEvent?.title?.trim() || template.sample.ceremony,
-    detail: details.familyLine?.trim() || details.message?.trim() || template.sample.detail,
+    detail: details.message?.trim() || details.familyLine?.trim() || template.sample.detail,
   } : template.sample;
 
   const dateLabel = details?.weddingDate
