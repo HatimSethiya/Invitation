@@ -3,6 +3,7 @@ import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import WeddingStudioHome from "./pages/admin/WeddingStudioHome";
 import TemplateGallery from "./pages/admin/TemplateGallery";
+import StudioCardEditor from "./pages/admin/StudioCardEditor";
 import InvitationWizard from "./pages/admin/InvitationWizard";
 import PublicInvitation from "./pages/public/PublicInvitation";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -20,6 +21,8 @@ function App() {
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/studio" element={<WeddingStudioHome />} />
             <Route path="/admin/studio/templates" element={<TemplateGallery />} />
+            <Route path="/admin/studio/create/:templateId" element={<StudioCardEditor />} />
+            <Route path="/admin/studio/drafts/:draftId/edit" element={<StudioCardEditor />} />
             <Route path="/admin/invitations/new" element={<InvitationWizard />} />
             <Route path="/admin/invitations/:id/edit" element={<InvitationWizard />} />
           </Route>
