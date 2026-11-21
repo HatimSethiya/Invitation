@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { STUDIO_CATEGORIES, STUDIO_TEMPLATES, listStudioTemplates } from "../../studio/templateCatalog";
 import { GALLERY_DESIGNS } from "../../studio/galleryDesigns";
+import StudioDraftLibrary from "../../studio/StudioDraftLibrary";
 import "./WeddingStudioHome.css";
 
 const studioSteps = [
@@ -94,7 +95,7 @@ function WeddingStudioHome() {
               <h2 id="studio-collection-heading">Explore wedding traditions</h2>
               <p>
                 Explore existing working themes and original community-specific
-                layouts. New layouts become editable in the next phase.
+                layouts. New designs can now be personalized and saved as private drafts.
               </p>
             </div>
             <span className="wedding-studio-coming-pill">
@@ -128,6 +129,8 @@ function WeddingStudioHome() {
             ))}
           </div>
         </section>
+
+        <StudioDraftLibrary />
 
         <section className="wedding-studio-steps" aria-labelledby="studio-steps-heading">
           <span className="wedding-studio-kicker">A SIMPLE CREATIVE JOURNEY</span>
