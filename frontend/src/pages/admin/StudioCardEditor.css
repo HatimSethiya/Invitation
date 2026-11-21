@@ -199,6 +199,40 @@
   cursor: not-allowed;
 }
 
+.studio-editor-page .studio-editor-event-suggestions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 16px;
+}
+
+.studio-editor-page .studio-editor-event-suggestions span {
+  color: #e9d6e7;
+  font-size: .78rem;
+  font-weight: 700;
+}
+
+.studio-editor-page .studio-editor-event-suggestions button {
+  min-height: 34px;
+  padding: 6px 12px;
+  border: 1px solid rgba(245, 213, 184, .38);
+  border-radius: 999px;
+  color: #fce9d5;
+  background: rgba(245, 213, 184, .12);
+  font-size: .76rem;
+  cursor: pointer;
+}
+
+.studio-editor-page .studio-editor-event-suggestions button:hover:not(:disabled) {
+  background: rgba(245, 213, 184, .23);
+}
+
+.studio-editor-page .studio-editor-event-suggestions button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
 .studio-editor-page .studio-editor-events {
   display: grid;
   gap: 12px;
