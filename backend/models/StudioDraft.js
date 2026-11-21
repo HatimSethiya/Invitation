@@ -10,6 +10,34 @@ const studioEventSchema = new mongoose.Schema(
   { _id: false }
 );
 
+const studioDesignSchema = new mongoose.Schema(
+  {
+    font: {
+      type: String,
+      enum: ["original", "classic", "modern", "romantic", "editorial"],
+      default: "original",
+    },
+    palette: {
+      type: String,
+      enum: ["original", "blush", "sage", "sapphire", "champagne", "lavender"],
+      default: "original",
+    },
+    background: {
+      type: String,
+      enum: ["original", "parchment", "linen", "glow"],
+      default: "original",
+    },
+    sections: {
+      heading: { type: Boolean, default: true },
+      family: { type: Boolean, default: true },
+      message: { type: Boolean, default: true },
+      dateVenue: { type: Boolean, default: true },
+      schedule: { type: Boolean, default: true },
+    },
+  },
+  { _id: false }
+);
+
 /**
  * Completely separate from Invitation: legacy published cards and their
  * passwords/routes/rendering are never migrated into Studio drafts.
@@ -33,6 +61,7 @@ const studioDraftSchema = new mongoose.Schema(
       address: { type: String, trim: true, maxlength: 360, default: "" },
     },
     events: { type: [studioEventSchema], default: [] },
+    design: { type: studioDesignSchema, default: () => ({}) },
     passwordHash: { type: String, required: true, select: false },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
