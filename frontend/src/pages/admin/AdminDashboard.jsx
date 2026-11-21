@@ -156,7 +156,14 @@ function AdminDashboard() {
   return (
     <main className="studio-page dashboard-premium">
       <header className="studio-header">
-        <div><span className="eyebrow">Wedding Invitation Studio</span><h1>Good to see you, {user?.name || "Admin"}</h1><p>Create, manage and publish beautiful wedding invitations.</p></div>
+        <div>
+          <span className="eyebrow">Wedding Invitation Studio</span>
+          <h1>Good to see you, {user?.name || "Admin"}</h1>
+          <p>Create, manage and publish beautiful wedding invitations.</p>
+          <Link className="small-button studio-launch-link" to="/admin/studio">
+            Explore Wedding Studio <span aria-hidden="true">↗</span>
+          </Link>
+        </div>
         <button className="secondary-button" onClick={handleLogout}>Logout</button>
       </header>
 
