@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import WeddingStudioHome from "./pages/admin/WeddingStudioHome";
 import InvitationWizard from "./pages/admin/InvitationWizard";
 import PublicInvitation from "./pages/public/PublicInvitation";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -16,6 +17,7 @@ function App() {
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route element={<ProtectedRoute />}>
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/admin/studio" element={<WeddingStudioHome />} />
             <Route path="/admin/invitations/new" element={<InvitationWizard />} />
             <Route path="/admin/invitations/:id/edit" element={<InvitationWizard />} />
           </Route>
