@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import api, { resolveMediaUrl } from "../../services/api";
 import ImageUpload from "../../components/ImageUpload";
 import { formatFatemiDate } from "../../utils/fatemiCalendar";
+import { getGalleryDesignByTheme } from "../../studio/galleryDesigns";
 
 const steps = ["Basic & Style", "Couple", "Bohra Details", "Events", "Family & Story", "Venue", "Music", "Review"];
 const eventTemplate = { type: "Wedding", title: "", date: "", showFatemiDate: false, time: "", venue: "", address: "", description: "", mapUrl: "" };
@@ -17,7 +18,11 @@ const toDateInput = (value) => {
 function InvitationWizard() {
   const navigate = useNavigate();
   const { id: editId } = useParams();
+  const [searchParams] = useSearchParams();
   const isEditing = Boolean(editId);
+  const selectedGalleryDesign = !isEditing
+    ? getGalleryDesignByTheme(searchParams.get("theme"))
+    : null;
   const [step, setStep] = useState(0);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -38,7 +43,7 @@ function InvitationWizard() {
   const previewAudioRef = useRef(null);
   const musicRequestRef = useRef(0);
   const [form, setForm] = useState({
-    title: "", slug: "", weddingDate: "", countdownEnabled: false, theme: "bohraNikah", cardType: "single", openingAnimation: "curtains", openingMode: "manual", coverImageUrl: "",
+    title: "", slug: "", weddingDate: "", countdownEnabled: false, theme: selectedGalleryDesign?.id || "bohraNikah", cardType: "single", openingAnimation: "curtains", openingMode: "manual", coverImageUrl: "",
     couple: { brideName: "", groomName: "", nameOrder: "groomFirst", bridePhoto: "", groomPhoto: "", couplePhoto: "", brideBio: "", groomBio: "" },
     secondCouple: { brideName: "", groomName: "", nameOrder: "groomFirst", bridePhoto: "", groomPhoto: "", couplePhoto: "", brideBio: "", groomBio: "" },
     firstNikah: { heading: "First Nikah Ceremony", officiant: "", hijriDate: "", time: "", venue: "" },
