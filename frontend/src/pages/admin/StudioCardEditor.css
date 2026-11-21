@@ -1,0 +1,458 @@
+/* Phase 4: all styles scoped to the independent Studio card editor. */
+.studio-editor-page {
+  min-height: 100vh;
+}
+
+.studio-editor-page .studio-editor-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 33px 0 30px;
+}
+
+.studio-editor-page .studio-editor-heading h1 {
+  margin: 12px 0;
+  color: #fff8fb;
+  font: 500 clamp(2.1rem, 3.4vw, 3.55rem)/1.12 Georgia, serif;
+  letter-spacing: -.045em;
+}
+
+.studio-editor-page .studio-editor-heading p {
+  max-width: 600px;
+  margin: 0;
+  color: #d9c8df;
+  font-size: .9rem;
+  line-height: 1.75;
+}
+
+.studio-editor-page .studio-editor-draft-badge {
+  flex-shrink: 0;
+  margin-bottom: 6px;
+  padding: 10px 17px;
+  border: 1px solid rgba(240, 204, 160, .28);
+  border-radius: 999px;
+  color: #efcfb1;
+  background: rgba(255, 255, 255, .09);
+  font-size: .74rem;
+  font-weight: 800;
+}
+
+.studio-editor-page .studio-editor-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.07fr) minmax(360px, .93fr);
+  align-items: start;
+  gap: clamp(16px, 2.5vw, 29px);
+}
+
+.studio-editor-page .studio-editor-form,
+.studio-editor-page .studio-editor-preview {
+  min-width: 0;
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: 28px;
+  background: linear-gradient(139deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, .06));
+  box-shadow: 0 24px 61px rgba(11, 7, 29, .16), inset 0 1px 0 rgba(255, 255, 255, .12);
+  backdrop-filter: blur(21px);
+  -webkit-backdrop-filter: blur(21px);
+}
+
+.studio-editor-page .studio-editor-form {
+  padding: clamp(19px, 2.7vw, 34px);
+}
+
+.studio-editor-page .studio-editor-form > fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.studio-editor-page .studio-editor-section + .studio-editor-section {
+  margin-top: 30px;
+  padding-top: 29px;
+  border-top: 1px solid rgba(255, 255, 255, .16);
+}
+
+.studio-editor-page .studio-editor-section-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 23px;
+}
+
+.studio-editor-page .studio-editor-step {
+  display: grid;
+  flex: 0 0 41px;
+  height: 41px;
+  place-items: center;
+  border: 1px solid rgba(255, 234, 211, .25);
+  border-radius: 13px;
+  color: #f5d5b8;
+  background: rgba(255, 255, 255, .09);
+  font: italic 1.2rem Georgia, serif;
+}
+
+.studio-editor-page .studio-editor-section-heading h2 {
+  margin: 1px 0 7px;
+  color: #fff8fc;
+  font: 500 clamp(1.33rem, 2vw, 1.7rem)/1.25 Georgia, serif;
+}
+
+.studio-editor-page .studio-editor-section-heading p {
+  margin: 0;
+  color: #cdbed3;
+  font-size: .8rem;
+  line-height: 1.6;
+}
+
+.studio-editor-page .studio-editor-fields {
+  display: grid;
+  gap: 17px;
+}
+
+.studio-editor-page .studio-editor-two-col {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+}
+
+.studio-editor-page .studio-editor-fields label,
+.studio-editor-page .studio-editor-lock-panel label {
+  display: grid;
+  min-width: 0;
+  gap: 8px;
+  color: #f5ebf6;
+  font-size: .79rem;
+  font-weight: 780;
+  line-height: 1.5;
+}
+
+.studio-editor-page .studio-editor-fields label > span {
+  color: #baaac4;
+  font-size: .71rem;
+  font-weight: 500;
+}
+
+.studio-editor-page .studio-editor-fields input,
+.studio-editor-page .studio-editor-fields textarea,
+.studio-editor-page .studio-editor-lock-panel input {
+  display: block;
+  width: 100%;
+  min-height: 45px;
+  padding: 11px 13px;
+  border: 1px solid rgba(255, 255, 255, .26);
+  border-radius: 13px;
+  outline: none;
+  color: #35273a;
+  background: rgba(255, 251, 254, .96);
+  box-shadow: inset 0 1px 1px rgba(49, 29, 53, .07);
+  font: 500 .88rem/1.5 ui-sans-serif, system-ui, sans-serif;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.studio-editor-page .studio-editor-fields input:focus,
+.studio-editor-page .studio-editor-fields textarea:focus,
+.studio-editor-page .studio-editor-lock-panel input:focus {
+  border-color: #ddaac8;
+  box-shadow: 0 0 0 3px rgba(239, 195, 224, .28);
+}
+
+.studio-editor-page .studio-editor-fields textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.studio-editor-page .studio-editor-fields input::placeholder,
+.studio-editor-page .studio-editor-fields textarea::placeholder {
+  color: #968498;
+}
+
+.studio-editor-page .studio-editor-event-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 24px 0 13px;
+}
+
+.studio-editor-page .studio-editor-event-header h3 {
+  margin: 0;
+  color: #fff8fb;
+  font: 500 1.2rem Georgia, serif;
+}
+
+.studio-editor-page .studio-editor-event-header button,
+.studio-editor-page .studio-editor-event-title button {
+  min-height: 37px;
+  padding: 7px 12px;
+  border: 1px solid rgba(255, 255, 255, .24);
+  border-radius: 99px;
+  color: #fff1f7;
+  background: rgba(255, 255, 255, .11);
+  font-size: .74rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.studio-editor-page .studio-editor-event-header button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.studio-editor-page .studio-editor-events {
+  display: grid;
+  gap: 12px;
+}
+
+.studio-editor-page .studio-editor-event {
+  padding: 17px;
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .065);
+}
+
+.studio-editor-page .studio-editor-event-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.studio-editor-page .studio-editor-event-title strong {
+  color: #f9e8ef;
+  font-size: .84rem;
+}
+
+.studio-editor-page .studio-editor-event-title button {
+  color: #f5cbcd;
+}
+
+.studio-editor-page .studio-editor-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 11px;
+  margin-top: 32px;
+}
+
+.studio-editor-page .studio-editor-save-button,
+.studio-editor-page .studio-editor-lock-panel button {
+  min-height: 47px;
+  padding: 11px 23px;
+  border: 1px solid rgba(255, 240, 231, .43);
+  border-radius: 999px;
+  color: #443046;
+  background: linear-gradient(118deg, #ffebd2, #f4c9dc);
+  box-shadow: 0 11px 26px rgba(19, 9, 31, .2);
+  font-size: .84rem;
+  font-weight: 850;
+  cursor: pointer;
+  transition: transform .23s ease, box-shadow .23s ease;
+}
+
+.studio-editor-page .studio-editor-save-button:disabled,
+.studio-editor-page .studio-editor-lock-panel button:disabled {
+  opacity: .65;
+  cursor: wait;
+}
+
+.studio-editor-page .studio-editor-cancel-link,
+.studio-editor-page .studio-editor-back-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 15px;
+  color: #f3e4f1;
+  font-size: .8rem;
+  font-weight: 760;
+  text-decoration: none;
+}
+
+.studio-editor-page .studio-editor-note {
+  margin: 18px 0 0;
+  color: #c1afcb;
+  font-size: .74rem;
+  line-height: 1.7;
+}
+
+.studio-editor-page .studio-editor-preview {
+  position: sticky;
+  top: 24px;
+  padding: clamp(18px, 2.6vw, 31px);
+}
+
+.studio-editor-page .studio-editor-preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.studio-editor-page .studio-editor-preview-header h2 {
+  margin: 7px 0 0;
+  color: #fff8fc;
+  font: 500 1.55rem Georgia, serif;
+}
+
+.studio-editor-page .studio-editor-live-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid rgba(151, 218, 184, .27);
+  border-radius: 999px;
+  padding: 6px 11px;
+  color: #c2f3d6;
+  background: rgba(96, 192, 141, .11);
+  font-size: .72rem;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.studio-editor-page .studio-editor-live-indicator i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #9ee1b3;
+  box-shadow: 0 0 12px rgba(158, 225, 179, .7);
+}
+
+.studio-editor-page .studio-editor-preview > .studio-invite-preview {
+  width: min(100%, 418px);
+  margin: 0 auto;
+}
+
+.studio-editor-page .studio-editor-preview-note {
+  max-width: 440px;
+  margin: 16px auto 0;
+  color: #d1c0d8;
+  font-size: .74rem;
+  line-height: 1.75;
+  text-align: center;
+}
+
+.studio-editor-page .studio-editor-error,
+.studio-editor-page .studio-editor-success {
+  margin: 13px 0;
+  padding: 15px 19px;
+  border: 1px solid rgba(255, 212, 217, .33);
+  border-radius: 15px;
+  color: #ffe1e3;
+  background: rgba(163, 56, 79, .26);
+  font-size: .82rem;
+  line-height: 1.6;
+}
+
+.studio-editor-page .studio-editor-success {
+  border-color: rgba(155, 221, 178, .36);
+  color: #d8f9e4;
+  background: rgba(81, 167, 113, .18);
+}
+
+.studio-editor-page .studio-editor-lock-panel,
+.studio-editor-page .studio-editor-state {
+  width: min(100%, 520px);
+  margin: clamp(60px, 15vh, 125px) auto;
+  padding: clamp(24px, 4vw, 44px);
+  border: 1px solid rgba(255, 255, 255, .25);
+  border-radius: 29px;
+  color: #fff8fc;
+  background: linear-gradient(140deg, rgba(99, 59, 112, .61), rgba(40, 30, 70, .77));
+  box-shadow: 0 25px 70px rgba(7, 4, 22, .26);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.studio-editor-page .studio-editor-lock-icon {
+  display: block;
+  margin: 15px 0;
+  font-size: 3rem;
+}
+
+.studio-editor-page .studio-editor-lock-panel h1,
+.studio-editor-page .studio-editor-state h1 {
+  margin: 10px 0;
+  color: #fff9fc;
+  font: 500 2.15rem/1.2 Georgia, serif;
+}
+
+.studio-editor-page .studio-editor-lock-panel > p,
+.studio-editor-page .studio-editor-state p {
+  color: #ddcce2;
+  line-height: 1.65;
+}
+
+.studio-editor-page .studio-editor-lock-panel form {
+  display: grid;
+  gap: 20px;
+  margin-top: 25px;
+}
+
+.studio-editor-page a:focus-visible,
+.studio-editor-page button:focus-visible {
+  outline: 3px solid #f3d3ac;
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .studio-editor-page .studio-editor-save-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 27px rgba(12, 5, 25, .29);
+  }
+}
+
+@media (max-width: 960px) {
+  .studio-editor-page .studio-editor-workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .studio-editor-page .studio-editor-preview {
+    position: static;
+    order: -1;
+  }
+
+  .studio-editor-page .studio-editor-preview > .studio-invite-preview {
+    max-width: 350px;
+    min-height: 375px;
+  }
+}
+
+@media (max-width: 590px) {
+  .studio-editor-page .studio-editor-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 17px;
+  }
+
+  .studio-editor-page .studio-editor-draft-badge {
+    margin: 0;
+  }
+
+  .studio-editor-page .studio-editor-two-col {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .studio-editor-page .studio-editor-form,
+  .studio-editor-page .studio-editor-preview {
+    padding: 19px 15px;
+    border-radius: 22px;
+  }
+
+  .studio-editor-page .studio-editor-event {
+    padding: 14px;
+  }
+
+  .studio-editor-page .studio-editor-preview > .studio-invite-preview {
+    max-width: 300px;
+    min-height: 365px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .studio-editor-page .studio-editor-save-button,
+  .studio-editor-page .studio-editor-fields input,
+  .studio-editor-page .studio-editor-fields textarea {
+    transition: none;
+  }
+}
