@@ -5,6 +5,7 @@ import api, { resolveMediaUrl } from "../../services/api";
 import EnvelopeReveal from "../../components/EnvelopeReveal";
 import InvitationMusicPlayer from "../../components/InvitationMusicPlayer";
 import RoyalRoseEffects from "../../components/cinematic/RoyalRoseEffects";
+import { formatFatemiDate } from "../../utils/fatemiCalendar";
 
 function formatDate(value, options = { dateStyle: "long" }) {
   if (!value) return "";
@@ -843,7 +844,14 @@ function PublicInvitation() {
                           {event.date && (
                             <div className="bohra-detail-row">
                               <span className="bohra-detail-icon" aria-hidden="true">▦</span>
-                              <div><strong>{formatDate(event.date)}</strong></div>
+                              <div>
+                                <strong>{formatDate(event.date)}</strong>
+                                {event.showFatemiDate === true && (
+                                  <span className="bohra-fatemi-date" lang="ar" dir="rtl">
+                                    {formatFatemiDate(event.date)}
+                                  </span>
+                                )}
+                              </div>
                             </div>
                           )}
                           {hasValue(event.time) && (
