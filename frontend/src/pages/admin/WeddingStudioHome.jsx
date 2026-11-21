@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { STUDIO_CATEGORIES } from "../../studio/templateCatalog";
+import { STUDIO_CATEGORIES, STUDIO_TEMPLATES, listStudioTemplates } from "../../studio/templateCatalog";
 import { GALLERY_DESIGNS } from "../../studio/galleryDesigns";
 import "./WeddingStudioHome.css";
 
@@ -23,6 +23,7 @@ const studioSteps = [
 
 function WeddingStudioHome() {
   const existingDesignCount = GALLERY_DESIGNS.length;
+  const studioPreviewCount = STUDIO_TEMPLATES.length;
 
   return (
     <main className="wedding-studio-page">
@@ -92,12 +93,12 @@ function WeddingStudioHome() {
               <span className="wedding-studio-kicker">DESIGNED FOR EVERY CELEBRATION</span>
               <h2 id="studio-collection-heading">Explore wedding traditions</h2>
               <p>
-                Explore existing visual designs now. Dedicated community layouts
-                are being developed in the next phase.
+                Explore existing working themes and original community-specific
+                layouts. New layouts become editable in the next phase.
               </p>
             </div>
             <span className="wedding-studio-coming-pill">
-              {existingDesignCount} existing designs
+              {existingDesignCount} working themes · {studioPreviewCount} new previews
             </span>
           </div>
 
@@ -119,7 +120,9 @@ function WeddingStudioHome() {
                 <div className="wedding-studio-category-info">
                   <h3>{category.name}</h3>
                   <p>{category.description}</p>
-                  <span>{category.id === "bohra" ? `Browse ${existingDesignCount} existing looks ↗` : "Dedicated templates coming soon ↗"}</span>
+                  <span>{category.id === "bohra"
+                    ? `${existingDesignCount} working themes · ${listStudioTemplates(category.id).length} new preview ↗`
+                    : `${listStudioTemplates(category.id).length} new layout ${listStudioTemplates(category.id).length === 1 ? "preview" : "previews"} ↗`}</span>
                 </div>
               </Link>
             ))}
