@@ -163,6 +163,29 @@ export function listStudioTemplates(categoryId = "") {
   );
 }
 
+export function filterStudioTemplates({
+  category = "all",
+  search = "",
+  style = "all",
+  color = "all",
+} = {}) {
+  const query = typeof search === "string" ? search.trim().toLocaleLowerCase() : "";
+
+  return STUDIO_TEMPLATES.filter((template) => {
+    if (category !== "all" && template.categoryId !== category) return false;
+    if (style !== "all" && template.style !== style) return false;
+    if (color !== "all" && template.color !== color) return false;
+
+    return !query || [
+      template.name,
+      template.description,
+      template.categoryId,
+      template.style,
+      template.color,
+    ].some((value) => value.toLocaleLowerCase().includes(query));
+  });
+}
+
 export function getStudioTemplate(templateId, templateVersion) {
   if (!templateId) return null;
 
