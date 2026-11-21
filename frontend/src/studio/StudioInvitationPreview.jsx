@@ -29,17 +29,18 @@ function StudioInvitationPreview({ template, enlarged = false, details = null })
     ],
     heading: details.heading?.trim() || template.sample.heading,
     ceremony: primaryEvent?.title?.trim() || template.sample.ceremony,
-    detail: details.message?.trim() || details.familyLine?.trim() || template.sample.detail,
+    detail: details.familyLine?.trim() || details.message?.trim() || template.sample.detail,
   } : template.sample;
 
-  const dateLabel = details?.weddingDate
-    ? new Date(`${details.weddingDate}T12:00:00`).toLocaleDateString(undefined, {
+  const dateValue = primaryEvent?.date || details?.weddingDate;
+  const dateLabel = dateValue
+    ? new Date(`${dateValue}T12:00:00`).toLocaleDateString(undefined, {
         day: "numeric",
         month: "long",
         year: "numeric",
       })
     : "Wedding date to be confirmed";
-  const placeLabel = details?.venue?.name?.trim() || primaryEvent?.venue?.trim()
+  const placeLabel = primaryEvent?.venue?.trim() || details?.venue?.name?.trim()
     || "Venue to be confirmed";
 
   const classes = [
@@ -244,6 +245,9 @@ function StudioInvitationPreview({ template, enlarged = false, details = null })
           <span>{dateLabel}</span>
           <span>{placeLabel}</span>
           {primaryEvent?.time && <span>{primaryEvent.time}</span>}
+          {details.message?.trim() && details.message?.trim() !== sample.detail && (
+            <span className="studio-invite-detail-message">{details.message.trim()}</span>
+          )}
         </div>
       )}
     </div>
