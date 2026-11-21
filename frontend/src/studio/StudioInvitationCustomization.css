@@ -1,0 +1,162 @@
+/*
+ * Phase 5: opt-in Studio design presets.
+ * Defaults apply no visual overrides to the twelve original templates.
+ * These selectors NEVER target legacy public invitation cards.
+ */
+
+/* The palette changes the card substrate and its major typography. */
+.studio-invite-preview.studio-invite-palette-blush {
+  --studio-accent: #a75b80;
+  --studio-ink: #744159;
+  --studio-paper: #f8e8ed;
+}
+.studio-invite-preview.studio-invite-palette-sage {
+  --studio-accent: #477665;
+  --studio-ink: #315d4c;
+  --studio-paper: #e6f1e9;
+}
+.studio-invite-preview.studio-invite-palette-sapphire {
+  --studio-accent: #45699f;
+  --studio-ink: #344e79;
+  --studio-paper: #e7effb;
+}
+.studio-invite-preview.studio-invite-palette-champagne {
+  --studio-accent: #977446;
+  --studio-ink: #6e5637;
+  --studio-paper: #f7ebd7;
+}
+.studio-invite-preview.studio-invite-palette-lavender {
+  --studio-accent: #8666a8;
+  --studio-ink: #634e85;
+  --studio-paper: #f0e9fa;
+}
+
+.studio-invite-preview:not(.studio-invite-palette-original) {
+  color: var(--studio-ink);
+  background: linear-gradient(140deg, #fff, var(--studio-paper));
+}
+
+.studio-invite-preview:not(.studio-invite-palette-original) :is(
+  .studio-invite-names,
+  .studio-invite-overline,
+  .studio-invite-mandap-welcome,
+  .studio-invite-editorial-label,
+  .studio-invite-chapel-cross,
+  .studio-invite-emerald-orbit,
+  .studio-invite-kolam-motif,
+  .studio-invite-jharokha-crown,
+  .studio-invite-lotus-underline,
+  .studio-invite-fatemi-calligraphy
+) {
+  color: var(--studio-accent);
+}
+
+.studio-invite-preview:not(.studio-invite-palette-original) :is(
+  p,
+  h3,
+  .studio-invite-footline,
+  .studio-invite-editorial-bottom,
+  .studio-invite-fatemi-programme,
+  .studio-invite-kolam-ceremony
+) {
+  color: var(--studio-ink);
+}
+
+/* Give the distinct template interiors a subtle matching paper wash. */
+.studio-invite-preview:not(.studio-invite-palette-original) :is(
+  .studio-invite-fatemi-frame,
+  .studio-invite-emerald-arch,
+  .studio-invite-mandap-sheet,
+  .studio-invite-lotus-sheet,
+  .studio-invite-jain-sheet,
+  .studio-invite-anand-content,
+  .studio-invite-chapel-window,
+  .studio-invite-bandhani-sheet,
+  .studio-invite-kolam-sheet,
+  .studio-invite-jharokha-arch,
+  .studio-invite-glass-panel
+) {
+  background: color-mix(in srgb, var(--studio-paper) 84%, white);
+  color: var(--studio-ink);
+}
+
+.studio-invite-preview:not(.studio-invite-palette-original) .studio-invite-editorial-top {
+  border-bottom-color: var(--studio-accent);
+  color: var(--studio-ink);
+}
+
+.studio-invite-preview:not(.studio-invite-palette-original) .studio-invite-detail-ribbon {
+  border-color: color-mix(in srgb, var(--studio-accent) 33%, transparent);
+}
+
+/* Background finishes are independent of palettes and need no uploaded assets. */
+.studio-invite-preview.studio-invite-bg-parchment {
+  background: repeating-linear-gradient(
+      34deg,
+      rgba(148, 117, 80, .065) 0 1px,
+      transparent 1px 17px
+    ),
+    linear-gradient(145deg, #fffaf0, var(--studio-paper, #eee3ce));
+}
+
+.studio-invite-preview.studio-invite-bg-linen {
+  background:
+    repeating-linear-gradient(0deg, rgba(94, 86, 93, .055) 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(90deg, rgba(94, 86, 93, .05) 0 1px, transparent 1px 6px),
+    var(--studio-paper, #f2eee9);
+}
+
+.studio-invite-preview.studio-invite-bg-glow {
+  background:
+    radial-gradient(ellipse at 17% 18%, rgba(251, 205, 222, .85), transparent 46%),
+    radial-gradient(ellipse at 86% 85%, rgba(191, 191, 246, .6), transparent 49%),
+    var(--studio-paper, #f9f4f8);
+}
+
+/*
+ * Only typography named in the card is overridden; decorative motifs, Arabic
+ * and regional-script letterforms retain their own language-appropriate fonts.
+ */
+.studio-invite-preview.studio-invite-font-classic :is(
+  .studio-invite-names, .studio-invite-overline, .studio-invite-mandap-welcome,
+  .studio-invite-editorial-label, h3
+) {
+  font-family: Palatino, "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: -.025em;
+}
+
+.studio-invite-preview.studio-invite-font-modern :is(
+  .studio-invite-names, .studio-invite-overline, .studio-invite-mandap-welcome,
+  .studio-invite-editorial-label, h3
+) {
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-style: normal;
+  font-weight: 650;
+  letter-spacing: -.035em;
+}
+
+.studio-invite-preview.studio-invite-font-romantic :is(
+  .studio-invite-names, .studio-invite-overline, .studio-invite-mandap-welcome,
+  .studio-invite-editorial-label, h3
+) {
+  font-family: "Palatino Linotype", Palatino, Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: -.04em;
+}
+
+.studio-invite-preview.studio-invite-font-editorial :is(
+  .studio-invite-names, .studio-invite-overline, .studio-invite-mandap-welcome,
+  .studio-invite-editorial-label, h3
+) {
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: -.05em;
+}
+
+.studio-invite-preview.studio-invite-font-editorial .studio-invite-names {
+  text-transform: uppercase;
+}
