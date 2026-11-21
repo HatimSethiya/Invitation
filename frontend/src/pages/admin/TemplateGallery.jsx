@@ -105,9 +105,9 @@ function TemplateGallery() {
           </p>
           <div className="template-gallery-notice">
             <span aria-hidden="true">✧</span>
-            New community layouts are real coded design previews, but cannot
-            yet be saved or published. Editor integration is coming in Phase 4.
-            The existing Bohra-layout themes remain available to customize today.
+            You can now personalize new community layouts and save private,
+            password-protected drafts. Publishing is not enabled for these new
+            layouts yet. Existing Bohra themes still use the original builder.
           </div>
         </header>
 
@@ -209,7 +209,12 @@ function TemplateGallery() {
                     <p>{design.description}</p>
                     <div className="template-gallery-card-actions">
                       {design.kind === "studio" ? (
-                        <span className="template-gallery-preview-status">Editor coming in Phase 4</span>
+                        <Link
+                          className="template-gallery-use-button"
+                          to={`/admin/studio/create/${encodeURIComponent(design.id)}`}
+                        >
+                          Make My Card <span aria-hidden="true">↗</span>
+                        </Link>
                       ) : (
                         <Link
                           className="template-gallery-use-button"
@@ -275,7 +280,7 @@ function TemplateGallery() {
               : <DesignPreview design={previewDesign} enlarged />}
             <p>
               {previewDesign.kind === "studio"
-                ? "Original layout preview with sample wording and names. This template will be editable and publishable after the Phase 4 editor integration."
+                ? "Original template preview with sample wording and names. Customize it in the new editor and save a secure private draft; publishing will be available in a later phase."
                 : "This uses the current builder's color-theme preview, not a full guest invitation. Actual content is personalized in the editor."}
             </p>
             {previewDesign.kind === "existing" ? (
@@ -286,7 +291,12 @@ function TemplateGallery() {
                 Customize This Design <span aria-hidden="true">↗</span>
               </Link>
             ) : (
-              <span className="template-gallery-preview-status">Coming in Phase 4 · Studio Editor</span>
+              <Link
+                to={`/admin/studio/create/${encodeURIComponent(previewDesign.id)}`}
+                className="template-gallery-use-button"
+              >
+                Make My Card <span aria-hidden="true">↗</span>
+              </Link>
             )}
           </div>
         </div>
