@@ -4,6 +4,7 @@ const {
   STUDIO_TEMPLATE_IDS,
   DraftValidationError,
   validateDraftPayload,
+  validateStudioDesign,
   isValidDraftPassword,
 } = require("../utils/studioDraftValidation");
 
@@ -86,6 +87,88 @@ test("invalid calendar dates, field types and event limits are rejected", () => 
       () => validateDraftPayload(draft),
       DraftValidationError,
       JSON.stringify(draft)?.slice(0, 80)
+    );
+  }
+});
+
+test("existing Phase 4 Studio drafts receive safe original-style defaults", () => {
+  const draft = validateDraftPayload({
+    title: "Old Private Draft",
+    partner1: "One",
+    partner2: "Two",
+  });
+
+  assert.deepEqual(draft.design, {
+    font: "original",
+    palette: "original",
+    background: "original",
+    sections: {
+      heading: true,
+      family: true,
+      message: true,
+      dateVenue: true,
+      schedule: true,
+    },
+  });
+});
+
+test("valid design presets and section visibility survive draft validation", () => {
+  const design = {
+    font: "romantic",
+    palette: "sage",
+    background: "linen",
+    sections: {
+      heading: false,
+      family: true,
+      message: false,
+      dateVenue: true,
+      schedule: false,
+    },
+    createdBy: "bad-owner",
+    unsafeCss: "body{display:none}",
+  };
+
+  const draft = validateDraftPayload({ design });
+  assert.deepEqual(draft.design, {
+    font: "romantic",
+    palette: "sage",
+    background: "linen",
+    sections: {
+      heading: false,
+      family: true,
+      message: false,
+      dateVenue: true,
+      schedule: false,
+    },
+  });
+  assert.equal("unsafeCss" in draft.design, false);
+  assert.equal("createdBy" in draft.design, false);
+});
+
+test("invalid arbitrary style IDs and non-boolean section values are rejected", () => {
+  const invalidDesigns = [
+    null,
+    "",
+    [],
+    "dangerous",
+    { font: "url(javascript:alert(1))" },
+    { font: 10 },
+    { palette: "#999999" },
+    { palette: "not-approved" },
+    { background: "url(https://unknown.site/image.png)" },
+    { background: "none; background-image: url(x)" },
+    { sections: [] },
+    { sections: null },
+    { sections: { heading: "false" } },
+    { sections: { message: 0 } },
+    { sections: { schedule: "on" } },
+  ];
+
+  for (const design of invalidDesigns) {
+    assert.throws(
+      () => validateStudioDesign(design),
+      DraftValidationError,
+      JSON.stringify(design)
     );
   }
 });
