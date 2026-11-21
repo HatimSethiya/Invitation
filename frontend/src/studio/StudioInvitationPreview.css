@@ -601,7 +601,7 @@
 }
 
 /* Phase 4 editor-only information, isolated from sample/gallery cards. */
-.studio-invite-preview.studio-invite-has-details > div:not(.studio-invite-detail-ribbon) {
+.studio-invite-preview.studio-invite-has-info > div:not(.studio-invite-detail-ribbon) {
   padding-bottom: 122px;
 }
 
@@ -645,6 +645,6 @@
   font-size: .84rem;
 }
 
-.studio-invite-preview.studio-invite-expanded.studio-invite-has-details > div:not(.studio-invite-detail-ribbon) {
+.studio-invite-preview.studio-invite-expanded.studio-invite-has-info > div:not(.studio-invite-detail-ribbon) {
   padding-bottom: 130px;
 }
