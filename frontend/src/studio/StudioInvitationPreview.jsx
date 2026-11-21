@@ -47,6 +47,10 @@ function StudioInvitationPreview({ template, enlarged = false, details = null })
   const placeLabel = primaryEvent?.venue?.trim() || details?.venue?.name?.trim()
     || "Venue to be confirmed";
 
+  const hasRibbon = Boolean(details && (
+    sections.dateVenue || (sections.message && details.message?.trim())
+  ));
+
   const classes = [
     "studio-invite-preview",
     `studio-invite-${template.layout}`,
@@ -55,7 +59,7 @@ function StudioInvitationPreview({ template, enlarged = false, details = null })
     `studio-invite-font-${design.font}`,
     `studio-invite-palette-${design.palette}`,
     `studio-invite-bg-${design.background}`,
-    details && sections.dateVenue ? "studio-invite-has-date-venue" : "",
+    hasRibbon ? "studio-invite-has-info" : "",
   ].filter(Boolean).join(" ");
 
   let content;
@@ -248,9 +252,7 @@ function StudioInvitationPreview({ template, enlarged = false, details = null })
       aria-label={`${template.name}: ${details ? "preview of" : "sample"} ${sample.names[0]} and ${sample.names[1]} invitation`}
     >
       {content}
-      {details && (
-        (sections.dateVenue || (sections.message && Boolean(details.message?.trim())))
-      ) && (
+      {hasRibbon && (
         <div className="studio-invite-detail-ribbon">
           {sections.dateVenue && (
             <>
