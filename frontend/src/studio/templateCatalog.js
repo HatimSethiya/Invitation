@@ -64,8 +64,98 @@ export const STUDIO_CATEGORIES = Object.freeze([
   }),
 ]);
 
-// New renderable templates are introduced in Phase 3, not this foundation.
-export const STUDIO_TEMPLATES = Object.freeze([]);
+/**
+ * Phase 3: original, structurally distinct invitation designs for preview.
+ *
+ * "preview" means the card exists as a coded visual design, but the studio
+ * editor, API persistence and public renderer are NOT connected yet.
+ * No existing invitation is auto-migrated; old cards always use the legacy
+ * renderer. Never set a template to "ready" before end-to-end integration.
+ */
+const previewTemplate = ({ sample, ...template }) => Object.freeze({
+  ...template,
+  version: 1,
+  status: "preview",
+  sample: Object.freeze({
+    ...sample,
+    names: Object.freeze([...sample.names]),
+  }),
+});
+
+export const STUDIO_TEMPLATES = Object.freeze([
+  previewTemplate({
+    id: "fatemi-heritage", categoryId: "bohra", name: "Fatemi Heritage",
+    description: "An ivory invitation with Arabic calligraphy, double-lined gold framing and a formal Nikah programme.",
+    layout: "fatemi", style: "traditional", color: "gold",
+    sample: { names: ["Mustafa", "Zainab"], heading: "Nikah Invitation", ceremony: "Nikah Ceremony", detail: "Together with their families" },
+  }),
+  previewTemplate({
+    id: "emerald-nikah", categoryId: "muslim", name: "Emerald Nikah",
+    description: "Emerald arches, a crescent emblem and a classic Nikah announcement.",
+    layout: "emerald", style: "royal", color: "green",
+    sample: { names: ["Ali", "Noor"], heading: "The Nikah Celebration", ceremony: "Nikah", detail: "With the blessings of their families" },
+  }),
+  previewTemplate({
+    id: "mandap-marigold", categoryId: "hindu", name: "Mandap Marigold",
+    description: "A festive marigold mandap with traditional pillars and warm vermilion tones.",
+    layout: "mandap", style: "traditional", color: "orange",
+    sample: { names: ["Aarav", "Meera"], heading: "शुभ विवाह", ceremony: "Wedding Ceremony", detail: "Together with their families" },
+  }),
+  previewTemplate({
+    id: "lotus-pichwai", categoryId: "hindu", name: "Lotus Pichwai",
+    description: "A pastel floral card with lotus medallions and an airy ceremonial invitation.",
+    layout: "lotus", style: "floral", color: "pink",
+    sample: { names: ["Ishaan", "Ananya"], heading: "शुभ विवाह", ceremony: "Wedding Celebration", detail: "With love and blessings" },
+  }),
+  previewTemplate({
+    id: "jain-pearl", categoryId: "jain", name: "Jain Pearl",
+    description: "Minimal ivory stationery with geometric details and a delicate lotus.",
+    layout: "jain", style: "classic", color: "neutral",
+    sample: { names: ["Riya", "Aditya"], heading: "मंगल परिणय", ceremony: "Wedding Ceremony", detail: "Your presence is requested" },
+  }),
+  previewTemplate({
+    id: "anand-karaj", categoryId: "sikh", name: "Anand Karaj",
+    description: "A royal blue and saffron card featuring an elegant Gurmukhi motif.",
+    layout: "anand", style: "royal", color: "blue",
+    sample: { names: ["Simran", "Gurpreet"], heading: "Anand Karaj", ceremony: "Wedding Ceremony", detail: "With the blessings of Waheguru" },
+  }),
+  previewTemplate({
+    id: "chapel-blossom", categoryId: "christian", name: "Chapel Blossom",
+    description: "A softly arched chapel design with fine rose branches and classic serif lettering.",
+    layout: "chapel", style: "floral", color: "pink",
+    sample: { names: ["Grace", "Daniel"], heading: "A Joyful Union", ceremony: "Wedding Ceremony", detail: "Together with their families" },
+  }),
+  previewTemplate({
+    id: "gujarati-bandhani", categoryId: "regional", name: "Gujarati Bandhani",
+    description: "A vibrant bandhani-inspired textile border and traditional Gujarati invitation.",
+    layout: "bandhani", style: "traditional", color: "red",
+    sample: { names: ["Krish", "Jinal"], heading: "શુભ વિવાહ", ceremony: "Wedding Celebration", detail: "With the blessings of our families" },
+  }),
+  previewTemplate({
+    id: "southern-kolam", categoryId: "regional", name: "Southern Kolam",
+    description: "An elegant South Indian-inspired card with temple lines and kolam ornamentation.",
+    layout: "kolam", style: "classic", color: "green",
+    sample: { names: ["Karthik", "Lakshmi"], heading: "Wedding Invitation", ceremony: "Muhurtham", detail: "With love and blessings" },
+  }),
+  previewTemplate({
+    id: "rajasthani-jharokha", categoryId: "regional", name: "Rajasthani Jharokha",
+    description: "A regal arched jharokha card with intricate borders and warm heritage colors.",
+    layout: "jharokha", style: "royal", color: "gold",
+    sample: { names: ["Dev", "Nisha"], heading: "Royal Wedding", ceremony: "Wedding Ceremony", detail: "Together with our families" },
+  }),
+  previewTemplate({
+    id: "modern-editorial", categoryId: "modern", name: "Editorial Vows",
+    description: "Architectural type, asymmetric composition and crisp monochrome stationery.",
+    layout: "editorial", style: "modern", color: "black",
+    sample: { names: ["Alex", "Taylor"], heading: "WE ARE GETTING MARRIED", ceremony: "The Celebration", detail: "Join us for the big day" },
+  }),
+  previewTemplate({
+    id: "celestial-glass", categoryId: "modern", name: "Celestial Glass",
+    description: "A luminous lilac glass design with floating stars and modern typography.",
+    layout: "glass", style: "modern", color: "purple",
+    sample: { names: ["Avery", "Jordan"], heading: "A New Chapter", ceremony: "Wedding Celebration", detail: "A day of love and light" },
+  }),
+]);
 
 export function listStudioTemplates(categoryId = "") {
   return STUDIO_TEMPLATES.filter(
@@ -83,11 +173,13 @@ export function getStudioTemplate(templateId, templateVersion) {
 }
 
 /**
- * Unversioned/saved legacy cards must always use the existing renderer.
- * New cards may use the Studio renderer only when their template is registered.
+ * A registered preview is NOT a published card renderer. Existing cards and
+ * unknown/preview template IDs continue to use the untouched legacy engine.
  */
 export function resolveInvitationDesignEngine(invitation) {
-  return getStudioTemplate(invitation?.studioTemplateId, invitation?.studioTemplateVersion)
-    ? "studio"
-    : "legacy";
+  const template = getStudioTemplate(
+    invitation?.studioTemplateId,
+    invitation?.studioTemplateVersion
+  );
+  return template?.status === "ready" ? "studio" : "legacy";
 }
