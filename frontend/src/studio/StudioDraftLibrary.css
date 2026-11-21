@@ -1,0 +1,202 @@
+/* New Studio draft cards only. No existing invitation selectors. */
+.wedding-studio-page .studio-draft-library {
+  margin-top: 54px;
+}
+
+.wedding-studio-page .studio-draft-library-browse {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 1px solid rgba(255, 240, 228, .29);
+  border-radius: 999px;
+  color: #f7e9de;
+  background: rgba(255, 255, 255, .1);
+  font-size: .79rem;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.wedding-studio-page .studio-draft-library-state,
+.wedding-studio-page .studio-draft-library-error {
+  padding: 18px 20px;
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: 17px;
+  background: rgba(255, 255, 255, .08);
+  color: #e1d1e7;
+}
+
+.wedding-studio-page .studio-draft-library-error {
+  border-color: rgba(247, 188, 196, .45);
+  color: #ffe0e3;
+}
+
+.wedding-studio-page .studio-draft-library-empty {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: clamp(22px, 3vw, 36px);
+  border: 1px dashed rgba(245, 223, 238, .28);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, .07);
+}
+
+.wedding-studio-page .studio-draft-library-empty > span {
+  color: #f4cfaa;
+  font-size: 2rem;
+}
+
+.wedding-studio-page .studio-draft-library-empty > div {
+  flex: 1 1 210px;
+}
+
+.wedding-studio-page .studio-draft-library-empty h3 {
+  margin: 0 0 7px;
+  color: #fff8fb;
+  font: 500 1.3rem Georgia, serif;
+}
+
+.wedding-studio-page .studio-draft-library-empty p {
+  margin: 0;
+  color: #d2c1d8;
+  font-size: .82rem;
+  line-height: 1.6;
+}
+
+.wedding-studio-page .studio-draft-library-empty > a {
+  display: inline-flex;
+  min-height: 43px;
+  align-items: center;
+  padding: 9px 17px;
+  border-radius: 999px;
+  color: #4b3347;
+  background: linear-gradient(115deg, #ffe8d3, #efc6d9);
+  font-size: .8rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.wedding-studio-page .studio-draft-library-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.wedding-studio-page .studio-draft-library-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .19);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, .11);
+  box-shadow: 0 17px 40px rgba(9, 6, 25, .16);
+  backdrop-filter: blur(17px);
+  -webkit-backdrop-filter: blur(17px);
+}
+
+.wedding-studio-page .studio-draft-library-protected {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 150px;
+  gap: 9px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 70% 20%, rgba(245, 213, 201, .25), transparent 45%),
+    linear-gradient(135deg, rgba(169, 123, 166, .37), rgba(75, 61, 116, .39));
+  color: #fff5fb;
+  text-align: center;
+}
+
+.wedding-studio-page .studio-draft-library-protected::before {
+  content: "❦";
+  position: absolute;
+  top: -27px;
+  right: -12px;
+  font: 200 11rem Georgia, serif;
+  color: rgba(255, 236, 245, .1);
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+.wedding-studio-page .studio-draft-library-protected > span {
+  color: #f3d3b4;
+  font-size: 2rem;
+}
+
+.wedding-studio-page .studio-draft-library-protected > strong {
+  color: #fff7fc;
+  font: 500 1.13rem Georgia, serif;
+}
+
+.wedding-studio-page .studio-draft-library-protected > small {
+  color: #dbc9e1;
+  font-size: .71rem;
+}
+
+.wedding-studio-page .studio-draft-library-summary {
+  padding: 19px 21px 23px;
+}
+
+.wedding-studio-page .studio-draft-library-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 11px;
+  border: 1px solid rgba(255, 227, 184, .2);
+  border-radius: 99px;
+  color: #f5d8ba;
+  background: rgba(255, 255, 255, .08);
+  font-size: .67rem;
+  font-weight: 800;
+}
+
+.wedding-studio-page .studio-draft-library-summary h3 {
+  margin: 14px 0 8px;
+  color: #fff8fc;
+  font: 500 1.34rem Georgia, serif;
+}
+
+.wedding-studio-page .studio-draft-library-summary p {
+  margin: 0 0 20px;
+  color: #d3c3d7;
+  font-size: .77rem;
+}
+
+.wedding-studio-page .studio-draft-library-open {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 8px 16px;
+  border-radius: 99px;
+  color: #433049;
+  background: linear-gradient(120deg, #ffe6d0, #ecc6dc);
+  font-size: .76rem;
+  font-weight: 850;
+  text-decoration: none;
+}
+
+.wedding-studio-page .studio-draft-library a:focus-visible {
+  outline: 3px solid #f3d5b6;
+  outline-offset: 3px;
+}
+
+@media (max-width: 900px) {
+  .wedding-studio-page .studio-draft-library-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 570px) {
+  .wedding-studio-page .studio-draft-library {
+    margin-top: 35px;
+  }
+
+  .wedding-studio-page .studio-draft-library-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
