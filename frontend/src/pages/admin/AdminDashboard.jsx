@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import api, { setInvitationUnlockToken, clearInvitationUnlockTokens } from "../../services/api";
 import { useAuth } from "../../context/AuthContext";
 import MusicLibraryDialog from "../../components/MusicLibraryDialog";
+import "./AdminDashboard.css";
 
 const formatCoupleNames = (couple) =>
   [couple?.brideName, couple?.groomName]
@@ -153,7 +154,7 @@ function AdminDashboard() {
   };
 
   return (
-    <main className="studio-page">
+    <main className="studio-page dashboard-premium">
       <header className="studio-header">
         <div><span className="eyebrow">Wedding Invitation Studio</span><h1>Good to see you, {user?.name || "Admin"}</h1><p>Create, manage and publish beautiful wedding invitations.</p></div>
         <button className="secondary-button" onClick={handleLogout}>Logout</button>
