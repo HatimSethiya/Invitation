@@ -564,9 +564,27 @@ function StudioCardEditor() {
               <span className="studio-editor-live-indicator"><i aria-hidden="true" /> Live</span>
             </div>
             <StudioInvitationPreview template={template} details={details} enlarged />
+            {details.events.some((event) => event.title || event.date || event.time || event.venue) && (
+              <div className="studio-editor-preview-events">
+                <h3>Celebration Schedule</h3>
+                {details.events.filter((event) => event.title || event.date || event.time || event.venue)
+                  .map((event, index) => (
+                    <div className="studio-editor-preview-event" key={index}>
+                      <strong>{event.title || `Event ${index + 1}`}</strong>
+                      <span>
+                        {[event.date, event.time, event.venue].filter(Boolean).join(" · ")
+                          || "Details to be confirmed"}
+                      </span>
+                    </div>
+                  ))}
+                {details.venue.address?.trim() && (
+                  <p className="studio-editor-preview-address">{details.venue.address}</p>
+                )}
+              </div>
+            )}
             <div className="studio-editor-preview-note">
-              Changes preview instantly. Your event and wedding information will
-              be included when final publishing is introduced.
+              The card and ceremony schedule update as you type. This is a private
+              draft preview; public sharing comes in a later phase.
             </div>
           </aside>
         </div>
