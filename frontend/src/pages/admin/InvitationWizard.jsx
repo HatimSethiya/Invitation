@@ -2,9 +2,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import api, { resolveMediaUrl } from "../../services/api";
 import ImageUpload from "../../components/ImageUpload";
+import { formatFatemiDate } from "../../utils/fatemiCalendar";
 
 const steps = ["Basic & Style", "Couple", "Bohra Details", "Events", "Family & Story", "Venue", "Music", "Review"];
-const eventTemplate = { type: "Wedding", title: "", date: "", time: "", venue: "", address: "", description: "", mapUrl: "" };
+const eventTemplate = { type: "Wedding", title: "", date: "", showFatemiDate: false, time: "", venue: "", address: "", description: "", mapUrl: "" };
 const familyTemplate = { name: "", relation: "", side: "other" };
 const galleryTemplate = { imageUrl: "", caption: "" };
 const toDateInput = (value) => {
@@ -113,7 +114,7 @@ function InvitationWizard() {
             secondCoupleGroomFamilyLine: invitation.bohraDetails?.secondCoupleGroomFamilyLine || "",
           },
           events: Array.isArray(invitation.events) && invitation.events.length
-            ? invitation.events.map((event) => ({ ...event, date: toDateInput(event.date) }))
+            ? invitation.events.map((event) => ({ ...event, date: toDateInput(event.date), showFatemiDate: event.showFatemiDate === true }))
             : [{ ...eventTemplate }],
           family: Array.isArray(invitation.family) && invitation.family.length
             ? invitation.family
@@ -440,6 +441,25 @@ function InvitationWizard() {
                   <label>Title<input value={event.title} onChange={(e) => item("events", index, "title", e.target.value)} placeholder="Wedding" /></label>
                   <label>Date<input type="date" value={event.date} onChange={(e) => item("events", index, "date", e.target.value)} /></label>
                   <label>Time<input value={event.time} onChange={(e) => item("events", index, "time", e.target.value)} placeholder="7:00 PM" /></label>
+                  <label className="full invitation-countdown-toggle">
+                    <span>Bohri Fatemi date (Arabic)</span>
+                    <span className="field-help">Automatically show the Fatemi date with the English date. Fatemi days change at Maghrib.</span>
+                    <span className="invitation-countdown-toggle-control">
+                      <input
+                        type="checkbox"
+                        checked={event.showFatemiDate === true}
+                        onChange={(e) => item("events", index, "showFatemiDate", e.target.checked)}
+                        aria-label={`Show Bohri Fatemi date for event ${index + 1}`}
+                      />
+                      <strong>{event.showFatemiDate ? "Enabled" : "Disabled"}</strong>
+                    </span>
+                  </label>
+                  {event.showFatemiDate && event.date && (
+                    <p className="full fatemi-date-preview">
+                      <span>Fatemi date preview: </span>
+                      <span lang="ar" dir="rtl">{formatFatemiDate(event.date)}</span>
+                    </p>
+                  )}
                   <label>Venue<input value={event.venue} onChange={(e) => item("events", index, "venue", e.target.value)} /></label>
                   <label>Map URL<input value={event.mapUrl} onChange={(e) => item("events", index, "mapUrl", e.target.value)} /></label>
                   <label className="full">Address<input value={event.address} onChange={(e) => item("events", index, "address", e.target.value)} /></label>
