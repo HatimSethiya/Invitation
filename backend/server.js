@@ -6,6 +6,7 @@ const fs = require("fs");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const invitationRoutes = require("./routes/invitationRoutes");
+const studioDraftRoutes = require("./routes/studioDraftRoutes");
 const musicRoutes = require("./routes/musicRoutes");
 const uploadRoutes = require("./routes/uploadRoutes");
 const { getUploadedImageFile } = require("./controllers/imageGridFsController");
@@ -31,6 +32,7 @@ app.get("/uploads/:filename", getUploadedImageFile);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/invitations", invitationRoutes);
+app.use("/api/studio", studioDraftRoutes);
 app.use("/api/music", musicRoutes);
 app.use("/api/uploads", uploadRoutes);
 
