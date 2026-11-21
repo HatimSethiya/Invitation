@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import api from "../../services/api";
 import StudioInvitationPreview from "../../studio/StudioInvitationPreview";
 import { getStudioTemplate } from "../../studio/templateCatalog";
@@ -53,6 +53,7 @@ const detailsFromDraft = (draft) => ({
 
 function StudioCardEditor() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { templateId, draftId } = useParams();
   const isEditing = Boolean(draftId);
   const initialTemplate = !isEditing ? getStudioTemplate(templateId, 1) : null;
@@ -73,6 +74,12 @@ function StudioCardEditor() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
+
+  useEffect(() => {
+    if (location.state?.studioDraftSaved) {
+      setNotice("Draft saved securely. Your invitation is not published.");
+    }
+  }, [location.state]);
 
   useEffect(() => {
     if (!draftId) return undefined;
@@ -223,7 +230,10 @@ function StudioCardEditor() {
         setStudioDraftUnlockToken(id, response.data.unlockToken);
         setPassword("");
         setConfirmPassword("");
-        navigate(`/admin/studio/drafts/${id}/edit`, { replace: true });
+        navigate(`/admin/studio/drafts/${id}/edit`, {
+          replace: true,
+          state: { studioDraftSaved: true },
+        });
       }
     } catch (requestError) {
       if (requestError.response?.status === 423 && draftId) {
