@@ -76,36 +76,9 @@ function getWeddingCountdownTarget(invitation) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(dateKey)) return null;
 
   const [year, month, day] = dateKey.split("-").map(Number);
-  let target = new Date(year, month - 1, day, 0, 0, 0, 0);
-
-  // When a ceremony time is entered for the wedding date, count down to that
-  // local time; otherwise count down to the beginning of the wedding day.
-  const matchingEvent = (invitation.events || []).find((event) => {
-    const eventDate = typeof event?.date === "string"
-      ? event.date.slice(0, 10)
-      : event?.date instanceof Date && !Number.isNaN(event.date.getTime())
-        ? event.date.toISOString().slice(0, 10)
-        : "";
-    return eventDate === dateKey && typeof event?.time === "string" && event.time.trim();
-  });
-
-  const timeMatch = matchingEvent?.time.match(
-    /(\d{1,2})(?::(\d{2}))?\s*(a\.?m\.?|p\.?m\.?)/i
-  );
-
-  if (timeMatch) {
-    let hours = Number(timeMatch[1]);
-    const minutes = Number(timeMatch[2] || 0);
-    const meridiem = timeMatch[3].replace(/\./g, "").toLowerCase();
-
-    if (hours >= 1 && hours <= 12 && minutes >= 0 && minutes <= 59) {
-      if (meridiem === "p.m" || meridiem === "pm") hours = hours % 12 + 12;
-      if (meridiem === "a.m" || meridiem === "am") hours %= 12;
-      target = new Date(year, month - 1, day, hours, minutes, 0, 0);
-    }
-  }
-
-  return target;
+  // Always count down to 12:00 AM at the start of the wedding date.
+  // Event ceremony times must not alter this target.
+  return new Date(year, month - 1, day, 0, 0, 0, 0);
 }
 
 function RoyalWeddingCountdown({ targetDate, theme }) {
