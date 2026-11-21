@@ -11,18 +11,42 @@ function CoupleNames({ names, vertical = false }) {
 }
 
 /**
- * Real, self-contained JSX layouts for upcoming Studio invitations.
- * They are sample-only until editing, persistence and guest rendering
- * are integrated in the next phases. They do NOT use legacy card CSS.
+ * The same isolated React layouts power gallery samples and the live editor.
+ * Phase 4 details never touch PublicInvitation or legacy invitation CSS.
+ * Public sharing remains intentionally unavailable until Phase 6.
  */
-function StudioInvitationPreview({ template, enlarged = false }) {
+function StudioInvitationPreview({ template, enlarged = false, details = null }) {
   if (!template?.sample) return null;
 
-  const { sample } = template;
+  const primaryEvent = details?.events?.find(
+    (event) => event.title || event.date || event.time || event.venue
+  );
+  const sample = details ? {
+    ...template.sample,
+    names: [
+      details.partner1?.trim() || "First Partner",
+      details.partner2?.trim() || "Second Partner",
+    ],
+    heading: details.heading?.trim() || template.sample.heading,
+    ceremony: primaryEvent?.title?.trim() || template.sample.ceremony,
+    detail: details.familyLine?.trim() || details.message?.trim() || template.sample.detail,
+  } : template.sample;
+
+  const dateLabel = details?.weddingDate
+    ? new Date(`${details.weddingDate}T12:00:00`).toLocaleDateString(undefined, {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      })
+    : "Wedding date to be confirmed";
+  const placeLabel = details?.venue?.name?.trim() || primaryEvent?.venue?.trim()
+    || "Venue to be confirmed";
+
   const classes = [
     "studio-invite-preview",
     `studio-invite-${template.layout}`,
     enlarged ? "studio-invite-expanded" : "",
+    details ? "studio-invite-has-details" : "",
   ].filter(Boolean).join(" ");
 
   let content;
@@ -212,9 +236,16 @@ function StudioInvitationPreview({ template, enlarged = false }) {
     <div
       className={classes}
       role="img"
-      aria-label={`${template.name}: sample ${sample.names[0]} and ${sample.names[1]} invitation`}
+      aria-label={`${template.name}: ${details ? "preview of" : "sample"} ${sample.names[0]} and ${sample.names[1]} invitation`}
     >
       {content}
+      {details && (
+        <div className="studio-invite-detail-ribbon">
+          <span>{dateLabel}</span>
+          <span>{placeLabel}</span>
+          {primaryEvent?.time && <span>{primaryEvent.time}</span>}
+        </div>
+      )}
     </div>
   );
 }
