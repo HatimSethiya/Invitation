@@ -50,7 +50,7 @@ function StudioDraftLibrary() {
       </div>
 
       {error && <p className="studio-draft-library-error" role="alert">{error}</p>}
-      {loading ? (
+      {error ? null : loading ? (
         <p className="studio-draft-library-state" role="status">Loading private drafts…</p>
       ) : drafts.length === 0 ? (
         <div className="studio-draft-library-empty">
