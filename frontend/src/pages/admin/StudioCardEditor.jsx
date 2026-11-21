@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import api from "../../services/api";
 import StudioInvitationPreview from "../../studio/StudioInvitationPreview";
+import StudioDesignControls from "../../studio/StudioDesignControls";
+import { normalizeStudioDesign } from "../../studio/studioDesignOptions";
 import { getStudioTemplate } from "../../studio/templateCatalog";
 import {
   clearStudioDraftUnlockToken,
@@ -29,6 +31,7 @@ const initialDetails = (template) => ({
   weddingDate: "",
   venue: { name: "", address: "" },
   events: [{ ...emptyEvent(), title: template?.sample?.ceremony || "" }],
+  design: normalizeStudioDesign(),
 });
 
 const detailsFromDraft = (draft) => ({
@@ -49,6 +52,7 @@ const detailsFromDraft = (draft) => ({
     time: event.time || "",
     venue: event.venue || "",
   })),
+  design: normalizeStudioDesign(draft.design),
 });
 
 function StudioCardEditor() {
@@ -152,6 +156,26 @@ function StudioCardEditor() {
         ? current.events
         : [...current.events, emptyEvent()],
     }));
+    setNotice("");
+  };
+
+  const updateDesign = (design) => {
+    setDetails((current) => ({
+      ...current,
+      design: normalizeStudioDesign(design),
+    }));
+    setNotice("");
+  };
+
+  const moveEvent = (index, direction) => {
+    setDetails((current) => {
+      const destination = index + direction;
+      if (destination < 0 || destination >= current.events.length) return current;
+
+      const events = [...current.events];
+      [events[index], events[destination]] = [events[destination], events[index]];
+      return { ...current, events };
+    });
     setNotice("");
   };
 
@@ -455,13 +479,31 @@ function StudioCardEditor() {
                     <div className="studio-editor-event" key={index}>
                       <div className="studio-editor-event-title">
                         <strong>Event {index + 1}</strong>
-                        <button
-                          type="button"
-                          aria-label={`Remove event ${index + 1}`}
-                          onClick={() => removeEvent(index)}
-                        >
-                          Remove
-                        </button>
+                        <div className="studio-editor-event-order">
+                          <button
+                            type="button"
+                            aria-label={`Move event ${index + 1} up`}
+                            onClick={() => moveEvent(index, -1)}
+                            disabled={index === 0}
+                          >
+                            ↑
+                          </button>
+                          <button
+                            type="button"
+                            aria-label={`Move event ${index + 1} down`}
+                            onClick={() => moveEvent(index, 1)}
+                            disabled={index === details.events.length - 1}
+                          >
+                            ↓
+                          </button>
+                          <button
+                            type="button"
+                            aria-label={`Remove event ${index + 1}`}
+                            onClick={() => removeEvent(index)}
+                          >
+                            Remove
+                          </button>
+                        </div>
                       </div>
                       <div className="studio-editor-fields">
                         <label>
@@ -510,10 +552,24 @@ function StudioCardEditor() {
                 </div>
               </section>
 
+              <section className="studio-editor-section" aria-labelledby="studio-editor-design-title">
+                <div className="studio-editor-section-heading">
+                  <span className="studio-editor-step">03</span>
+                  <div>
+                    <h2 id="studio-editor-design-title">Customize Your Card</h2>
+                    <p>Choose fonts, colors, background finishes and visible sections.</p>
+                  </div>
+                </div>
+                <StudioDesignControls
+                  value={details.design}
+                  onChange={updateDesign}
+                />
+              </section>
+
               {!isEditing && (
                 <section className="studio-editor-section" aria-labelledby="studio-editor-security-title">
                   <div className="studio-editor-section-heading">
-                    <span className="studio-editor-step">03</span>
+                    <span className="studio-editor-step">04</span>
                     <div>
                       <h2 id="studio-editor-security-title">Secure Your Draft</h2>
                       <p>Protect your card from anyone else using this account.</p>
@@ -574,7 +630,8 @@ function StudioCardEditor() {
               <span className="studio-editor-live-indicator"><i aria-hidden="true" /> Live</span>
             </div>
             <StudioInvitationPreview template={template} details={details} enlarged />
-            {details.events.some((event) => event.title || event.date || event.time || event.venue) && (
+            {normalizeStudioDesign(details.design).sections.schedule
+              && details.events.some((event) => event.title || event.date || event.time || event.venue) && (
               <div className="studio-editor-preview-events">
                 <h3>Celebration Schedule</h3>
                 {details.events.filter((event) => event.title || event.date || event.time || event.venue)
