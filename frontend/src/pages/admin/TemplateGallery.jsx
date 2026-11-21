@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { STUDIO_CATEGORIES } from "../../studio/templateCatalog";
+import { STUDIO_CATEGORIES, STUDIO_TEMPLATES } from "../../studio/templateCatalog";
+import StudioInvitationPreview from "../../studio/StudioInvitationPreview";
 import {
   GALLERY_COLORS,
   GALLERY_DESIGNS,
@@ -45,10 +46,27 @@ function TemplateGallery() {
   const color = GALLERY_COLORS.some((entry) => entry.id === rawColor) ? rawColor : "all";
   const hasFilters = category !== "all" || Boolean(search) || style !== "all" || color !== "all";
 
-  const results = useMemo(
-    () => filterGalleryDesigns({ category, search, style, color }),
-    [category, search, style, color]
-  );
+  const results = useMemo(() => {
+    const query = search.trim().toLocaleLowerCase();
+    const newLayouts = STUDIO_TEMPLATES.filter((template) => {
+      if (category !== "all" && template.categoryId !== category) return false;
+      if (style !== "all" && template.style !== style) return false;
+      if (color !== "all" && template.color !== color) return false;
+
+      return !query || [
+        template.name,
+        template.description,
+        template.categoryId,
+        template.style,
+        template.color,
+      ].some((value) => value.toLocaleLowerCase().includes(query));
+    }).map((template) => ({ ...template, kind: "studio" }));
+
+    const existingThemes = filterGalleryDesigns({ category, search, style, color })
+      .map((design) => ({ ...design, kind: "existing" }));
+
+    return [...newLayouts, ...existingThemes];
+  }, [category, search, style, color]);
 
   const updateFilter = (name, value) => {
     const next = new URLSearchParams(params);
@@ -95,21 +113,21 @@ function TemplateGallery() {
           <span className="wedding-studio-kicker">THE DESIGN COLLECTION</span>
           <h1>Find the invitation <em>you love.</em></h1>
           <p>
-            Explore the designs available in the current invitation builder.
-            Select a look, preview its colors, and start a new card with that theme.
+            Discover original wedding layouts for every celebration, plus
+            existing color themes you can already customize in the current builder.
           </p>
           <div className="template-gallery-notice">
             <span aria-hidden="true">✧</span>
-            These are existing Bohra-layout visual themes, not separate community
-            layouts. Dedicated Hindu, Jain, Sikh, Christian and other collections
-            will arrive in the next template phase.
+            New community layouts are real coded design previews, but cannot
+            yet be saved or published. Editor integration is coming in Phase 4.
+            The existing Bohra-layout themes remain available to customize today.
           </div>
         </header>
 
         <section className="template-gallery-collections" aria-label="Filter by wedding tradition">
           <div className="template-gallery-section-title">
             <h2>Choose a collection</h2>
-            <p>Browse what's ready, or see which traditions are coming next.</p>
+            <p>Browse original designs by tradition and discover your favorite look.</p>
           </div>
           <div className="template-gallery-category-tabs">
             <button
@@ -119,10 +137,11 @@ function TemplateGallery() {
               onClick={() => updateFilter("category", "all")}
             >
               <span aria-hidden="true">✧</span> All Designs
-              <small>{GALLERY_DESIGNS.length}</small>
+              <small>{GALLERY_DESIGNS.length + STUDIO_TEMPLATES.length}</small>
             </button>
             {STUDIO_CATEGORIES.map((entry) => {
-              const count = GALLERY_DESIGNS.filter((design) => design.categoryId === entry.id).length;
+              const count = GALLERY_DESIGNS.filter((design) => design.categoryId === entry.id).length
+                + STUDIO_TEMPLATES.filter((template) => template.categoryId === entry.id).length;
               return (
                 <button
                   type="button"
@@ -133,7 +152,7 @@ function TemplateGallery() {
                 >
                   <span aria-hidden="true">{entry.symbol}</span>
                   {entry.name}
-                  <small>{count || "Soon"}</small>
+                  <small>{count}</small>
                 </button>
               );
             })}
@@ -147,7 +166,7 @@ function TemplateGallery() {
               <h2 id="template-gallery-library-title">Invitation Design Library</h2>
             </div>
             <span className="template-gallery-result-count" aria-live="polite">
-              {results.length} {results.length === 1 ? "design" : "designs"} available
+              {results.length} {results.length === 1 ? "design" : "designs"} shown
             </span>
           </div>
 
@@ -187,8 +206,12 @@ function TemplateGallery() {
               {results.map((design) => (
                 <article className="template-gallery-design-card" key={design.id}>
                   <div className="template-gallery-design-preview">
-                    <DesignPreview design={design} />
-                    <span className="template-gallery-design-type">Existing theme</span>
+                    {design.kind === "studio"
+                      ? <StudioInvitationPreview template={design} />
+                      : <DesignPreview design={design} />}
+                    <span className="template-gallery-design-type">
+                      {design.kind === "studio" ? "New layout · Preview" : "Existing theme"}
+                    </span>
                   </div>
                   <div className="template-gallery-design-details">
                     <div className="template-gallery-design-tags">
@@ -198,12 +221,16 @@ function TemplateGallery() {
                     <h3>{design.name}</h3>
                     <p>{design.description}</p>
                     <div className="template-gallery-card-actions">
-                      <Link
-                        className="template-gallery-use-button"
-                        to={`/admin/invitations/new?theme=${encodeURIComponent(design.id)}`}
-                      >
-                        Customize <span aria-hidden="true">↗</span>
-                      </Link>
+                      {design.kind === "studio" ? (
+                        <span className="template-gallery-preview-status">Editor coming in Phase 4</span>
+                      ) : (
+                        <Link
+                          className="template-gallery-use-button"
+                          to={`/admin/invitations/new?theme=${encodeURIComponent(design.id)}`}
+                        >
+                          Customize <span aria-hidden="true">↗</span>
+                        </Link>
+                      )}
                       <button
                         type="button"
                         className="template-gallery-preview-button"
@@ -219,14 +246,8 @@ function TemplateGallery() {
           ) : (
             <div className="template-gallery-empty-state" role="status">
               <span aria-hidden="true">✧</span>
-              <h3>{category !== "all" && category !== "bohra"
-                ? `${STUDIO_CATEGORIES.find((entry) => entry.id === category)?.name} collection is coming soon`
-                : "No designs match these filters"}</h3>
-              <p>
-                {category !== "all" && category !== "bohra"
-                  ? "Dedicated layouts for this tradition are planned for Phase 3. Existing Bohra-layout design themes are available now."
-                  : "Try another color or style to discover more existing designs."}
-              </p>
+              <h3>No designs match these filters</h3>
+              <p>Try another community, color, style or search to discover more designs.</p>
               <button type="button" onClick={resetFilters}>View all existing designs</button>
             </div>
           )}
@@ -262,17 +283,24 @@ function TemplateGallery() {
                 ×
               </button>
             </div>
-            <DesignPreview design={previewDesign} enlarged />
+            {previewDesign.kind === "studio"
+              ? <StudioInvitationPreview template={previewDesign} enlarged />
+              : <DesignPreview design={previewDesign} enlarged />}
             <p>
-              This uses the existing builder's color-theme preview, not a full
-              guest invitation. Actual card content is personalized in the editor.
+              {previewDesign.kind === "studio"
+                ? "Original layout preview with sample wording and names. This template will be editable and publishable after the Phase 4 editor integration."
+                : "This uses the current builder's color-theme preview, not a full guest invitation. Actual content is personalized in the editor."}
             </p>
-            <Link
-              to={`/admin/invitations/new?theme=${encodeURIComponent(previewDesign.id)}`}
-              className="template-gallery-use-button"
-            >
-              Customize This Design <span aria-hidden="true">↗</span>
-            </Link>
+            {previewDesign.kind === "existing" ? (
+              <Link
+                to={`/admin/invitations/new?theme=${encodeURIComponent(previewDesign.id)}`}
+                className="template-gallery-use-button"
+              >
+                Customize This Design <span aria-hidden="true">↗</span>
+              </Link>
+            ) : (
+              <span className="template-gallery-preview-status">Coming in Phase 4 · Studio Editor</span>
+            )}
           </div>
         </div>
       )}
