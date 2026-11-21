@@ -323,6 +323,54 @@
   margin: 0 auto;
 }
 
+.studio-editor-page .studio-editor-preview-events {
+  max-width: 440px;
+  max-height: 220px;
+  margin: 22px auto 0;
+  padding: 15px;
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, .21);
+  border-radius: 16px;
+  color: #f7ecf6;
+  background: rgba(255, 255, 255, .07);
+}
+
+.studio-editor-page .studio-editor-preview-events h3 {
+  margin: 0 0 13px;
+  color: #fff2f6;
+  font: 500 1.13rem Georgia, serif;
+}
+
+.studio-editor-page .studio-editor-preview-event + .studio-editor-preview-event {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, .13);
+}
+
+.studio-editor-page .studio-editor-preview-event strong,
+.studio-editor-page .studio-editor-preview-event span {
+  display: block;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.studio-editor-page .studio-editor-preview-event strong {
+  font-size: .8rem;
+}
+
+.studio-editor-page .studio-editor-preview-event span,
+.studio-editor-page .studio-editor-preview-address {
+  margin-top: 5px;
+  color: #d7c7df;
+  font-size: .73rem;
+}
+
+.studio-editor-page .studio-editor-preview-address {
+  margin-bottom: 0;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, .13);
+}
+
 .studio-editor-page .studio-editor-preview-note {
   max-width: 440px;
   margin: 16px auto 0;
