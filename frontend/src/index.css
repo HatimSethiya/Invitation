@@ -366,6 +366,13 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
   color: var(--bohra-muted);
   font-size: .9rem;
 }
+.bohra-detail-row div span.bohra-fatemi-date {
+  font-family: "Noto Naskh Arabic", "Geeza Pro", "Traditional Arabic", serif;
+  font-size: 1.02rem;
+  line-height: 1.7;
+  text-align: left;
+  unicode-bidi: isolate;
+}
 .bohra-invitees {
   margin: 20px 0 0;
   color: var(--bohra-forest);
@@ -4570,6 +4577,24 @@ body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; colo
 .wizard-page .invitation-countdown-toggle-control strong {
   font-size: .82rem;
   line-height: 1.25;
+}
+
+.wizard-page .fatemi-date-preview {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 9px 12px;
+  border: 1px solid rgba(133, 96, 124, .2);
+  border-radius: 10px;
+  background: rgba(250, 247, 251, .78);
+  color: #573a4d;
+}
+.wizard-page .fatemi-date-preview span[lang="ar"] {
+  font-family: "Noto Naskh Arabic", "Geeza Pro", "Traditional Arabic", serif;
+  font-size: 1.08rem;
+  line-height: 1.65;
 }
 
 @media (max-width: 640px) {
