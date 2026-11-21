@@ -16,6 +16,48 @@ const STUDIO_TEMPLATE_IDS = new Set([
 
 class DraftValidationError extends Error {}
 
+const DESIGN_OPTIONS = Object.freeze({
+  font: ["original", "classic", "modern", "romantic", "editorial"],
+  palette: ["original", "blush", "sage", "sapphire", "champagne", "lavender"],
+  background: ["original", "parchment", "linen", "glow"],
+});
+const DESIGN_SECTIONS = Object.freeze([
+  "heading", "family", "message", "dateVenue", "schedule",
+]);
+
+function validateStudioDesign(input) {
+  const design = input === undefined ? {} : input;
+  if (!design || typeof design !== "object" || Array.isArray(design)) {
+    throw new DraftValidationError("Design settings must be an object.");
+  }
+
+  const result = {};
+  for (const [key, options] of Object.entries(DESIGN_OPTIONS)) {
+    const value = design[key] ?? "original";
+    if (typeof value !== "string" || !options.includes(value)) {
+      throw new DraftValidationError(`Invalid ${key} selection.`);
+    }
+    result[key] = value;
+  }
+
+  const sections = design.sections ?? {};
+  if (!sections || typeof sections !== "object" || Array.isArray(sections)) {
+    throw new DraftValidationError("Card section settings must be an object.");
+  }
+
+  result.sections = {};
+  for (const key of DESIGN_SECTIONS) {
+    const visible = sections[key] ?? true;
+    if (typeof visible !== "boolean") {
+      throw new DraftValidationError(`Invalid visibility setting for ${key}.`);
+    }
+    result.sections[key] = visible;
+  }
+
+  return result;
+}
+
+
 function cleanText(value, field, limit) {
   if (value == null) return "";
   if (typeof value !== "string") {
@@ -92,6 +134,7 @@ function validateDraftPayload(value) {
       address: cleanText(venue.address, "Venue address", 360),
     },
     events: normalizedEvents,
+    design: validateStudioDesign(value.design),
   };
 }
 
@@ -105,5 +148,6 @@ module.exports = {
   STUDIO_TEMPLATE_IDS,
   DraftValidationError,
   validateDraftPayload,
+  validateStudioDesign,
   isValidDraftPassword,
 };
