@@ -2,8 +2,8 @@
  * Gallery entries for EXISTING invitation themes.
  *
  * Every design below is a visual variant of the CURRENT Bohra layout; these
- * are NOT new community-specific templates. Phase 3 will add dedicated
- * wedding layouts to STUDIO_TEMPLATES in templateCatalog.js.
+ * are NOT new community-specific templates. Phase 3's dedicated layouts
+ * are registered separately in STUDIO_TEMPLATES in templateCatalog.js.
  *
  * Keep theme IDs identical to the existing wizard and backend. New invitation
  * creation can preselect a theme; existing invitation data never changes.
