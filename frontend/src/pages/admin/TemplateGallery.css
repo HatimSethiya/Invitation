@@ -519,3 +519,36 @@
     transition: none;
   }
 }
+
+
+/* Phase 3: preview-only Studio templates are never presented as creatable. */
+.studio-template-gallery .template-gallery-preview-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 9px 13px;
+  border: 1px solid rgba(246, 213, 176, .31);
+  border-radius: 999px;
+  color: #f4ddc6;
+  background: rgba(231, 181, 135, .12);
+  font-size: .74rem;
+  font-weight: 740;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.studio-template-gallery .template-gallery-design-preview .studio-invite-preview {
+  height: auto;
+  border: 1px solid rgba(255, 255, 255, .13);
+}
+
+.studio-template-gallery .template-gallery-preview-dialog > .studio-invite-preview {
+  margin-bottom: 18px;
+}
+
+.studio-template-gallery .template-gallery-design-type {
+  z-index: 1;
+  max-width: calc(100% - 64px);
+  text-align: center;
+}
