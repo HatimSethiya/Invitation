@@ -372,7 +372,25 @@ function InvitationWizard() {
   return (
     <main className={`wizard-page ${isBohraTemplate ? "bohra-wizard-page" : ""}`}>
       <header className="wizard-header"><div><span className="eyebrow">{isEditing ? "Edit Invitation" : "Create Invitation"}</span><h1>{isEditing ? "Refine your wedding invitation" : "Create a wedding invitation"}</h1><p>{"All themes share the same Bohra Nikah fields and invitation layout; only the visual theme changes."}</p></div>{isEditing ? <button className="secondary-button" type="button" onClick={save} disabled={saving || audioUploading}>{saving ? "Saving..." : "Save & Exit"}</button> : <Link className="secondary-button" to="/admin/dashboard">Save & Exit</Link>}</header>
-      <nav className="stepper">{steps.map((label, index) => <button type="button" key={label} className={index === step ? "step active" : index < step ? "step done" : "step"} onClick={() => { if (index <= step && !saving) { setError(""); setStep(index); } }}><span>{index + 1}</span>{label}</button>)}</nav>
+      <nav className="stepper" aria-label="Invitation setup steps">
+        {steps.map((label, index) => (
+          <button
+            type="button"
+            key={label}
+            className={index === step ? "step active" : index < step ? "step done" : "step"}
+            onClick={() => {
+              if (saving) return;
+              setError("");
+              setStep(index);
+            }}
+            disabled={saving}
+            aria-current={index === step ? "step" : undefined}
+          >
+            <span>{index + 1}</span>
+            {label}
+          </button>
+        ))}
+      </nav>
 
       <section className="wizard-card">
         {step === 0 && <div className="form-section"><h2>Start your invitation</h2><p className="section-note">Choose the wedding type, opening card image and invitation design.</p>{!isEditing && <div className="form-grid"><label className="full">Wedding card type<select value={form.cardType} onChange={(e) => root("cardType", e.target.value)}><option value="single">Single Wedding Card — one couple</option><option value="double">Double Wedding Card — two couples</option></select></label></div>}<div className="form-grid"><label>Invitation title<input value={form.title} onChange={(e) => root("title", e.target.value)} placeholder="Ibrahim & Dr. Fatema" /></label><label>Share URL slug<input value={form.slug} onChange={(e) => root("slug", e.target.value)} placeholder="ibrahim-fatema" /></label><label>Wedding date<input type="date" value={form.weddingDate} onChange={(e) => root("weddingDate", e.target.value)} /></label><label className="invitation-countdown-toggle"><span>Wedding countdown</span><span className="field-help">Show an animated countdown on this invitation.</span><span className="invitation-countdown-toggle-control"><input type="checkbox" checked={form.countdownEnabled} onChange={(e) => root("countdownEnabled", e.target.checked)} /><strong>{form.countdownEnabled ? "Enabled" : "Disabled"}</strong></span></label><label>Invitation design<select value={form.theme} onChange={(e) => root("theme", e.target.value)}><option value="bohraNikah">Ivory Gold · Nikah</option><option value="purpleWhite">White Purple · Glass</option><option value="midnightNavy">Midnight Navy</option><option value="sageBotanical">Sage Botanical</option><option value="champagnePearl">Champagne Pearl</option><option value="rubyVelvet">Ruby Velvet</option><option value="oceanTeal">Ocean Teal</option><option value="celestialBlack">Celestial Onyx</option><option value="blushTerracotta">Blush Terracotta</option><option value="desertSand">Desert Sand</option><option value="sapphireSilver">Sapphire Silver</option><option value="burgundyLuxe">Burgundy Luxe</option><option value="jadeMarble">Jade Marble</option><option value="sunsetCopper">Sunset Copper</option><option value="whiteRoseGold">White Rose Gold · Royale</option></select></label><label>Opening animation<select value={form.openingAnimation} onChange={(e) => root("openingAnimation", e.target.value)}><option value="curtains">Luxury Theatre Curtains</option><option value="envelope">Sealed 3D Envelope</option><option value="door">Royal Double Doors</option></select><span className="field-help">Choose how guests first open this invitation.</span></label><label>Opening mode<select value={form.openingMode} onChange={(e) => root("openingMode", e.target.value)}><option value="manual">Manual — Tap to Open</option><option value="automatic">Automatic — Open on Load</option></select><span className="field-help">Manual waits for a tap. Automatic starts the selected opening animation once the invitation loads.</span></label><div className="full"><ImageUpload label="Tap to Open card image (optional)" value={form.coverImageUrl} onChange={(value) => root("coverImageUrl", value)} /></div></div><div className="bohra-template-note"><span className="bohra-template-note-mark">۞</span><div><strong>"Bohra Nikah fields & layout selected"</strong><p>"Every design uses the same Bohra Nikah field set, event details, and card layout. Theme changes only colors and styling."</p></div></div><div className="full invitation-theme-preview" aria-live="polite">
