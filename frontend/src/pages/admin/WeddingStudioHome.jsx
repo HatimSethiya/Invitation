@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { STUDIO_CATEGORIES, STUDIO_TEMPLATES } from "../../studio/templateCatalog";
+import { STUDIO_CATEGORIES } from "../../studio/templateCatalog";
+import { GALLERY_DESIGNS } from "../../studio/galleryDesigns";
 import "./WeddingStudioHome.css";
 
 const studioSteps = [
@@ -21,7 +22,7 @@ const studioSteps = [
 ];
 
 function WeddingStudioHome() {
-  const templatesReady = STUDIO_TEMPLATES.length > 0;
+  const existingDesignCount = GALLERY_DESIGNS.length;
 
   return (
     <main className="wedding-studio-page">
@@ -35,6 +36,7 @@ function WeddingStudioHome() {
             </span>
           </Link>
           <div className="wedding-studio-nav-actions">
+            <Link to="/admin/studio/templates" className="wedding-studio-nav-link">Templates</Link>
             <Link to="/admin/dashboard" className="wedding-studio-nav-link">
               My Cards
             </Link>
@@ -56,8 +58,11 @@ function WeddingStudioHome() {
               traditions and craft a design that feels uniquely yours.
             </p>
             <div className="wedding-studio-hero-actions">
-              <Link className="wedding-studio-action-primary" to="/admin/invitations/new">
-                Create With Current Builder <span aria-hidden="true">↗</span>
+              <Link className="wedding-studio-action-primary" to="/admin/studio/templates">
+                Explore Design Gallery <span aria-hidden="true">↗</span>
+              </Link>
+              <Link className="wedding-studio-action-secondary" to="/admin/invitations/new">
+                Create With Current Builder
               </Link>
               <Link className="wedding-studio-action-secondary" to="/admin/dashboard">
                 Open My Cards
@@ -87,20 +92,21 @@ function WeddingStudioHome() {
               <span className="wedding-studio-kicker">DESIGNED FOR EVERY CELEBRATION</span>
               <h2 id="studio-collection-heading">Explore wedding traditions</h2>
               <p>
-                Collections are being prepared. Choose the current builder
-                above to create an invitation today.
+                Explore existing visual designs now. Dedicated community layouts
+                are being developed in the next phase.
               </p>
             </div>
             <span className="wedding-studio-coming-pill">
-              {templatesReady ? "Collections in progress" : "Templates coming soon"}
+              {existingDesignCount} existing designs
             </span>
           </div>
 
           <div className="wedding-studio-category-grid">
             {STUDIO_CATEGORIES.map((category, index) => (
-              <article
+              <Link
                 className="wedding-studio-category"
                 key={category.id}
+                to={`/admin/studio/templates?category=${encodeURIComponent(category.id)}`}
                 style={{
                   "--studio-category-from": category.colors[0],
                   "--studio-category-to": category.colors[1],
@@ -113,9 +119,9 @@ function WeddingStudioHome() {
                 <div className="wedding-studio-category-info">
                   <h3>{category.name}</h3>
                   <p>{category.description}</p>
-                  <span>Collection in development</span>
+                  <span>{category.id === "bohra" ? `Browse ${existingDesignCount} existing looks ↗` : "Dedicated templates coming soon ↗"}</span>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         </section>
